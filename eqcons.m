@@ -1,10 +1,4 @@
-%[c, ceq] - NonLinear
-%for Relaxed use [-ceq,c]
 function[c, ceq] = eqcons(x, T, nb)
-% global nb;
-% global T;
-
-%% defining variables
 
 Ap=1:nb-1;                          % defining the unknowns for phaseA
 Aq=nb:2*(nb-1);
@@ -16,8 +10,6 @@ Table = [T(:,1) T(:,2) Ap'  Aq'  Ai' Av'];
 Da = 3*(nb)-2:4*(nb-1)+1;
 Volttable = Da';
 
-
-%% current equation lv = P^2 + Q^2
 c = [];
 
 for i =2:nb

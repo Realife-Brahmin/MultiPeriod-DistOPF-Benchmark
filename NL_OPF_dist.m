@@ -1,4 +1,4 @@
-function [V,S1, S_all, mic_iter, Dec_Var, time_dist, R, T, nb] = NL_OPF_dist(Vs, Se,Area, end_area, loss_min, CVR)
+function [V, S1, S_all, mic_iter, Dec_Var, time_dist, R, T, nb] = NL_OPF_dist(Vs, Se, Area, end_area, loss_min, CVR)
 
 V_min = 0.95;
 V_max = 1.05;
@@ -25,7 +25,6 @@ fb = branch(:,1);
 tb = branch(:,2);
 G = graph(fb,tb);
 
-% global nb;
 nb = size(powerdata,1);     % total number of nodes
 %% Line Data
 
@@ -65,10 +64,8 @@ l_bQ(:,1) = -sqrt((S_DER.^2)-(P_DER.^2));
 u_bQ(:,1) = sqrt((S_DER.^2)-(P_DER.^2));
 
 %%
-% global T;
 T = dfsearch(G,1,'edgetonew');
 
-% global R;
 R = zeros(nb);
 X = zeros(nb);
 
@@ -85,7 +82,6 @@ Ap=1:nb-1;                                  % defining the variabes for P
 Aq=nb:2*(nb-1);                             % defining the variabes for Q
 Ai=2*(nb)-1:3*(nb-1);                       % defining the variabes for l(I^2)
 Av=3*(nb)-1:4*(nb-1)+1;                     % defining the variabes for V
-global Table;
 Table = [T(:,1) T(:,2) Ap'  Aq'  Ai' Av'];  % creating Table for variabes P, Q ,l, V
 Da = 3*(nb)-2:4*(nb-1)+1;                   % voltage variables including substation
 Volttable = Da';
@@ -211,7 +207,7 @@ ub = [ub; u_bQ];
 options = optimoptions('fmincon','Display','off','MaxFunctionEvaluations',100000000,'Algorithm','sqp');
 tic
     % For Loss minimization:
-    [x,fval,exitflag,output] = fmincon(@(x)objfun(x, R ,T, nb),x0,[],[],Aeq,beq,lb,ub, @(x)eqcons(x, T, nb), options);
+    [x,fval,exitflag,output] = fmincon(@(x)objfun(x, R ,T, nb, Table),x0,[],[],Aeq,beq,lb,ub, @(x)eqcons(x, T, nb), options);
 
 time_dist = toc;
 % mic_iter = output.iterations;

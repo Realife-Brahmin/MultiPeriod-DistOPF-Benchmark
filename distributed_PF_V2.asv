@@ -1,3 +1,9 @@
+
+clear all
+clc
+
+%% Initialization:
+
 loss_min = 1;   % CVR  = 0, Loss minimization = 1;
 
 if (loss_min)
@@ -19,7 +25,7 @@ end
 %Check if the area is located at the end of the tree: 1- Yes, 0- No
 end_area = ~row ;
 
-%
+%%
 % Uncomment the line below for 13/123/smaller systems -
 Se(1:max(CB(:,3))-1,1:Tot_Area) = 0;
 
@@ -28,15 +34,14 @@ S_A = zeros (max(row),Tot_Area);
 Vs(1:Tot_Area) = 1.03^2;
 Vs(1) = 1.03^2;
 V(2,Tot_Area) = 0;
-% Dec_Var(: ,Tot_Area) = 0;
-Dec_Var = zeros(size(Se, 1)+1, Tot_Area);
-% Loop:
+Dec_Var(: ,Tot_Area) = 0;
+%% Loop:
 
 c=1;
 iter = 0;
-%
+%%
 while (c)
-    % Solve Areas parallelly:
+    %% Solve Areas parallelly:
     for Area = 1:Tot_Area
         [v2, Ss(Area), S_all, mic_iter(iter+1,Area), Dec_Var_1, time_dist(iter+1,Area), R, T, nb] = ...
             NL_OPF_dist(Vs(Area), Se(CB(find(Area==CB(:,1)),3)-1,Area), Area, end_area(Area), loss_min, CVR);
@@ -45,20 +50,13 @@ while (c)
         lenV = size(V, 1);
 %         if (size(v2,1)< size (V,1))  % Ensuring the dimensions will match to store the voltages
         if lenv2 < lenV
-            v2 = [v2; zeros(lenV - lenv2, 1)];
-            Dec_Var_1 = [Dec_Var_1; zeros(lenV - lenv2, 1)];
-            lenDec_Var = size(Dec_Var, 1);
-            if lenV > lenDec_Var
-                Dec_Var = [Dec_Var; zeros(lenV - lenDec_Var, 4)];
-            end      
-        elseif lenv2 > lenV
-            V = [V; zeros(lenv2 - lenV, 4)];
-            lenDec_Var = size(Dec_Var, 1);
-            if lenv2 > lenDec_Var
-                Dec_Var = [Dec_Var; zeros(lenv2 - lenDec_Var, 4)];
-            end
-%             V(end+1:size(v2,1),:) = 0;
-%             Dec_Var(end+1:size(v2,1),:) = 0;
+            v2 = [v2]
+            v2(end+1:size(V,1)) = 0;
+            Dec_Var_1(end+1:size(V,1)) = 0;
+            
+        elseif (size(v2,1)> size (V,1))
+            V(end+1:size(v2,1),:) = 0;
+            Dec_Var(end+1:size(v2,1),:) = 0;
         end
         
         if (size(S_all,1)< size (S_A,1))  % Ensuring the dimensions will match to store the S flow
@@ -75,7 +73,7 @@ while (c)
         disp('*************')
         disp(['Iteration: ', num2str(iter), '    Area: ', num2str(Area)])
     end
-    % Stopping Criterion:
+    %% Stopping Criterion:
     eps = 0.001 ; % Tolerance
     
     % Residual Matrix:
@@ -93,7 +91,7 @@ while (c)
         c = 1;
         a(1) = 0.25;
         a(2) = 0.05;
-        %Communication-
+        %% Communication-
         for k2 = 1:size(CB,1)
             V_iter(iter+1,CB(k2,3),CB(k2,1)) = V(CB(k2,3),CB(k2,1)) ;
             Se_iter(iter+1,CB(k2,2)) = Ss(CB(k2,2));
@@ -117,11 +115,12 @@ while (c)
     end
     
 end
-
+%% node voltages- 
 disp('00000000000000')
 V_node_sq = Vs(1);
 Dec_Var_overall = 0;
 for j = 1:Tot_Area
+    %% min(CB((find(j==CB(:,1))),3))-1 = starting point of dummy buses
     v_area1 = V(2:min(CB((find(j==CB(:,1))),3))-1,j);
     DV_area1 = Dec_Var(2:min(CB((find(j==CB(:,1))),3))-1,j);
     
@@ -137,6 +136,7 @@ for j = 1:Tot_Area
             DV_area1 = Dec_Var(2:end,j);
             disp('%%%%%%')
         end
+        %
     end
     node_size(j)= size(v_area1,1);
     V_node_sq = [V_node_sq;v_area1];
@@ -145,19 +145,23 @@ for j = 1:Tot_Area
     
 end
 
+%%
 bus_ser = [1:36,119,126,127,117,54:68,122,118,37:53,120,125,128,69:116,121,123,124]';
+% 
+% bus_ser = [1:36,119,126,127,117,118,54:68,122,125,37:53,120,128,69:116,121,123,124];
 
 for j = 1:length(bus_ser)
     V_node_sq_1(bus_ser(j),1) = V_node_sq(j);
     Dec_Var_overall_1(bus_ser(j),1) = Dec_Var_overall(j);
 end
-%
+%%
 V_node = (sqrt(V_node_sq_1))';
 Dec_Var = Dec_Var_overall_1';
 
 disp('------------------------------------------------------------')
 if (loss_min)
     disp(['Line Loss: ', num2str(sum(mic_iter(end,:))*1000),' kW'])                       
+% else 
     disp(['Substation Power: ', num2str(real(S_A(1))*1000),' kW']) 
 end
 

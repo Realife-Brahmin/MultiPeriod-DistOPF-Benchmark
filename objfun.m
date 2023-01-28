@@ -1,6 +1,6 @@
 
-function f = objfun(x, R, T, nb)
-global Table;
+function f = objfun(x, R, T, nb, Table)
+% global Table;
 % global nb;
 % global T;
 % global R;
