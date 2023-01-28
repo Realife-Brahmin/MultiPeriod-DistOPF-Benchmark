@@ -1,7 +1,7 @@
 %[c, ceq] - NonLinear
 %for Relaxed use [-ceq,c]
-function[c, ceq] = eqcons(x, T)
-global nb;
+function[c, ceq] = eqcons(x, T, nb)
+% global nb;
 % global T;
 
 %% defining variables

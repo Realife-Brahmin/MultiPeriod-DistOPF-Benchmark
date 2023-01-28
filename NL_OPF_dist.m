@@ -1,4 +1,4 @@
-function [V,S1, S_all, mic_iter, Dec_Var, time_dist, R, T] = NL_OPF_dist(Vs, Se,Area, end_area, loss_min, CVR)
+function [V,S1, S_all, mic_iter, Dec_Var, time_dist, R, T, nb] = NL_OPF_dist(Vs, Se,Area, end_area, loss_min, CVR)
 
 V_min = 0.95;
 V_max = 1.05;
@@ -25,7 +25,7 @@ fb = branch(:,1);
 tb = branch(:,2);
 G = graph(fb,tb);
 
-global nb;
+% global nb;
 nb = size(powerdata,1);     % total number of nodes
 %% Line Data
 
@@ -211,7 +211,7 @@ ub = [ub; u_bQ];
 options = optimoptions('fmincon','Display','off','MaxFunctionEvaluations',100000000,'Algorithm','sqp');
 tic
     % For Loss minimization:
-    [x,fval,exitflag,output] = fmincon(@(x)objfun(x, R ,T),x0,[],[],Aeq,beq,lb,ub, @(x)eqcons(x, T), options);
+    [x,fval,exitflag,output] = fmincon(@(x)objfun(x, R ,T, nb),x0,[],[],Aeq,beq,lb,ub, @(x)eqcons(x, T, nb), options);
 
 time_dist = toc;
 % mic_iter = output.iterations;

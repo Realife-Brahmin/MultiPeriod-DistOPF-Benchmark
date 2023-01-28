@@ -1,7 +1,7 @@
 
-function f = objfun(x, R, T)
+function f = objfun(x, R, T, nb)
 global Table;
-global nb;
+% global nb;
 % global T;
 % global R;
 %% onjective function I^2*R
