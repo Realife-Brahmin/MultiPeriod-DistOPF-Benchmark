@@ -1,7 +1,9 @@
+addpath functions\
+
 loss_min = 1;   % CVR  = 0, Loss minimization = 1;
 
-if (loss_min)
-    CVR = [0 ,0];                       
+if loss_min
+    CVR = [0, 0];                       
 else
     CVR = [0.6, 3.0];
 end
