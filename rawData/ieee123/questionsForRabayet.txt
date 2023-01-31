@@ -1,0 +1,1 @@
+1. How are the linking buses in CB.txt (now renamed as connectionBuses.txt) chosen?
