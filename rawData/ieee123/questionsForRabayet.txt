@@ -1,2 +1,8 @@
+0. What code is this?
+Rabayet: The system is IEEE 123 Bus System in single-phase. This code divides it into four areas (specifications given as input files) and performs micro-iterations of distributed optimization on them.
 1. How are the linking buses in CB.txt (now renamed as connectionBuses.txt) chosen?
+Rabayet: Tie-lines buses in the IEEE 123 Bus System.
 2. Vs being initialized as 1.03 pu is a scalable and general method? Or specific to 123 bus system?
+Rabayet: It doesn't really matter.
+3. How did you use Artemis Knitro?
+Rabayet: Proprietary algorithm. Available on a specific machine.
