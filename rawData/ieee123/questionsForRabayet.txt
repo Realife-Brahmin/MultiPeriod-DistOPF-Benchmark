@@ -1,1 +1,2 @@
 1. How are the linking buses in CB.txt (now renamed as connectionBuses.txt) chosen?
+2. Vs being initialized as 1.03 pu is a scalable and general method? Or specific to 123 bus system?
