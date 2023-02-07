@@ -10,6 +10,3 @@ Rabayet: Proprietary algorithm. Available on a specific machine.
 4. What is the last column for powerdata.txt (which has values 0, 1, 2, 3)?
 5. Why is S_der = 1.2*P_der?
 6. Area 1 is connected to Area 2 at bus 40 and Area 3 at bus 41 of Area 1. Flipping the areas, at what bus of bus 2 is it connected to bus 1?
-7. How many nodes does this system have? Is it 128 or 131?
-	If 128, ask for a count of the union of area bus collections
-	Else if 131, ask why only 128 bus numbers are used for final calculation?
