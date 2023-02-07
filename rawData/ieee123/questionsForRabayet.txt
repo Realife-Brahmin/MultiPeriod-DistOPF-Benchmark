@@ -7,4 +7,5 @@ Rabayet: It doesn't really matter.
 3. How did you use Artemis Knitro?
 Rabayet: Proprietary algorithm. Available on a specific machine.
 
-4. What are the columns for powerdata.txt?
+4. What is the last column for powerdata.txt (which has values 0, 1, 2, 3)?
+5. Why is S_der = 1.2*P_der?
