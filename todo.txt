@@ -1,0 +1,5 @@
+Scalability issue:
+Input files in rawData currently hand-written. Ideally all areas should be created using a single busData and branchData using:
+1. Dividing the network into several areas in theory. (How? User input? Intelligent algorithm?)
+2. Creating separate data structures for the area-wide busData_Area and branchData_Area which are good enough for OPF solver.
+	Currently can be obtained via cutting the area out of the network, doing a dfs on the nodes (erasing their original node numbers in favour of 1:N_Area, but also making sure to have a mapping between 1:N_Area and the actual centralized Node numbers).	
