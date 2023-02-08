@@ -13,3 +13,6 @@ Rabayet: Proprietary algorithm. Available on a specific machine.
 7. How many nodes does this system have? Is it 128 or 131?
 	If 128, ask for a count of the union of area bus collections
 	Else if 131, ask why only 128 bus numbers are used for final calculation?
+Rabayet: Pulled up his own paper and displayed that the system has 128 nodes. Apparently there is no real overlap between relative areas. Only common branch.	
+
+8. How did you come up with individual area numbers in powerdata.txt? Is it obtained via a dfs from the overlapping branch node?
