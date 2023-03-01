@@ -1,4 +1,3 @@
 parentArea, childArea, connectingBus_parentArea_parentIdx, connectingBus_childArea_parentIdx, connectingBus_parentArea_childIdx, connectingBus_childArea_childIdx
 1, 2, 15, 40, 1, 2
 1, 3, 20, 41, 1, 2
-2, 4, 11, 19, 1, 2
