@@ -1,0 +1,2 @@
+parentArea, childArea, connectingBus_parentArea_parentIdx, connectingBus_childArea_parentIdx, connectingBus_parentArea_childIdx, connectingBus_childArea_childIdx
+1, 2, 15, 40, 1, 2

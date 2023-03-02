@@ -1,0 +1,3 @@
+Line Loss = 12.18kW
+Substation Power = 768.24kW
+Time to Solve = 8.618s

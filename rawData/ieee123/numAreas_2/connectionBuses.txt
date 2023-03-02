@@ -1,0 +1,2 @@
+parentArea, childArea, connectingBus
+1, 2, 40
