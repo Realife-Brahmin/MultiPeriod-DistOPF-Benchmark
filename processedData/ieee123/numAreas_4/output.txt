@@ -1,5 +1,5 @@
 Line Loss = 12.18kW
 Substation Power = 768.24kW
-Time to Solve = 8.075s
+Time to Solve = 8.005s
 Number of Iterations = 5
-Program Run Time: 21.51
+Program Run Time: 37.18
