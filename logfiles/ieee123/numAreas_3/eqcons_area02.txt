@@ -1,0 +1,561 @@
+Constructing ceq for Area 2.
+Checking for bus 2.
+It's parent is bus 1 at index 1.
+Sibling(s) is(are):
+2 
+located at:
+1 
+ceq(1) = l(1) * v(1) -  ( P(1)^2 +  Q(1)^2 )
+ceq(1) = x(141) * x(211) -  ( x(1)^2 +  x(71)^2 )
+Checking for bus 3.
+It's parent is bus 2 at index 2.
+Sibling(s) is(are):
+3 
+located at:
+2 
+ceq(2) = l(2) * v(2) -  ( P(2)^2 +  Q(2)^2 )
+ceq(2) = x(142) * x(212) -  ( x(2)^2 +  x(72)^2 )
+Checking for bus 4.
+It's parent is bus 3 at index 3.
+Sibling(s) is(are):
+4 
+located at:
+3 
+ceq(3) = l(3) * v(3) -  ( P(3)^2 +  Q(3)^2 )
+ceq(3) = x(143) * x(213) -  ( x(3)^2 +  x(73)^2 )
+Checking for bus 5.
+It's parent is bus 4 at index 4.
+Sibling(s) is(are):
+5 
+located at:
+4 
+ceq(4) = l(4) * v(4) -  ( P(4)^2 +  Q(4)^2 )
+ceq(4) = x(144) * x(214) -  ( x(4)^2 +  x(74)^2 )
+Checking for bus 6.
+It's parent is bus 5 at index 5.
+Sibling(s) is(are):
+6 8 
+located at:
+5 7 
+ceq(5) = l(5) * v(5) -  ( P(5)^2 +  Q(5)^2 )
+ceq(5) = x(145) * x(215) -  ( x(5)^2 +  x(75)^2 )
+Checking for bus 7.
+It's parent is bus 6 at index 6.
+Sibling(s) is(are):
+7 
+located at:
+6 
+ceq(6) = l(6) * v(6) -  ( P(6)^2 +  Q(6)^2 )
+ceq(6) = x(146) * x(216) -  ( x(6)^2 +  x(76)^2 )
+Checking for bus 8.
+It's parent is bus 5 at index 7.
+Sibling(s) is(are):
+6 8 
+located at:
+5 7 
+ceq(7) = l(7) * v(5) -  ( P(7)^2 +  Q(7)^2 )
+ceq(7) = x(147) * x(215) -  ( x(7)^2 +  x(77)^2 )
+Checking for bus 9.
+It's parent is bus 8 at index 8.
+Sibling(s) is(are):
+9 11 
+located at:
+8 10 
+ceq(8) = l(8) * v(8) -  ( P(8)^2 +  Q(8)^2 )
+ceq(8) = x(148) * x(218) -  ( x(8)^2 +  x(78)^2 )
+Checking for bus 10.
+It's parent is bus 9 at index 9.
+Sibling(s) is(are):
+10 
+located at:
+9 
+ceq(9) = l(9) * v(9) -  ( P(9)^2 +  Q(9)^2 )
+ceq(9) = x(149) * x(219) -  ( x(9)^2 +  x(79)^2 )
+Checking for bus 11.
+It's parent is bus 8 at index 10.
+Sibling(s) is(are):
+9 11 
+located at:
+8 10 
+ceq(10) = l(10) * v(8) -  ( P(10)^2 +  Q(10)^2 )
+ceq(10) = x(150) * x(218) -  ( x(10)^2 +  x(80)^2 )
+Checking for bus 12.
+It's parent is bus 11 at index 11.
+Sibling(s) is(are):
+12 13 19 
+located at:
+11 12 18 
+ceq(11) = l(11) * v(11) -  ( P(11)^2 +  Q(11)^2 )
+ceq(11) = x(151) * x(221) -  ( x(11)^2 +  x(81)^2 )
+Checking for bus 13.
+It's parent is bus 11 at index 12.
+Sibling(s) is(are):
+12 13 19 
+located at:
+11 12 18 
+ceq(12) = l(12) * v(11) -  ( P(12)^2 +  Q(12)^2 )
+ceq(12) = x(152) * x(221) -  ( x(12)^2 +  x(82)^2 )
+Checking for bus 14.
+It's parent is bus 13 at index 13.
+Sibling(s) is(are):
+14 
+located at:
+13 
+ceq(13) = l(13) * v(13) -  ( P(13)^2 +  Q(13)^2 )
+ceq(13) = x(153) * x(223) -  ( x(13)^2 +  x(83)^2 )
+Checking for bus 15.
+It's parent is bus 14 at index 14.
+Sibling(s) is(are):
+15 
+located at:
+14 
+ceq(14) = l(14) * v(14) -  ( P(14)^2 +  Q(14)^2 )
+ceq(14) = x(154) * x(224) -  ( x(14)^2 +  x(84)^2 )
+Checking for bus 16.
+It's parent is bus 15 at index 15.
+Sibling(s) is(are):
+16 
+located at:
+15 
+ceq(15) = l(15) * v(15) -  ( P(15)^2 +  Q(15)^2 )
+ceq(15) = x(155) * x(225) -  ( x(15)^2 +  x(85)^2 )
+Checking for bus 17.
+It's parent is bus 16 at index 16.
+Sibling(s) is(are):
+17 
+located at:
+16 
+ceq(16) = l(16) * v(16) -  ( P(16)^2 +  Q(16)^2 )
+ceq(16) = x(156) * x(226) -  ( x(16)^2 +  x(86)^2 )
+Checking for bus 18.
+It's parent is bus 12 at index 17.
+Sibling(s) is(are):
+18 
+located at:
+17 
+ceq(17) = l(17) * v(17) -  ( P(17)^2 +  Q(17)^2 )
+ceq(17) = x(157) * x(227) -  ( x(17)^2 +  x(87)^2 )
+Checking for bus 19.
+It's parent is bus 11 at index 18.
+Sibling(s) is(are):
+12 13 19 
+located at:
+11 12 18 
+ceq(18) = l(18) * v(11) -  ( P(18)^2 +  Q(18)^2 )
+ceq(18) = x(158) * x(221) -  ( x(18)^2 +  x(88)^2 )
+Checking for bus 20.
+It's parent is bus 19 at index 19.
+Sibling(s) is(are):
+20 
+located at:
+19 
+ceq(19) = l(19) * v(19) -  ( P(19)^2 +  Q(19)^2 )
+ceq(19) = x(159) * x(229) -  ( x(19)^2 +  x(89)^2 )
+Checking for bus 21.
+It's parent is bus 20 at index 20.
+Sibling(s) is(are):
+21 
+located at:
+20 
+ceq(20) = l(20) * v(20) -  ( P(20)^2 +  Q(20)^2 )
+ceq(20) = x(160) * x(230) -  ( x(20)^2 +  x(90)^2 )
+Checking for bus 22.
+It's parent is bus 21 at index 21.
+Sibling(s) is(are):
+22 26 51 
+located at:
+21 25 50 
+ceq(21) = l(21) * v(21) -  ( P(21)^2 +  Q(21)^2 )
+ceq(21) = x(161) * x(231) -  ( x(21)^2 +  x(91)^2 )
+Checking for bus 23.
+It's parent is bus 22 at index 22.
+Sibling(s) is(are):
+23 
+located at:
+22 
+ceq(22) = l(22) * v(22) -  ( P(22)^2 +  Q(22)^2 )
+ceq(22) = x(162) * x(232) -  ( x(22)^2 +  x(92)^2 )
+Checking for bus 24.
+It's parent is bus 23 at index 23.
+Sibling(s) is(are):
+24 
+located at:
+23 
+ceq(23) = l(23) * v(23) -  ( P(23)^2 +  Q(23)^2 )
+ceq(23) = x(163) * x(233) -  ( x(23)^2 +  x(93)^2 )
+Checking for bus 25.
+It's parent is bus 24 at index 24.
+Sibling(s) is(are):
+25 
+located at:
+24 
+ceq(24) = l(24) * v(24) -  ( P(24)^2 +  Q(24)^2 )
+ceq(24) = x(164) * x(234) -  ( x(24)^2 +  x(94)^2 )
+Checking for bus 26.
+It's parent is bus 21 at index 25.
+Sibling(s) is(are):
+22 26 51 
+located at:
+21 25 50 
+ceq(25) = l(25) * v(21) -  ( P(25)^2 +  Q(25)^2 )
+ceq(25) = x(165) * x(231) -  ( x(25)^2 +  x(95)^2 )
+Checking for bus 27.
+It's parent is bus 26 at index 26.
+Sibling(s) is(are):
+27 30 
+located at:
+26 29 
+ceq(26) = l(26) * v(26) -  ( P(26)^2 +  Q(26)^2 )
+ceq(26) = x(166) * x(236) -  ( x(26)^2 +  x(96)^2 )
+Checking for bus 28.
+It's parent is bus 27 at index 27.
+Sibling(s) is(are):
+28 
+located at:
+27 
+ceq(27) = l(27) * v(27) -  ( P(27)^2 +  Q(27)^2 )
+ceq(27) = x(167) * x(237) -  ( x(27)^2 +  x(97)^2 )
+Checking for bus 29.
+It's parent is bus 28 at index 28.
+Sibling(s) is(are):
+29 
+located at:
+28 
+ceq(28) = l(28) * v(28) -  ( P(28)^2 +  Q(28)^2 )
+ceq(28) = x(168) * x(238) -  ( x(28)^2 +  x(98)^2 )
+Checking for bus 30.
+It's parent is bus 26 at index 29.
+Sibling(s) is(are):
+27 30 
+located at:
+26 29 
+ceq(29) = l(29) * v(26) -  ( P(29)^2 +  Q(29)^2 )
+ceq(29) = x(169) * x(236) -  ( x(29)^2 +  x(99)^2 )
+Checking for bus 31.
+It's parent is bus 30 at index 30.
+Sibling(s) is(are):
+31 40 
+located at:
+30 39 
+ceq(30) = l(30) * v(30) -  ( P(30)^2 +  Q(30)^2 )
+ceq(30) = x(170) * x(240) -  ( x(30)^2 +  x(100)^2 )
+Checking for bus 32.
+It's parent is bus 31 at index 31.
+Sibling(s) is(are):
+32 
+located at:
+31 
+ceq(31) = l(31) * v(31) -  ( P(31)^2 +  Q(31)^2 )
+ceq(31) = x(171) * x(241) -  ( x(31)^2 +  x(101)^2 )
+Checking for bus 33.
+It's parent is bus 32 at index 32.
+Sibling(s) is(are):
+33 34 
+located at:
+32 33 
+ceq(32) = l(32) * v(32) -  ( P(32)^2 +  Q(32)^2 )
+ceq(32) = x(172) * x(242) -  ( x(32)^2 +  x(102)^2 )
+Checking for bus 34.
+It's parent is bus 32 at index 33.
+Sibling(s) is(are):
+33 34 
+located at:
+32 33 
+ceq(33) = l(33) * v(32) -  ( P(33)^2 +  Q(33)^2 )
+ceq(33) = x(173) * x(242) -  ( x(33)^2 +  x(103)^2 )
+Checking for bus 35.
+It's parent is bus 34 at index 34.
+Sibling(s) is(are):
+35 
+located at:
+34 
+ceq(34) = l(34) * v(34) -  ( P(34)^2 +  Q(34)^2 )
+ceq(34) = x(174) * x(244) -  ( x(34)^2 +  x(104)^2 )
+Checking for bus 36.
+It's parent is bus 35 at index 35.
+Sibling(s) is(are):
+36 38 
+located at:
+35 37 
+ceq(35) = l(35) * v(35) -  ( P(35)^2 +  Q(35)^2 )
+ceq(35) = x(175) * x(245) -  ( x(35)^2 +  x(105)^2 )
+Checking for bus 37.
+It's parent is bus 36 at index 36.
+Sibling(s) is(are):
+37 
+located at:
+36 
+ceq(36) = l(36) * v(36) -  ( P(36)^2 +  Q(36)^2 )
+ceq(36) = x(176) * x(246) -  ( x(36)^2 +  x(106)^2 )
+Checking for bus 38.
+It's parent is bus 35 at index 37.
+Sibling(s) is(are):
+36 38 
+located at:
+35 37 
+ceq(37) = l(37) * v(35) -  ( P(37)^2 +  Q(37)^2 )
+ceq(37) = x(177) * x(245) -  ( x(37)^2 +  x(107)^2 )
+Checking for bus 39.
+It's parent is bus 38 at index 38.
+Sibling(s) is(are):
+39 
+located at:
+38 
+ceq(38) = l(38) * v(38) -  ( P(38)^2 +  Q(38)^2 )
+ceq(38) = x(178) * x(248) -  ( x(38)^2 +  x(108)^2 )
+Checking for bus 40.
+It's parent is bus 30 at index 39.
+Sibling(s) is(are):
+31 40 
+located at:
+30 39 
+ceq(39) = l(39) * v(30) -  ( P(39)^2 +  Q(39)^2 )
+ceq(39) = x(179) * x(240) -  ( x(39)^2 +  x(109)^2 )
+Checking for bus 41.
+It's parent is bus 40 at index 40.
+Sibling(s) is(are):
+41 
+located at:
+40 
+ceq(40) = l(40) * v(40) -  ( P(40)^2 +  Q(40)^2 )
+ceq(40) = x(180) * x(250) -  ( x(40)^2 +  x(110)^2 )
+Checking for bus 42.
+It's parent is bus 41 at index 41.
+Sibling(s) is(are):
+42 43 
+located at:
+41 42 
+ceq(41) = l(41) * v(41) -  ( P(41)^2 +  Q(41)^2 )
+ceq(41) = x(181) * x(251) -  ( x(41)^2 +  x(111)^2 )
+Checking for bus 43.
+It's parent is bus 41 at index 42.
+Sibling(s) is(are):
+42 43 
+located at:
+41 42 
+ceq(42) = l(42) * v(41) -  ( P(42)^2 +  Q(42)^2 )
+ceq(42) = x(182) * x(251) -  ( x(42)^2 +  x(112)^2 )
+Checking for bus 44.
+It's parent is bus 43 at index 43.
+Sibling(s) is(are):
+44 45 
+located at:
+43 44 
+ceq(43) = l(43) * v(43) -  ( P(43)^2 +  Q(43)^2 )
+ceq(43) = x(183) * x(253) -  ( x(43)^2 +  x(113)^2 )
+Checking for bus 45.
+It's parent is bus 43 at index 44.
+Sibling(s) is(are):
+44 45 
+located at:
+43 44 
+ceq(44) = l(44) * v(43) -  ( P(44)^2 +  Q(44)^2 )
+ceq(44) = x(184) * x(253) -  ( x(44)^2 +  x(114)^2 )
+Checking for bus 46.
+It's parent is bus 45 at index 45.
+Sibling(s) is(are):
+46 47 
+located at:
+45 46 
+ceq(45) = l(45) * v(45) -  ( P(45)^2 +  Q(45)^2 )
+ceq(45) = x(185) * x(255) -  ( x(45)^2 +  x(115)^2 )
+Checking for bus 47.
+It's parent is bus 45 at index 46.
+Sibling(s) is(are):
+46 47 
+located at:
+45 46 
+ceq(46) = l(46) * v(45) -  ( P(46)^2 +  Q(46)^2 )
+ceq(46) = x(186) * x(255) -  ( x(46)^2 +  x(116)^2 )
+Checking for bus 48.
+It's parent is bus 47 at index 47.
+Sibling(s) is(are):
+48 49 
+located at:
+47 48 
+ceq(47) = l(47) * v(47) -  ( P(47)^2 +  Q(47)^2 )
+ceq(47) = x(187) * x(257) -  ( x(47)^2 +  x(117)^2 )
+Checking for bus 49.
+It's parent is bus 47 at index 48.
+Sibling(s) is(are):
+48 49 
+located at:
+47 48 
+ceq(48) = l(48) * v(47) -  ( P(48)^2 +  Q(48)^2 )
+ceq(48) = x(188) * x(257) -  ( x(48)^2 +  x(118)^2 )
+Checking for bus 50.
+It's parent is bus 49 at index 49.
+Sibling(s) is(are):
+50 
+located at:
+49 
+ceq(49) = l(49) * v(49) -  ( P(49)^2 +  Q(49)^2 )
+ceq(49) = x(189) * x(259) -  ( x(49)^2 +  x(119)^2 )
+Checking for bus 51.
+It's parent is bus 21 at index 50.
+Sibling(s) is(are):
+22 26 51 
+located at:
+21 25 50 
+ceq(50) = l(50) * v(21) -  ( P(50)^2 +  Q(50)^2 )
+ceq(50) = x(190) * x(231) -  ( x(50)^2 +  x(120)^2 )
+Checking for bus 52.
+It's parent is bus 51 at index 51.
+Sibling(s) is(are):
+52 71 
+located at:
+51 70 
+ceq(51) = l(51) * v(51) -  ( P(51)^2 +  Q(51)^2 )
+ceq(51) = x(191) * x(261) -  ( x(51)^2 +  x(121)^2 )
+Checking for bus 53.
+It's parent is bus 52 at index 52.
+Sibling(s) is(are):
+53 
+located at:
+52 
+ceq(52) = l(52) * v(52) -  ( P(52)^2 +  Q(52)^2 )
+ceq(52) = x(192) * x(262) -  ( x(52)^2 +  x(122)^2 )
+Checking for bus 54.
+It's parent is bus 53 at index 53.
+Sibling(s) is(are):
+54 
+located at:
+53 
+ceq(53) = l(53) * v(53) -  ( P(53)^2 +  Q(53)^2 )
+ceq(53) = x(193) * x(263) -  ( x(53)^2 +  x(123)^2 )
+Checking for bus 55.
+It's parent is bus 71 at index 54.
+Sibling(s) is(are):
+55 
+located at:
+54 
+ceq(54) = l(54) * v(54) -  ( P(54)^2 +  Q(54)^2 )
+ceq(54) = x(194) * x(264) -  ( x(54)^2 +  x(124)^2 )
+Checking for bus 56.
+It's parent is bus 55 at index 55.
+Sibling(s) is(are):
+56 59 
+located at:
+55 58 
+ceq(55) = l(55) * v(55) -  ( P(55)^2 +  Q(55)^2 )
+ceq(55) = x(195) * x(265) -  ( x(55)^2 +  x(125)^2 )
+Checking for bus 57.
+It's parent is bus 56 at index 56.
+Sibling(s) is(are):
+57 
+located at:
+56 
+ceq(56) = l(56) * v(56) -  ( P(56)^2 +  Q(56)^2 )
+ceq(56) = x(196) * x(266) -  ( x(56)^2 +  x(126)^2 )
+Checking for bus 58.
+It's parent is bus 57 at index 57.
+Sibling(s) is(are):
+58 
+located at:
+57 
+ceq(57) = l(57) * v(57) -  ( P(57)^2 +  Q(57)^2 )
+ceq(57) = x(197) * x(267) -  ( x(57)^2 +  x(127)^2 )
+Checking for bus 59.
+It's parent is bus 55 at index 58.
+Sibling(s) is(are):
+56 59 
+located at:
+55 58 
+ceq(58) = l(58) * v(55) -  ( P(58)^2 +  Q(58)^2 )
+ceq(58) = x(198) * x(265) -  ( x(58)^2 +  x(128)^2 )
+Checking for bus 60.
+It's parent is bus 59 at index 59.
+Sibling(s) is(are):
+60 62 
+located at:
+59 61 
+ceq(59) = l(59) * v(59) -  ( P(59)^2 +  Q(59)^2 )
+ceq(59) = x(199) * x(269) -  ( x(59)^2 +  x(129)^2 )
+Checking for bus 61.
+It's parent is bus 60 at index 60.
+Sibling(s) is(are):
+61 
+located at:
+60 
+ceq(60) = l(60) * v(60) -  ( P(60)^2 +  Q(60)^2 )
+ceq(60) = x(200) * x(270) -  ( x(60)^2 +  x(130)^2 )
+Checking for bus 62.
+It's parent is bus 59 at index 61.
+Sibling(s) is(are):
+60 62 
+located at:
+59 61 
+ceq(61) = l(61) * v(59) -  ( P(61)^2 +  Q(61)^2 )
+ceq(61) = x(201) * x(269) -  ( x(61)^2 +  x(131)^2 )
+Checking for bus 63.
+It's parent is bus 62 at index 62.
+Sibling(s) is(are):
+63 69 
+located at:
+62 68 
+ceq(62) = l(62) * v(62) -  ( P(62)^2 +  Q(62)^2 )
+ceq(62) = x(202) * x(272) -  ( x(62)^2 +  x(132)^2 )
+Checking for bus 64.
+It's parent is bus 63 at index 63.
+Sibling(s) is(are):
+64 
+located at:
+63 
+ceq(63) = l(63) * v(63) -  ( P(63)^2 +  Q(63)^2 )
+ceq(63) = x(203) * x(273) -  ( x(63)^2 +  x(133)^2 )
+Checking for bus 65.
+It's parent is bus 64 at index 64.
+Sibling(s) is(are):
+65 66 
+located at:
+64 65 
+ceq(64) = l(64) * v(64) -  ( P(64)^2 +  Q(64)^2 )
+ceq(64) = x(204) * x(274) -  ( x(64)^2 +  x(134)^2 )
+Checking for bus 66.
+It's parent is bus 64 at index 65.
+Sibling(s) is(are):
+65 66 
+located at:
+64 65 
+ceq(65) = l(65) * v(64) -  ( P(65)^2 +  Q(65)^2 )
+ceq(65) = x(205) * x(274) -  ( x(65)^2 +  x(135)^2 )
+Checking for bus 67.
+It's parent is bus 66 at index 66.
+Sibling(s) is(are):
+67 
+located at:
+66 
+ceq(66) = l(66) * v(66) -  ( P(66)^2 +  Q(66)^2 )
+ceq(66) = x(206) * x(276) -  ( x(66)^2 +  x(136)^2 )
+Checking for bus 68.
+It's parent is bus 67 at index 67.
+Sibling(s) is(are):
+68 
+located at:
+67 
+ceq(67) = l(67) * v(67) -  ( P(67)^2 +  Q(67)^2 )
+ceq(67) = x(207) * x(277) -  ( x(67)^2 +  x(137)^2 )
+Checking for bus 69.
+It's parent is bus 62 at index 68.
+Sibling(s) is(are):
+63 69 
+located at:
+62 68 
+ceq(68) = l(68) * v(62) -  ( P(68)^2 +  Q(68)^2 )
+ceq(68) = x(208) * x(272) -  ( x(68)^2 +  x(138)^2 )
+Checking for bus 70.
+It's parent is bus 54 at index 69.
+Sibling(s) is(are):
+70 
+located at:
+69 
+ceq(69) = l(69) * v(69) -  ( P(69)^2 +  Q(69)^2 )
+ceq(69) = x(209) * x(279) -  ( x(69)^2 +  x(139)^2 )
+Checking for bus 71.
+It's parent is bus 51 at index 70.
+Sibling(s) is(are):
+52 71 
+located at:
+51 70 
+ceq(70) = l(70) * v(51) -  ( P(70)^2 +  Q(70)^2 )
+ceq(70) = x(210) * x(261) -  ( x(70)^2 +  x(140)^2 )
