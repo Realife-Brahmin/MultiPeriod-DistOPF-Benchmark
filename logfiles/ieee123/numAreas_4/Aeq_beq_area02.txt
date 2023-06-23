@@ -11,14 +11,16 @@ Aeq(19, Q(1)) = 1.
 Note that we've used QIdx = 19, instead of 19 for indexing into Aeq.
 Aeq(19, l(1)) = -X(1, 2).
 Aeq(19, v(1)) = -0.5 * CVR_Q * Q_L(2).
-The child buses of bus 2 include: buses 3 at indices 2.
+The child buses of bus 2
+include: buses 3
+at indices 2.
 Aeq(1, P(2)) = -1
 Aeq(19, Q(2)) = -1
 Aeq(37, v(1)) = 1
 The siblings of bus 2
-include: 2
+include these buses: 2
 at indices 1.
-Sibling(s) is(are) 1:
+which makes bus 2 at index 1 as the eldest sibling.
 Aeq(37, v_Full(1)) = -1
 Aeq(37, P(1)) = 2*R(1, 2).
 Aeq(37, Q(1)) = 2*X(1, 2).
@@ -36,14 +38,16 @@ Aeq(20, Q(2)) = 1.
 Note that we've used QIdx = 20, instead of 20 for indexing into Aeq.
 Aeq(20, l(2)) = -X(2, 3).
 Aeq(20, v(2)) = -0.5 * CVR_Q * Q_L(3).
-The child buses of bus 3 include: buses 4 at indices 3.
+The child buses of bus 3
+include: buses 4
+at indices 3.
 Aeq(2, P(3)) = -1
 Aeq(20, Q(3)) = -1
 Aeq(38, v(2)) = 1
 The siblings of bus 3
-include: 3
+include these buses: 3
 at indices 2.
-Sibling(s) is(are) 2:
+which makes bus 3 at index 2 as the eldest sibling.
 Aeq(38, v_Full(2)) = -1
 Aeq(38, P(2)) = 2*R(2, 3).
 Aeq(38, Q(2)) = 2*X(2, 3).
@@ -61,14 +65,16 @@ Aeq(21, Q(3)) = 1.
 Note that we've used QIdx = 21, instead of 21 for indexing into Aeq.
 Aeq(21, l(3)) = -X(3, 4).
 Aeq(21, v(3)) = -0.5 * CVR_Q * Q_L(4).
-The child buses of bus 4 include: buses 5 at indices 4.
+The child buses of bus 4
+include: buses 5
+at indices 4.
 Aeq(3, P(4)) = -1
 Aeq(21, Q(4)) = -1
 Aeq(39, v(3)) = 1
 The siblings of bus 4
-include: 4
+include these buses: 4
 at indices 3.
-Sibling(s) is(are) 3:
+which makes bus 4 at index 3 as the eldest sibling.
 Aeq(39, v_Full(3)) = -1
 Aeq(39, P(3)) = 2*R(3, 4).
 Aeq(39, Q(3)) = 2*X(3, 4).
@@ -86,14 +92,20 @@ Aeq(22, Q(4)) = 1.
 Note that we've used QIdx = 22, instead of 22 for indexing into Aeq.
 Aeq(22, l(4)) = -X(4, 5).
 Aeq(22, v(4)) = -0.5 * CVR_Q * Q_L(5).
-The child buses of bus 5 include: buses 6 at indices 8.
-The child buses of bus 5 include: buses 7 at indices Aeq(4, P(5)) = -1
-Aeq(7, P(Aeq(22, Q(5)) = -1
-Aeq(7, Q(Aeq(40, v(4)) = 1
+The child buses of bus 5
+include: buses 6
+include: buses 8
+at indices 5.
+at indices 7.
+Aeq(4, P(5)) = -1
+Aeq(22, Q(5)) = -1
+Aeq(4, P(7)) = -1
+Aeq(22, Q(7)) = -1
+Aeq(40, v(4)) = 1
 The siblings of bus 5
-include: 5
+include these buses: 5
 at indices 4.
-Sibling(s) is(are) 4:
+which makes bus 5 at index 4 as the eldest sibling.
 Aeq(40, v_Full(4)) = -1
 Aeq(40, P(4)) = 2*R(4, 5).
 Aeq(40, Q(4)) = 2*X(4, 5).
@@ -111,17 +123,18 @@ Aeq(23, Q(5)) = 1.
 Note that we've used QIdx = 23, instead of 23 for indexing into Aeq.
 Aeq(23, l(5)) = -X(5, 6).
 Aeq(23, v(5)) = -0.5 * CVR_Q * Q_L(6).
-The child buses of bus 6 include: buses 7 at indices 6.
+The child buses of bus 6
+include: buses 7
+at indices 6.
 Aeq(5, P(6)) = -1
 Aeq(23, Q(6)) = -1
 Aeq(41, v(5)) = 1
 The siblings of bus 6
-include: 6
-include: 8
+include these buses: 6
+include these buses: 8
 at indices 5.
 at indices 7.
-Sibling(s) is(are) 5:
-Sibling(s) is(are) 7:
+which makes bus 6 at index 5 as the eldest sibling.
 Aeq(41, v_Full(5)) = -1
 Aeq(41, P(5)) = 2*R(5, 6).
 Aeq(41, Q(5)) = 2*X(5, 6).
@@ -142,9 +155,9 @@ Aeq(24, v(6)) = -0.5 * CVR_Q * Q_L(7).
 It is a leaf node.
 Aeq(42, v(6)) = 1
 The siblings of bus 7
-include: 7
+include these buses: 7
 at indices 6.
-Sibling(s) is(are) 6:
+which makes bus 7 at index 6 as the eldest sibling.
 Aeq(42, v_Full(6)) = -1
 Aeq(42, P(6)) = 2*R(6, 7).
 Aeq(42, Q(6)) = 2*X(6, 7).
@@ -162,17 +175,22 @@ Aeq(25, Q(7)) = 1.
 Note that we've used QIdx = 25, instead of 25 for indexing into Aeq.
 Aeq(25, l(7)) = -X(5, 8).
 Aeq(25, v(7)) = -0.5 * CVR_Q * Q_L(8).
-The child buses of bus 8 include: buses 9 at indices 11.
-The child buses of bus 8 include: buses 10 at indices Aeq(7, P(8)) = -1
-Aeq(10, P(Aeq(25, Q(8)) = -1
-Aeq(10, Q(Aeq(43, v(7)) = 1
+The child buses of bus 8
+include: buses 9
+include: buses 11
+at indices 8.
+at indices 10.
+Aeq(7, P(8)) = -1
+Aeq(25, Q(8)) = -1
+Aeq(7, P(10)) = -1
+Aeq(25, Q(10)) = -1
+Aeq(43, v(7)) = 1
 The siblings of bus 8
-include: 6
-include: 8
+include these buses: 6
+include these buses: 8
 at indices 5.
 at indices 7.
-Sibling(s) is(are) 5:
-Sibling(s) is(are) 7:
+which makes bus 6 at index 5 as the eldest sibling.
 Aeq(43, v_Full(5)) = -1
 Aeq(43, P(7)) = 2*R(5, 8).
 Aeq(43, Q(7)) = 2*X(5, 8).
@@ -190,17 +208,18 @@ Aeq(26, Q(8)) = 1.
 Note that we've used QIdx = 26, instead of 26 for indexing into Aeq.
 Aeq(26, l(8)) = -X(8, 9).
 Aeq(26, v(8)) = -0.5 * CVR_Q * Q_L(9).
-The child buses of bus 9 include: buses 10 at indices 9.
+The child buses of bus 9
+include: buses 10
+at indices 9.
 Aeq(8, P(9)) = -1
 Aeq(26, Q(9)) = -1
 Aeq(44, v(8)) = 1
 The siblings of bus 9
-include: 9
-include: 11
+include these buses: 9
+include these buses: 11
 at indices 8.
 at indices 10.
-Sibling(s) is(are) 8:
-Sibling(s) is(are) 10:
+which makes bus 9 at index 8 as the eldest sibling.
 Aeq(44, v_Full(8)) = -1
 Aeq(44, P(8)) = 2*R(8, 9).
 Aeq(44, Q(8)) = 2*X(8, 9).
@@ -221,9 +240,9 @@ Aeq(27, v(9)) = -0.5 * CVR_Q * Q_L(10).
 It is a leaf node.
 Aeq(45, v(9)) = 1
 The siblings of bus 10
-include: 10
+include these buses: 10
 at indices 9.
-Sibling(s) is(are) 9:
+which makes bus 10 at index 9 as the eldest sibling.
 Aeq(45, v_Full(9)) = -1
 Aeq(45, P(9)) = 2*R(9, 10).
 Aeq(45, Q(9)) = 2*X(9, 10).
@@ -241,20 +260,26 @@ Aeq(28, Q(10)) = 1.
 Note that we've used QIdx = 28, instead of 28 for indexing into Aeq.
 Aeq(28, l(10)) = -X(8, 11).
 Aeq(28, v(10)) = -0.5 * CVR_Q * Q_L(11).
-The child buses of bus 11 include: buses 12 at indices 13.
-The child buses of bus 19 include: buses 11 at indices 12.
-The child buses of bus 18 include: buses Aeq(10, P(11)) = -1
-Aeq(12, P(18)) = -1
+The child buses of bus 11
+include: buses 12
+include: buses 13
+include: buses 19
+at indices 11.
+at indices 12.
+at indices 18.
+Aeq(10, P(11)) = -1
 Aeq(28, Q(11)) = -1
-Aeq(12, Q(18)) = -1
+Aeq(10, P(12)) = -1
+Aeq(28, Q(12)) = -1
+Aeq(10, P(18)) = -1
+Aeq(28, Q(18)) = -1
 Aeq(46, v(10)) = 1
 The siblings of bus 11
-include: 9
-include: 11
+include these buses: 9
+include these buses: 11
 at indices 8.
 at indices 10.
-Sibling(s) is(are) 8:
-Sibling(s) is(are) 10:
+which makes bus 9 at index 8 as the eldest sibling.
 Aeq(46, v_Full(8)) = -1
 Aeq(46, P(10)) = 2*R(8, 11).
 Aeq(46, Q(10)) = 2*X(8, 11).
@@ -272,20 +297,20 @@ Aeq(29, Q(11)) = 1.
 Note that we've used QIdx = 29, instead of 29 for indexing into Aeq.
 Aeq(29, l(11)) = -X(11, 12).
 Aeq(29, v(11)) = -0.5 * CVR_Q * Q_L(12).
-The child buses of bus 12 include: buses 18 at indices 17.
+The child buses of bus 12
+include: buses 18
+at indices 17.
 Aeq(11, P(17)) = -1
 Aeq(29, Q(17)) = -1
 Aeq(47, v(11)) = 1
 The siblings of bus 12
-include: 12
-include: 13
-include: 19
+include these buses: 12
+include these buses: 13
+include these buses: 19
 at indices 11.
 at indices 12.
 at indices 18.
-Sibling(s) is(are) 11:
-Sibling(s) is(are) 12:
-Sibling(s) is(are) 18:
+which makes bus 12 at index 11 as the eldest sibling.
 Aeq(47, v_Full(11)) = -1
 Aeq(47, P(11)) = 2*R(11, 12).
 Aeq(47, Q(11)) = 2*X(11, 12).
@@ -303,20 +328,20 @@ Aeq(30, Q(12)) = 1.
 Note that we've used QIdx = 30, instead of 30 for indexing into Aeq.
 Aeq(30, l(12)) = -X(11, 13).
 Aeq(30, v(12)) = -0.5 * CVR_Q * Q_L(13).
-The child buses of bus 13 include: buses 14 at indices 13.
+The child buses of bus 13
+include: buses 14
+at indices 13.
 Aeq(12, P(13)) = -1
 Aeq(30, Q(13)) = -1
 Aeq(48, v(12)) = 1
 The siblings of bus 13
-include: 12
-include: 13
-include: 19
+include these buses: 12
+include these buses: 13
+include these buses: 19
 at indices 11.
 at indices 12.
 at indices 18.
-Sibling(s) is(are) 11:
-Sibling(s) is(are) 12:
-Sibling(s) is(are) 18:
+which makes bus 12 at index 11 as the eldest sibling.
 Aeq(48, v_Full(11)) = -1
 Aeq(48, P(12)) = 2*R(11, 13).
 Aeq(48, Q(12)) = 2*X(11, 13).
@@ -334,14 +359,16 @@ Aeq(31, Q(13)) = 1.
 Note that we've used QIdx = 31, instead of 31 for indexing into Aeq.
 Aeq(31, l(13)) = -X(13, 14).
 Aeq(31, v(13)) = -0.5 * CVR_Q * Q_L(14).
-The child buses of bus 14 include: buses 15 at indices 14.
+The child buses of bus 14
+include: buses 15
+at indices 14.
 Aeq(13, P(14)) = -1
 Aeq(31, Q(14)) = -1
 Aeq(49, v(13)) = 1
 The siblings of bus 14
-include: 14
+include these buses: 14
 at indices 13.
-Sibling(s) is(are) 13:
+which makes bus 14 at index 13 as the eldest sibling.
 Aeq(49, v_Full(13)) = -1
 Aeq(49, P(13)) = 2*R(13, 14).
 Aeq(49, Q(13)) = 2*X(13, 14).
@@ -359,14 +386,16 @@ Aeq(32, Q(14)) = 1.
 Note that we've used QIdx = 32, instead of 32 for indexing into Aeq.
 Aeq(32, l(14)) = -X(14, 15).
 Aeq(32, v(14)) = -0.5 * CVR_Q * Q_L(15).
-The child buses of bus 15 include: buses 16 at indices 15.
+The child buses of bus 15
+include: buses 16
+at indices 15.
 Aeq(14, P(15)) = -1
 Aeq(32, Q(15)) = -1
 Aeq(50, v(14)) = 1
 The siblings of bus 15
-include: 15
+include these buses: 15
 at indices 14.
-Sibling(s) is(are) 14:
+which makes bus 15 at index 14 as the eldest sibling.
 Aeq(50, v_Full(14)) = -1
 Aeq(50, P(14)) = 2*R(14, 15).
 Aeq(50, Q(14)) = 2*X(14, 15).
@@ -384,14 +413,16 @@ Aeq(33, Q(15)) = 1.
 Note that we've used QIdx = 33, instead of 33 for indexing into Aeq.
 Aeq(33, l(15)) = -X(15, 16).
 Aeq(33, v(15)) = -0.5 * CVR_Q * Q_L(16).
-The child buses of bus 16 include: buses 17 at indices 16.
+The child buses of bus 16
+include: buses 17
+at indices 16.
 Aeq(15, P(16)) = -1
 Aeq(33, Q(16)) = -1
 Aeq(51, v(15)) = 1
 The siblings of bus 16
-include: 16
+include these buses: 16
 at indices 15.
-Sibling(s) is(are) 15:
+which makes bus 16 at index 15 as the eldest sibling.
 Aeq(51, v_Full(15)) = -1
 Aeq(51, P(15)) = 2*R(15, 16).
 Aeq(51, Q(15)) = 2*X(15, 16).
@@ -412,9 +443,9 @@ Aeq(34, v(16)) = -0.5 * CVR_Q * Q_L(17).
 It is a leaf node.
 Aeq(52, v(16)) = 1
 The siblings of bus 17
-include: 17
+include these buses: 17
 at indices 16.
-Sibling(s) is(are) 16:
+which makes bus 17 at index 16 as the eldest sibling.
 Aeq(52, v_Full(16)) = -1
 Aeq(52, P(16)) = 2*R(16, 17).
 Aeq(52, Q(16)) = 2*X(16, 17).
@@ -435,9 +466,9 @@ Aeq(35, v(17)) = -0.5 * CVR_Q * Q_L(18).
 It is a leaf node.
 Aeq(53, v(17)) = 1
 The siblings of bus 18
-include: 18
+include these buses: 18
 at indices 17.
-Sibling(s) is(are) 17:
+which makes bus 18 at index 17 as the eldest sibling.
 Aeq(53, v_Full(17)) = -1
 Aeq(53, P(17)) = 2*R(12, 18).
 Aeq(53, Q(17)) = 2*X(12, 18).
@@ -458,15 +489,13 @@ Aeq(36, v(18)) = -0.5 * CVR_Q * Q_L(19).
 It is a leaf node.
 Aeq(54, v(18)) = 1
 The siblings of bus 19
-include: 12
-include: 13
-include: 19
+include these buses: 12
+include these buses: 13
+include these buses: 19
 at indices 11.
 at indices 12.
 at indices 18.
-Sibling(s) is(are) 11:
-Sibling(s) is(are) 12:
-Sibling(s) is(are) 18:
+which makes bus 12 at index 11 as the eldest sibling.
 Aeq(54, v_Full(11)) = -1
 Aeq(54, P(18)) = 2*R(11, 19).
 Aeq(54, Q(18)) = 2*X(11, 19).
