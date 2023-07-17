@@ -164,7 +164,7 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
         
        % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
         childBusIndices = find(graphDFS_Area_Table.fbus == currentBusNum);
-        childBuses = graphDFS_Area_Table.tbus(childBusIndices);
+        % childBuses = graphDFS_Area_Table.tbus(childBusIndices);
         if isempty(childBusIndices)
             % myfprintf(verbose, fid, "It is a leaf node.\n");
         else
