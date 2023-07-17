@@ -6,13 +6,9 @@ Checking for bus 2.
 The parent of bus 2 is bus 1 at index 1.
 Aeq(1, P(1)) = 1.
 Aeq(1, l(1)) = -r(1, 2).
-Aeq(19, Q(1)) = 1.
-Note that we've used QIdx = 19, instead of 19 for indexing into Aeq.
-Aeq(19, l(1)) = -x(1, 2).
-The child buses of bus 2
-include: buses 3
-at indices 2.
 Aeq(1, P(2)) = -1
+Aeq(19, Q(1)) = 1.
+Aeq(19, l(1)) = -x(1, 2).
 Aeq(19, Q(2)) = -1
 Aeq(37, v(1)) = 1
 The siblings of bus 2
@@ -31,13 +27,9 @@ Checking for bus 3.
 The parent of bus 3 is bus 2 at index 2.
 Aeq(2, P(2)) = 1.
 Aeq(2, l(2)) = -r(2, 3).
-Aeq(20, Q(2)) = 1.
-Note that we've used QIdx = 20, instead of 20 for indexing into Aeq.
-Aeq(20, l(2)) = -x(2, 3).
-The child buses of bus 3
-include: buses 4
-at indices 3.
 Aeq(2, P(3)) = -1
+Aeq(20, Q(2)) = 1.
+Aeq(20, l(2)) = -x(2, 3).
 Aeq(20, Q(3)) = -1
 Aeq(38, v(2)) = 1
 The siblings of bus 3
@@ -56,13 +48,9 @@ Checking for bus 4.
 The parent of bus 4 is bus 3 at index 3.
 Aeq(3, P(3)) = 1.
 Aeq(3, l(3)) = -r(3, 4).
-Aeq(21, Q(3)) = 1.
-Note that we've used QIdx = 21, instead of 21 for indexing into Aeq.
-Aeq(21, l(3)) = -x(3, 4).
-The child buses of bus 4
-include: buses 5
-at indices 4.
 Aeq(3, P(4)) = -1
+Aeq(21, Q(3)) = 1.
+Aeq(21, l(3)) = -x(3, 4).
 Aeq(21, Q(4)) = -1
 Aeq(39, v(3)) = 1
 The siblings of bus 4
@@ -81,17 +69,11 @@ Checking for bus 5.
 The parent of bus 5 is bus 4 at index 4.
 Aeq(4, P(4)) = 1.
 Aeq(4, l(4)) = -r(4, 5).
-Aeq(22, Q(4)) = 1.
-Note that we've used QIdx = 22, instead of 22 for indexing into Aeq.
-Aeq(22, l(4)) = -x(4, 5).
-The child buses of bus 5
-include: buses 6
-include: buses 8
-at indices 5.
-at indices 7.
 Aeq(4, P(5)) = -1
-Aeq(22, Q(5)) = -1
 Aeq(4, P(7)) = -1
+Aeq(22, Q(4)) = 1.
+Aeq(22, l(4)) = -x(4, 5).
+Aeq(22, Q(5)) = -1
 Aeq(22, Q(7)) = -1
 Aeq(40, v(4)) = 1
 The siblings of bus 5
@@ -110,13 +92,9 @@ Checking for bus 6.
 The parent of bus 6 is bus 5 at index 5.
 Aeq(5, P(5)) = 1.
 Aeq(5, l(5)) = -r(5, 6).
-Aeq(23, Q(5)) = 1.
-Note that we've used QIdx = 23, instead of 23 for indexing into Aeq.
-Aeq(23, l(5)) = -x(5, 6).
-The child buses of bus 6
-include: buses 7
-at indices 6.
 Aeq(5, P(6)) = -1
+Aeq(23, Q(5)) = 1.
+Aeq(23, l(5)) = -x(5, 6).
 Aeq(23, Q(6)) = -1
 Aeq(41, v(5)) = 1
 The siblings of bus 6
@@ -138,9 +116,7 @@ The parent of bus 7 is bus 6 at index 6.
 Aeq(6, P(6)) = 1.
 Aeq(6, l(6)) = -r(6, 7).
 Aeq(24, Q(6)) = 1.
-Note that we've used QIdx = 24, instead of 24 for indexing into Aeq.
 Aeq(24, l(6)) = -x(6, 7).
-It is a leaf node.
 Aeq(42, v(6)) = 1
 The siblings of bus 7
 include these buses: 7
@@ -158,17 +134,11 @@ Checking for bus 8.
 The parent of bus 8 is bus 5 at index 7.
 Aeq(7, P(7)) = 1.
 Aeq(7, l(7)) = -r(5, 8).
-Aeq(25, Q(7)) = 1.
-Note that we've used QIdx = 25, instead of 25 for indexing into Aeq.
-Aeq(25, l(7)) = -x(5, 8).
-The child buses of bus 8
-include: buses 9
-include: buses 11
-at indices 8.
-at indices 10.
 Aeq(7, P(8)) = -1
-Aeq(25, Q(8)) = -1
 Aeq(7, P(10)) = -1
+Aeq(25, Q(7)) = 1.
+Aeq(25, l(7)) = -x(5, 8).
+Aeq(25, Q(8)) = -1
 Aeq(25, Q(10)) = -1
 Aeq(43, v(7)) = 1
 The siblings of bus 8
@@ -189,13 +159,9 @@ Checking for bus 9.
 The parent of bus 9 is bus 8 at index 8.
 Aeq(8, P(8)) = 1.
 Aeq(8, l(8)) = -r(8, 9).
-Aeq(26, Q(8)) = 1.
-Note that we've used QIdx = 26, instead of 26 for indexing into Aeq.
-Aeq(26, l(8)) = -x(8, 9).
-The child buses of bus 9
-include: buses 10
-at indices 9.
 Aeq(8, P(9)) = -1
+Aeq(26, Q(8)) = 1.
+Aeq(26, l(8)) = -x(8, 9).
 Aeq(26, Q(9)) = -1
 Aeq(44, v(8)) = 1
 The siblings of bus 9
@@ -217,9 +183,7 @@ The parent of bus 10 is bus 9 at index 9.
 Aeq(9, P(9)) = 1.
 Aeq(9, l(9)) = -r(9, 10).
 Aeq(27, Q(9)) = 1.
-Note that we've used QIdx = 27, instead of 27 for indexing into Aeq.
 Aeq(27, l(9)) = -x(9, 10).
-It is a leaf node.
 Aeq(45, v(9)) = 1
 The siblings of bus 10
 include these buses: 10
@@ -237,21 +201,13 @@ Checking for bus 11.
 The parent of bus 11 is bus 8 at index 10.
 Aeq(10, P(10)) = 1.
 Aeq(10, l(10)) = -r(8, 11).
-Aeq(28, Q(10)) = 1.
-Note that we've used QIdx = 28, instead of 28 for indexing into Aeq.
-Aeq(28, l(10)) = -x(8, 11).
-The child buses of bus 11
-include: buses 12
-include: buses 13
-include: buses 19
-at indices 11.
-at indices 12.
-at indices 18.
 Aeq(10, P(11)) = -1
-Aeq(28, Q(11)) = -1
 Aeq(10, P(12)) = -1
-Aeq(28, Q(12)) = -1
 Aeq(10, P(18)) = -1
+Aeq(28, Q(10)) = 1.
+Aeq(28, l(10)) = -x(8, 11).
+Aeq(28, Q(11)) = -1
+Aeq(28, Q(12)) = -1
 Aeq(28, Q(18)) = -1
 Aeq(46, v(10)) = 1
 The siblings of bus 11
@@ -272,13 +228,9 @@ Checking for bus 12.
 The parent of bus 12 is bus 11 at index 11.
 Aeq(11, P(11)) = 1.
 Aeq(11, l(11)) = -r(11, 12).
-Aeq(29, Q(11)) = 1.
-Note that we've used QIdx = 29, instead of 29 for indexing into Aeq.
-Aeq(29, l(11)) = -x(11, 12).
-The child buses of bus 12
-include: buses 18
-at indices 17.
 Aeq(11, P(17)) = -1
+Aeq(29, Q(11)) = 1.
+Aeq(29, l(11)) = -x(11, 12).
 Aeq(29, Q(17)) = -1
 Aeq(47, v(11)) = 1
 The siblings of bus 12
@@ -301,13 +253,9 @@ Checking for bus 13.
 The parent of bus 13 is bus 11 at index 12.
 Aeq(12, P(12)) = 1.
 Aeq(12, l(12)) = -r(11, 13).
-Aeq(30, Q(12)) = 1.
-Note that we've used QIdx = 30, instead of 30 for indexing into Aeq.
-Aeq(30, l(12)) = -x(11, 13).
-The child buses of bus 13
-include: buses 14
-at indices 13.
 Aeq(12, P(13)) = -1
+Aeq(30, Q(12)) = 1.
+Aeq(30, l(12)) = -x(11, 13).
 Aeq(30, Q(13)) = -1
 Aeq(48, v(12)) = 1
 The siblings of bus 13
@@ -330,13 +278,9 @@ Checking for bus 14.
 The parent of bus 14 is bus 13 at index 13.
 Aeq(13, P(13)) = 1.
 Aeq(13, l(13)) = -r(13, 14).
-Aeq(31, Q(13)) = 1.
-Note that we've used QIdx = 31, instead of 31 for indexing into Aeq.
-Aeq(31, l(13)) = -x(13, 14).
-The child buses of bus 14
-include: buses 15
-at indices 14.
 Aeq(13, P(14)) = -1
+Aeq(31, Q(13)) = 1.
+Aeq(31, l(13)) = -x(13, 14).
 Aeq(31, Q(14)) = -1
 Aeq(49, v(13)) = 1
 The siblings of bus 14
@@ -355,13 +299,9 @@ Checking for bus 15.
 The parent of bus 15 is bus 14 at index 14.
 Aeq(14, P(14)) = 1.
 Aeq(14, l(14)) = -r(14, 15).
-Aeq(32, Q(14)) = 1.
-Note that we've used QIdx = 32, instead of 32 for indexing into Aeq.
-Aeq(32, l(14)) = -x(14, 15).
-The child buses of bus 15
-include: buses 16
-at indices 15.
 Aeq(14, P(15)) = -1
+Aeq(32, Q(14)) = 1.
+Aeq(32, l(14)) = -x(14, 15).
 Aeq(32, Q(15)) = -1
 Aeq(50, v(14)) = 1
 The siblings of bus 15
@@ -380,13 +320,9 @@ Checking for bus 16.
 The parent of bus 16 is bus 15 at index 15.
 Aeq(15, P(15)) = 1.
 Aeq(15, l(15)) = -r(15, 16).
-Aeq(33, Q(15)) = 1.
-Note that we've used QIdx = 33, instead of 33 for indexing into Aeq.
-Aeq(33, l(15)) = -x(15, 16).
-The child buses of bus 16
-include: buses 17
-at indices 16.
 Aeq(15, P(16)) = -1
+Aeq(33, Q(15)) = 1.
+Aeq(33, l(15)) = -x(15, 16).
 Aeq(33, Q(16)) = -1
 Aeq(51, v(15)) = 1
 The siblings of bus 16
@@ -406,9 +342,7 @@ The parent of bus 17 is bus 16 at index 16.
 Aeq(16, P(16)) = 1.
 Aeq(16, l(16)) = -r(16, 17).
 Aeq(34, Q(16)) = 1.
-Note that we've used QIdx = 34, instead of 34 for indexing into Aeq.
 Aeq(34, l(16)) = -x(16, 17).
-It is a leaf node.
 Aeq(52, v(16)) = 1
 The siblings of bus 17
 include these buses: 17
@@ -427,9 +361,7 @@ The parent of bus 18 is bus 12 at index 17.
 Aeq(17, P(17)) = 1.
 Aeq(17, l(17)) = -r(12, 18).
 Aeq(35, Q(17)) = 1.
-Note that we've used QIdx = 35, instead of 35 for indexing into Aeq.
 Aeq(35, l(17)) = -x(12, 18).
-It is a leaf node.
 Aeq(53, v(17)) = 1
 The siblings of bus 18
 include these buses: 18
@@ -448,9 +380,7 @@ The parent of bus 19 is bus 11 at index 18.
 Aeq(18, P(18)) = 1.
 Aeq(18, l(18)) = -r(11, 19).
 Aeq(36, Q(18)) = 1.
-Note that we've used QIdx = 36, instead of 36 for indexing into Aeq.
 Aeq(36, l(18)) = -x(11, 19).
-It is a leaf node.
 Aeq(54, v(18)) = 1
 The siblings of bus 19
 include these buses: 12

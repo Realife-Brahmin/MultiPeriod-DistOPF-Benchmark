@@ -150,44 +150,50 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     %     busesWithDERs_Area
         PIdx = parentBusIdx;
         Aeq( PIdx, indices_P(parentBusIdx) ) = 1;
-        myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 1.\n", PIdx, parentBusIdx);
         Aeq( PIdx, indices_l(parentBusIdx) ) = -R_Area_Matrix( parentBusNum, currentBusNum );
-        myfprintf(verbose, fid, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, parentBusIdx, parentBusNum, currentBusNum);
         Aeq( PIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_P * P_L_Area( currentBusNum );
-        if CVR_P
-            myfprintf(verbose, fid, "Aeq(%d, v(%d)) = -0.5 * CVR_P * P_L(%d).\n", PIdx, parentBusIdx, currentBusNum);
-        end
+
         
         %Q equations
         QIdx = PIdx + (N_Area-1);
         Aeq( QIdx, indices_Q(parentBusIdx) ) = 1;
-        myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = 1.\n", QIdx, parentBusIdx);
-        myfprintf(verbose, fid, "Note that we've used QIdx = %d, instead of %d for indexing into Aeq.\n", QIdx, indices_Q(parentBusIdx));
+        % myfprintf(verbose, fid, "Note that we've used QIdx = %d, instead of %d for indexing into Aeq.\n", QIdx, indices_Q(parentBusIdx));
         Aeq( QIdx, indices_l(parentBusIdx) ) = -X_Area_Matrix( parentBusNum, currentBusNum );
-        myfprintf(verbose, fid, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, parentBusIdx, parentBusNum, currentBusNum);
         Aeq( QIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
-        if CVR_Q
-            myfprintf(verbose, fid, "Aeq(%d, v(%d)) = -0.5 * CVR_Q * Q_L(%d).\n", QIdx, parentBusIdx, currentBusNum);
-        end
+
         
        % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
         childBusIndices = find(graphDFS_Area_Table.fbus == currentBusNum);
         childBuses = graphDFS_Area_Table.tbus(childBusIndices);
         if isempty(childBusIndices)
-            myfprintf(verbose, fid, "It is a leaf node.\n");
+            % myfprintf(verbose, fid, "It is a leaf node.\n");
         else
-            myfprintf(verbose, fid, "The child buses of bus %d\n", currentBusNum);
-            myfprintf(verbose, fid, "include: buses %d\n", childBuses);
-            myfprintf(verbose, fid, "at indices %d.\n", childBusIndices);
+            % myfprintf(verbose, fid, "The child buses of bus %d\n", currentBusNum);
+            % myfprintf(verbose, fid, "include: buses %d\n", childBuses);
+            % myfprintf(verbose, fid, "at indices %d.\n", childBusIndices);
             Aeq(PIdx, indices_P(childBusIndices) ) = -1;   % for P
             Aeq(QIdx, indices_Q(childBusIndices) ) = -1;   % for Q
-            for i = 1:length(childBusIndices)
-                myfprintf(verbose, fid, "Aeq(%d, P(%d)) = -1\n", PIdx, childBusIndices(i));
-                myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = -1\n", QIdx, childBusIndices(i));
-            end
+        end
+        
+        myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 1.\n", PIdx, parentBusIdx);
+        myfprintf(verbose, fid, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, parentBusIdx, parentBusNum, currentBusNum);
+        for i = 1:length(childBusIndices)
+            myfprintf(verbose, fid, "Aeq(%d, P(%d)) = -1\n", PIdx, childBusIndices(i));
+        end
+        if CVR_P
+            myfprintf(verbose, fid, "Aeq(%d, v(%d)) = -0.5 * CVR_P * P_L(%d).\n", PIdx, parentBusIdx, currentBusNum);
+        end
+        
+
+        myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = 1.\n", QIdx, parentBusIdx);
+        myfprintf(verbose, fid, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, parentBusIdx, parentBusNum, currentBusNum);
+        for i = 1:length(childBusIndices)
+            myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = -1\n", QIdx, childBusIndices(i));
+        end
+        if CVR_Q
+            myfprintf(verbose, fid, "Aeq(%d, v(%d)) = -0.5 * CVR_Q * Q_L(%d).\n", QIdx, parentBusIdx, currentBusNum);
         end
 
-        
         % V equations
         % vIdx = parentBusIdx + 2*(N_Area-1);
         vIdx = QIdx + (N_Area-1);
