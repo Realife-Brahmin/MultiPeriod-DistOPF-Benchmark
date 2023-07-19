@@ -13,6 +13,8 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     CVR = [0; 0];
     V_max = 1.05;
     V_min = 0.95;
+    Qref_DER = 0.00;
+    Vref_DER = 1.00;
 
     saveToFile = false;
     strArea = convert2doubleDigits(Area);
@@ -28,7 +30,7 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
         error('Optional arguments must be specified as name-value pairs.');
     end
     
-    validArgs = ["verbose", "CVR", "V_max", "V_min", "saveToFile", "saveLocation"];
+    validArgs = ["verbose", "CVR", "V_max", "V_min", "saveToFile", "saveLocation", "Qref_DER", "Vref_DER"];
     
     for i = 1:2:numArgs
         argName = varargin{i};
@@ -51,6 +53,10 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
                 saveToFile = argValue;
             case 'saveLocation'
                 saveLocationFilename = argValue;
+            case 'Vref_DER'
+                Vref_DER = argValue;
+            case 'Qref_DER'
+                Qref_DER = argValue;
         end
     end
 
@@ -82,9 +88,9 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     
     % DER Configuration:
     busesWithDERs_Area = find(S_der_Area); %all nnz element indices
-    numBusesWithDERs_Area = length(busesWithDERs_Area);
+    nDER_Area = length(busesWithDERs_Area);
 
-    mydisp(verbose, ['Number of DERs in Area ', num2str(Area), ' : ', num2str(numBusesWithDERs_Area)]);
+    mydisp(verbose, ['Number of DERs in Area ', num2str(Area), ' : ', num2str(nDER_Area)]);
     
     S_onlyDERbuses_Area = S_der_Area(busesWithDERs_Area);   %in PU
     P_onlyDERbuses_Area = P_der_Area(busesWithDERs_Area);   %in PU
@@ -237,23 +243,35 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     end
     
     % substation voltage equation
-    Aeq( 3*(N_Area-1) + 1, indices_v_Full(1) ) = 1;
-    beq( 3*(N_Area-1) + 1 ) = v2_parent_Area;
+    vSubIdx = 3*m_Area + 1;
+    Aeq( vSubIdx, indices_v_Full(1) ) = 1;
+    myfprintf(verbose, fid, "Aeq(%d, v_Full(1)) = 1\n", vSubIdx);
+
+    beq(vSubIdx) = v2_parent_Area;
+    myfprintf(verbose, fid, "beq(%d) = %.3f\n", v2_parent_Area);
     
+    % mydisp(verbose, beq)
     % DER equation addition
-    Table_DER = zeros(numBusesWithDERs_Area, 5);
+    Table_DER = zeros(nDER_Area, 5);
     
-    for k22 = 1 : size(busesWithDERs_Area,  1)
-        Aeq( indices_Q( Table_Area_Table.tbus == busesWithDERs_Area(k22) ), end+1 ) = 1;
+    indices_qD = 4*m_Area + 2:4*m_Area + 1 + nDER_Area;
+    % qD_Idx = 4*m_Area + 2;
+    for i = 1:nDER_Area
+        qD_Idx = indices_qD(i);
+        busDER = busesWithDERs_Area(i);
+        parentIdx_DER = Table_Area_Table.tbus == busDER;
+        Aeq( indices_Q(parentIdx_DER), qD_Idx ) = 1;
         
         %setting other parameters for DGs:
-        Table_DER(k22, 2) = size(Aeq, 2);
+        Table_DER(i, 2) = qD_Idx;
         
         % slope kq definiton:
-        Table_DER(k22, 3) = 2*ub_Q_onlyDERbuses_Area(k22)/(V_max-V_min); % Qmax at Vmin, and vice versa     
+        Table_DER(i, 3) = 2*ub_Q_onlyDERbuses_Area(i)/(V_max-V_min); % Qmax at Vmin, and vice versa
+        
         % Q_ref, V_ref definition:
-        Table_DER(k22, 4) = 0.00;  %Qref
-        Table_DER(k22, 5) = 1.00;  %Vref
+        Table_DER(i, 4) = Qref_DER;  %Qref
+        Table_DER(i, 5) = Vref_DER;  %Vref
+        % qD_Idx = qD_Idx + 1;
     end
     
     % Table_DER_Table = array2table(Table_DER, 'VariableNames', {'Idx', 'DG_parameter', 'Slope_kq', 'Q_ref', 'V_ref'});
@@ -269,20 +287,35 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
         Area, N_Area, graphDFS_Area, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
         P_L_Area, Q_L_Area, Q_C_Area, P_der_Area, ...
         busesWithDERs_Area, lb_Q_onlyDERbuses_Area, ub_Q_onlyDERbuses_Area, itr);
+
+    numVarsFull = [m_Area, m_Area, N_Area, nDER_Area];
+
+    ranges_noLoss = generateRangesFromValues(numVarsFull);
+
+    indices_P_noLoss = ranges_noLoss{1};
+    indices_Q_noLoss = ranges_noLoss{2};
+    indices_vFull_noLoss = ranges_noLoss{3};
+    indices_qD_noLoss = ranges_noLoss{4};
+
+    P0_Area = x_linear_Area( indices_P_noLoss );
+    Q0_Area = x_linear_Area( indices_Q_noLoss );
+    v0_Area =  x_linear_Area( indices_vFull_noLoss );
+    qD_Area = x_linear_Area( indices_qD_noLoss );
     
-    Pflow0_Area = x_linear_Area( 1 : N_Area-1 );
-    Qflow0_Area = x_linear_Area( N_Area : 2*(N_Area-1) );
-    V0_Area =  V_linear_Area;
-    Qder0_Area = x_linear_Area( ( end- numBusesWithDERs_Area + 1) : end);
-    
+    Iflow0 = zeros(m_Area, 1);
     for currentBusNum = 2 : N_Area
         parentBusIdx = find(graphDFS_Area_Table.tbus == currentBusNum);
         siblingBusesIndices = find(parentBusNum == graphDFS_Area_Table.fbus);
-        Iflow0( Table_linear_Area(parentBusIdx, 3) )= x_linear_Area(Table_linear_Area(parentBusIdx,3))^2+x_linear_Area(Table_linear_Area(parentBusIdx,4))^2 / x_linear_Area( Volttable_linear_Area( siblingBusesIndices(1) ) );
+        Iflow0( Table_linear_Area(parentBusIdx, 3) ) = x_linear_Area(Table_linear_Area(parentBusIdx,3))^2+x_linear_Area(Table_linear_Area(parentBusIdx,4))^2 / x_linear_Area( Volttable_linear_Area( siblingBusesIndices(1) ) );
     end
     
-    x0_Area = [Pflow0_Area; Qflow0_Area; Iflow0'; V0_Area; Qder0_Area];
+    x0_Area = [P0_Area; Q0_Area; Iflow0; v0_Area; qD_Area];
     
+    if itr == 0
+        display(graphDFS_Area_Table)
+        display(Aeq)
+        display(beq)
+    end
     % Definig Limits
     
     lb_Area(1,1) = -1500;                                        % this is to limit the power flow going reverse at the substation
@@ -306,10 +339,6 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     % mydisplay(verbose, beq);
     
     startSolvingForOptimization = tic;
-    
-    if itr == 0
-        display(graphDFS_Area_Table)
-    end
 
     [x, ~, ~, ~] = fmincon( @(x)objfunTables(x, N_Area, graphDFS_Area_Table.fbus, graphDFS_Area_Table.tbus, indices_l, R_Area_Matrix), ...
                               x0_Area, [], [], Aeq, beq, lb_Area, ub_Area, ...
@@ -331,11 +360,11 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     S_parent_Area = complex(P1, Q1);  %1x1  % In Pu
 
     
-    Dec_Var_Q = x(end - numBusesWithDERs_Area + 1 : end);
+    Dec_Var_Q = x(end - nDER_Area + 1 : end);
 
     decisionVars_Area = zeros(N_Area, 1);
     
-    for currentBusWithDERIdx = 1 : numBusesWithDERs_Area
+    for currentBusWithDERIdx = 1 : nDER_Area
         decisionVars_Area( busesWithDERs_Area(currentBusWithDERIdx) ) = Dec_Var_Q(currentBusWithDERIdx);
     end
     
@@ -344,7 +373,7 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     S_child_Area = zeros(N_Area, 1);
 
     for j = 1:size(Table_Area,1)
-        v2_Area( Table_Area_Table.tbus(j) ) = x( end - N_Area + 1 - numBusesWithDERs_Area + j);
+        v2_Area( Table_Area_Table.tbus(j) ) = x( end - N_Area + 1 - nDER_Area + j);
         S_child_Area( Table_Area_Table.tbus(j) - 1 ) = Sall(j);
     end
     
