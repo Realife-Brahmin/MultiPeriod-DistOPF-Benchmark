@@ -1,4 +1,4 @@
-bus,P_L,Q_L,P_der,Q_der,busType
+bus,P_L,Q_L,Q_C,P_der,busType
 20,0,0,0,0,0
 118,0,0,0,0,0
 37,13.33,6.667,0,4.6655,0
