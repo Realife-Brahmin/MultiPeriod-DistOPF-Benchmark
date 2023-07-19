@@ -1,6 +1,6 @@
-function [v2_Area, S_parent_Area, S_child_Area, ...
-    microIterationLosses, decisionVars_Area, itr, ...
-    time_dist, R_Area_Matrix, graphDFS_Area, N_Area, busDataTable_Area, ...
+function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
+    microIterationLosses, itr, ...
+    time_dist, R_Area_Matrix, graphDFS_Area, N_Area, busDataTable_pu_Area, ...
     branchDataTable_Area] = ...
     ...
     NL_OPF_dist(v2_parent_Area, S_connection_Area, ...
@@ -73,8 +73,19 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     end
 % ExtractAreaElectricalParameters extracts electrical data required for OPF from an area's csv files. Optionally it can plot the graphs for the areas and save them as pngs.
 
-    [busDataTable_Area, N_Area, branchDataTable_Area, fb_Area, tb_Area, edgeMatrix_Area, R_Area, X_Area, P_L_Area, Q_L_Area, Q_C_Area, P_der_Area, S_der_Area] ...
-        = extractAreaElectricalParameters(Area, itr, N, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area);
+    [busDataTable_pu_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
+        = extractAreaElectricalParameters(Area, itr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area);
+    
+    N_Area = length(busDataTable_pu_Area.bus);
+    m_Area = length(branchDataTable_Area.fb);
+    fb_Area = branchDataTable_Area.fb;
+    tb_Area = branchDataTable_Area.tb;
+    P_L_Area = busDataTable_pu_Area.P_L;
+    Q_L_Area = busDataTable_pu_Area.Q_L;
+    Q_C_Area = busDataTable_pu_Area.Q_C;
+    P_der_Area = busDataTable_pu_Area.P_der;
+    S_der_Area = busDataTable_pu_Area.S_der;
+
 % Update the Parent Complex Power Vector with values from interconnection. 
 
     numChildAreas = size(S_connection_Area, 1); %could even be zero for a child-less area
@@ -97,7 +108,6 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     lb_Q_onlyDERbuses_Area = -sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
     ub_Q_onlyDERbuses_Area = sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
     
-    % graphDFS_Area = dfsearch(graph_Area, 1, 'edgetonew');
     graphDFS_Area = edgeMatrix_Area; %not doing any DFS
     graphDFS_Area_Table = array2table(graphDFS_Area, 'VariableNames', {'fbus', 'tbus'});
 
@@ -115,15 +125,21 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
 % Initializing vectors to be used in the Optimization Problem formulation
 
     % defining the unknowns for phaseA
-    %Assume N_Area = 41 (Area 1)
-    m_Area = N_Area - 1;
-    indices_P = 1:N_Area-1;  %1:40                                % defining the variables for P
-    indices_Q = indices_P + (N_Area - 1); %41:80                             % defining the variables for Q
-    indices_l = indices_Q + m_Area; %81:120                      % defining the variables for l(I^2)
-    indices_v = indices_l + 1 + m_Area; %122:161                     % defining the variables for V
+    
+    numVarsFull = [m_Area, m_Area, m_Area, N_Area, nDER_Area];
+
+    ranges_Full = generateRangesFromValues(numVarsFull);
+
+    indices_P = ranges_Full{1};
+    indices_Q = ranges_Full{2};
+    indices_l = ranges_Full{3};
+    indices_vFull = ranges_Full{4};
+    indices_v = indices_vFull(2:end);
+    indices_qD = ranges_Full{5};
+
     Table_Area = [graphDFS_Area_Table.fbus graphDFS_Area_Table.tbus indices_P' indices_Q' indices_l' indices_v'];  % creating Table for variables P, Q ,l, V
     Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_l', 'indices_v'});
-    indices_v_Full = transpose( indices_v(1)-1:indices_v(end) ) ; %121:161                   % voltage variables including parent node.
+    % indices_vFull = transpose( indices_v(1)-1:indices_v(end) ) ; %121:161                   % voltage variables including parent node.
 
     % Initialization-
     
@@ -134,10 +150,11 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     CVR_P = CVR(1);
     CVR_Q = CVR(2);
     
-    % A and b matrix formulation-
-    % mydisplay(verbose, graphDFS_Area_Table)
-    % mydisplay(verbose, Table_Area_Table)
-    
+    numLinOptEquations = 3*m_Area + 1;
+    numOptVarsFull = 3*m_Area + N_Area + nDER_Area;
+    Aeq = zeros(numLinOptEquations, numOptVarsFull);
+    beq = zeros(numLinOptEquations, 1);
+
     for currentBusNum = 2 : N_Area
         myfprintf(verbose, fid, "*****\n" + ...
             "Checking for bus %d.\n" + ...
@@ -217,7 +234,7 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
         eldestSiblingIdx = siblingBusesIndices(1);
         eldestSiblingBus = siblingBuses(1);
         myfprintf(verbose, fid,  "which makes bus %d at index %d as the eldest sibling.\n", eldestSiblingBus, eldestSiblingIdx);
-        Aeq( vIdx, indices_v_Full( eldestSiblingIdx ) ) = -1;
+        Aeq( vIdx, indices_vFull( eldestSiblingIdx ) ) = -1;
         myfprintf(verbose, fid, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, eldestSiblingIdx);
         Aeq( vIdx, indices_P(parentBusIdx) ) = 2 * R_Area_Matrix( parentBusNum, currentBusNum );
         myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, parentBusIdx, parentBusNum, currentBusNum);
@@ -244,23 +261,25 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     
     % substation voltage equation
     vSubIdx = 3*m_Area + 1;
-    Aeq( vSubIdx, indices_v_Full(1) ) = 1;
+    Aeq( vSubIdx, indices_vFull(1) ) = 1;
     myfprintf(verbose, fid, "Aeq(%d, v_Full(1)) = 1\n", vSubIdx);
 
     beq(vSubIdx) = v2_parent_Area;
-    myfprintf(verbose, fid, "beq(%d) = %.3f\n", v2_parent_Area);
+    myfprintf(verbose, fid, "beq(%d) = %.3f\n", vSubIdx, v2_parent_Area);
     
-    % mydisp(verbose, beq)
     % DER equation addition
     Table_DER = zeros(nDER_Area, 5);
     
-    indices_qD = 4*m_Area + 2:4*m_Area + 1 + nDER_Area;
-    % qD_Idx = 4*m_Area + 2;
+    % indices_qD = 4*m_Area + 2:4*m_Area + 1 + nDER_Area;
     for i = 1:nDER_Area
+        currentBusNum = busesWithDERs_Area(i);
+        parentBusIdx = find(graphDFS_Area_Table.tbus == currentBusNum);
+        QIdx = parentBusIdx + m_Area;
         qD_Idx = indices_qD(i);
-        busDER = busesWithDERs_Area(i);
-        parentIdx_DER = Table_Area_Table.tbus == busDER;
-        Aeq( indices_Q(parentIdx_DER), qD_Idx ) = 1;
+        % busDER = busesWithDERs_Area(i);
+        % QIdx = Table_Area_Table.tbus == busDER;
+        Aeq(QIdx, qD_Idx) = 1;
+        myfprintf(verbose, fid, "Aeq(%d, qD(%d)) = 1\n", QIdx, i);
         
         %setting other parameters for DGs:
         Table_DER(i, 2) = qD_Idx;
@@ -271,7 +290,6 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
         % Q_ref, V_ref definition:
         Table_DER(i, 4) = Qref_DER;  %Qref
         Table_DER(i, 5) = Vref_DER;  %Vref
-        % qD_Idx = qD_Idx + 1;
     end
     
     % Table_DER_Table = array2table(Table_DER, 'VariableNames', {'Idx', 'DG_parameter', 'Slope_kq', 'Q_ref', 'V_ref'});
@@ -282,15 +300,15 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     end
     
     % calling linear solution for intial point
-    [V_linear_Area, x_linear_Area, Table_linear_Area, Volttable_linear_Area] = ...
+    [x_linear_Area, Table_linear_Area, Volttable_linear_Area] = ...
         singlephaselin(v2_parent_Area, S_connection_Area, isLeaf_Area, ...
         Area, N_Area, graphDFS_Area, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
         P_L_Area, Q_L_Area, Q_C_Area, P_der_Area, ...
         busesWithDERs_Area, lb_Q_onlyDERbuses_Area, ub_Q_onlyDERbuses_Area, itr);
 
-    numVarsFull = [m_Area, m_Area, N_Area, nDER_Area];
+    numVarsLoss = [m_Area, m_Area, N_Area, nDER_Area];
 
-    ranges_noLoss = generateRangesFromValues(numVarsFull);
+    ranges_noLoss = generateRangesFromValues(numVarsLoss);
 
     indices_P_noLoss = ranges_noLoss{1};
     indices_Q_noLoss = ranges_noLoss{2};
@@ -300,7 +318,7 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     P0_Area = x_linear_Area( indices_P_noLoss );
     Q0_Area = x_linear_Area( indices_Q_noLoss );
     v0_Area =  x_linear_Area( indices_vFull_noLoss );
-    qD_Area = x_linear_Area( indices_qD_noLoss );
+    qD0_Area = x_linear_Area( indices_qD_noLoss );
     
     Iflow0 = zeros(m_Area, 1);
     for currentBusNum = 2 : N_Area
@@ -309,41 +327,41 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
         Iflow0( Table_linear_Area(parentBusIdx, 3) ) = x_linear_Area(Table_linear_Area(parentBusIdx,3))^2+x_linear_Area(Table_linear_Area(parentBusIdx,4))^2 / x_linear_Area( Volttable_linear_Area( siblingBusesIndices(1) ) );
     end
     
-    x0_Area = [P0_Area; Q0_Area; Iflow0; v0_Area; qD_Area];
+    x0_Area = [P0_Area; Q0_Area; Iflow0; v0_Area; qD0_Area];
     
-    if itr == 0
-        display(graphDFS_Area_Table)
-        display(Aeq)
-        display(beq)
-    end
     % Definig Limits
     
-    lb_Area(1,1) = -1500;                                        % this is to limit the power flow going reverse at the substation
-    lb_Area(2:2*(N_Area-1),1)= (-1500*ones(2*(N_Area-1)-1,1));       % P Q limit
-    lb_Area(2*(N_Area-1)+1:3*(N_Area-1),1)= zeros((N_Area-1),1);         % I limit
-    lb_Area(3*(N_Area-1)+1:4*(N_Area-1)+1,1)= ((V_min^2)*ones(N_Area,1)); % V limit
+    lb_Area = zeros(numLinOptEquations, 1);
+    lb_Area(1) = -1500;                                        % this is to limit the power flow going reverse at the substation
+    lb_Area(2:2*(N_Area-1))= (-1500*ones(2*(N_Area-1)-1,1));       % P Q limit
+    lb_Area(2*(N_Area-1)+1:3*(N_Area-1))= zeros((N_Area-1),1);         % I limit
+    lb_Area(3*(N_Area-1)+1:4*(N_Area-1)+1)= ((V_min^2)*ones(N_Area,1)); % V limit
     
-    
-    ub_Area(1:2*(N_Area-1),1)= (1500*ones(2*(N_Area-1),1));          % P Q limit
-    ub_Area(2*(N_Area-1)+1:3*(N_Area-1),1)= (1500*ones((N_Area-1),1));   % I limit
-    ub_Area(3*(N_Area-1)+1:4*(N_Area-1)+1,1)= ((V_max^2)*ones(N_Area,1));      % V limit
+    ub_Area = zeros(numLinOptEquations, 1);
+    ub_Area(1:2*(N_Area-1))= (1500*ones(2*(N_Area-1),1));          % P Q limit
+    ub_Area(2*(N_Area-1)+1:3*(N_Area-1))= (1500*ones((N_Area-1),1));   % I limit
+    ub_Area(3*(N_Area-1)+1:4*(N_Area-1)+1)= ((V_max^2)*ones(N_Area,1));      % V limit
     
     lb_Area = [lb_Area; lb_Q_onlyDERbuses_Area];
     ub_Area = [ub_Area; ub_Q_onlyDERbuses_Area];
     
+    if itr == 0 && Area == 2
+        mydisplay(verbose, graphDFS_Area_Table)
+        mydisplay(verbose, Aeq)
+        mydisplay(verbose, beq)
+        mydisplay(verbose, lb_Area)
+        mydisplay(verbose, ub_Area)
+    end
+
     %  Optimization - 
     options = optimoptions('fmincon', 'Display', 'off', 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
-    
-    % For Loss minimization:
-    % mydisplay(verbose, Aeq);
-    % mydisplay(verbose, beq);
     
     startSolvingForOptimization = tic;
 
     [x, ~, ~, ~] = fmincon( @(x)objfunTables(x, N_Area, graphDFS_Area_Table.fbus, graphDFS_Area_Table.tbus, indices_l, R_Area_Matrix), ...
                               x0_Area, [], [], Aeq, beq, lb_Area, ub_Area, ...
                               @(x)eqcons(x, Area, N_Area, ...
-                              graphDFS_Area_Table.fbus, graphDFS_Area_Table.tbus, indices_P, indices_Q, indices_l, indices_v_Full, ...
+                              graphDFS_Area_Table.fbus, graphDFS_Area_Table.tbus, indices_P, indices_Q, indices_l, indices_vFull, ...
                               itr, systemName, numAreas, "verbose", false, "saveToFile", false),...
                               options);
     
@@ -360,15 +378,14 @@ function [v2_Area, S_parent_Area, S_child_Area, ...
     S_parent_Area = complex(P1, Q1);  %1x1  % In Pu
 
     
-    Dec_Var_Q = x(end - nDER_Area + 1 : end);
+    qD_Area = x(indices_qD);
 
-    decisionVars_Area = zeros(N_Area, 1);
-    
-    for currentBusWithDERIdx = 1 : nDER_Area
-        decisionVars_Area( busesWithDERs_Area(currentBusWithDERIdx) ) = Dec_Var_Q(currentBusWithDERIdx);
+    qD_Full_Area = zeros(N_Area, 1);
+
+    for i = 1 : nDER_Area
+        qD_Full_Area( busesWithDERs_Area(i) ) = qD_Area(i);
     end
-    
-   
+       
     v2_Area = zeros(N_Area, 1);
     S_child_Area = zeros(N_Area, 1);
 
