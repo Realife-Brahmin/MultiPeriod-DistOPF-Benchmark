@@ -1,6 +1,6 @@
-function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
+function [v2_Area, S_Area, qD_Full_Area,...
     microIterationLosses, itr, ...
-    time_dist, R_Area_Matrix, graphDFS_Area, N_Area, busDataTable_pu_Area, ...
+    time_dist, R_Area_Matrix, graphDFS_Area, N_Area, m_Area, busDataTable_pu_Area, ...
     branchDataTable_Area] = ...
     ...
     NL_OPF_dist(v2_parent_Area, S_connection_Area, ...
@@ -168,11 +168,6 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
         parentBusNum = graphDFS_Area_Table.fbus(parentBusIdx);
         myfprintf(verbose, fid, "The parent of bus %d is bus %d at index %d.\n", currentBusNum, parentBusNum, parentBusIdx);
 
-        % Aeq = zeros( 3*(N_Area-1), Table_Area_Table{end, end} ); %zeros(120, 121)
-        % beq = zeros( 3*(N_Area-1), 1); %zeros(120, 1)
-        % Aeq formulations
-        %P equations
-    %     busesWithDERs_Area
         PIdx = parentBusIdx;
         Aeq( PIdx, indices_P(parentBusIdx) ) = 1;
         Aeq( PIdx, indices_l(parentBusIdx) ) = -R_Area_Matrix( parentBusNum, currentBusNum );
@@ -182,20 +177,13 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
         %Q equations
         QIdx = PIdx + (N_Area-1);
         Aeq( QIdx, indices_Q(parentBusIdx) ) = 1;
-        % myfprintf(verbose, fid, "Note that we've used QIdx = %d, instead of %d for indexing into Aeq.\n", QIdx, indices_Q(parentBusIdx));
         Aeq( QIdx, indices_l(parentBusIdx) ) = -X_Area_Matrix( parentBusNum, currentBusNum );
         Aeq( QIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
 
         
        % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
         childBusIndices = find(graphDFS_Area_Table.fbus == currentBusNum);
-        % childBuses = graphDFS_Area_Table.tbus(childBusIndices);
-        if isempty(childBusIndices)
-            % myfprintf(verbose, fid, "It is a leaf node.\n");
-        else
-            % myfprintf(verbose, fid, "The child buses of bus %d\n", currentBusNum);
-            % myfprintf(verbose, fid, "include: buses %d\n", childBuses);
-            % myfprintf(verbose, fid, "at indices %d.\n", childBusIndices);
+        if ~isempty(childBusIndices)
             Aeq(PIdx, indices_P(childBusIndices) ) = -1;   % for P
             Aeq(QIdx, indices_Q(childBusIndices) ) = -1;   % for Q
         end
@@ -247,16 +235,16 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
             -X_Area_Matrix( parentBusNum, currentBusNum )^2 ;
         myfprintf(verbose, fid, "Aeq(%d, l(%d)) = -r(%d, %d)^2 -x(%d, %d)^2.\n", vIdx, parentBusIdx, parentBusNum, currentBusNum, parentBusNum, currentBusNum);
         
-        % beq Formulation
-    %     beq = zeros(1, 3*N_Area - 2);
-        beq( PIdx ) = ...
+
+        beq(PIdx) = ...
             ( 1- 0.5 * CVR_P ) * ...
             ( P_L_Area( currentBusNum ) - P_der_Area( currentBusNum ) );
         myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_P)*(P_L(%d) - P_der(%d))\n", PIdx, currentBusNum, currentBusNum);
     
-        beq( QIdx ) =  ...
+        beq(QIdx) =  ...
             ( 1- 0.5*CVR_Q ) * ...
             ( Q_L_Area( currentBusNum ) - Q_C_Area( currentBusNum ) );
+
         myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_Q)*(Q_L(%d) - Q_C(%d))\n", QIdx, currentBusNum, currentBusNum);
 
     end
@@ -290,9 +278,6 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
         Table_DER(i, 4) = Qref_DER;  %Qref
         Table_DER(i, 5) = Vref_DER;  %Vref
     end
-    
-    % Table_DER_Table = array2table(Table_DER, 'VariableNames', {'Idx', 'DG_parameter', 'Slope_kq', 'Q_ref', 'V_ref'});
-    % mydisplay(verbose, Table_DER_Table)
     
     if fileOpenedFlag
         fclose(fid);
@@ -361,13 +346,11 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     time_dist(itr+1, Area) = optimizationSolutionTime;
     
     % Result
-    Pall = x(indices_P); %40x1
-    Qall = x(indices_Q); %40x1
-    Sall = complex(Pall, Qall); %40x1
-    P1 = Pall(1); %1x1
-    Q1 = Qall(1); %1x1
-    S_parent_Area = complex(P1, Q1);  %1x1  % In Pu
-
+    P_Area = x(indices_P); %m_Areax1
+    Q_Area = x(indices_Q); %m_Areax1
+    S_Area = complex(P_Area, Q_Area); %m_Areax1
+    v2_Area = x(indices_vFull); %N_Areax1
+    v2_Area(1) = v2_parent_Area;
     
     qD_Area = x(indices_qD);
 
@@ -376,17 +359,7 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     for i = 1 : nDER_Area
         qD_Full_Area( busesWithDERs_Area(i) ) = qD_Area(i);
     end
-       
-    v2_Area = zeros(N_Area, 1);
-    S_child_Area = zeros(N_Area, 1);
-
-    for j = 1:size(Table_Area,1)
-        v2_Area( Table_Area_Table.tbus(j) ) = x( end - N_Area + 1 - nDER_Area + j);
-        S_child_Area( Table_Area_Table.tbus(j) - 1 ) = Sall(j);
-    end
     
-    v2_Area(1) = v2_parent_Area;
-    
-    microIterationLosses(itr + 1, Area) = P1 + sum(P_der_Area) - sum(P_L_Area);
+    microIterationLosses(itr + 1, Area) = P_Area(1) + sum(P_der_Area) - sum(P_L_Area);
 
 end
