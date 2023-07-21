@@ -332,26 +332,20 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     
     % Definig Limits
     
-    lb_Area = zeros(numLinOptEquations, 1);
-    lb_Area(1) = -1500;                                        % this is to limit the power flow going reverse at the substation
-    lb_Area(2:2*(N_Area-1))= (-1500*ones(2*(N_Area-1)-1,1));       % P Q limit
-    lb_Area(2*(N_Area-1)+1:3*(N_Area-1))= zeros((N_Area-1),1);         % I limit
-    lb_Area(3*(N_Area-1)+1:4*(N_Area-1)+1)= ((V_min^2)*ones(N_Area,1)); % V limit
+    numVarsForBoundsFull = [1, numVarsFull(1) - 1, numVarsFull(2:end-1) ]; % qD limits are specific to each machine, will be appended later.
+    lbVals = [-1500, -1500, -1500, 0, V_min^2];
+    ubVals = [1500, 1500, 1500, 1500, V_max^2];
+    [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsFull, lbVals, ubVals);
     
-    ub_Area = zeros(numLinOptEquations, 1);
-    ub_Area(1:2*(N_Area-1))= (1500*ones(2*(N_Area-1),1));          % P Q limit
-    ub_Area(2*(N_Area-1)+1:3*(N_Area-1))= (1500*ones((N_Area-1),1));   % I limit
-    ub_Area(3*(N_Area-1)+1:4*(N_Area-1)+1)= ((V_max^2)*ones(N_Area,1));      % V limit
-    
-    lb_Area = [lb_Area; lb_Q_onlyDERbuses_Area];
-    ub_Area = [ub_Area; ub_Q_onlyDERbuses_Area];
+    lb_AreaFull = [lb_Area; lb_Q_onlyDERbuses_Area];
+    ub_AreaFull = [ub_Area; ub_Q_onlyDERbuses_Area];
     
     if itr == 0 && Area == 2
-        mydisplay(verbose, graphDFS_Area_Table)
-        mydisplay(verbose, Aeq)
-        mydisplay(verbose, beq)
-        mydisplay(verbose, lb_Area)
-        mydisplay(verbose, ub_Area)
+        mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
+        mydisplay(verbose, "Aeq", Aeq)
+        mydisplay(verbose, "beq", beq)
+        mydisplay(verbose, "lb", lb_AreaFull)
+        mydisplay(verbose, "ub", ub_AreaFull)
     end
 
     %  Optimization - 
@@ -360,7 +354,7 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     startSolvingForOptimization = tic;
 
     [x, ~, ~, ~] = fmincon( @(x)objfunTables(x, N_Area, graphDFS_Area_Table.fbus, graphDFS_Area_Table.tbus, indices_l, R_Area_Matrix), ...
-                              x0_Area, [], [], Aeq, beq, lb_Area, ub_Area, ...
+                              x0_Area, [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, ...
                               @(x)eqcons(x, Area, N_Area, ...
                               graphDFS_Area_Table.fbus, graphDFS_Area_Table.tbus, indices_P, indices_Q, indices_l, indices_vFull, ...
                               itr, systemName, numAreas, "verbose", false, "saveToFile", false),...
