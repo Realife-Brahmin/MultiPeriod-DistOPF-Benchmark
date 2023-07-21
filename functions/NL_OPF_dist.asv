@@ -305,11 +305,11 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     [x_linear_Area, Table_linear_Area, Volttable_linear_Area] = ...
         singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, isLeaf_Area, ...
         Area, numAreas, graphDFS_Area, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
-        busesWithDERs_Area, lb_Q_onlyDERbuses_Area, ub_Q_onlyDERbuses_Area, itr, 'verbose', true);
+        lb_Q_onlyDERbuses_Area, ub_Q_onlyDERbuses_Area, itr, 'verbose', true);
 
-    numVarsLoss = [m_Area, m_Area, N_Area, nDER_Area];
+    numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
 
-    ranges_noLoss = generateRangesFromValues(numVarsLoss);
+    ranges_noLoss = generateRangesFromValues(numVarsNoLoss);
 
     indices_P_noLoss = ranges_noLoss{1};
     indices_Q_noLoss = ranges_noLoss{2};
