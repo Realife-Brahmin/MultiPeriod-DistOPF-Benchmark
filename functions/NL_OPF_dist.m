@@ -88,7 +88,8 @@ function [v2_Area, S_Area, qD_Full_Area,...
     Q_C_Area = busDataTable_pu_Area.Q_C;
     P_der_Area = busDataTable_pu_Area.P_der;
     S_der_Area = busDataTable_pu_Area.S_der;
-
+    S_battMax_Area = S_der_Area;
+    P_battMax_Area = P_der_Area;
 % Update the Parent Complex Power Vector with values from interconnection. 
 
     numChildAreas = size(S_connection_Area, 1); %could even be zero for a child-less area
@@ -103,14 +104,29 @@ function [v2_Area, S_Area, qD_Full_Area,...
     % DER Configuration:
     busesWithDERs_Area = find(S_der_Area); %all nnz element indices
     nDER_Area = length(busesWithDERs_Area);
+    busesWithBatts_Area = busesWithDERs_Area;
+    nBatt_Area = nDER_Area;
 
-    mydisp(verbose, ['Number of DERs in Area ', num2str(Area), ' : ', num2str(nDER_Area)]);
-    
+    myfprintf(verbose, fid, strcat("Number of DERs in Area ", num2str(Area), " : ", num2str(nDER_Area), ".\n") );
+    myfprintf(verbose, fid, strcat("Number of Batteries in Area ", num2str(Area), " : ", num2str(nBatt_Area), ".\n") );
+
     S_onlyDERbuses_Area = S_der_Area(busesWithDERs_Area);   %in PU
-    P_onlyDERbuses_Area = P_der_Area(busesWithDERs_Area);   %in PU
-    lb_Q_onlyDERbuses_Area = -sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
-    ub_Q_onlyDERbuses_Area = sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
+    S_onlyBattBusesMax_Area = S_battMax_Area(busesWithBatts_Area);
     
+    P_onlyDERbuses_Area = P_der_Area(busesWithDERs_Area);   %in PU
+    P_onlyBattBusesMax_Area = P_battMax_Area(busesWithBatts_Area);
+
+    lb_Pc_onlyBattBuses_Area = zeros*ones(nBatt_Area, 1);
+    ub_Pc_onlyBattBuses_Area = P_onlyBattBusesMax_Area;
+    lb_Pd_onlyBattBuses_Area = zeros*ones(nBatt_Area, 1);
+    ub_Pd_onlyBattBuses_Area = P_onlyBattBusesMax_Area;
+    
+    lb_qD_onlyDERbuses_Area = -sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
+    ub_qD_onlyDERbuses_Area = sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
+    
+    lb_qB_onlyBattBuses_Area = -sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
+    ub_qB_onlyBattBuses_Area = sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
+
     graphDFS_Area = edgeMatrix_Area; %not doing any DFS
     graphDFS_Area_Table = array2table(graphDFS_Area, 'VariableNames', {'fbus', 'tbus'});
 
@@ -129,8 +145,8 @@ function [v2_Area, S_Area, qD_Full_Area,...
 
     % defining the unknowns for phaseA
     
-    numVarsFull = [m_Area, m_Area, m_Area, N_Area, nDER_Area];
-
+    % numVarsFull = [m_Area, m_Area, m_Area, N_Area, nDER_Area];
+    numVarsFull = [m_Area, m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
     ranges_Full = generateRangesFromValues(numVarsFull);
 
     indices_P = ranges_Full{1};
@@ -139,9 +155,16 @@ function [v2_Area, S_Area, qD_Full_Area,...
     indices_vFull = ranges_Full{4};
     indices_v = indices_vFull(2:end);
     indices_qD = ranges_Full{5};
+    indices_B = ranges_Full{6};
+    indices_Pc = ranges_Full{7};
+    indices_Pd = ranges_Full{8};
+    indices_qB = ranges_Full{9};
 
-    Table_Area = [fb_Area tb_Area indices_P' indices_Q' indices_l' indices_v'];  % creating Table for variables P, Q ,l, V
-    Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_l', 'indices_v'});
+    % Table_Area = [fb_Area tb_Area indices_P' indices_Q' indices_l' indices_v'];  % creating Table for variables P, Q ,l, V
+    Table_Area = [fb_Area tb_Area indices_P' indices_Q' indices_l' indices_v' indices_qD' indices_B' indices_Pc' indices_Pd' indices_qB'];  % creating Table for variables P, Q ,l, V
+
+    % Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_l', 'indices_v'});
+    Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_l', 'indices_v', 'indices_B', 'indices_Pc', 'indices_Pd', 'indices_qB'});
 
     % Initialization-
     
@@ -152,8 +175,10 @@ function [v2_Area, S_Area, qD_Full_Area,...
     CVR_P = CVR(1);
     CVR_Q = CVR(2);
     
-    numLinOptEquations = 3*m_Area + 1;
-    numOptVarsFull = 3*m_Area + N_Area + nDER_Area;
+    % numLinOptEquations = 3*m_Area + 1;
+    numLinOptEquations = 3*m_Area + 1 + nBatt_Area;
+    % numOptVarsFull = 3*m_Area + N_Area + nDER_Area;
+    numOptVarsFull = 3*m_Area + N_Area + nDER_Area + 4*nBatt_Area;
     Aeq = zeros(numLinOptEquations, numOptVarsFull);
     beq = zeros(numLinOptEquations, 1);
 
@@ -270,13 +295,43 @@ function [v2_Area, S_Area, qD_Full_Area,...
         Table_DER(i, 2) = qD_Idx;
         
         % slope kq definiton:
-        Table_DER(i, 3) = 2*ub_Q_onlyDERbuses_Area(i)/(V_max-V_min); % Qmax at Vmin, and vice versa
+        Table_DER(i, 3) = 2*ub_qD_onlyDERbuses_Area(i)/(V_max-V_min); % Qmax at Vmin, and vice versa
         
         % Q_ref, V_ref definition:
         Table_DER(i, 4) = Qref_DER;  %Qref
         Table_DER(i, 5) = Vref_DER;  %Vref
     end
     
+    % Battery equation addition    
+    for i = 1:nBatt_Area
+        currentBusNum = busesWithBatts_Area(i);
+        parentBusIdx = find(tb_Area == currentBusNum);
+        PEqnIdx = parentBusIdx;
+        QEqnIdx = parentBusIdx + m_Area;
+        BEqnIdx = QEqnIdx + m_Area + N_Area;
+        
+        B_Idx = indices_B(i);
+        Pc_Idx = indices_Pc(i);
+        Pd_Idx = indices_Pd(i);
+        qB_Idx = indices_qB(i);
+
+        Aeq(PEqnIdx, Pc_Idx) = 1;
+        myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = 1\n", PEqnIdx, i);
+
+        Aeq(PEqnIdx, Pd_Idx) = -1;
+        myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = -1\n", PEqnIdx, i);
+
+        Aeq(QEqnIdx, qB_Idx) = 1;
+        myfprintf(verbose, fid, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, i);
+        
+        Aeq(BEqnIdx, B_Idx) = 1;
+        myfprintf(verbose, fid, "Aeq(%d, B(%d)) = 1\n", BEqnIdx, i);
+        Aeq(BEqnIdx, Pc_Idx) = -delta_t*etta_C;
+        myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = -delta_t*etta_C\n", BEqnIdx, i);
+        Aeq(BEqnIdx, Pd_Idx) = delta_t/etta_D;
+        myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = delta_t*etta_D\n", BEqnIdx, i);
+    end
+
     if fileOpenedFlag
         fclose(fid);
     end
@@ -284,7 +339,7 @@ function [v2_Area, S_Area, qD_Full_Area,...
     % calling linear solution for intial point
     x_linear_Area = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, isLeaf_Area, ...
         Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
-        lb_Q_onlyDERbuses_Area, ub_Q_onlyDERbuses_Area, itr, 'verbose', true);
+        lb_qD_onlyDERbuses_Area, ub_qD_onlyDERbuses_Area, itr, 'verbose', true);
 
     numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
     ranges_noLoss = generateRangesFromValues(numVarsNoLoss);
@@ -316,8 +371,8 @@ function [v2_Area, S_Area, qD_Full_Area,...
     ubVals = [1500, 1500, 1500, 1500, V_max^2];
     [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsFull, lbVals, ubVals);
     
-    lb_AreaFull = [lb_Area; lb_Q_onlyDERbuses_Area];
-    ub_AreaFull = [ub_Area; ub_Q_onlyDERbuses_Area];
+    lb_AreaFull = [lb_Area; lb_qD_onlyDERbuses_Area];
+    ub_AreaFull = [ub_Area; ub_qD_onlyDERbuses_Area];
     
     if itr == 0 && Area == 2
         mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
