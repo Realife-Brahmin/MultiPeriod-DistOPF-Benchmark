@@ -1,31 +1,35 @@
 function [c, ceq] = eqcons(x, Area, N_Area, fbus_Area, tbus_Area, indices_P_Area, indices_Q_Area, indices_l_Area, indices_v_Full_Area, itr, systemName, numAreas, varargin)
-%  EQCONS Understand what does eqcons do.
     
     verbose = false;
     saveToFile = false;
-    strArea = convert2doubleDigits(Area);
+    saveLocation = "logfiles/";
+    systemName = "ieee123";
     fileExtension = ".txt";
-    % systemName = "ieee123";
-    saveLocationFilename = strcat("logfiles/", systemName, "/numAreas_", num2str(numAreas), "/eqcons_area", strArea, fileExtension);
-    fileOpenedFlag = false;
-    
+
     for i = 1:2:numel(varargin)
         name = varargin{i};
         value = varargin{i+1};
         
-        % Check the name-value pair
         switch lower(name)
             case 'verbose'
                 verbose = value;
             case 'savetofile'
                 saveToFile = value;
             case 'savelocation'
-                saveLocationFilename = value;
+                saveLocation = value;
+            case 'systemname'
+                systemName = value;
+            case 'fileextension'
+                fileExtension = value;
             otherwise
                 error('Unknown option: %s', name);
         end
     end
     
+    strArea = convert2doubleDigits(Area);
+    saveLocationFilename = strcat(saveLocation, systemName, "/numAreas_", num2str(numAreas), "/eqcons_area", strArea, fileExtension);
+    fileOpenedFlag = false;
+
     if verbose && saveToFile && itr == 0 && Area == 2
         fileOpenedFlag = true;
         fid = fopen(saveLocationFilename, 'w');  % Open file for writing
@@ -63,7 +67,9 @@ function [c, ceq] = eqcons(x, Area, N_Area, fbus_Area, tbus_Area, indices_P_Area
             myfprintf(verbose, fid, "It has NO parent bus.\n");
         end
     end
+
     if fileOpenedFlag
         fclose(fid);
     end
+
 end
