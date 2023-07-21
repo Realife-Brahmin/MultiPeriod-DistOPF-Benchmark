@@ -282,9 +282,8 @@ function [v2_Area, S_Area, qD_Full_Area,...
     end
     
     % calling linear solution for intial point
-    x_linear_Area = ...
-        singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, isLeaf_Area, ...
-        Area, numAreas, graphDFS_Area, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
+    x_linear_Area = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, isLeaf_Area, ...
+        Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
         lb_Q_onlyDERbuses_Area, ub_Q_onlyDERbuses_Area, itr, 'verbose', true);
 
     numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
@@ -300,14 +299,15 @@ function [v2_Area, S_Area, qD_Full_Area,...
     v0_Area =  x_linear_Area( indices_vFull_noLoss );
     qD0_Area = x_linear_Area( indices_qD_noLoss );
     
-    Iflow0 = zeros(m_Area, 1);
+    Iflow0_Area = zeros(m_Area, 1);
+
     for currentBusNum = 2 : N_Area
         parentBusIdx = find(tb_Area == currentBusNum);
         siblingBusesIndices = find(parentBusNum == fb_Area);
-        Iflow0( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
+        Iflow0_Area( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
     end
     
-    x0_Area = [P0_Area; Q0_Area; Iflow0; v0_Area; qD0_Area];
+    x0_Area = [P0_Area; Q0_Area; Iflow0_Area; v0_Area; qD0_Area];
     
     % Definig Limits
     
