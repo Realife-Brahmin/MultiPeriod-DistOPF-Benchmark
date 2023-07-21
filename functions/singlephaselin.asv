@@ -10,13 +10,11 @@ function [x_Area, Table_Area, indices_vFull] = ...
     V_min = 0.95;
     Qref_DER = 0.00;
     Vref_DER = 1.00;
-
-    saveToFile = false;
-    strArea = convert2doubleDigits(Area);
+    saveToFile = true;
     fileExtension = ".txt";
     systemName = "ieee123";
     saveLocationName = "logfiles/";
-
+    
     % Process optional arguments
     numArgs = numel(varargin);
 
@@ -24,7 +22,7 @@ function [x_Area, Table_Area, indices_vFull] = ...
         error('Optional arguments must be specified as name-value pairs.');
     end
     
-    validArgs = ["verbose", "CVR", "V_max", "V_min", "saveToFile", "saveLocation"];
+    validArgs = ["verbose", "CVR", "V_max", "V_min", "saveToFile", "saveLocation", "Qref_DER", "Vref_DER", "fileExtension", "systemName"];
     
     for i = 1:2:numArgs
         argName = varargin{i};
@@ -51,9 +49,14 @@ function [x_Area, Table_Area, indices_vFull] = ...
                 Vref_DER = argValue;
             case 'Qref_DER'
                 Qref_DER = argValue;
+            case "fileExtension"
+                fileExtension = argValue;
+            case "systemName"
+                fileExtension = argValue;
         end
     end
-
+    
+    strArea = convert2doubleDigits(Area);
     saveLocationFilename = strcat(saveLocationName, systemName, "/numAreas_", num2str(numAreas), "/Aeq_beq_area", strArea, "_singlephaselin", fileExtension);
     
     fileOpenedFlag = false;
@@ -100,6 +103,12 @@ function [x_Area, Table_Area, indices_vFull] = ...
     indices_vFull = ranges_noLoss{3};
     indices_v = indices_vFull(2:end);
     indices_qD = ranges_noLoss{4};
+    
+
+    numVarsForBoundsNoLoss = [1, numVarsNoLoss(1) - 1, numVarsNoLoss(2:end-1) ]; % qD limits are specific to each machine, will be appended later.
+    lbVals = [0, -1500, -1500, V_min^2];
+    ubVals = [1500, 1500, 1500, V_max^2];
+    [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsNoLoss, lbVals, ubVals);
 
     Table_Area = [graphDFS_Area_Table.fbus graphDFS_Area_Table.tbus indices_P' indices_Q' indices_v'];  % creating Table for variables P, Q ,l, V
     Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_v'});
@@ -107,16 +116,7 @@ function [x_Area, Table_Area, indices_vFull] = ...
     myfprintf(verbose, fid, "**********" + ...
         "Constructing Aeq and beq for Area %d.\n" + ...
         "***********\n", Area);
-    % indices_P = 1:N_Area-1;  %1:40
-    % indices_Q = indices_P + (N_Area - 1); %41:80
-    % % indices_l = indices_Q + m_Area; %81:120
-    % indices_v = indices_Q + 1 + m_Area; %122:161
-    % Table_Area = [graphDFS_Area_Table.fbus graphDFS_Area_Table.tbus indices_P' indices_Q' indices_v'];
-    % Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_v'});
-    % indices_vFull = transpose( indices_v(1)-1:indices_v(end) ) ; %121:161 % voltage variables including parent node.
-    
-    % fb_Area = graphDFS_Area_Table.fbus;
-    % tb_Area = graphDFS_Area_Table.tbus;
+
     % Initialization-
     
     CVR_P = CVR(1);                %% this will make the loads as constant power load
@@ -127,8 +127,6 @@ function [x_Area, Table_Area, indices_vFull] = ...
     Aeq = zeros(numLinOptEquations, numOptVarsFull);
     beq = zeros(numLinOptEquations, 1);
 
-    % Aeq = zeros( 3*(N_Area-1), Table_Area_Table{end, end} ); %zeros(120, 121)
-    % beq = zeros( 3*(N_Area-1), 1); %zeros(120, 1)
     
     % A and b matrix formulation-
     
@@ -209,17 +207,17 @@ function [x_Area, Table_Area, indices_vFull] = ...
     f = zeros(Tnvar,1);
     f(Table_Area(1,3)) = 0;
     
-    lb(1) = 0;                  % this is to limit the power flow going reverse at the substation
-    lb(2:2*(N_Area-1),1)= (-1500*ones(2*(N_Area-1)-1,1));
-    lb(2*(N_Area-1)+1:3*(N_Area-1)+1,1)= ((V_min^2)*ones(N_Area,1));
+    % lb(1) = 0;                  % this is to limit the power flow going reverse at the substation
+    % lb(2:2*(N_Area-1),1)= (-1500*ones(2*(N_Area-1)-1,1));
+    % lb(2*(N_Area-1)+1:3*(N_Area-1)+1,1)= ((V_min^2)*ones(N_Area,1));
+    % 
+    % ub(1:2*(N_Area-1),1)= (1500*ones(2*(N_Area-1),1));
+    % ub(2*(N_Area-1)+1:3*(N_Area-1)+1,1)= (V_max^2*ones(N_Area,1));
     
-    ub(1:2*(N_Area-1),1)= (1500*ones(2*(N_Area-1),1));
-    ub(2*(N_Area-1)+1:3*(N_Area-1)+1,1)= (V_max^2*ones(N_Area,1));
-    
-    lb = [lb ;lb_Q_onlyDERbuses_Area];
-    ub = [ub; ub_Q_onlyDERbuses_Area];
+    lb_AreaFull = [lb_Area ;lb_Q_onlyDERbuses_Area];
+    ub_AreaFull = [ub_Area; ub_Q_onlyDERbuses_Area];
     
     options = optimoptions('intlinprog','Display','off');
-    [x_Area, ~, ~, ~] = intlinprog(f, [], [], [], Aeq, beq, lb, ub, options);
+    [x_Area, ~, ~, ~] = intlinprog(f, [], [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, options);
 
 end

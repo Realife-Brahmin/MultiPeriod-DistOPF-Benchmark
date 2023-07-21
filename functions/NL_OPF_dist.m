@@ -272,14 +272,11 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     % DER equation addition
     Table_DER = zeros(nDER_Area, 5);
     
-    % indices_qD = 4*m_Area + 2:4*m_Area + 1 + nDER_Area;
     for i = 1:nDER_Area
         currentBusNum = busesWithDERs_Area(i);
         parentBusIdx = find(graphDFS_Area_Table.tbus == currentBusNum);
         QIdx = parentBusIdx + m_Area;
         qD_Idx = indices_qD(i);
-        % busDER = busesWithDERs_Area(i);
-        % QIdx = Table_Area_Table.tbus == busDER;
         Aeq(QIdx, qD_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, qD(%d)) = 1\n", QIdx, i);
         
@@ -302,13 +299,12 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     end
     
     % calling linear solution for intial point
-    [x_linear_Area, Table_linear_Area, Volttable_linear_Area] = ...
+    x_linear_Area = ...
         singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, isLeaf_Area, ...
         Area, numAreas, graphDFS_Area, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
         lb_Q_onlyDERbuses_Area, ub_Q_onlyDERbuses_Area, itr, 'verbose', true);
 
     numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
-
     ranges_noLoss = generateRangesFromValues(numVarsNoLoss);
 
     indices_P_noLoss = ranges_noLoss{1};
@@ -325,7 +321,7 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     for currentBusNum = 2 : N_Area
         parentBusIdx = find(graphDFS_Area_Table.tbus == currentBusNum);
         siblingBusesIndices = find(parentBusNum == graphDFS_Area_Table.fbus);
-        Iflow0( Table_linear_Area(parentBusIdx, 3) ) = x_linear_Area(Table_linear_Area(parentBusIdx,3))^2+x_linear_Area(Table_linear_Area(parentBusIdx,4))^2 / x_linear_Area( Volttable_linear_Area( siblingBusesIndices(1) ) );
+        Iflow0( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
     end
     
     x0_Area = [P0_Area; Q0_Area; Iflow0; v0_Area; qD0_Area];
@@ -333,7 +329,7 @@ function [v2_Area, S_parent_Area, S_child_Area, qD_Full_Area,...
     % Definig Limits
     
     numVarsForBoundsFull = [1, numVarsFull(1) - 1, numVarsFull(2:end-1) ]; % qD limits are specific to each machine, will be appended later.
-    lbVals = [-1500, -1500, -1500, 0, V_min^2];
+    lbVals = [0, -1500, -1500, 0, V_min^2];
     ubVals = [1500, 1500, 1500, 1500, V_max^2];
     [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsFull, lbVals, ubVals);
     

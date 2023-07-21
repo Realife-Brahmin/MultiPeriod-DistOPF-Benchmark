@@ -1,0 +1,17 @@
+Area 2 is NOT a leaf area, does have child areas.
+**********Constructing Aeq and beq for Area 2.
+***********
+Aeq(55, v_Full(1)) = 1
+beq(55) = 1.061
+Aeq(20, qD(1)) = 1
+Aeq(21, qD(2)) = 1
+Aeq(23, qD(3)) = 1
+Aeq(24, qD(4)) = 1
+Aeq(26, qD(5)) = 1
+Aeq(27, qD(6)) = 1
+Aeq(28, qD(7)) = 1
+Aeq(30, qD(8)) = 1
+Aeq(31, qD(9)) = 1
+Aeq(32, qD(10)) = 1
+Aeq(33, qD(11)) = 1
+Aeq(34, qD(12)) = 1
