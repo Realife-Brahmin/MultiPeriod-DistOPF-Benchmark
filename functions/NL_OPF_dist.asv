@@ -140,7 +140,7 @@ function [v2_Area, S_Area, qD_Full_Area,...
     indices_v = indices_vFull(2:end);
     indices_qD = ranges_Full{5};
 
-    Table_Area = [graphDFS_Area_Table.fbus graphDFS_Area_Table.tbus indices_P' indices_Q' indices_l' indices_v'];  % creating Table for variables P, Q ,l, V
+    Table_Area = [fb_Area tb_Area indices_P' indices_Q' indices_l' indices_v'];  % creating Table for variables P, Q ,l, V
     Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_l', 'indices_v'});
 
     % Initialization-
@@ -164,8 +164,8 @@ function [v2_Area, S_Area, qD_Full_Area,...
  
         % The row index showing the 'parent' bus of our currentBus:
         
-        parentBusIdx = find(graphDFS_Area_Table.tbus == currentBusNum);
-        parentBusNum = graphDFS_Area_Table.fbus(parentBusIdx);
+        parentBusIdx = find(tb_Area == currentBusNum);
+        parentBusNum = fb_Area(parentBusIdx);
         myfprintf(verbose, fid, "The parent of bus %d is bus %d at index %d.\n", currentBusNum, parentBusNum, parentBusIdx);
 
         PIdx = parentBusIdx;
@@ -175,14 +175,14 @@ function [v2_Area, S_Area, qD_Full_Area,...
 
         
         %Q equations
-        QIdx = PIdx + (N_Area-1);
+        QIdx = PIdx + m_Area;
         Aeq( QIdx, indices_Q(parentBusIdx) ) = 1;
         Aeq( QIdx, indices_l(parentBusIdx) ) = -X_Area_Matrix( parentBusNum, currentBusNum );
         Aeq( QIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
 
         
        % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
-        childBusIndices = find(graphDFS_Area_Table.fbus == currentBusNum);
+        childBusIndices = find(fb_Area == currentBusNum);
         if ~isempty(childBusIndices)
             Aeq(PIdx, indices_P(childBusIndices) ) = -1;   % for P
             Aeq(QIdx, indices_Q(childBusIndices) ) = -1;   % for Q
@@ -208,15 +208,14 @@ function [v2_Area, S_Area, qD_Full_Area,...
         end
 
         % V equations
-        % vIdx = parentBusIdx + 2*(N_Area-1);
-        vIdx = QIdx + (N_Area-1);
+        vIdx = QIdx + m_Area;
         Aeq( vIdx, indices_v(parentBusIdx) ) = 1;
         myfprintf(verbose, fid, "Aeq(%d, v(%d)) = 1\n", vIdx, parentBusIdx);
 
         %Return the rows with the list of 'children' buses of 'under' the PARENT of our currentBus:
         %our currentBus will obviously also be included in the list.
-        siblingBusesIndices = find(graphDFS_Area_Table.fbus == parentBusNum);
-        siblingBuses = graphDFS_Area_Table.tbus(siblingBusesIndices);
+        siblingBusesIndices = find(fb_Area == parentBusNum);
+        siblingBuses = tb_Area(siblingBusesIndices);
 
         myfprintf(verbose, fid, "The siblings of bus %d\n", currentBusNum);
         myfprintf(verbose, fid, "include these buses: %d\n", siblingBuses)
@@ -244,7 +243,6 @@ function [v2_Area, S_Area, qD_Full_Area,...
         beq(QIdx) =  ...
             ( 1- 0.5*CVR_Q ) * ...
             ( Q_L_Area( currentBusNum ) - Q_C_Area( currentBusNum ) );
-
         myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_Q)*(Q_L(%d) - Q_C(%d))\n", QIdx, currentBusNum, currentBusNum);
 
     end
@@ -262,7 +260,7 @@ function [v2_Area, S_Area, qD_Full_Area,...
     
     for i = 1:nDER_Area
         currentBusNum = busesWithDERs_Area(i);
-        parentBusIdx = find(graphDFS_Area_Table.tbus == currentBusNum);
+        parentBusIdx = find(tb_Area == currentBusNum);
         QIdx = parentBusIdx + m_Area;
         qD_Idx = indices_qD(i);
         Aeq(QIdx, qD_Idx) = 1;
@@ -304,8 +302,8 @@ function [v2_Area, S_Area, qD_Full_Area,...
     
     Iflow0 = zeros(m_Area, 1);
     for currentBusNum = 2 : N_Area
-        parentBusIdx = find(graphDFS_Area_Table.tbus == currentBusNum);
-        siblingBusesIndices = find(parentBusNum == graphDFS_Area_Table.fbus);
+        parentBusIdx = find(tb_Area == currentBusNum);
+        siblingBusesIndices = find(parentBusNum == fb_Area);
         Iflow0( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
     end
     
@@ -334,10 +332,10 @@ function [v2_Area, S_Area, qD_Full_Area,...
     
     startSolvingForOptimization = tic;
 
-    [x, ~, ~, ~] = fmincon( @(x)objfunTables(x, N_Area, graphDFS_Area_Table.fbus, graphDFS_Area_Table.tbus, indices_l, R_Area_Matrix), ...
+    [x, ~, ~, ~] = fmincon( @(x)objfunTables(x, N_Area, fb_Area, tb_Area, indices_l, R_Area_Matrix), ...
                               x0_Area, [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, ...
                               @(x)eqcons(x, Area, N_Area, ...
-                              graphDFS_Area_Table.fbus, graphDFS_Area_Table.tbus, indices_P, indices_Q, indices_l, indices_vFull, ...
+                              fb_Area, tb_Area, indices_P, indices_Q, indices_l, indices_vFull, ...
                               itr, systemName, numAreas, "verbose", false, "saveToFile", false),...
                               options);
     

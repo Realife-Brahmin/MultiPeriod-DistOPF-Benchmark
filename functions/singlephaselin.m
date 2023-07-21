@@ -125,43 +125,80 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     numOptVarsFull = 2*m_Area + N_Area + nDER_Area;
     Aeq = zeros(numLinOptEquations, numOptVarsFull);
     beq = zeros(numLinOptEquations, 1);
-
-    
-    % A and b matrix formulation-
     
     for currentBusNum = 2 : N_Area
-        childBusIndices = find(fb_Area == currentBusNum) ;
-        parentIdx = find(tb_Area == currentBusNum) ;
-        parentBusNum = fb_Area(parentIdx);
-        siblingBusesIndices = find(fb_Area == parentBusNum);
+        myfprintf(verbose, fid, "*****\n" + ...
+            "Checking for bus %d.\n" + ...
+            "*****\n", currentBusNum);      
+
+        parentBusIdx = find(tb_Area == currentBusNum) ;
+        parentBusNum = fb_Area(parentBusIdx);
         
-        % Aeq formulations
-        %indices_P equations
-        Aeq(parentIdx, indices_P(parentIdx) ) = 1; 
-        Aeq(parentIdx, indices_v(parentIdx) ) = -0.5 * CVR_P * P_L_Area(currentBusNum);
+        myfprintf(verbose, fid, "The parent of bus %d is bus %d at index %d.\n", currentBusNum, parentBusNum, parentBusIdx);
+
+        PIdx = parentBusIdx;
+        Aeq( PIdx, indices_P(parentBusIdx) ) = 1;
+        Aeq( PIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_P * P_L_Area( currentBusNum );
         
-        %indices_Q equations
-        Aeq( parentIdx + (N_Area-1), indices_Q(parentIdx) ) = 1;
-        Aeq( parentIdx + (N_Area-1), indices_v(parentIdx) ) = -0.5 * CVR_Q * Q_L_Area(currentBusNum);
+        QIdx = PIdx + m_Area;
+        Aeq( QIdx, indices_Q(parentBusIdx) ) = 1;
+        Aeq( QIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
         
-        % For nodes with child bus
+        % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
+        childBusIndices = find(fb_Area == currentBusNum);
         if ~isempty(childBusIndices)
-            for currentSiblingIdx = 1 : length(childBusIndices)
-                Aeq(parentIdx, Table_Area(childBusIndices(currentSiblingIdx),3)) =   - 1;   % for P
-                Aeq(parentIdx+(N_Area-1),Table_Area(childBusIndices(currentSiblingIdx),4)) =  -  1;   % for indices_Q
-            end
+            Aeq(PIdx, indices_P(childBusIndices) ) = -1;   % for P
+            Aeq(QIdx, indices_Q(childBusIndices) ) = -1;   % for Q
         end
         
+        myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 1.\n", PIdx, parentBusIdx);
+        for i = 1:length(childBusIndices)
+            myfprintf(verbose, fid, "Aeq(%d, P(%d)) = -1\n", PIdx, childBusIndices(i));
+        end
+        if CVR_P
+            myfprintf(verbose, fid, "Aeq(%d, v(%d)) = -0.5 * CVR_P * P_L(%d).\n", PIdx, parentBusIdx, currentBusNum);
+        end
+        
+        myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = 1.\n", QIdx, parentBusIdx);
+        for i = 1:length(childBusIndices)
+            myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = -1\n", QIdx, childBusIndices(i));
+        end
+        if CVR_Q
+            myfprintf(verbose, fid, "Aeq(%d, v(%d)) = -0.5 * CVR_Q * Q_L(%d).\n", QIdx, parentBusIdx, currentBusNum);
+        end
+
         % V equations
-        Aeq(parentIdx+2*(N_Area-1),indices_v(parentIdx))= 1;
-        Aeq(parentIdx+2*(N_Area-1),indices_vFull(siblingBusesIndices(1)))= -1;
-        Aeq(parentIdx+2*(N_Area-1),Table_Area(parentIdx,3))= 2*(R_Area_Matrix(graphDFS_Area((parentIdx),1),graphDFS_Area((parentIdx),2)));
-        Aeq(parentIdx+2*(N_Area-1),indices_Q(parentIdx))= 2*(X_Area_Matrix(graphDFS_Area((parentIdx),1),graphDFS_Area((parentIdx),2)));
+        vIdx = QIdx + m_Area;
+        Aeq( vIdx, indices_v(parentBusIdx) ) = 1;
+        myfprintf(verbose, fid, "Aeq(%d, v(%d)) = 1\n", vIdx, parentBusIdx);
+    
+        %Return the rows with the list of 'children' buses of 'under' the PARENT of our currentBus:
+        %our currentBus will obviously also be included in the list.
+        siblingBusesIndices = find(fb_Area == parentBusNum);
+        siblingBuses = tb_Area(siblingBusesIndices);
         
+        myfprintf(verbose, fid, "The siblings of bus %d\n", currentBusNum);
+        myfprintf(verbose, fid, "include these buses: %d\n", siblingBuses)
+        myfprintf(verbose, fid, "at indices %d.\n", siblingBusesIndices);
+        eldestSiblingIdx = siblingBusesIndices(1);
+        eldestSiblingBus = siblingBuses(1);
+        myfprintf(verbose, fid,  "which makes bus %d at index %d as the eldest sibling.\n", eldestSiblingBus, eldestSiblingIdx);
+        Aeq( vIdx, indices_vFull( eldestSiblingIdx ) ) = -1;
+        myfprintf(verbose, fid, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, eldestSiblingIdx);
+        Aeq( vIdx, indices_P(parentBusIdx) ) = 2 * R_Area_Matrix( parentBusNum, currentBusNum );
+        myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, parentBusIdx, parentBusNum, currentBusNum);
+        Aeq( vIdx, indices_Q(parentBusIdx) ) = 2 * X_Area_Matrix( parentBusNum, currentBusNum );
+        myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = 2*x(%d, %d).\n", vIdx, parentBusIdx, parentBusNum, currentBusNum);    
         
-        % beq Formulation
-        beq(parentIdx)=(1-(CVR_P/2))*P_L_Area(currentBusNum)-P_der_Area(currentBusNum);
-        beq(parentIdx+(N_Area-1)) =  (1-(CVR_Q/2))*Q_L_Area(currentBusNum)-Q_C_Area(currentBusNum);
+        beq(PIdx) = ...
+            ( 1- 0.5 * CVR_P ) * ...
+            ( P_L_Area( currentBusNum ) - P_der_Area( currentBusNum ) );
+        myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_P)*(P_L(%d) - P_der(%d))\n", PIdx, currentBusNum, currentBusNum);
+    
+        beq(QIdx) =  ...
+            ( 1- 0.5*CVR_Q ) * ...
+            ( Q_L_Area( currentBusNum ) - Q_C_Area( currentBusNum ) );
+        myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_Q)*(Q_L(%d) - Q_C(%d))\n", QIdx, currentBusNum, currentBusNum);
         
     end
     
@@ -194,24 +231,15 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
         Table_DER(i, 4) = Qref_DER;  %Qref
         Table_DER(i, 5) = Vref_DER;  %Vref
     end
-    %
+    
     
     if fileOpenedFlag
         fclose(fid);
     end
     Tnvar = size(Aeq,2);         % total number of variables
-    
-    % formation of objective function
-    
+        
     f = zeros(Tnvar,1);
     f(Table_Area(1,3)) = 0;
-    
-    % lb(1) = 0;                  % this is to limit the power flow going reverse at the substation
-    % lb(2:2*(N_Area-1),1)= (-1500*ones(2*(N_Area-1)-1,1));
-    % lb(2*(N_Area-1)+1:3*(N_Area-1)+1,1)= ((V_min^2)*ones(N_Area,1));
-    % 
-    % ub(1:2*(N_Area-1),1)= (1500*ones(2*(N_Area-1),1));
-    % ub(2*(N_Area-1)+1:3*(N_Area-1)+1,1)= (V_max^2*ones(N_Area,1));
     
     lb_AreaFull = [lb_Area ;lb_Q_onlyDERbuses_Area];
     ub_AreaFull = [ub_Area; ub_Q_onlyDERbuses_Area];
