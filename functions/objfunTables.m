@@ -46,16 +46,26 @@
 %
 % References: (If applicable)
 
-function f = objfunTables(x, N_Area, fbus_Area, tbus_Area, indices_l_Area, R_Area_Matrix)
-
-f = 0;
-
-for currentBusNum = 2 : N_Area
-    parentBusIdx = find(tbus_Area == currentBusNum);
-    parentBusNum = fbus_Area(parentBusIdx);
+function f = objfunTables(x, N_Area, fbus_Area, tbus_Area, indices_l_Area, R_Area_Matrix, indices_Pc, indices_Pd, nBatt_Area, varargin)
     
-    if ~isempty(parentBusIdx)
-       f = f + x( indices_l_Area(parentBusIdx) ) * R_Area_Matrix( parentBusNum, currentBusNum );
+    f = 0;
+    alpha = 0.5;
+    
+    for currentBusNum = 2 : N_Area
+        parentBusIdx = find(tbus_Area == currentBusNum);
+        parentBusNum = fbus_Area(parentBusIdx);
+        
+        if ~isempty(parentBusIdx)
+           f = f + x( indices_l_Area(parentBusIdx) ) * R_Area_Matrix( parentBusNum, currentBusNum );
+        end
+        
     end
-    
+
+    for i = 1:nBatt_Area
+        Pc_Idx = indices_Pc(i);
+        Pd_Idx = indices_Pd(i);
+        
+        f = f + alpha* ( x(Pc_Idx)*(1-etta_C) + x(Pd_Idx)*(1/etta_D - 1) );
+    end
+
 end

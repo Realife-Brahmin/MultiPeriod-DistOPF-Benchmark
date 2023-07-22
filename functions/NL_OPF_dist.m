@@ -1,9 +1,9 @@
-function [v2_Area, S_Area, qD_Full_Area,...
+function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     microIterationLosses, itr, ...
     time_dist, R_Area_Matrix, graphDFS_Area, N_Area, m_Area, busDataTable_pu_Area, ...
     branchDataTable_Area] = ...
     ...
-    NL_OPF_dist(v2_parent_Area, S_connection_Area, ...
+    NL_OPF_dist(v2_parent_Area, S_connection_Area, B0Vals_Area, ...
     Area, isLeaf_Area, isRoot_Area, numChildAreas_Area, numAreas, ...
     microIterationLosses, time_dist, itr, ...
     CB_FullTable, varargin)
@@ -75,6 +75,7 @@ function [v2_Area, S_Area, qD_Full_Area,...
         fid = 1;
     end
 % ExtractAreaElectricalParameters extracts electrical data required for OPF from an area's csv files. Optionally it can plot the graphs for the areas and save them as pngs.
+    chargeToPowerRatio = 4;
 
     [busDataTable_pu_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
         = extractAreaElectricalParameters(Area, itr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area);
@@ -90,6 +91,8 @@ function [v2_Area, S_Area, qD_Full_Area,...
     S_der_Area = busDataTable_pu_Area.S_der;
     S_battMax_Area = S_der_Area;
     P_battMax_Area = P_der_Area;
+
+
 % Update the Parent Complex Power Vector with values from interconnection. 
 
     numChildAreas = size(S_connection_Area, 1); %could even be zero for a child-less area
@@ -104,8 +107,9 @@ function [v2_Area, S_Area, qD_Full_Area,...
     % DER Configuration:
     busesWithDERs_Area = find(S_der_Area); %all nnz element indices
     nDER_Area = length(busesWithDERs_Area);
-    busesWithBatts_Area = busesWithDERs_Area;
-    nBatt_Area = nDER_Area;
+    busesWithBatts_Area = find(S_battMax_Area);
+    nBatt_Area = length(busesWithBatts_Area);
+    B0Vals_Area = B0Vals_Area(1:nBatt_Area);
 
     myfprintf(verbose, fid, strcat("Number of DERs in Area ", num2str(Area), " : ", num2str(nDER_Area), ".\n") );
     myfprintf(verbose, fid, strcat("Number of Batteries in Area ", num2str(Area), " : ", num2str(nBatt_Area), ".\n") );
@@ -115,12 +119,16 @@ function [v2_Area, S_Area, qD_Full_Area,...
     
     P_onlyDERbuses_Area = P_der_Area(busesWithDERs_Area);   %in PU
     P_onlyBattBusesMax_Area = P_battMax_Area(busesWithBatts_Area);
-
+    
     lb_Pc_onlyBattBuses_Area = zeros*ones(nBatt_Area, 1);
     ub_Pc_onlyBattBuses_Area = P_onlyBattBusesMax_Area;
+    
     lb_Pd_onlyBattBuses_Area = zeros*ones(nBatt_Area, 1);
     ub_Pd_onlyBattBuses_Area = P_onlyBattBusesMax_Area;
     
+    lb_B_onlyBattBuses_Area = delta_t.*ub_Pc_onlyBattBuses_Area;
+    ub_B_onlyBattBuses_Area = chargeToPowerRatio*ub_Pc_onlyBattBuses_Area;
+
     lb_qD_onlyDERbuses_Area = -sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
     ub_qD_onlyDERbuses_Area = sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
     
@@ -330,6 +338,8 @@ function [v2_Area, S_Area, qD_Full_Area,...
         myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = -delta_t*etta_C\n", BEqnIdx, i);
         Aeq(BEqnIdx, Pd_Idx) = delta_t/etta_D;
         myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = delta_t*etta_D\n", BEqnIdx, i);
+
+        beq(BEqnIdx) = B0Vals_Area(i);
     end
 
     if fileOpenedFlag
@@ -341,18 +351,38 @@ function [v2_Area, S_Area, qD_Full_Area,...
         Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
         lb_qD_onlyDERbuses_Area, ub_qD_onlyDERbuses_Area, itr, 'verbose', true);
 
-    numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
+    % numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
+    % numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
+
+    % ranges_noLoss = generateRangesFromValues(numVarsNoLoss);
+
+    % indices_P_noLoss = ranges_noLoss{1};
+    % indices_Q_noLoss = ranges_noLoss{2};
+    % indices_vFull_noLoss = ranges_noLoss{3};
+    % indices_qD_noLoss = ranges_noLoss{4};
+
+
+
+    numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
     ranges_noLoss = generateRangesFromValues(numVarsNoLoss);
 
     indices_P_noLoss = ranges_noLoss{1};
     indices_Q_noLoss = ranges_noLoss{2};
     indices_vFull_noLoss = ranges_noLoss{3};
     indices_qD_noLoss = ranges_noLoss{4};
-
+    indices_B_noLoss = ranges_noLoss{5};
+    indices_Pc_noLoss = ranges_noLoss{6};
+    indices_Pd_noLoss = ranges_noLoss{7};
+    indices_qB_noLoss = ranges_noLoss{8};
+    
     P0_Area = x_linear_Area( indices_P_noLoss );
     Q0_Area = x_linear_Area( indices_Q_noLoss );
     v0_Area =  x_linear_Area( indices_vFull_noLoss );
     qD0_Area = x_linear_Area( indices_qD_noLoss );
+    B0_Area = x_linear_Area(indices_B_noLoss);
+    Pc0_Area = x_linear_Area(indices_Pc_noLoss);
+    Pd0_Area = x_linear_Area(indices_Pd_noLoss);
+    qB0_Area = x_linear_Area(indices_qB_noLoss);
     
     Iflow0_Area = zeros(m_Area, 1);
 
@@ -362,7 +392,9 @@ function [v2_Area, S_Area, qD_Full_Area,...
         Iflow0_Area( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
     end
     
-    x0_Area = [P0_Area; Q0_Area; Iflow0_Area; v0_Area; qD0_Area];
+    % x0_Area = [P0_Area; Q0_Area; Iflow0_Area; v0_Area; qD0_Area];
+    x0_Area = [P0_Area; Q0_Area; Iflow0_Area; v0_Area; qD0_Area; B0_Area; Pc0_Area; Pd0_Area; qB0_Area];
+
     
     % Definig Limits
     
@@ -371,8 +403,12 @@ function [v2_Area, S_Area, qD_Full_Area,...
     ubVals = [1500, 1500, 1500, 1500, V_max^2];
     [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsFull, lbVals, ubVals);
     
-    lb_AreaFull = [lb_Area; lb_qD_onlyDERbuses_Area];
-    ub_AreaFull = [ub_Area; ub_qD_onlyDERbuses_Area];
+    % lb_AreaFull = [lb_Area; lb_qD_onlyDERbuses_Area];
+    lb_AreaFull = [lb_Area; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area];
+
+    % ub_AreaFull = [ub_Area; ub_qD_onlyDERbuses_Area];
+    ub_AreaFull = [ub_Area; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area];
+
     
     if itr == 0 && Area == 2
         mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
@@ -413,6 +449,14 @@ function [v2_Area, S_Area, qD_Full_Area,...
         qD_Full_Area( busesWithDERs_Area(i) ) = qD_Area(i);
     end
     
+    BVals_Area = x(indices_B);
+    
+    B_Full_Area = zeros(N_Area, 1);
+
+    for i = 1 : nBatt_Area
+        B_Full_Area( busesWithBatts_Area(i) ) = BVals_Area(i);
+    end
+
     microIterationLosses(itr + 1, Area) = P_Area(1) + sum(P_der_Area) - sum(P_L_Area);
 
 end

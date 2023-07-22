@@ -1,4 +1,4 @@
-function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, isLeaf_Area, ...
+function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, B0Vals_Area, isLeaf_Area, ...
     Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
     lb_Q_onlyDERbuses_Area, ub_Q_onlyDERbuses_Area, itr, varargin)
 
@@ -72,6 +72,8 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
         fid = 1;
     end
     
+    chargeToPowerRatio = 15;
+
     N_Area = length(busDataTable_pu_Area.bus);
     m_Area = length(branchDataTable_Area.fb);
     fb_Area = branchDataTable_Area.fb;
@@ -81,9 +83,33 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     Q_C_Area = busDataTable_pu_Area.Q_C;
     P_der_Area = busDataTable_pu_Area.P_der;
     S_der_Area = busDataTable_pu_Area.S_der;
+    S_battMax_Area = S_der_Area;
+    P_battMax_Area = P_der_Area;
+    
     busesWithDERs_Area = find(S_der_Area);
     nDER_Area = length(busesWithDERs_Area);
+    busesWithBatts_Area = find(S_battMax_Area);
+    nBatt_Area = length(busesWithBatts_Area);
+    
+    S_onlyBattBusesMax_Area = S_battMax_Area(busesWithBatts_Area);
+    
+    P_onlyBattBusesMax_Area = P_battMax_Area(busesWithBatts_Area);
+    
+    lb_Pc_onlyBattBuses_Area = zeros*ones(nBatt_Area, 1);
+    ub_Pc_onlyBattBuses_Area = P_onlyBattBusesMax_Area;
+    
+    lb_Pd_onlyBattBuses_Area = zeros*ones(nBatt_Area, 1);
+    ub_Pd_onlyBattBuses_Area = P_onlyBattBusesMax_Area;
+    
+    lb_B_onlyBattBuses_Area = delta_t.*ub_Pc_onlyBattBuses_Area;
+    ub_B_onlyBattBuses_Area = chargeToPowerRatio*ub_Pc_onlyBattBuses_Area;
 
+    lb_qD_onlyDERbuses_Area = -sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
+    ub_qD_onlyDERbuses_Area = sqrt( S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2 );
+    
+    lb_qB_onlyBattBuses_Area = -sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
+    ub_qB_onlyBattBuses_Area = sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
+    
     if ~isLeaf_Area
         myfprintf(verbose, fid, "Area %d is NOT a leaf area, does have child areas.\n", Area);
         for j = 1:size(S_connection_Area, 1)
@@ -93,8 +119,8 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
         myfprintf(verbose, fid, "Area %d does NOT have any child areas.\n", Area);
     end
     
-    numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
-
+    % numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area];
+    numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
     ranges_noLoss = generateRangesFromValues(numVarsNoLoss);
 
     indices_P = ranges_noLoss{1};
@@ -102,7 +128,10 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     indices_vFull = ranges_noLoss{3};
     indices_v = indices_vFull(2:end);
     indices_qD = ranges_noLoss{4};
-    
+    indices_B = ranges_noLoss{5};
+    indices_Pc = ranges_noLoss{6};
+    indices_Pd = ranges_noLoss{7};
+    indices_qB = ranges_noLoss{8};
 
     numVarsForBoundsNoLoss = [1, numVarsNoLoss(1) - 1, numVarsNoLoss(2:end-1) ]; % qD limits are specific to each machine, will be appended later.
     lbVals = [0, -1500, -1500, V_min^2];
@@ -121,9 +150,11 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     CVR_P = CVR(1);                %% this will make the loads as constant power load
     CVR_Q = CVR(2);                %% this will make the loads as constant power load
 
-    numLinOptEquations = 3*m_Area + 1;
-    numOptVarsFull = 2*m_Area + N_Area + nDER_Area;
-    Aeq = zeros(numLinOptEquations, numOptVarsFull);
+    % numLinOptEquations = 3*m_Area + 1;
+    numLinOptEquations = 3*m_Area + 1 + nBatt_Area;
+    % numOptVarsNoLoss = 2*m_Area + N_Area + nDER_Area;
+    numOptVarsNoLoss = 2*m_Area + N_Area + nDER_Area + 4*nBatt_Area;
+    Aeq = zeros(numLinOptEquations, numOptVarsNoLoss);
     beq = zeros(numLinOptEquations, 1);
     
     for currentBusNum = 2 : N_Area
@@ -241,8 +272,8 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     f = zeros(Tnvar,1);
     f(Table_Area(1,3)) = 0;
     
-    lb_AreaFull = [lb_Area ;lb_Q_onlyDERbuses_Area];
-    ub_AreaFull = [ub_Area; ub_Q_onlyDERbuses_Area];
+    lb_AreaFull = [lb_Area ;lb_Q_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area];
+    ub_AreaFull = [ub_Area; ub_Q_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area];
     
     options = optimoptions('intlinprog','Display','off');
     [x_Area_Linear, ~, ~, ~] = intlinprog(f, [], [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, options);
