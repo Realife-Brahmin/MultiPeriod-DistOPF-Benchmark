@@ -161,7 +161,7 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsNoLoss, lbVals, ubVals);
 
     Table_Area = [graphDFS_Area_Table.fbus graphDFS_Area_Table.tbus indices_P' indices_Q' indices_v'];  % creating Table for variables P, Q ,l, V
-    Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_v'});
+    % Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_v'});
     
     myfprintf(verbose, fid, "**********" + ...
         "Constructing Aeq and beq for Area %d.\n" + ...
@@ -298,11 +298,11 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
         Pd_Idx = indices_Pd(i);
         qB_Idx = indices_qB(i);
 
-        Aeq(PEqnIdx, Pc_Idx) = 1;
-        myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = 1\n", PEqnIdx, i);
+        Aeq(PEqnIdx, Pc_Idx) = -1;
+        myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, i);
 
-        Aeq(PEqnIdx, Pd_Idx) = -1;
-        myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = -1\n", PEqnIdx, i);
+        Aeq(PEqnIdx, Pd_Idx) = 1;
+        myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = 1\n", PEqnIdx, i);
 
         Aeq(QEqnIdx, qB_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, i);
@@ -336,11 +336,11 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     Tnvar = size(Aeq,2);         % total number of variables
         
     f = zeros(Tnvar,1);
-    f(Table_Area(1,3)) = 0;
+    % f(Table_Area(1,3)) = 0;
     
 
     
-    options = optimoptions('intlinprog','Display','off');
+    options = optimoptions('intlinprog','Display','iter');
     [x_Area_Linear, ~, ~, ~] = intlinprog(f, [], [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, options)
 
 end

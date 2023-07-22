@@ -101,10 +101,10 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     m_Area = length(branchDataTable_Area.fb);
     fb_Area = branchDataTable_Area.fb;
     tb_Area = branchDataTable_Area.tb;
-    P_L_Area = busDataTable_pu_Area.P_L;
+    P_L_Area = busDataTable_pu_Area.P_L
     Q_L_Area = busDataTable_pu_Area.Q_L;
     Q_C_Area = busDataTable_pu_Area.Q_C;
-    P_der_Area = busDataTable_pu_Area.P_der;
+    P_der_Area = busDataTable_pu_Area.P_der
     S_der_Area = busDataTable_pu_Area.S_der;
     S_battMax_Area = S_der_Area;
     P_battMax_Area = P_der_Area;
@@ -188,10 +188,10 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     indices_Pd = ranges_Full{8};
     indices_qB = ranges_Full{9};
 
-    Table_Area = [fb_Area tb_Area indices_P' indices_Q' indices_l' indices_v'];  % creating Table for variables P, Q ,l, V
+    % Table_Area = [fb_Area tb_Area indices_P' indices_Q' indices_l' indices_v'];  % creating Table for variables P, Q ,l, V
     % Table_Area = [fb_Area tb_Area indices_P' indices_Q' indices_l' indices_v' indices_qD' indices_B' indices_Pc' indices_Pd' indices_qB'];  % creating Table for variables P, Q ,l, V
 
-    Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_l', 'indices_v'});
+    % Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_l', 'indices_v'});
     % Table_Area_Table = array2table(Table_Area, 'VariableNames', {'fbus', 'tbus', 'indices_P', 'indices_Q', 'indices_l', 'indices_v', 'indices_B', 'indices_Pc', 'indices_Pd', 'indices_qB'});
 
     % Initialization-
@@ -343,11 +343,11 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
         Pd_Idx = indices_Pd(i);
         qB_Idx = indices_qB(i);
 
-        Aeq(PEqnIdx, Pc_Idx) = 1;
-        myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = 1\n", PEqnIdx, i);
+        Aeq(PEqnIdx, Pc_Idx) = -1;
+        myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, i);
 
-        Aeq(PEqnIdx, Pd_Idx) = -1;
-        myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = -1\n", PEqnIdx, i);
+        Aeq(PEqnIdx, Pd_Idx) = 1;
+        myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = 1\n", PEqnIdx, i);
 
         Aeq(QEqnIdx, qB_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, i);
@@ -368,7 +368,7 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     
     % calling linear solution for intial point
     x_linear_Area = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, B0Vals_Area, isLeaf_Area, ...
-        Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, itr, 'verbose', true)
+        Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, itr, 'verbose', true);
 
 
     numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
