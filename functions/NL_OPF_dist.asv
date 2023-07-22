@@ -73,10 +73,6 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
                 etta_D = argValue;
             case "chargeToPowerRatio"
                 chargeToPowerRatio = argValue;
-            case "soc_min"
-                soc_min = argValue;
-            case "soc_max"
-                soc_max = argValue;
         end
     end
     
