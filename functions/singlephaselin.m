@@ -325,11 +325,12 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     end
 
     numVarsForBoundsNoLoss = [1, numVarsNoLoss(1) - 1, numVarsNoLoss(2:3)]; % qD limits are specific to each machine, will be appended later.
-    % lbVals = [0, -150, 150, V_min^2];
+    % lbVals = [0, -150, -150, V_min^2];
     % ubVals = [150, 150, 150, V_max^2];
-    lbVals = [0, -1500, -1500, V_min^2];
-    ubVals = [1500, 1500, 1500, V_max^2];
-    
+    % lbVals = [0, -1500, -1500, V_min^2];
+    % ubVals = [1500, 1500, 1500, V_max^2];
+    lbVals = [0, -5, -5, V_min^2];
+    ubVals = [5, 5, 5, V_max^2];
     [lbBFM_NoLoss, ubBFM_NoLoss] = constructBoundVectors(numVarsForBoundsNoLoss, lbVals, ubVals);
     
     lbBFM_DER_NoLoss = [lbBFM_NoLoss; lb_qD_onlyDERbuses_Area];
@@ -375,28 +376,28 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     options = optimoptions('intlinprog','Display','iter');
     
     [xBFM, ~, ~, ~] = intlinprog(fBFM, [], [], [], AeqBFM_noLoss, beqBFM_noLoss, lbBFM_DER_NoLoss, ubBFM_DER_NoLoss, options)
-    error = AeqBFM_noLoss*xBFM - beqBFM_noLoss
+    % error = AeqBFM_noLoss*xBFM - beqBFM_noLoss
     
-    Iflow0_Area = zeros(m_Area, 1);
+    % Iflow0_Area = zeros(m_Area, 1);
     
  
     
-    P0_Area = xBFM( indices_P_noLoss );
-    Q0_Area = xBFM( indices_Q_noLoss );
-    v0_Area =  xBFM( indices_vFull_noLoss );
-    qD0_Area = xBFM( indices_qD_noLoss );
+    % P0_Area = xBFM( indices_P_noLoss );
+    % Q0_Area = xBFM( indices_Q_noLoss );
+    % v0_Area =  xBFM( indices_vFull_noLoss );
+    % qD0_Area = xBFM( indices_qD_noLoss );
     % B0_Area = x_linear_Area(indices_B_noLoss);
     % Pc0_Area = x_linear_Area(indices_Pc_noLoss);
     % Pd0_Area = x_linear_Area(indices_Pd_noLoss);
     % qB0_Area = x_linear_Area(indices_qB_noLoss);
 
-    for currentBusNum = 2 : N_Area
-        parentBusIdx = find(tb_Area == currentBusNum);
-        siblingBusesIndices = find(parentBusNum == fb_Area);
-        Iflow0_Area( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
-    end
-    
-    Iflow0_Area
+    % for currentBusNum = 2 : N_Area
+    %     parentBusIdx = find(tb_Area == currentBusNum);
+    %     siblingBusesIndices = find(parentBusNum == fb_Area);
+    %     Iflow0_Area( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
+    % end
+    % 
+    % Iflow0_Area
 
     error("Okay you may stop here, hopefully x_Area_Linear is obtained.")
 

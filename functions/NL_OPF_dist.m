@@ -414,9 +414,9 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     
     numVarsForBoundsFull = [1, numVarsFull(1) - 1, numVarsFull(2:3) ]; % qD limits are specific to each machine, will be appended later.
     % lbVals = [0, -1500, -1500, 0, V_min^2];
-    lbVals = [0, -15, -15, 0, V_min^2];
+    lbVals = [0, -5, -15, 0, V_min^2];
     % ubVals = [1500, 1500, 1500, 1500, V_max^2];
-    ubVals = [15, 15, 15, 15, V_max^2];
+    ubVals = [5, 5, 5, 15, V_max^2];
     [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsFull, lbVals, ubVals);
     
     % lb_AreaFull = [lb_Area; lb_qD_onlyDERbuses_Area];
