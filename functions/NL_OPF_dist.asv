@@ -101,10 +101,10 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     m_Area = length(branchDataTable_Area.fb);
     fb_Area = branchDataTable_Area.fb;
     tb_Area = branchDataTable_Area.tb;
-    P_L_Area = busDataTable_pu_Area.P_L
+    P_L_Area = busDataTable_pu_Area.P_L;
     Q_L_Area = busDataTable_pu_Area.Q_L;
     Q_C_Area = busDataTable_pu_Area.Q_C;
-    P_der_Area = busDataTable_pu_Area.P_der
+    P_der_Area = busDataTable_pu_Area.P_der;
     S_der_Area = busDataTable_pu_Area.S_der;
     S_battMax_Area = S_der_Area;
     P_battMax_Area = P_der_Area;
@@ -204,9 +204,14 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     CVR_Q = CVR(2);
     
     % numLinOptEquations = 3*m_Area + 1;
-    numLinOptEquations = 3*m_Area + 1 + nBatt_Area;
+    numLinOptEquationsBFM = 3*m_Area + 1;
+    numLinOptEquationsBFM_Batt = numLinOptEquationsBFM + nBatt_Area;
+    numLinOptEquations = numLinOptEquationsBFM_Batt;
     % numOptVarsFull = 3*m_Area + N_Area + nDER_Area;
-    numOptVarsFull = 3*m_Area + N_Area + nDER_Area + 4*nBatt_Area;
+    numOptVarsBFM_Full = 3*m_Area + N_Area;
+    numOptVars_BFM_DERs_Full = numOptVarsBFM_Full + nDER_Area;
+    numOptVars_BFM_DERs_Batt_Full = numOptVars_BFM_DERs_Full + 4*nBatt_Area;
+    numOptVarsFull = numOptVars_BFM_DERs_Batt_Full;
     Aeq = zeros(numLinOptEquations, numOptVarsFull);
     beq = zeros(numLinOptEquations, 1);
 
@@ -336,7 +341,7 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
         parentBusIdx = find(tb_Area == currentBusNum);
         PEqnIdx = parentBusIdx;
         QEqnIdx = parentBusIdx + m_Area;
-        BEqnIdx = QEqnIdx + m_Area + N_Area;
+        BEqnIdx = numLinOptEquationsBFM + i;
         
         B_Idx = indices_B(i);
         Pc_Idx = indices_Pc(i);
@@ -360,6 +365,7 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
         myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = delta_t*etta_D\n", BEqnIdx, i);
 
         beq(BEqnIdx) = B0Vals_Area(i);
+        myfprintf(verbose, fid, "beq(%d) = B0(%d) = %f\n", BEqnIdx, i, B0Vals_Area(i));
     end
 
     if fileOpenedFlag
@@ -407,8 +413,10 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     % Definig Limits
     
     numVarsForBoundsFull = [1, numVarsFull(1) - 1, numVarsFull(2:3) ]; % qD limits are specific to each machine, will be appended later.
-    lbVals = [0, -1500, -1500, 0, V_min^2];
-    ubVals = [1500, 1500, 1500, 1500, V_max^2];
+    % lbVals = [0, -1500, -1500, 0, V_min^2];
+    lbVals = [0, -15, -15, 0, V_min^2];
+    % ubVals = [1500, 1500, 1500, 1500, V_max^2];
+    ubVals = [15, 15, 15, 15, V_max^2];
     [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsFull, lbVals, ubVals);
     
     % lb_AreaFull = [lb_Area; lb_qD_onlyDERbuses_Area];

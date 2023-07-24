@@ -343,8 +343,10 @@ Aeq(54, P(18)) = 2*r(11, 19).
 Aeq(54, Q(18)) = 2*x(11, 19).
 beq(18) = (1 - 0.5*CVR_P)*(P_L(19) - P_der(19))
 beq(36) = (1 - 0.5*CVR_Q)*(Q_L(19) - Q_C(19))
+And who can forget the substation voltage equation..
 Aeq(55, v_Full(1)) = 1
 beq(55) = 1.061
+Now adding the required 12 coefficients to model the 12 DERs in just as many equations from among the 18 branch reactive flow equations.
 Aeq(20, qD(1)) = 1
 Aeq(21, qD(2)) = 1
 Aeq(23, qD(3)) = 1
@@ -357,75 +359,124 @@ Aeq(31, qD(9)) = 1
 Aeq(32, qD(10)) = 1
 Aeq(33, qD(11)) = 1
 Aeq(34, qD(12)) = 1
+Now adding the required 12 + 12 = 24 coefficients in just as many equations from among existing 18 real and 18 reactive branch flow equations, as well as 12 new equations to model the SOCs for the batteries.
+Battery number 1 is actually bus number 3.
+Whose parent is bus 2 at index 2.
+Obviously, this additional battery will go into equation #56.
 Aeq(2, Pc(1)) = -1
 Aeq(2, Pd(1)) = 1
 Aeq(20, qB(1)) = 1
-Aeq(57, B(1)) = 1
-Aeq(57, Pc(1)) = -delta_t*etta_C
-Aeq(57, Pd(1)) = delta_t*etta_D
+Aeq(56, B(1)) = 1
+Aeq(56, Pc(1)) = -delta_t*etta_C
+Aeq(56, Pd(1)) = delta_t/etta_D
+beq(56) = B0(1) = 0.053826
+Battery number 2 is actually bus number 4.
+Whose parent is bus 3 at index 3.
+Obviously, this additional battery will go into equation #57.
 Aeq(3, Pc(2)) = -1
 Aeq(3, Pd(2)) = 1
 Aeq(21, qB(2)) = 1
-Aeq(58, B(2)) = 1
-Aeq(58, Pc(2)) = -delta_t*etta_C
-Aeq(58, Pd(2)) = delta_t*etta_D
+Aeq(57, B(2)) = 1
+Aeq(57, Pc(2)) = -delta_t*etta_C
+Aeq(57, Pd(2)) = delta_t/etta_D
+beq(57) = B0(2) = 0.053826
+Battery number 3 is actually bus number 6.
+Whose parent is bus 5 at index 5.
+Obviously, this additional battery will go into equation #58.
 Aeq(5, Pc(3)) = -1
 Aeq(5, Pd(3)) = 1
 Aeq(23, qB(3)) = 1
-Aeq(60, B(3)) = 1
-Aeq(60, Pc(3)) = -delta_t*etta_C
-Aeq(60, Pd(3)) = delta_t*etta_D
+Aeq(58, B(3)) = 1
+Aeq(58, Pc(3)) = -delta_t*etta_C
+Aeq(58, Pd(3)) = delta_t/etta_D
+beq(58) = B0(3) = 0.053826
+Battery number 4 is actually bus number 7.
+Whose parent is bus 6 at index 6.
+Obviously, this additional battery will go into equation #59.
 Aeq(6, Pc(4)) = -1
 Aeq(6, Pd(4)) = 1
 Aeq(24, qB(4)) = 1
-Aeq(61, B(4)) = 1
-Aeq(61, Pc(4)) = -delta_t*etta_C
-Aeq(61, Pd(4)) = delta_t*etta_D
+Aeq(59, B(4)) = 1
+Aeq(59, Pc(4)) = -delta_t*etta_C
+Aeq(59, Pd(4)) = delta_t/etta_D
+beq(59) = B0(4) = 0.053826
+Battery number 5 is actually bus number 9.
+Whose parent is bus 8 at index 8.
+Obviously, this additional battery will go into equation #60.
 Aeq(8, Pc(5)) = -1
 Aeq(8, Pd(5)) = 1
 Aeq(26, qB(5)) = 1
-Aeq(63, B(5)) = 1
-Aeq(63, Pc(5)) = -delta_t*etta_C
-Aeq(63, Pd(5)) = delta_t*etta_D
+Aeq(60, B(5)) = 1
+Aeq(60, Pc(5)) = -delta_t*etta_C
+Aeq(60, Pd(5)) = delta_t/etta_D
+beq(60) = B0(5) = 0.053826
+Battery number 6 is actually bus number 10.
+Whose parent is bus 9 at index 9.
+Obviously, this additional battery will go into equation #61.
 Aeq(9, Pc(6)) = -1
 Aeq(9, Pd(6)) = 1
 Aeq(27, qB(6)) = 1
-Aeq(64, B(6)) = 1
-Aeq(64, Pc(6)) = -delta_t*etta_C
-Aeq(64, Pd(6)) = delta_t*etta_D
+Aeq(61, B(6)) = 1
+Aeq(61, Pc(6)) = -delta_t*etta_C
+Aeq(61, Pd(6)) = delta_t/etta_D
+beq(61) = B0(6) = 0.053826
+Battery number 7 is actually bus number 11.
+Whose parent is bus 8 at index 10.
+Obviously, this additional battery will go into equation #62.
 Aeq(10, Pc(7)) = -1
 Aeq(10, Pd(7)) = 1
 Aeq(28, qB(7)) = 1
-Aeq(65, B(7)) = 1
-Aeq(65, Pc(7)) = -delta_t*etta_C
-Aeq(65, Pd(7)) = delta_t*etta_D
+Aeq(62, B(7)) = 1
+Aeq(62, Pc(7)) = -delta_t*etta_C
+Aeq(62, Pd(7)) = delta_t/etta_D
+beq(62) = B0(7) = 0.053826
+Battery number 8 is actually bus number 13.
+Whose parent is bus 11 at index 12.
+Obviously, this additional battery will go into equation #63.
 Aeq(12, Pc(8)) = -1
 Aeq(12, Pd(8)) = 1
 Aeq(30, qB(8)) = 1
-Aeq(67, B(8)) = 1
-Aeq(67, Pc(8)) = -delta_t*etta_C
-Aeq(67, Pd(8)) = delta_t*etta_D
+Aeq(63, B(8)) = 1
+Aeq(63, Pc(8)) = -delta_t*etta_C
+Aeq(63, Pd(8)) = delta_t/etta_D
+beq(63) = B0(8) = 0.053826
+Battery number 9 is actually bus number 14.
+Whose parent is bus 13 at index 13.
+Obviously, this additional battery will go into equation #64.
 Aeq(13, Pc(9)) = -1
 Aeq(13, Pd(9)) = 1
 Aeq(31, qB(9)) = 1
-Aeq(68, B(9)) = 1
-Aeq(68, Pc(9)) = -delta_t*etta_C
-Aeq(68, Pd(9)) = delta_t*etta_D
+Aeq(64, B(9)) = 1
+Aeq(64, Pc(9)) = -delta_t*etta_C
+Aeq(64, Pd(9)) = delta_t/etta_D
+beq(64) = B0(9) = 0.053826
+Battery number 10 is actually bus number 15.
+Whose parent is bus 14 at index 14.
+Obviously, this additional battery will go into equation #65.
 Aeq(14, Pc(10)) = -1
 Aeq(14, Pd(10)) = 1
 Aeq(32, qB(10)) = 1
-Aeq(69, B(10)) = 1
-Aeq(69, Pc(10)) = -delta_t*etta_C
-Aeq(69, Pd(10)) = delta_t*etta_D
+Aeq(65, B(10)) = 1
+Aeq(65, Pc(10)) = -delta_t*etta_C
+Aeq(65, Pd(10)) = delta_t/etta_D
+beq(65) = B0(10) = 0.053826
+Battery number 11 is actually bus number 16.
+Whose parent is bus 15 at index 15.
+Obviously, this additional battery will go into equation #66.
 Aeq(15, Pc(11)) = -1
 Aeq(15, Pd(11)) = 1
 Aeq(33, qB(11)) = 1
-Aeq(70, B(11)) = 1
-Aeq(70, Pc(11)) = -delta_t*etta_C
-Aeq(70, Pd(11)) = delta_t*etta_D
+Aeq(66, B(11)) = 1
+Aeq(66, Pc(11)) = -delta_t*etta_C
+Aeq(66, Pd(11)) = delta_t/etta_D
+beq(66) = B0(11) = 0.053826
+Battery number 12 is actually bus number 17.
+Whose parent is bus 16 at index 16.
+Obviously, this additional battery will go into equation #67.
 Aeq(16, Pc(12)) = -1
 Aeq(16, Pd(12)) = 1
 Aeq(34, qB(12)) = 1
-Aeq(71, B(12)) = 1
-Aeq(71, Pc(12)) = -delta_t*etta_C
-Aeq(71, Pd(12)) = delta_t*etta_D
+Aeq(67, B(12)) = 1
+Aeq(67, Pc(12)) = -delta_t*etta_C
+Aeq(67, Pd(12)) = delta_t/etta_D
+beq(67) = B0(12) = 0.053826
