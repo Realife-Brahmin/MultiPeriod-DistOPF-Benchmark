@@ -127,7 +127,7 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     nDER_Area = length(busesWithDERs_Area);
     busesWithBatts_Area = find(S_battMax_Area);
     nBatt_Area = length(busesWithBatts_Area);
-    B0Vals_Area = B0Vals_Area(1:nBatt_Area);
+    B0Vals_Area = reshape(B0Vals_Area(1:nBatt_Area), nBatt_Area, 1);
 
     myfprintf(verbose, fid, strcat("Number of DERs in Area ", num2str(Area), " : ", num2str(nDER_Area), ".\n") );
     myfprintf(verbose, fid, strcat("Number of Batteries in Area ", num2str(Area), " : ", num2str(nBatt_Area), ".\n") );
@@ -154,6 +154,11 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     
     lb_qB_onlyBattBuses_Area = -sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
     ub_qB_onlyBattBuses_Area = sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
+    
+    if itr == 0
+        myfprintf(verbose, "First iteration, will initialize Battery SOCs at the middle of the permissible bandwidth.\n");
+        B0Vals_Area = mean([lb_B_onlyBattBuses_Area, ub_B_onlyBattBuses_Area], 2);
+    end
 
     graphDFS_Area = edgeMatrix_Area; %not doing any DFS
     graphDFS_Area_Table = array2table(graphDFS_Area, 'VariableNames', {'fbus', 'tbus'});
@@ -438,8 +443,10 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     options = optimoptions('fmincon', 'Display', 'off', 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
     
     startSolvingForOptimization = tic;
+    
+    % @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min", 'secondObjFun', "SCD_min")
 
-    [x, ~, ~, ~] = fmincon( @(x)objfunTables(x, N_Area, fb_Area, tb_Area, indices_l, R_Area_Matrix), ...
+    [x, ~, ~, ~] = fmincon( @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, "mainObjFun", "loss_min", "secondObjFun", "SCD_min"), ...
                               x0_Area, [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, ...
                               @(x)eqcons(x, Area, N_Area, ...
                               fb_Area, tb_Area, indices_P, indices_Q, indices_l, indices_vFull, ...

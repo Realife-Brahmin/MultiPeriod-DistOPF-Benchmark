@@ -418,81 +418,81 @@ Aeq(20, qB(1)) = 1
 Aeq(56, B(1)) = 1
 Aeq(56, Pc(1)) = -delta_t*etta_C
 Aeq(56, Pd(1)) = delta_t*etta_D
-beq(56) = B0(1) = 0.053826
+beq(56) = B0(1) = 0.011664
 Aeq(3, Pc(2)) = -1
 Aeq(3, Pd(2)) = 1
 Aeq(21, qB(2)) = 1
 Aeq(57, B(2)) = 1
 Aeq(57, Pc(2)) = -delta_t*etta_C
 Aeq(57, Pd(2)) = delta_t*etta_D
-beq(57) = B0(2) = 0.053826
+beq(57) = B0(2) = 0.011664
 Aeq(5, Pc(3)) = -1
 Aeq(5, Pd(3)) = 1
 Aeq(23, qB(3)) = 1
 Aeq(58, B(3)) = 1
 Aeq(58, Pc(3)) = -delta_t*etta_C
 Aeq(58, Pd(3)) = delta_t*etta_D
-beq(58) = B0(3) = 0.053826
+beq(58) = B0(3) = 0.005834
 Aeq(6, Pc(4)) = -1
 Aeq(6, Pd(4)) = 1
 Aeq(24, qB(4)) = 1
 Aeq(59, B(4)) = 1
 Aeq(59, Pc(4)) = -delta_t*etta_C
 Aeq(59, Pd(4)) = delta_t*etta_D
-beq(59) = B0(4) = 0.053826
+beq(59) = B0(4) = 0.005834
 Aeq(8, Pc(5)) = -1
 Aeq(8, Pd(5)) = 1
 Aeq(26, qB(5)) = 1
 Aeq(60, B(5)) = 1
 Aeq(60, Pc(5)) = -delta_t*etta_C
 Aeq(60, Pd(5)) = delta_t*etta_D
-beq(60) = B0(5) = 0.053826
+beq(60) = B0(5) = 0.005834
 Aeq(9, Pc(6)) = -1
 Aeq(9, Pd(6)) = 1
 Aeq(27, qB(6)) = 1
 Aeq(61, B(6)) = 1
 Aeq(61, Pc(6)) = -delta_t*etta_C
 Aeq(61, Pd(6)) = delta_t*etta_D
-beq(61) = B0(6) = 0.053826
+beq(61) = B0(6) = 0.005834
 Aeq(10, Pc(7)) = -1
 Aeq(10, Pd(7)) = 1
 Aeq(28, qB(7)) = 1
 Aeq(62, B(7)) = 1
 Aeq(62, Pc(7)) = -delta_t*etta_C
 Aeq(62, Pd(7)) = delta_t*etta_D
-beq(62) = B0(7) = 0.053826
+beq(62) = B0(7) = 0.005834
 Aeq(12, Pc(8)) = -1
 Aeq(12, Pd(8)) = 1
 Aeq(30, qB(8)) = 1
 Aeq(63, B(8)) = 1
 Aeq(63, Pc(8)) = -delta_t*etta_C
 Aeq(63, Pd(8)) = delta_t*etta_D
-beq(63) = B0(8) = 0.053826
+beq(63) = B0(8) = 0.011664
 Aeq(13, Pc(9)) = -1
 Aeq(13, Pd(9)) = 1
 Aeq(31, qB(9)) = 1
 Aeq(64, B(9)) = 1
 Aeq(64, Pc(9)) = -delta_t*etta_C
 Aeq(64, Pd(9)) = delta_t*etta_D
-beq(64) = B0(9) = 0.053826
+beq(64) = B0(9) = 0.011664
 Aeq(14, Pc(10)) = -1
 Aeq(14, Pd(10)) = 1
 Aeq(32, qB(10)) = 1
 Aeq(65, B(10)) = 1
 Aeq(65, Pc(10)) = -delta_t*etta_C
 Aeq(65, Pd(10)) = delta_t*etta_D
-beq(65) = B0(10) = 0.053826
+beq(65) = B0(10) = 0.021875
 Aeq(15, Pc(11)) = -1
 Aeq(15, Pd(11)) = 1
 Aeq(33, qB(11)) = 1
 Aeq(66, B(11)) = 1
 Aeq(66, Pc(11)) = -delta_t*etta_C
 Aeq(66, Pd(11)) = delta_t*etta_D
-beq(66) = B0(11) = 0.053826
+beq(66) = B0(11) = 0.040836
 Aeq(16, Pc(12)) = -1
 Aeq(16, Pd(12)) = 1
 Aeq(34, qB(12)) = 1
 Aeq(67, B(12)) = 1
 Aeq(67, Pc(12)) = -delta_t*etta_C
 Aeq(67, Pd(12)) = delta_t*etta_D
-beq(67) = B0(12) = 0.053826
+beq(67) = B0(12) = 0.021875

@@ -46,26 +46,69 @@
 %
 % References: (If applicable)
 
-function f = objfunTables(x, N_Area, fbus_Area, tbus_Area, indices_l_Area, R_Area_Matrix, indices_Pc, indices_Pd, nBatt_Area, varargin)
+function f = objfun(x, N_Area, fbus_Area, tbus_Area, indices_l_Area, R_Area_Matrix, indices_Pc, indices_Pd, nBatt_Area, varargin)
     
-    f = 0;
+ % Default values for optional arguments
+    verbose = false;
+    etta_C = 0.80;
+    etta_D = 0.80;
     alpha = 0.5;
+    mainObjFun = "loss_min";
+    secondObjFun = "SCD_min";
+    % Process optional arguments
+    numArgs = numel(varargin);
+
+    if mod(numArgs, 2) ~= 0
+        error('Optional arguments must be specified as name-value pairs.');
+    end
     
-    for currentBusNum = 2 : N_Area
-        parentBusIdx = find(tbus_Area == currentBusNum);
-        parentBusNum = fbus_Area(parentBusIdx);
+    validArgs = ["verbose", "etta_C", "etta_D", "alpha", "mainObjFun", "secondObjFun"];
+    
+    for i = 1:2:numArgs
+        argName = varargin{i};
+        argValue = varargin{i+1};
         
-        if ~isempty(parentBusIdx)
-           f = f + x( indices_l_Area(parentBusIdx) ) * R_Area_Matrix( parentBusNum, currentBusNum );
+        if ~ischar(argName) || ~any(argName == validArgs)
+            error('Invalid optional argument name.');
         end
         
+        switch argName
+            case "verbose"
+                verbose = argValue;
+            case "etta_C"
+                etta_C = argValue;
+            case "etta_D"
+                etta_D = argValue;
+            case "mainObjFun"
+                mainObjFun = argValue;
+            case "secondObjFun"
+                secondObjFun = argValue;
+            case "alpha"
+                alpha = argValue;
+        end
     end
 
-    for i = 1:nBatt_Area
-        Pc_Idx = indices_Pc(i);
-        Pd_Idx = indices_Pd(i);
-        
-        f = f + alpha* ( x(Pc_Idx)*(1-etta_C) + x(Pd_Idx)*(1/etta_D - 1) );
+    f = 0;
+    
+    if strcmp(mainObjFun, "loss_min")
+        for currentBusNum = 2 : N_Area
+            parentBusIdx = find(tbus_Area == currentBusNum);
+            parentBusNum = fbus_Area(parentBusIdx);
+            
+            if ~isempty(parentBusIdx)
+               f = f + x( indices_l_Area(parentBusIdx) ) * R_Area_Matrix( parentBusNum, currentBusNum );
+            end
+            
+        end
+    end
+    
+    if strcmp(secondObjFun, "SCD_min")
+        for i = 1:nBatt_Area
+            Pc_Idx = indices_Pc(i);
+            Pd_Idx = indices_Pd(i);
+            
+            f = f + alpha* ( x(Pc_Idx)*(1-etta_C) + x(Pd_Idx)*(1/etta_D - 1) );
+        end
     end
 
 end
