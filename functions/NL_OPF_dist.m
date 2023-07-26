@@ -1,11 +1,11 @@
-function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
+function [v_Area, S_Area, qD_Full_Area, B_Area,...
     microIterationLosses, itr, ...
     time_dist, R_Area_Matrix, graphDFS_Area, N_Area, m_Area, nBatt_Area, busDataTable_pu_Area, ...
     branchDataTable_Area] = ...
     ...
-    NL_OPF_dist(v2_parent_Area, S_connection_Area, B0Vals_Area, ...
+    NL_OPF_dist(v_parent_Area, S_connection_Area, B0Vals_Area, ...
     Area, isLeaf_Area, isRoot_Area, numChildAreas_Area, numAreas, ...
-    microIterationLosses, time_dist, itr, ...
+    microIterationLosses, time_dist, itr, timePeriodNum, ...
     CB_FullTable, varargin)
     
  % Default values for optional arguments
@@ -132,6 +132,9 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     myfprintf(verbose, fid, strcat("Number of DERs in Area ", num2str(Area), " : ", num2str(nDER_Area), ".\n") );
     myfprintf(verbose, fid, strcat("Number of Batteries in Area ", num2str(Area), " : ", num2str(nBatt_Area), ".\n") );
 
+    myfprintf(verbose, strcat("Number of DERs in Area ", num2str(Area), " : ", num2str(nDER_Area), ".\n") ); 
+    myfprintf(verbose, strcat("Number of Batteries in Area ", num2str(Area), " : ", num2str(nBatt_Area), ".\n") ); 
+    
     S_onlyDERbuses_Area = S_der_Area(busesWithDERs_Area);   %in PU
     S_onlyBattBusesMax_Area = S_battMax_Area(busesWithBatts_Area);
     
@@ -155,8 +158,8 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     lb_qB_onlyBattBuses_Area = -sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
     ub_qB_onlyBattBuses_Area = sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
     
-    if itr == 0
-        myfprintf(verbose, "First iteration, will initialize Battery SOCs at the middle of the permissible bandwidth.\n");
+    if timePeriodNum == 1
+        myfprintf(verbose, "First Time Period, will initialize Battery SOCs at the middle of the permissible bandwidth.\n");
         B0Vals_Area = mean([lb_B_onlyBattBuses_Area, ub_B_onlyBattBuses_Area], 2);
     end
 
@@ -185,8 +188,8 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     indices_P = ranges_Full{1};
     indices_Q = ranges_Full{2};
     indices_l = ranges_Full{3};
-    indices_vFull = ranges_Full{4};
-    indices_v = indices_vFull(2:end);
+    indices_vAll = ranges_Full{4};
+    indices_v = indices_vAll(2:end);
     indices_qD = ranges_Full{5};
     indices_B = ranges_Full{6};
     indices_Pc = ranges_Full{7};
@@ -217,8 +220,8 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     numOptVars_BFM_DERs_Full = numOptVarsBFM_Full + nDER_Area;
     numOptVars_BFM_DERs_Batt_Full = numOptVars_BFM_DERs_Full + 4*nBatt_Area;
     numOptVarsFull = numOptVars_BFM_DERs_Batt_Full;
-    Aeq = zeros(numLinOptEquations, numOptVarsFull);
-    beq = zeros(numLinOptEquations, 1);
+    Aeq_Full = zeros(numLinOptEquations, numOptVarsFull);
+    beq_Full = zeros(numLinOptEquations, 1);
 
     for currentBusNum = 2 : N_Area
         myfprintf(verbose, fid, "*****\n" + ...
@@ -232,23 +235,23 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
         myfprintf(verbose, fid, "The parent of bus %d is bus %d at index %d.\n", currentBusNum, parentBusNum, parentBusIdx);
 
         PIdx = parentBusIdx;
-        Aeq( PIdx, indices_P(parentBusIdx) ) = 1;
-        Aeq( PIdx, indices_l(parentBusIdx) ) = -R_Area_Matrix( parentBusNum, currentBusNum );
-        Aeq( PIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_P * P_L_Area( currentBusNum );
+        Aeq_Full( PIdx, indices_P(parentBusIdx) ) = 1;
+        Aeq_Full( PIdx, indices_l(parentBusIdx) ) = -R_Area_Matrix( parentBusNum, currentBusNum );
+        Aeq_Full( PIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_P * P_L_Area( currentBusNum );
 
         
         %Q equations
         QIdx = PIdx + m_Area;
-        Aeq( QIdx, indices_Q(parentBusIdx) ) = 1;
-        Aeq( QIdx, indices_l(parentBusIdx) ) = -X_Area_Matrix( parentBusNum, currentBusNum );
-        Aeq( QIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
+        Aeq_Full( QIdx, indices_Q(parentBusIdx) ) = 1;
+        Aeq_Full( QIdx, indices_l(parentBusIdx) ) = -X_Area_Matrix( parentBusNum, currentBusNum );
+        Aeq_Full( QIdx, indices_v(parentBusIdx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
 
         
        % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
         childBusIndices = find(fb_Area == currentBusNum);
         if ~isempty(childBusIndices)
-            Aeq(PIdx, indices_P(childBusIndices) ) = -1;   % for P
-            Aeq(QIdx, indices_Q(childBusIndices) ) = -1;   % for Q
+            Aeq_Full(PIdx, indices_P(childBusIndices) ) = -1;   % for P
+            Aeq_Full(QIdx, indices_Q(childBusIndices) ) = -1;   % for Q
         end
         
         myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 1.\n", PIdx, parentBusIdx);
@@ -272,7 +275,7 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
 
         % V equations
         vIdx = QIdx + m_Area;
-        Aeq( vIdx, indices_v(parentBusIdx) ) = 1;
+        Aeq_Full( vIdx, indices_v(parentBusIdx) ) = 1;
         myfprintf(verbose, fid, "Aeq(%d, v(%d)) = 1\n", vIdx, parentBusIdx);
 
         %Return the rows with the list of 'children' buses of 'under' the PARENT of our currentBus:
@@ -286,24 +289,24 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
         eldestSiblingIdx = siblingBusesIndices(1);
         eldestSiblingBus = siblingBuses(1);
         myfprintf(verbose, fid,  "which makes bus %d at index %d as the eldest sibling.\n", eldestSiblingBus, eldestSiblingIdx);
-        Aeq( vIdx, indices_vFull( eldestSiblingIdx ) ) = -1;
+        Aeq_Full( vIdx, indices_vAll( eldestSiblingIdx ) ) = -1;
         myfprintf(verbose, fid, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, eldestSiblingIdx);
-        Aeq( vIdx, indices_P(parentBusIdx) ) = 2 * R_Area_Matrix( parentBusNum, currentBusNum );
+        Aeq_Full( vIdx, indices_P(parentBusIdx) ) = 2 * R_Area_Matrix( parentBusNum, currentBusNum );
         myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, parentBusIdx, parentBusNum, currentBusNum);
-        Aeq( vIdx, indices_Q(parentBusIdx) ) = 2 * X_Area_Matrix( parentBusNum, currentBusNum );
+        Aeq_Full( vIdx, indices_Q(parentBusIdx) ) = 2 * X_Area_Matrix( parentBusNum, currentBusNum );
         myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = 2*x(%d, %d).\n", vIdx, parentBusIdx, parentBusNum, currentBusNum);
-        Aeq( vIdx, indices_l(parentBusIdx) ) = ...
+        Aeq_Full( vIdx, indices_l(parentBusIdx) ) = ...
             -R_Area_Matrix( parentBusNum, currentBusNum )^2 + ...
             -X_Area_Matrix( parentBusNum, currentBusNum )^2 ;
         myfprintf(verbose, fid, "Aeq(%d, l(%d)) = -r(%d, %d)^2 -x(%d, %d)^2.\n", vIdx, parentBusIdx, parentBusNum, currentBusNum, parentBusNum, currentBusNum);
         
 
-        beq(PIdx) = ...
+        beq_Full(PIdx) = ...
             ( 1- 0.5 * CVR_P ) * ...
             ( P_L_Area( currentBusNum ) - P_der_Area( currentBusNum ) );
         myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_P)*(P_L(%d) - P_der(%d))\n", PIdx, currentBusNum, currentBusNum);
     
-        beq(QIdx) =  ...
+        beq_Full(QIdx) =  ...
             ( 1- 0.5*CVR_Q ) * ...
             ( Q_L_Area( currentBusNum ) - Q_C_Area( currentBusNum ) );
         myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_Q)*(Q_L(%d) - Q_C(%d))\n", QIdx, currentBusNum, currentBusNum);
@@ -312,11 +315,11 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     
     % substation voltage equation
     vSubIdx = 3*m_Area + 1;
-    Aeq( vSubIdx, indices_vFull(1) ) = 1;
+    Aeq_Full( vSubIdx, indices_vAll(1) ) = 1;
     myfprintf(verbose, fid, "Aeq(%d, v_Full(1)) = 1\n", vSubIdx);
 
-    beq(vSubIdx) = v2_parent_Area;
-    myfprintf(verbose, fid, "beq(%d) = %.3f\n", vSubIdx, v2_parent_Area);
+    beq_Full(vSubIdx) = v_parent_Area;
+    myfprintf(verbose, fid, "beq(%d) = %.3f\n", vSubIdx, v_parent_Area);
     
     % DER equation addition
     Table_DER = zeros(nDER_Area, 5);
@@ -326,7 +329,7 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
         parentBusIdx = find(tb_Area == currentBusNum);
         QIdx = parentBusIdx + m_Area;
         qD_Idx = indices_qD(i);
-        Aeq(QIdx, qD_Idx) = 1;
+        Aeq_Full(QIdx, qD_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, qD(%d)) = 1\n", QIdx, i);
         
         %setting other parameters for DGs:
@@ -353,23 +356,23 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
         Pd_Idx = indices_Pd(i);
         qB_Idx = indices_qB(i);
 
-        Aeq(PEqnIdx, Pc_Idx) = -1;
+        Aeq_Full(PEqnIdx, Pc_Idx) = -1;
         myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, i);
 
-        Aeq(PEqnIdx, Pd_Idx) = 1;
+        Aeq_Full(PEqnIdx, Pd_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = 1\n", PEqnIdx, i);
 
-        Aeq(QEqnIdx, qB_Idx) = 1;
+        Aeq_Full(QEqnIdx, qB_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, i);
         
-        Aeq(BEqnIdx, B_Idx) = 1;
+        Aeq_Full(BEqnIdx, B_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, B(%d)) = 1\n", BEqnIdx, i);
-        Aeq(BEqnIdx, Pc_Idx) = -delta_t*etta_C;
+        Aeq_Full(BEqnIdx, Pc_Idx) = -delta_t*etta_C;
         myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = -delta_t*etta_C\n", BEqnIdx, i);
-        Aeq(BEqnIdx, Pd_Idx) = delta_t/etta_D;
+        Aeq_Full(BEqnIdx, Pd_Idx) = delta_t/etta_D;
         myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = delta_t*etta_D\n", BEqnIdx, i);
 
-        beq(BEqnIdx) = B0Vals_Area(i);
+        beq_Full(BEqnIdx) = B0Vals_Area(i);
         myfprintf(verbose, fid, "beq(%d) = B0(%d) = %f\n", BEqnIdx, i, B0Vals_Area(i));
     end
 
@@ -378,7 +381,8 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     end
     
     % calling linear solution for intial point
-    x_linear_Area = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, B0Vals_Area, isLeaf_Area, ...
+
+    x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v_parent_Area, S_connection_Area, B0Vals_Area, isLeaf_Area, ...
         Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, itr, 'verbose', true);
 
 
@@ -394,30 +398,30 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     indices_Pd_noLoss = ranges_noLoss{7};
     indices_qB_noLoss = ranges_noLoss{8};
     
-    P0_Area = x_linear_Area( indices_P_noLoss );
-    Q0_Area = x_linear_Area( indices_Q_noLoss );
-    v0_Area =  x_linear_Area( indices_vFull_noLoss );
-    qD0_Area = x_linear_Area( indices_qD_noLoss );
-    B0_Area = x_linear_Area(indices_B_noLoss);
-    Pc0_Area = x_linear_Area(indices_Pc_noLoss);
-    Pd0_Area = x_linear_Area(indices_Pd_noLoss);
-    qB0_Area = x_linear_Area(indices_qB_noLoss);
+    P0_NoLoss = x_NoLoss( indices_P_noLoss );
+    Q0_NoLoss = x_NoLoss( indices_Q_noLoss );
+    v0_NoLoss =  x_NoLoss( indices_vFull_noLoss );
+    qD0_NoLoss = x_NoLoss( indices_qD_noLoss );
+    B0_NoLoss = x_NoLoss(indices_B_noLoss);
+    Pc0_NoLoss = x_NoLoss(indices_Pc_noLoss);
+    Pd0_NoLoss = x_NoLoss(indices_Pd_noLoss);
+    qB0_NoLoss = x_NoLoss(indices_qB_noLoss);
     
-    Iflow0_Area = zeros(m_Area, 1);
+    l0_NoLoss = zeros(m_Area, 1);
 
     for currentBusNum = 2 : N_Area
         parentBusIdx = find(tb_Area == currentBusNum);
         siblingBusesIndices = find(parentBusNum == fb_Area);
-        Iflow0_Area( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
+        l0_NoLoss( parentBusIdx ) = ( P0_NoLoss(parentBusIdx)^2 + Q0_NoLoss(parentBusIdx)^2 ) / v0_NoLoss(siblingBusesIndices(1));
     end
     
     % x0_Area = [P0_Area; Q0_Area; Iflow0_Area; v0_Area; qD0_Area];
-    x0_Area = [P0_Area; Q0_Area; Iflow0_Area; v0_Area; qD0_Area; B0_Area; Pc0_Area; Pd0_Area; qB0_Area];
+    x0 = [P0_NoLoss; Q0_NoLoss; l0_NoLoss; v0_NoLoss; qD0_NoLoss; B0_NoLoss; Pc0_NoLoss; Pd0_NoLoss; qB0_NoLoss];
 
     
     % Definig Limits
     
-    numVarsForBoundsFull = [1, numVarsFull(1) - 1, numVarsFull(2:3) ]; % qD limits are specific to each machine, will be appended later.
+    numVarsForBoundsFull = [1, numVarsFull(1) - 1, numVarsFull(2:4) ]; % qD limits are specific to each machine, will be appended later.
     % lbVals = [0, -1500, -1500, 0, V_min^2];
     lbVals = [0, -5, -15, 0, V_min^2];
     % ubVals = [1500, 1500, 1500, 1500, V_max^2];
@@ -431,25 +435,51 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     ub_AreaFull = [ub_Area; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area];
 
     
-    if itr == 0 && Area == 2
-        mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
-        mydisplay(verbose, "Aeq", Aeq)
-        mydisplay(verbose, "beq", beq)
-        mydisplay(verbose, "lb", lb_AreaFull)
-        mydisplay(verbose, "ub", ub_AreaFull)
-    end
+    % if itr == 0 && Area == 2
+    %     mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
+    %     mydisplay(verbose, "Aeq", Aeq_Full)
+    %     mydisplay(verbose, "beq", beq_Full)
+    %     mydisplay(verbose, "lb", lb_AreaFull)
+    %     mydisplay(verbose, "ub", ub_AreaFull)
+    % end
 
     %  Optimization - 
     options = optimoptions('fmincon', 'Display', 'off', 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
     
     startSolvingForOptimization = tic;
     
-    % @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min", 'secondObjFun', "SCD_min")
+    % [lb_AreaFull x0 ub_AreaFull]
+    flaggedForLimitViolation = false;
 
-    [x, ~, ~, ~] = fmincon( @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, "mainObjFun", "loss_min", "secondObjFun", "SCD_min"), ...
-                              x0_Area, [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, ...
+    for varNum = 1:numOptVarsFull
+        lbVal = lb_AreaFull(varNum);
+        ubVal = ub_AreaFull(varNum);
+        x0Val = x0(varNum);
+        if lbVal > x0Val
+            myfprintf(verbose, "Oh no! x0(%d) < lb(%d) as %f < %f.\n", varNum, varNum, x0Val, lbVal);
+            flaggedForLimitViolation = true;
+        end
+        if ubVal < x0Val
+            myfprintf(verbose, "Oh no! x0_NoLoss(%d) > ub(%d) as %f > %f.\n", varNum, varNum, x0Val, ubVal);
+            flaggedForLimitViolation = true;
+        end
+    end
+    
+    if checkOptimalSolutionWithinBounds(x0, lb_AreaFull, ub_AreaFull)
+        myfprintf(verbose, "My native bound checker says that bounds are being violated.\n");
+        error("Nani?");
+    elseif flaggedForLimitViolation
+        myfprintf(verbose, "x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.\n")
+    else
+        myfprintf(verbose, "x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.\n");
+    end
+
+    myfprintf(verbose, "Now solving for the real deal. Area %d and Iteration %d\n", Area, itr);
+
+    [x, ~, ~, ~] = fmincon( @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min", 'secondObjFun', "SCD_min"), ...
+                              x0, [], [], Aeq_Full, beq_Full, lb_AreaFull, ub_AreaFull, ...
                               @(x)eqcons(x, Area, N_Area, ...
-                              fb_Area, tb_Area, indices_P, indices_Q, indices_l, indices_vFull, ...
+                              fb_Area, tb_Area, indices_P, indices_Q, indices_l, indices_vAll, ...
                               itr, systemName, numAreas, "verbose", false, "saveToFile", false),...
                               options);
     
@@ -461,25 +491,43 @@ function [v2_Area, S_Area, qD_Full_Area, BVals_Area,...
     P_Area = x(indices_P); %m_Areax1
     Q_Area = x(indices_Q); %m_Areax1
     S_Area = complex(P_Area, Q_Area); %m_Areax1
-    v2_Area = x(indices_vFull); %N_Areax1
-    v2_Area(1) = v2_parent_Area;
-    
+    l_Area = x(indices_l);
+    v_Area = x(indices_vAll); %N_Areax1
     qD_Area = x(indices_qD);
+    v_Area(1) = v_parent_Area;
+    B_Area = x(indices_B);
+    Pd_Area = x(indices_Pd);
+    Pc_Area = x(indices_Pc);
+    qB_Area = x(indices_qB);
 
     qD_Full_Area = zeros(N_Area, 1);
 
     for i = 1 : nDER_Area
-        qD_Full_Area( busesWithDERs_Area(i) ) = qD_Area(i);
+        busNum = busesWithDERs_Area(i);
+        qD_Full_Area(busNum) = qD_Area(i);
     end
     
-    BVals_Area = x(indices_B);
-    
-    B_Full_Area = zeros(N_Area, 1);
+    [B_AllBuses, Pd_AllBuses, Pc_AllBuses, qB_AllBuses] = deal(zeros(N_Area, 1));
 
     for i = 1 : nBatt_Area
-        B_Full_Area( busesWithBatts_Area(i) ) = BVals_Area(i);
+        busNum = busesWithBatts_Area(i); 
+        B_AllBuses(busNum) = B_Area(i);
+        Pc_AllBuses(busNum) = Pc_Area(i);
+        Pd_AllBuses(busNum) = Pd_Area(i);
+        qB_AllBuses(busNum) = qB_Area(i);
     end
+    
+    P_inFlowArea = P_Area(1);
+    P_der_Total = sum(P_der_Area);
+    Pd_Total = sum(Pd_Area);
+    Pc_Total = sum(Pc_Area);
+    PLoad_Total = sum(P_L_Area);
 
-    microIterationLosses(itr + 1, Area) = P_Area(1) + sum(P_der_Area) - sum(P_L_Area);
+    PLoss = P_inFlowArea + P_der_Total + Pd_Total - PLoad_Total - Pc_Total;
+    percentageSavings = 100*(1 - P_inFlowArea/(P_inFlowArea + Pd_Total - Pc_Total) );
+
+    myfprintf(true, "Projected savings in substation power flow by using batteries: %f percent.\n", percentageSavings); % always true
+
+    microIterationLosses(itr + 1, Area) = PLoss;
 
 end

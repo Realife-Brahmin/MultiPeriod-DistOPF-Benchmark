@@ -14,8 +14,11 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
     indices_l = 2*m_Area + 1:3*m_Area;
     indices_vFull_NoLoss = indices_Q + N_Area;
     % indices_v_NoLoss = indices_vFull_NoLoss(2:end);
-    indices_Pc = 2*m_Area + N_Area + nDER_Area + nBatt_Area + 1:2*m_Area + N_Area + nDER_Area + 2*nBatt_Area;
-    indices_Pd = indices_Pc + nBatt_Area;
+    indices_Pc_NoLoss = 2*m_Area + N_Area + nDER_Area + nBatt_Area + 1:2*m_Area + N_Area + nDER_Area + 2*nBatt_Area;
+    indices_Pd_NoLoss = indices_Pc_NoLoss + nBatt_Area;
+
+    indices_Pc_Full = indices_Pc_NoLoss + m_Area;
+    indices_Pd_Full = indices_Pd_NoLoss + m_Area;
     % Process optional arguments
     numArgs = numel(varargin);
 
@@ -61,10 +64,11 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
                 indices_Pd = argValue;
         end
     end
+    
 
     f = 0;
     
-    if strcmp(mainObjFun, "loss_min-real")
+    if strcmp(mainObjFun, "loss_min")
         for currentBusNum = 2 : N_Area
             parentBusIdx = find(tb_Area == currentBusNum);
             parentBusNum = fb_Area(parentBusIdx);
@@ -87,7 +91,6 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
 
               f = f + l0_fake(parentBusIdx) * R_Area_Matrix( parentBusNum, currentBusNum );
           end
-
     elseif strcmp(mainObjFun, "none")
         myfprintf(verbose, "Okay, no primary objective function component.\n");
     else
@@ -96,6 +99,19 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
     
     if strcmp(secondObjFun, "SCD_min")
         myfprintf(verbose, "Complementarity Needs to Be Respected.\n");
+
+        if ~exist('indices_Pc', 'var') && strcmp(mainObjFun, "loss_min")
+            indices_Pc = indices_Pc_Full;
+            indices_Pd = indices_Pd_Full;
+        elseif ~exist('indices_Pc', 'var') && ~strcmp(mainObjFun, "loss_min")
+            indices_Pc = indices_Pc_NoLoss;
+            indices_Pd = indices_Pd_NoLoss;
+        elseif strcmp(mainObjFun, "none")
+            error("Illegal! Cannot solve for SCD with no minimization function. Abort!");
+        else
+            myfprintf(verbose, "Hope that Pc and Pd indices were input as optional arguments, cause this shit is being solved for.\n");
+        end
+
         for i = 1:nBatt_Area
             Pc_Idx = indices_Pc(i);
             Pd_Idx = indices_Pd(i);

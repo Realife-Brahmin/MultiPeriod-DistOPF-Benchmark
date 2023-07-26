@@ -1,4 +1,4 @@
-function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, B0Vals_Area, isLeaf_Area, ...
+function x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, B0Vals_Area, isLeaf_Area, ...
     Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, itr, varargin)
 
  % Default values for optional arguments
@@ -325,10 +325,6 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     end
 
     numVarsForBoundsNoLoss = [1, numVarsNoLoss(1) - 1, numVarsNoLoss(2:3)]; % qD limits are specific to each machine, will be appended later.
-    % lbVals = [0, -150, -150, V_min^2];
-    % ubVals = [150, 150, 150, V_max^2];
-    % lbVals = [0, -1500, -1500, V_min^2];
-    % ubVals = [1500, 1500, 1500, V_max^2];
     lbVals = [0, -5, -4, V_min^2];
     ubVals = [5, 5, 4, V_max^2];
     [lbBFM_NoLoss, ubBFM_NoLoss] = constructBoundVectors(numVarsForBoundsNoLoss, lbVals, ubVals);
@@ -341,22 +337,22 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     ubBFM_DER_Batt_NoLoss = [ubBFM_DER_NoLoss; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area];
     ub_NoLoss = ubBFM_DER_Batt_NoLoss;
 
-    verbose = true;
-    if itr == 0 && Area == 2
-        myfprintf(verbose, "Hello!\n")
-        mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
-        mydisplay(verbose, "Aeq", Aeq_NoLoss)
-        mydisplay(verbose, "beq", beq_NoLoss)
-        mydisplay(verbose, "lb", lb_NoLoss)
-        mydisplay(verbose, "ub", ub_NoLoss)
-    end
+    % verbose = true;
+    % if itr == 0 && Area == 2
+    %     myfprintf(verbose, "Hello!\n")
+    %     mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
+    %     mydisplay(verbose, "Aeq", Aeq_NoLoss)
+    %     mydisplay(verbose, "beq", beq_NoLoss)
+    %     mydisplay(verbose, "lb", lb_NoLoss)
+    %     mydisplay(verbose, "ub", ub_NoLoss)
+    % end
 
     if fileOpenedFlag
         fclose(fid);
     end
-    Tnvar = size(Aeq_NoLoss,2);         % total number of variables
+    % Tnvar = size(Aeq_NoLoss,2);         % total number of variables
         
-    f = zeros(Tnvar,1);
+    % f = zeros(Tnvar,1);
     fBFM = zeros(numVarsBFM_DERs_NoLoss, 1);
 
     % f(Table_Area(1,3)) = 0;
@@ -364,39 +360,31 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     AeqBFM_NoLoss = Aeq_NoLoss(1:numLinOptEquationsBFM, 1:numVarsBFM_DERs_NoLoss);
     beqBFM_NoLoss = beq_NoLoss(1:numLinOptEquationsBFM);
 
-    if itr == 0 && Area == 2
-        myfprintf(verbose, "Let's first solve for equations without any batteries.\n")
-        mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
-        mydisplay(verbose, "AeqBFM", AeqBFM_NoLoss)
-        mydisplay(verbose, "beqBFM", beqBFM_NoLoss)
-        mydisplay(verbose, "lbBFM", lbBFM_DER_NoLoss)
-        mydisplay(verbose, "ubBFM", ubBFM_DER_NoLoss)
-    end
+    % if itr == 0 && Area == 2
+    %     myfprintf(verbose, "Let's first solve for equations without any batteries.\n")
+    %     mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
+    %     mydisplay(verbose, "AeqBFM", AeqBFM_NoLoss)
+    %     mydisplay(verbose, "beqBFM", beqBFM_NoLoss)
+    %     mydisplay(verbose, "lbBFM", lbBFM_DER_NoLoss)
+    %     mydisplay(verbose, "ubBFM", ubBFM_DER_NoLoss)
+    % end
 
     options = optimoptions('intlinprog','Display','iter');
     
-
+    myfprintf(verbose, "Performing Initialization Phase 1 for Area %d, Iteration #%d.\n", Area, itr);
     [xBFM_DER_NoLoss, ~, ~, ~] = intlinprog(fBFM, [], [], [], AeqBFM_NoLoss, beqBFM_NoLoss, lbBFM_DER_NoLoss, ubBFM_DER_NoLoss, options);
     
     if ~isempty(xBFM_DER_NoLoss)
-        myfprintf(verbose, "Iteration %d Area %d, Lossless Initialization WITHOUT batteries accomplished.\n", itr, Area);
+        myfprintf(verbose, "Iteration %d Area %d: Lossless Initialization WITHOUT batteries accomplished.\n", itr, Area);
     end
 
-    l0_Area = zeros(m_Area, 1);
+    % l0_Area = zeros(m_Area, 1);
     
     P0_BFM_DER_NoLoss = xBFM_DER_NoLoss(indices_P_noLoss);
     Q0_BFM_DER_NoLoss = xBFM_DER_NoLoss(indices_Q_noLoss);
     v0_BFM_DER_NoLoss =  xBFM_DER_NoLoss(indices_vFull_noLoss);
     qD0_BFM_DER_NoLoss = xBFM_DER_NoLoss(indices_qD_noLoss);
-    % B0_Area = x_linear_Area(indices_B_noLoss);
-    % Pc0_Area = x_linear_Area(indices_Pc_noLoss);
-    % Pd0_Area = x_linear_Area(indices_Pd_noLoss);
-    % qB0_Area = x_linear_Area(indices_qB_noLoss);
-    
 
-
-    % l0_Area
-    
     B0 = B0Vals_Area;
     Pc0 = zeros(nBatt_Area, 1);
     Pd0 = zeros(nBatt_Area, 1);
@@ -404,35 +392,44 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     
     x0_NoLoss = [P0_BFM_DER_NoLoss; Q0_BFM_DER_NoLoss; v0_BFM_DER_NoLoss; qD0_BFM_DER_NoLoss; B0; Pc0; Pd0; qB0];
     % [lb_NoLoss x0_NoLoss ub_NoLoss]
+    flaggedForLimitViolation = false;
+    for varNum = 1:numOptVarsNoLoss
+        lbVal = lb_NoLoss(varNum);
+        ubVal = ub_NoLoss(varNum);
+        x0Val = x0_NoLoss(varNum);
+        if lb_NoLoss(varNum) > x0_NoLoss(varNum)
+            myfprintf(verbose, "Oh no! x0_NoLoss(%d) < lb(%d) as %f < %f.\n", varNum, varNum, x0Val, lbVal);
+            flaggedForLimitViolation = true;
+        end
+        if ub_NoLoss(varNum) < x0_NoLoss(varNum)
+            myfprintf(verbose, "Oh no! x0_NoLoss(%d) > ub(%d) as %f > %f.\n", varNum, varNum, x0Val, ubVal);
+            flaggedForLimitViolation = true;
+        end
+    end
+    
+    if checkOptimalSolutionWithinBounds(x0_NoLoss, lb_NoLoss, ub_NoLoss)
+        myfprintf("My native bound checker says that bounds are being violated.\n");
+        error("Nani?");
+    elseif flaggedForLimitViolation
+        myfprintf(verbose, "x0_NoLoss within limits anyway? More like MATLAB stupid? Phase 1 of Initialization successful. Proceeding to Phase 2 of Initialization.\n")
+    else
+        myfprintf(verbose, "x0_NoLoss within limits. Phase 1 of Initialization successful. Proceeding to Phase 2 of Initialization.\n");
+    end
 
     options = optimoptions('fmincon', 'Display', 'iter', 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
     
-    % @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min-fake", 'secondObjFun', "SCD_min")
+    myfprintf(verbose, "Performing Initialization Phase 2 for Area %d, Iteration #%d.\n", Area, itr);
 
     [x_NoLoss, ~, ~, ~] = ...
-        fmincon(@(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min-fake", 'secondObjFun', "none"), ...
+        fmincon(@(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min-fake", 'secondObjFun', "none", 'indices_Pd', indices_Pd_noLoss, 'indices_Pc', indices_Pc_noLoss), ...
         x0_NoLoss, [], [], Aeq_NoLoss, beq_NoLoss, lb_NoLoss, ub_NoLoss, [], options);
     
     if ~isempty(x_NoLoss)
         myfprintf(verbose, "Iteration %d Area %d, Lossless Initialization WITH batteries accomplished.\n", itr, Area);
     else
-        error("Iteration %d Area %d, Lossless Initialization WITH batteries accomplished.\n", itr, Area);
-    end
-    
-    P0 = x_NoLoss(indices_P_noLoss);
-    Q0 = x_NoLoss(indices_Q_noLoss);
-    v0 =  x_NoLoss(indices_vFull_noLoss);    
-    
-    for currentBusNum = 2 : N_Area
-        parentBusIdx = find(tb_Area == currentBusNum);
-        siblingBusesIndices = find(parentBusNum == fb_Area);
-        l0_Area( parentBusIdx ) = ( P0(parentBusIdx)^2 + Q0(parentBusIdx)^2 ) / v0(siblingBusesIndices(1));
+        error("Iteration %d Area %d, Lossless Initialization WITH batteries failed.\n", itr, Area);
     end
     
     mydisplay(verbose, x_NoLoss)
-    error("Okay you may stop here, hopefully x_Area_Linear is obtained.")
-
-
-    % [x_Area_Linear, ~, ~, ~] = intlinprog(f, [], [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, options)
 
 end

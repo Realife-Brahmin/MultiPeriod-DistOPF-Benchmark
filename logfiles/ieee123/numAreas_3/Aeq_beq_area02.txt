@@ -1,3 +1,5 @@
+Number of DERs in Area 2 : 48.
+Number of Batteries in Area 2 : 48.
 **********Constructing Aeq and beq for Area 2.
 ***********
 *****
@@ -1602,3 +1604,339 @@ Aeq(134, qD(45)) = 1
 Aeq(135, qD(46)) = 1
 Aeq(136, qD(47)) = 1
 Aeq(137, qD(48)) = 1
+Aeq(2, Pc(1)) = -1
+Aeq(2, Pd(1)) = 1
+Aeq(72, qB(1)) = 1
+Aeq(212, B(1)) = 1
+Aeq(212, Pc(1)) = -delta_t*etta_C
+Aeq(212, Pd(1)) = delta_t*etta_D
+beq(212) = B0(1) = 0.011664
+Aeq(3, Pc(2)) = -1
+Aeq(3, Pd(2)) = 1
+Aeq(73, qB(2)) = 1
+Aeq(213, B(2)) = 1
+Aeq(213, Pc(2)) = -delta_t*etta_C
+Aeq(213, Pd(2)) = delta_t*etta_D
+beq(213) = B0(2) = 0.011664
+Aeq(5, Pc(3)) = -1
+Aeq(5, Pd(3)) = 1
+Aeq(75, qB(3)) = 1
+Aeq(214, B(3)) = 1
+Aeq(214, Pc(3)) = -delta_t*etta_C
+Aeq(214, Pd(3)) = delta_t*etta_D
+beq(214) = B0(3) = 0.005834
+Aeq(6, Pc(4)) = -1
+Aeq(6, Pd(4)) = 1
+Aeq(76, qB(4)) = 1
+Aeq(215, B(4)) = 1
+Aeq(215, Pc(4)) = -delta_t*etta_C
+Aeq(215, Pd(4)) = delta_t*etta_D
+beq(215) = B0(4) = 0.005834
+Aeq(8, Pc(5)) = -1
+Aeq(8, Pd(5)) = 1
+Aeq(78, qB(5)) = 1
+Aeq(216, B(5)) = 1
+Aeq(216, Pc(5)) = -delta_t*etta_C
+Aeq(216, Pd(5)) = delta_t*etta_D
+beq(216) = B0(5) = 0.005834
+Aeq(9, Pc(6)) = -1
+Aeq(9, Pd(6)) = 1
+Aeq(79, qB(6)) = 1
+Aeq(217, B(6)) = 1
+Aeq(217, Pc(6)) = -delta_t*etta_C
+Aeq(217, Pd(6)) = delta_t*etta_D
+beq(217) = B0(6) = 0.005834
+Aeq(10, Pc(7)) = -1
+Aeq(10, Pd(7)) = 1
+Aeq(80, qB(7)) = 1
+Aeq(218, B(7)) = 1
+Aeq(218, Pc(7)) = -delta_t*etta_C
+Aeq(218, Pd(7)) = delta_t*etta_D
+beq(218) = B0(7) = 0.005834
+Aeq(12, Pc(8)) = -1
+Aeq(12, Pd(8)) = 1
+Aeq(82, qB(8)) = 1
+Aeq(219, B(8)) = 1
+Aeq(219, Pc(8)) = -delta_t*etta_C
+Aeq(219, Pd(8)) = delta_t*etta_D
+beq(219) = B0(8) = 0.011664
+Aeq(13, Pc(9)) = -1
+Aeq(13, Pd(9)) = 1
+Aeq(83, qB(9)) = 1
+Aeq(220, B(9)) = 1
+Aeq(220, Pc(9)) = -delta_t*etta_C
+Aeq(220, Pd(9)) = delta_t*etta_D
+beq(220) = B0(9) = 0.011664
+Aeq(14, Pc(10)) = -1
+Aeq(14, Pd(10)) = 1
+Aeq(84, qB(10)) = 1
+Aeq(221, B(10)) = 1
+Aeq(221, Pc(10)) = -delta_t*etta_C
+Aeq(221, Pd(10)) = delta_t*etta_D
+beq(221) = B0(10) = 0.021875
+Aeq(15, Pc(11)) = -1
+Aeq(15, Pd(11)) = 1
+Aeq(85, qB(11)) = 1
+Aeq(222, B(11)) = 1
+Aeq(222, Pc(11)) = -delta_t*etta_C
+Aeq(222, Pd(11)) = delta_t*etta_D
+beq(222) = B0(11) = 0.040836
+Aeq(16, Pc(12)) = -1
+Aeq(16, Pd(12)) = 1
+Aeq(86, qB(12)) = 1
+Aeq(223, B(12)) = 1
+Aeq(223, Pc(12)) = -delta_t*etta_C
+Aeq(223, Pd(12)) = delta_t*etta_D
+beq(223) = B0(12) = 0.021875
+Aeq(21, Pc(13)) = -1
+Aeq(21, Pd(13)) = 1
+Aeq(91, qB(13)) = 1
+Aeq(224, B(13)) = 1
+Aeq(224, Pc(13)) = -delta_t*etta_C
+Aeq(224, Pd(13)) = delta_t*etta_D
+beq(224) = B0(13) = 0.005834
+Aeq(22, Pc(14)) = -1
+Aeq(22, Pd(14)) = 1
+Aeq(92, qB(14)) = 1
+Aeq(225, B(14)) = 1
+Aeq(225, Pc(14)) = -delta_t*etta_C
+Aeq(225, Pd(14)) = delta_t*etta_D
+beq(225) = B0(14) = 0.011664
+Aeq(23, Pc(15)) = -1
+Aeq(23, Pd(15)) = 1
+Aeq(93, qB(15)) = 1
+Aeq(226, B(15)) = 1
+Aeq(226, Pc(15)) = -delta_t*etta_C
+Aeq(226, Pd(15)) = delta_t*etta_D
+beq(226) = B0(15) = 0.005834
+Aeq(24, Pc(16)) = -1
+Aeq(24, Pd(16)) = 1
+Aeq(94, qB(16)) = 1
+Aeq(227, B(16)) = 1
+Aeq(227, Pc(16)) = -delta_t*etta_C
+Aeq(227, Pd(16)) = delta_t*etta_D
+beq(227) = B0(16) = 0.011664
+Aeq(26, Pc(17)) = -1
+Aeq(26, Pd(17)) = 1
+Aeq(96, qB(17)) = 1
+Aeq(228, B(17)) = 1
+Aeq(228, Pc(17)) = -delta_t*etta_C
+Aeq(228, Pd(17)) = delta_t*etta_D
+beq(228) = B0(17) = 0.011664
+Aeq(27, Pc(18)) = -1
+Aeq(27, Pd(18)) = 1
+Aeq(97, qB(18)) = 1
+Aeq(229, B(18)) = 1
+Aeq(229, Pc(18)) = -delta_t*etta_C
+Aeq(229, Pd(18)) = delta_t*etta_D
+beq(229) = B0(18) = 0.011664
+Aeq(28, Pc(19)) = -1
+Aeq(28, Pd(19)) = 1
+Aeq(98, qB(19)) = 1
+Aeq(230, B(19)) = 1
+Aeq(230, Pc(19)) = -delta_t*etta_C
+Aeq(230, Pd(19)) = delta_t*etta_D
+beq(230) = B0(19) = 0.011664
+Aeq(29, Pc(20)) = -1
+Aeq(29, Pd(20)) = 1
+Aeq(99, qB(20)) = 1
+Aeq(231, B(20)) = 1
+Aeq(231, Pc(20)) = -delta_t*etta_C
+Aeq(231, Pd(20)) = delta_t*etta_D
+beq(231) = B0(20) = 0.071461
+Aeq(30, Pc(21)) = -1
+Aeq(30, Pd(21)) = 1
+Aeq(100, qB(21)) = 1
+Aeq(232, B(21)) = 1
+Aeq(232, Pc(21)) = -delta_t*etta_C
+Aeq(232, Pd(21)) = delta_t*etta_D
+beq(232) = B0(21) = 0.011664
+Aeq(32, Pc(22)) = -1
+Aeq(32, Pd(22)) = 1
+Aeq(102, qB(22)) = 1
+Aeq(233, B(22)) = 1
+Aeq(233, Pc(22)) = -delta_t*etta_C
+Aeq(233, Pd(22)) = delta_t*etta_D
+beq(233) = B0(22) = 0.011664
+Aeq(33, Pc(23)) = -1
+Aeq(33, Pd(23)) = 1
+Aeq(103, qB(23)) = 1
+Aeq(234, B(23)) = 1
+Aeq(234, Pc(23)) = -delta_t*etta_C
+Aeq(234, Pd(23)) = delta_t*etta_D
+beq(234) = B0(23) = 0.011664
+Aeq(35, Pc(24)) = -1
+Aeq(35, Pd(24)) = 1
+Aeq(105, qB(24)) = 1
+Aeq(235, B(24)) = 1
+Aeq(235, Pc(24)) = -delta_t*etta_C
+Aeq(235, Pd(24)) = delta_t*etta_D
+beq(235) = B0(24) = 0.011664
+Aeq(36, Pc(25)) = -1
+Aeq(36, Pd(25)) = 1
+Aeq(106, qB(25)) = 1
+Aeq(236, B(25)) = 1
+Aeq(236, Pc(25)) = -delta_t*etta_C
+Aeq(236, Pd(25)) = delta_t*etta_D
+beq(236) = B0(25) = 0.005834
+Aeq(37, Pc(26)) = -1
+Aeq(37, Pd(26)) = 1
+Aeq(107, qB(26)) = 1
+Aeq(237, B(26)) = 1
+Aeq(237, Pc(26)) = -delta_t*etta_C
+Aeq(237, Pd(26)) = delta_t*etta_D
+beq(237) = B0(26) = 0.005834
+Aeq(38, Pc(27)) = -1
+Aeq(38, Pd(27)) = 1
+Aeq(108, qB(27)) = 1
+Aeq(238, B(27)) = 1
+Aeq(238, Pc(27)) = -delta_t*etta_C
+Aeq(238, Pd(27)) = delta_t*etta_D
+beq(238) = B0(27) = 0.011664
+Aeq(39, Pc(28)) = -1
+Aeq(39, Pd(28)) = 1
+Aeq(109, qB(28)) = 1
+Aeq(239, B(28)) = 1
+Aeq(239, Pc(28)) = -delta_t*etta_C
+Aeq(239, Pd(28)) = delta_t*etta_D
+beq(239) = B0(28) = 0.005834
+Aeq(40, Pc(29)) = -1
+Aeq(40, Pd(29)) = 1
+Aeq(110, qB(29)) = 1
+Aeq(240, B(29)) = 1
+Aeq(240, Pc(29)) = -delta_t*etta_C
+Aeq(240, Pd(29)) = delta_t*etta_D
+beq(240) = B0(29) = 0.011664
+Aeq(41, Pc(30)) = -1
+Aeq(41, Pd(30)) = 1
+Aeq(111, qB(30)) = 1
+Aeq(241, B(30)) = 1
+Aeq(241, Pc(30)) = -delta_t*etta_C
+Aeq(241, Pd(30)) = delta_t*etta_D
+beq(241) = B0(30) = 0.011664
+Aeq(43, Pc(31)) = -1
+Aeq(43, Pd(31)) = 1
+Aeq(113, qB(31)) = 1
+Aeq(242, B(31)) = 1
+Aeq(242, Pc(31)) = -delta_t*etta_C
+Aeq(242, Pd(31)) = delta_t*etta_D
+beq(242) = B0(31) = 0.011664
+Aeq(45, Pc(32)) = -1
+Aeq(45, Pd(32)) = 1
+Aeq(115, qB(32)) = 1
+Aeq(243, B(32)) = 1
+Aeq(243, Pc(32)) = -delta_t*etta_C
+Aeq(243, Pd(32)) = delta_t*etta_D
+beq(243) = B0(32) = 0.011664
+Aeq(47, Pc(33)) = -1
+Aeq(47, Pd(33)) = 1
+Aeq(117, qB(33)) = 1
+Aeq(244, B(33)) = 1
+Aeq(244, Pc(33)) = -delta_t*etta_C
+Aeq(244, Pd(33)) = delta_t*etta_D
+beq(244) = B0(33) = 0.011664
+Aeq(48, Pc(34)) = -1
+Aeq(48, Pd(34)) = 1
+Aeq(118, qB(34)) = 1
+Aeq(245, B(34)) = 1
+Aeq(245, Pc(34)) = -delta_t*etta_C
+Aeq(245, Pd(34)) = delta_t*etta_D
+beq(245) = B0(34) = 0.005834
+Aeq(49, Pc(35)) = -1
+Aeq(49, Pd(35)) = 1
+Aeq(119, qB(35)) = 1
+Aeq(246, B(35)) = 1
+Aeq(246, Pc(35)) = -delta_t*etta_C
+Aeq(246, Pd(35)) = delta_t*etta_D
+beq(246) = B0(35) = 0.005834
+Aeq(51, Pc(36)) = -1
+Aeq(51, Pd(36)) = 1
+Aeq(121, qB(36)) = 1
+Aeq(247, B(36)) = 1
+Aeq(247, Pc(36)) = -delta_t*etta_C
+Aeq(247, Pd(36)) = delta_t*etta_D
+beq(247) = B0(36) = 0.011664
+Aeq(52, Pc(37)) = -1
+Aeq(52, Pd(37)) = 1
+Aeq(122, qB(37)) = 1
+Aeq(248, B(37)) = 1
+Aeq(248, Pc(37)) = -delta_t*etta_C
+Aeq(248, Pd(37)) = delta_t*etta_D
+beq(248) = B0(37) = 0.011664
+Aeq(53, Pc(38)) = -1
+Aeq(53, Pd(38)) = 1
+Aeq(123, qB(38)) = 1
+Aeq(249, B(38)) = 1
+Aeq(249, Pc(38)) = -delta_t*etta_C
+Aeq(249, Pd(38)) = delta_t*etta_D
+beq(249) = B0(38) = 0.011664
+Aeq(55, Pc(39)) = -1
+Aeq(55, Pd(39)) = 1
+Aeq(125, qB(39)) = 1
+Aeq(250, B(39)) = 1
+Aeq(250, Pc(39)) = -delta_t*etta_C
+Aeq(250, Pd(39)) = delta_t*etta_D
+beq(250) = B0(39) = 0.005834
+Aeq(56, Pc(40)) = -1
+Aeq(56, Pd(40)) = 1
+Aeq(126, qB(40)) = 1
+Aeq(251, B(40)) = 1
+Aeq(251, Pc(40)) = -delta_t*etta_C
+Aeq(251, Pd(40)) = delta_t*etta_D
+beq(251) = B0(40) = 0.011664
+Aeq(57, Pc(41)) = -1
+Aeq(57, Pd(41)) = 1
+Aeq(127, qB(41)) = 1
+Aeq(252, B(41)) = 1
+Aeq(252, Pc(41)) = -delta_t*etta_C
+Aeq(252, Pd(41)) = delta_t*etta_D
+beq(252) = B0(41) = 0.011664
+Aeq(59, Pc(42)) = -1
+Aeq(59, Pd(42)) = 1
+Aeq(129, qB(42)) = 1
+Aeq(253, B(42)) = 1
+Aeq(253, Pc(42)) = -delta_t*etta_C
+Aeq(253, Pd(42)) = delta_t*etta_D
+beq(253) = B0(42) = 0.011664
+Aeq(60, Pc(43)) = -1
+Aeq(60, Pd(43)) = 1
+Aeq(130, qB(43)) = 1
+Aeq(254, B(43)) = 1
+Aeq(254, Pc(43)) = -delta_t*etta_C
+Aeq(254, Pd(43)) = delta_t*etta_D
+beq(254) = B0(43) = 0.011664
+Aeq(62, Pc(44)) = -1
+Aeq(62, Pd(44)) = 1
+Aeq(132, qB(44)) = 1
+Aeq(255, B(44)) = 1
+Aeq(255, Pc(44)) = -delta_t*etta_C
+Aeq(255, Pd(44)) = delta_t*etta_D
+beq(255) = B0(44) = 0.011664
+Aeq(64, Pc(45)) = -1
+Aeq(64, Pd(45)) = 1
+Aeq(134, qB(45)) = 1
+Aeq(256, B(45)) = 1
+Aeq(256, Pc(45)) = -delta_t*etta_C
+Aeq(256, Pd(45)) = delta_t*etta_D
+beq(256) = B0(45) = 0.005834
+Aeq(65, Pc(46)) = -1
+Aeq(65, Pd(46)) = 1
+Aeq(135, qB(46)) = 1
+Aeq(257, B(46)) = 1
+Aeq(257, Pc(46)) = -delta_t*etta_C
+Aeq(257, Pd(46)) = delta_t*etta_D
+beq(257) = B0(46) = 0.005834
+Aeq(66, Pc(47)) = -1
+Aeq(66, Pd(47)) = 1
+Aeq(136, qB(47)) = 1
+Aeq(258, B(47)) = 1
+Aeq(258, Pc(47)) = -delta_t*etta_C
+Aeq(258, Pd(47)) = delta_t*etta_D
+beq(258) = B0(47) = 0.011664
+Aeq(67, Pc(48)) = -1
+Aeq(67, Pd(48)) = 1
+Aeq(137, qB(48)) = 1
+Aeq(259, B(48)) = 1
+Aeq(259, Pc(48)) = -delta_t*etta_C
+Aeq(259, Pd(48)) = delta_t*etta_D
+beq(259) = B0(48) = 0.005834
