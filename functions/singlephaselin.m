@@ -176,8 +176,8 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     numVarsBFM_DERs_NoLoss = numOptVarsBFM_NoLoss + nDER_Area;
     numOptVarsBFM_DERs_Batt_NoLoss = numVarsBFM_DERs_NoLoss + 4*nBatt_Area;
     numOptVarsNoLoss = numOptVarsBFM_DERs_Batt_NoLoss;
-    Aeq_noLoss = zeros(numLinOptEquations, numOptVarsNoLoss);
-    beq_noLoss = zeros(numLinOptEquations, 1);
+    Aeq_NoLoss = zeros(numLinOptEquations, numOptVarsNoLoss);
+    beq_NoLoss = zeros(numLinOptEquations, 1);
     
     for currentBusNum = 2 : N_Area
         myfprintf(verbose, fid, "*****\n" + ...
@@ -190,18 +190,18 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
         myfprintf(verbose, fid, "The parent of bus %d is bus %d at index %d.\n", currentBusNum, parentBusNum, parentBusIdx);
 
         PIdx = parentBusIdx;
-        Aeq_noLoss( PIdx, indices_P_noLoss(parentBusIdx) ) = 1;
-        Aeq_noLoss( PIdx, indices_v_noLoss(parentBusIdx) ) = -0.5 * CVR_P * P_L_Area( currentBusNum );
+        Aeq_NoLoss( PIdx, indices_P_noLoss(parentBusIdx) ) = 1;
+        Aeq_NoLoss( PIdx, indices_v_noLoss(parentBusIdx) ) = -0.5 * CVR_P * P_L_Area( currentBusNum );
         
         QIdx = PIdx + m_Area;
-        Aeq_noLoss( QIdx, indices_Q_noLoss(parentBusIdx) ) = 1;
-        Aeq_noLoss( QIdx, indices_v_noLoss(parentBusIdx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
+        Aeq_NoLoss( QIdx, indices_Q_noLoss(parentBusIdx) ) = 1;
+        Aeq_NoLoss( QIdx, indices_v_noLoss(parentBusIdx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
         
         % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
         childBusIndices = find(fb_Area == currentBusNum);
         if ~isempty(childBusIndices)
-            Aeq_noLoss(PIdx, indices_P_noLoss(childBusIndices) ) = -1;   % for P
-            Aeq_noLoss(QIdx, indices_Q_noLoss(childBusIndices) ) = -1;   % for Q
+            Aeq_NoLoss(PIdx, indices_P_noLoss(childBusIndices) ) = -1;   % for P
+            Aeq_NoLoss(QIdx, indices_Q_noLoss(childBusIndices) ) = -1;   % for Q
         end
         
         myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 1.\n", PIdx, parentBusIdx);
@@ -222,7 +222,7 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
 
         % V equations
         vIdx = QIdx + m_Area;
-        Aeq_noLoss( vIdx, indices_v_noLoss(parentBusIdx) ) = 1;
+        Aeq_NoLoss( vIdx, indices_v_noLoss(parentBusIdx) ) = 1;
         myfprintf(verbose, fid, "Aeq(%d, v(%d)) = 1\n", vIdx, parentBusIdx);
     
         %Return the rows with the list of 'children' buses of 'under' the PARENT of our currentBus:
@@ -236,19 +236,19 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
         eldestSiblingIdx = siblingBusesIndices(1);
         eldestSiblingBus = siblingBuses(1);
         myfprintf(verbose, fid,  "which makes bus %d at index %d as the eldest sibling.\n", eldestSiblingBus, eldestSiblingIdx);
-        Aeq_noLoss( vIdx, indices_vFull_noLoss( eldestSiblingIdx ) ) = -1;
+        Aeq_NoLoss( vIdx, indices_vFull_noLoss( eldestSiblingIdx ) ) = -1;
         myfprintf(verbose, fid, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, eldestSiblingIdx);
-        Aeq_noLoss( vIdx, indices_P_noLoss(parentBusIdx) ) = 2 * R_Area_Matrix( parentBusNum, currentBusNum );
+        Aeq_NoLoss( vIdx, indices_P_noLoss(parentBusIdx) ) = 2 * R_Area_Matrix( parentBusNum, currentBusNum );
         myfprintf(verbose, fid, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, parentBusIdx, parentBusNum, currentBusNum);
-        Aeq_noLoss( vIdx, indices_Q_noLoss(parentBusIdx) ) = 2 * X_Area_Matrix( parentBusNum, currentBusNum );
+        Aeq_NoLoss( vIdx, indices_Q_noLoss(parentBusIdx) ) = 2 * X_Area_Matrix( parentBusNum, currentBusNum );
         myfprintf(verbose, fid, "Aeq(%d, Q(%d)) = 2*x(%d, %d).\n", vIdx, parentBusIdx, parentBusNum, currentBusNum);    
         
-        beq_noLoss(PIdx) = ...
+        beq_NoLoss(PIdx) = ...
             ( 1- 0.5 * CVR_P ) * ...
             ( P_L_Area( currentBusNum ) - P_der_Area( currentBusNum ) );
         myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_P)*(P_L(%d) - P_der(%d))\n", PIdx, currentBusNum, currentBusNum);
     
-        beq_noLoss(QIdx) =  ...
+        beq_NoLoss(QIdx) =  ...
             ( 1- 0.5*CVR_Q ) * ...
             ( Q_L_Area( currentBusNum ) - Q_C_Area( currentBusNum ) );
         myfprintf(verbose, fid, "beq(%d) = (1 - 0.5*CVR_Q)*(Q_L(%d) - Q_C(%d))\n", QIdx, currentBusNum, currentBusNum);
@@ -258,10 +258,10 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     % substation voltage equation
     myfprintf(verbose, fid, "And who can forget the substation voltage equation..\n")
     vSubIdx = 3*m_Area + 1;
-    Aeq_noLoss( vSubIdx, indices_vFull_noLoss(1) ) = 1;
+    Aeq_NoLoss(vSubIdx, indices_vFull_noLoss(1) ) = 1;
     myfprintf(verbose, fid, "Aeq(%d, v_Full(1)) = 1\n", vSubIdx);
 
-    beq_noLoss(vSubIdx) = v2_parent_Area;
+    beq_NoLoss(vSubIdx) = v2_parent_Area;
     myfprintf(verbose, fid, "beq(%d) = %.3f\n", vSubIdx, v2_parent_Area);
 
     Table_DER = zeros(nDER_Area, 5);
@@ -273,7 +273,7 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
         QIdx = parentBusIdx + m_Area;
         qD_Idx = indices_qD_noLoss(i);
 
-        Aeq_noLoss(QIdx, qD_Idx) = 1;
+        Aeq_NoLoss(QIdx, qD_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, qD(%d)) = 1\n", QIdx, i);
         
         %setting other parameters for DGs:
@@ -304,23 +304,23 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
         Pd_Idx = indices_Pd_noLoss(i);
         qB_Idx = indices_qB_noLoss(i);
 
-        Aeq_noLoss(PEqnIdx, Pc_Idx) = -1;
+        Aeq_NoLoss(PEqnIdx, Pc_Idx) = -1;
         myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, i);
 
-        Aeq_noLoss(PEqnIdx, Pd_Idx) = 1;
+        Aeq_NoLoss(PEqnIdx, Pd_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = 1\n", PEqnIdx, i);
 
-        Aeq_noLoss(QEqnIdx, qB_Idx) = 1;
+        Aeq_NoLoss(QEqnIdx, qB_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, i);
         
-        Aeq_noLoss(BEqnIdx, B_Idx) = 1;
+        Aeq_NoLoss(BEqnIdx, B_Idx) = 1;
         myfprintf(verbose, fid, "Aeq(%d, B(%d)) = 1\n", BEqnIdx, i);
-        Aeq_noLoss(BEqnIdx, Pc_Idx) = -delta_t*etta_C;
+        Aeq_NoLoss(BEqnIdx, Pc_Idx) = -delta_t*etta_C;
         myfprintf(verbose, fid, "Aeq(%d, Pc(%d)) = -delta_t*etta_C\n", BEqnIdx, i);
-        Aeq_noLoss(BEqnIdx, Pd_Idx) = delta_t/etta_D;
+        Aeq_NoLoss(BEqnIdx, Pd_Idx) = delta_t/etta_D;
         myfprintf(verbose, fid, "Aeq(%d, Pd(%d)) = delta_t/etta_D\n", BEqnIdx, i);
 
-        beq_noLoss(BEqnIdx) = B0Vals_Area(i);
+        beq_NoLoss(BEqnIdx) = B0Vals_Area(i);
         myfprintf(verbose, fid, "beq(%d) = B0(%d) = %f\n", BEqnIdx, i, B0Vals_Area(i));
     end
 
@@ -329,12 +329,12 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     % ubVals = [150, 150, 150, V_max^2];
     % lbVals = [0, -1500, -1500, V_min^2];
     % ubVals = [1500, 1500, 1500, V_max^2];
-    lbVals = [0, -5, -5, V_min^2];
-    ubVals = [5, 5, 5, V_max^2];
+    lbVals = [0, -5, -4, V_min^2];
+    ubVals = [5, 5, 4, V_max^2];
     [lbBFM_NoLoss, ubBFM_NoLoss] = constructBoundVectors(numVarsForBoundsNoLoss, lbVals, ubVals);
     
     lbBFM_DER_NoLoss = [lbBFM_NoLoss; lb_qD_onlyDERbuses_Area];
-    ubBFM_DER_NoLoss = [ubBFM_NoLoss; lb_qD_onlyDERbuses_Area];
+    ubBFM_DER_NoLoss = [ubBFM_NoLoss; ub_qD_onlyDERbuses_Area];
     lbBFM_DER_Batt_NoLoss = [lbBFM_DER_NoLoss; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area];
     lb_NoLoss = lbBFM_DER_Batt_NoLoss;
     
@@ -345,8 +345,8 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     if itr == 0 && Area == 2
         myfprintf(verbose, "Hello!\n")
         mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
-        mydisplay(verbose, "Aeq", Aeq_noLoss)
-        mydisplay(verbose, "beq", beq_noLoss)
+        mydisplay(verbose, "Aeq", Aeq_NoLoss)
+        mydisplay(verbose, "beq", beq_NoLoss)
         mydisplay(verbose, "lb", lb_NoLoss)
         mydisplay(verbose, "ub", ub_NoLoss)
     end
@@ -354,59 +354,84 @@ function x_Area_Linear = singlephaselin(busDataTable_pu_Area, branchDataTable_Ar
     if fileOpenedFlag
         fclose(fid);
     end
-    Tnvar = size(Aeq_noLoss,2);         % total number of variables
+    Tnvar = size(Aeq_NoLoss,2);         % total number of variables
         
     f = zeros(Tnvar,1);
     fBFM = zeros(numVarsBFM_DERs_NoLoss, 1);
 
     % f(Table_Area(1,3)) = 0;
     
-    AeqBFM_noLoss = Aeq_noLoss(1:numLinOptEquationsBFM, 1:numVarsBFM_DERs_NoLoss);
-    beqBFM_noLoss = beq_noLoss(1:numLinOptEquationsBFM);
+    AeqBFM_NoLoss = Aeq_NoLoss(1:numLinOptEquationsBFM, 1:numVarsBFM_DERs_NoLoss);
+    beqBFM_NoLoss = beq_NoLoss(1:numLinOptEquationsBFM);
 
     if itr == 0 && Area == 2
         myfprintf(verbose, "Let's first solve for equations without any batteries.\n")
         mydisplay(verbose, "branchTable",  graphDFS_Area_Table)
-        mydisplay(verbose, "AeqBFM", AeqBFM_noLoss)
-        mydisplay(verbose, "beqBFM", beqBFM_noLoss)
+        mydisplay(verbose, "AeqBFM", AeqBFM_NoLoss)
+        mydisplay(verbose, "beqBFM", beqBFM_NoLoss)
         mydisplay(verbose, "lbBFM", lbBFM_DER_NoLoss)
         mydisplay(verbose, "ubBFM", ubBFM_DER_NoLoss)
     end
 
     options = optimoptions('intlinprog','Display','iter');
     
-    [xBFM, ~, ~, ~] = intlinprog(fBFM, [], [], [], AeqBFM_noLoss, beqBFM_noLoss, lbBFM_DER_NoLoss, ubBFM_DER_NoLoss, options)
-    % error = AeqBFM_noLoss*xBFM - beqBFM_noLoss
+
+    [xBFM_DER_NoLoss, ~, ~, ~] = intlinprog(fBFM, [], [], [], AeqBFM_NoLoss, beqBFM_NoLoss, lbBFM_DER_NoLoss, ubBFM_DER_NoLoss, options);
     
-    % Iflow0_Area = zeros(m_Area, 1);
+    if ~isempty(xBFM_DER_NoLoss)
+        myfprintf(verbose, "Iteration %d Area %d, Lossless Initialization WITHOUT batteries accomplished.\n", itr, Area);
+    end
+
+    l0_Area = zeros(m_Area, 1);
     
- 
-    
-    % P0_Area = xBFM( indices_P_noLoss );
-    % Q0_Area = xBFM( indices_Q_noLoss );
-    % v0_Area =  xBFM( indices_vFull_noLoss );
-    % qD0_Area = xBFM( indices_qD_noLoss );
+    P0_BFM_DER_NoLoss = xBFM_DER_NoLoss(indices_P_noLoss);
+    Q0_BFM_DER_NoLoss = xBFM_DER_NoLoss(indices_Q_noLoss);
+    v0_BFM_DER_NoLoss =  xBFM_DER_NoLoss(indices_vFull_noLoss);
+    qD0_BFM_DER_NoLoss = xBFM_DER_NoLoss(indices_qD_noLoss);
     % B0_Area = x_linear_Area(indices_B_noLoss);
     % Pc0_Area = x_linear_Area(indices_Pc_noLoss);
     % Pd0_Area = x_linear_Area(indices_Pd_noLoss);
     % qB0_Area = x_linear_Area(indices_qB_noLoss);
+    
 
-    % for currentBusNum = 2 : N_Area
-    %     parentBusIdx = find(tb_Area == currentBusNum);
-    %     siblingBusesIndices = find(parentBusNum == fb_Area);
-    %     Iflow0_Area( parentBusIdx ) = ( P0_Area(parentBusIdx)^2 + Q0_Area(parentBusIdx)^2 ) / v0_Area(siblingBusesIndices(1));
-    % end
-    % 
-    % Iflow0_Area
 
+    % l0_Area
+    
+    B0 = B0Vals_Area;
+    Pc0 = zeros(nBatt_Area, 1);
+    Pd0 = zeros(nBatt_Area, 1);
+    qB0 = zeros(nBatt_Area, 1);
+    
+    x0_NoLoss = [P0_BFM_DER_NoLoss; Q0_BFM_DER_NoLoss; v0_BFM_DER_NoLoss; qD0_BFM_DER_NoLoss; B0; Pc0; Pd0; qB0];
+    % [lb_NoLoss x0_NoLoss ub_NoLoss]
+
+    options = optimoptions('fmincon', 'Display', 'iter', 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+    
+    % @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min-fake", 'secondObjFun', "SCD_min")
+
+    [x_NoLoss, ~, ~, ~] = ...
+        fmincon(@(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min-fake", 'secondObjFun', "none"), ...
+        x0_NoLoss, [], [], Aeq_NoLoss, beq_NoLoss, lb_NoLoss, ub_NoLoss, [], options);
+    
+    if ~isempty(x_NoLoss)
+        myfprintf(verbose, "Iteration %d Area %d, Lossless Initialization WITH batteries accomplished.\n", itr, Area);
+    else
+        error("Iteration %d Area %d, Lossless Initialization WITH batteries accomplished.\n", itr, Area);
+    end
+    
+    P0 = x_NoLoss(indices_P_noLoss);
+    Q0 = x_NoLoss(indices_Q_noLoss);
+    v0 =  x_NoLoss(indices_vFull_noLoss);    
+    
+    for currentBusNum = 2 : N_Area
+        parentBusIdx = find(tb_Area == currentBusNum);
+        siblingBusesIndices = find(parentBusNum == fb_Area);
+        l0_Area( parentBusIdx ) = ( P0(parentBusIdx)^2 + Q0(parentBusIdx)^2 ) / v0(siblingBusesIndices(1));
+    end
+    
+    mydisplay(verbose, x_NoLoss)
     error("Okay you may stop here, hopefully x_Area_Linear is obtained.")
 
-        % [x, ~, ~, ~] = fmincon( @(x)initWithBatteries(x, indices_Pc, indices_Pd), ...
-        %                       x0_Area, [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, ...
-        %                       @(x)eqcons(x, Area, N_Area, ...
-        %                       fb_Area, tb_Area, indices_P, indices_Q, indices_l, indices_vFull, ...
-        %                       itr, systemName, numAreas, "verbose", false, "saveToFile", false),...
-        %                       options);
 
     % [x_Area_Linear, ~, ~, ~] = intlinprog(f, [], [], [], Aeq, beq, lb_AreaFull, ub_AreaFull, options)
 
