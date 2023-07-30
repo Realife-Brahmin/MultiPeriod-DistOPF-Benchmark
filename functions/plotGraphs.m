@@ -40,7 +40,7 @@ function plotGraphs(displayNetworkGraphs, itr, Area, N_Area, displayActualBusNum
         myfprintf(verbose, "This area has no child areas.\n");
     end
 
-    if displayNetworkGraphs && ~itr
+    if displayNetworkGraphs && itr == 1
         numLegendItems = 1 + ~isRoot_Area + 2*numChildAreas_Area;  
         legendList = cell(numLegendItems, 1);
         legendItr = 1;
