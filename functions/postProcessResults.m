@@ -44,7 +44,7 @@ function postProcessResults(N, numAreas, N_Areas, isRoot, v2, actualBusNums, mic
     timeToSolveOPFs_s = max(sum(time_dist));
     
     disp('------------------------------------------------------------')
-    disp(["Time Period: ", num2str(timePeriodNum)]);
+    disp(['Time Period: ', num2str(timePeriodNum)]);
     disp(['Line Loss: ', num2str(lineLoss_kW),' kW'])                       
     disp(['Substation Power: ', num2str(substationPower_kW),' kW'])
     disp(['Number of Iterations: ', num2str(itr)])

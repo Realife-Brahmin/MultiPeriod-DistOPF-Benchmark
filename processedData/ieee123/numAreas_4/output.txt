@@ -1,5 +1,26 @@
+Time Period = 1 or Time = 0.25 hours.
 Line Loss = 2.87kW
 Substation Power = 351.83kW
-Time to Solve = 15.795s
-Number of Iterations = 4
-Program Run Time: 674.55
+Time to Solve = 21.759s
+Number of Iterations = 6
+Program Run Time: 86.77Time Period = 2 or Time = 0.50 hours.
+Line Loss = 0.00kW
+Substation Power = 351.83kW
+Time to Solve = 0.000s
+Number of Iterations = 1
+Program Run Time: 100.82Time Period = 3 or Time = 0.75 hours.
+Line Loss = 0.00kW
+Substation Power = 351.83kW
+Time to Solve = 0.000s
+Number of Iterations = 1
+Program Run Time: 114.58Time Period = 4 or Time = 1.00 hours.
+Line Loss = 0.00kW
+Substation Power = 351.83kW
+Time to Solve = 0.000s
+Number of Iterations = 1
+Program Run Time: 128.71Time Period = 5 or Time = 1.25 hours.
+Line Loss = 9.59kW
+Substation Power = 700.53kW
+Time to Solve = 28.837s
+Number of Iterations = 6
+Program Run Time: 225.35
