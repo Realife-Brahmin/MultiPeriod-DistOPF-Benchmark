@@ -1,6 +1,6 @@
-function [v_Area, S_Area, qD_Full_Area, B_Area,...
+function [x, B0Vals_Area, ...
     microIterationLosses, itr, ...
-    time_dist, R_Area_Matrix, graphDFS_Area, N_Area, m_Area, nBatt_Area, busDataTable_pu_Area, ...
+    time_dist, R_Area_Matrix, graphDFS_Area, N_Area, m_Area, nDER_Area, nBatt_Area, busDataTable_pu_Area, ...
     branchDataTable_Area] = ...
     ...
     NL_OPF_dist(v_parent_Area, S_connection_Area, B0Vals_Area, ...
@@ -99,7 +99,7 @@ function [v_Area, S_Area, qD_Full_Area, B_Area,...
     
 
     [busDataTable_pu_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
-        = extractAreaElectricalParameters(Area, timePeriodNum, itr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area);
+        = extractAreaElectricalParameters(Area, timePeriodNum, itr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'displayNetworkGraphs', false);
     
     N_Area = length(busDataTable_pu_Area.bus);
     m_Area = length(branchDataTable_Area.fb);
@@ -458,22 +458,22 @@ function [v_Area, S_Area, qD_Full_Area, B_Area,...
     
     % Result
     P_Area = x(indices_P); %m_Areax1
-    Q_Area = x(indices_Q); %m_Areax1
-    S_Area = complex(P_Area, Q_Area); %m_Areax1
-    l_Area = x(indices_l);
-    v_Area = x(indices_vAll); %N_Areax1
+    % Q_Area = x(indices_Q); %m_Areax1
+    % S_Area = complex(P_Area, Q_Area); %m_Areax1
+    % l_Area = x(indices_l);
+    % v_Area = x(indices_vAll); %N_Areax1
     qD_Area = x(indices_qD);
-    v_Area(1) = v_parent_Area;
+    % v_Area(1) = v_parent_Area;
     B_Area = x(indices_B);
     Pd_Area = x(indices_Pd);
     Pc_Area = x(indices_Pc);
     qB_Area = x(indices_qB);
 
-    qD_Full_Area = zeros(N_Area, 1);
+    qD_AllBuses = zeros(N_Area, 1);
 
     for i = 1 : nDER_Area
         busNum = busesWithDERs_Area(i);
-        qD_Full_Area(busNum) = qD_Area(i);
+        qD_AllBuses(busNum) = qD_Area(i);
     end
     
     [B_AllBuses, Pd_AllBuses, Pc_AllBuses, qB_AllBuses] = deal(zeros(N_Area, 1));

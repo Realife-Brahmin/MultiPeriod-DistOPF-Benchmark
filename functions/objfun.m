@@ -27,7 +27,8 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
     end
     
     validArgs = ["verbose", "etta_C", "etta_D", "alpha", "mainObjFun", ...
-        "secondObjFun", "indices_P", "indices_Q", "indices_vFull_NoLoss", "indices_l", "indices_Pc", "indices_Pd"];
+        "secondObjFun", "indices_P", "indices_Q", "indices_vFull_NoLoss", "indices_l", "indices_Pc", "indices_Pd",...
+        "voltageVals"];
     
     for i = 1:2:numArgs
         argName = varargin{i};
@@ -62,6 +63,8 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
                 indices_Pc = argValue;
             case "indices_Pd"
                 indices_Pd = argValue;
+            case "voltageVals"
+                v0Vals = argValue;
         end
     end
     
@@ -79,9 +82,12 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
             
         end
     elseif strcmp(mainObjFun, "loss_min-fake")
+          if ~exist("v0Vals", "var")
+              error("Fake Loss Minimization to be performed, but v0Vals NOT inserted.")
+          end
           P0 = x(indices_P);
           Q0 = x(indices_Q);
-          v0 = x(indices_vFull_NoLoss);    
+          v0 = v0Vals;    
           l0_fake = zeros(m_Area, 1);
           for currentBusNum = 2 : N_Area
               parentBusIdx = find(tb_Area == currentBusNum);
