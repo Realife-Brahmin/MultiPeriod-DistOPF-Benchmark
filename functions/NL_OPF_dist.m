@@ -1,11 +1,11 @@
 function [x, B0Vals_Area, ...
-    microIterationLosses, itr, ...
-    time_dist, R_Area_Matrix, graphDFS_Area, N_Area, m_Area, nDER_Area, nBatt_Area, busDataTable_pu_Area, ...
+    macroIterationLosses, macroItr, ...
+    time_dist, N_Area, m_Area, nDER_Area, nBatt_Area, busDataTable_pu_Area, ...
     branchDataTable_Area] = ...
     ...
     NL_OPF_dist(v_parent_Area, S_connection_Area, B0Vals_Area, ...
     Area, isLeaf_Area, isRoot_Area, numChildAreas_Area, numAreas, ...
-    microIterationLosses, time_dist, timePeriodNum, itr, ...
+    macroIterationLosses, time_dist, timePeriodNum, macroItr, ...
     CB_FullTable, varargin)
     
  % Default values for optional arguments
@@ -85,11 +85,11 @@ function [x, B0Vals_Area, ...
     
     saveLocationFilename = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/Aeq_beq_area", strArea, fileExtension);
 
-    if itr ~= 1
+    if macroItr ~= 1
         logging = false;
     end
 
-    if logging && saveToFile && itr == 1 && Area == 2
+    if logging && saveToFile && macroItr == 1 && Area == 2
         fileOpenedFlag = true;
         fid = fopen(saveLocationFilename, 'w');  % Open file for writing
     else
@@ -99,7 +99,7 @@ function [x, B0Vals_Area, ...
     
 
     [busDataTable_pu_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
-        = extractAreaElectricalParameters(Area, timePeriodNum, itr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'displayNetworkGraphs', false);
+        = extractAreaElectricalParameters(Area, timePeriodNum, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'displayNetworkGraphs', false);
     
     N_Area = length(busDataTable_pu_Area.bus);
     m_Area = length(branchDataTable_Area.fb);
@@ -373,7 +373,7 @@ function [x, B0Vals_Area, ...
     end
     
     x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v_parent_Area, S_connection_Area, B0Vals_Area, isLeaf_Area, ...
-        Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, timePeriodNum, itr, 'verbose', true, 'logging', true);
+        Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, timePeriodNum, macroItr, 'verbose', true, 'logging', true);
 
 
     numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
@@ -425,36 +425,36 @@ function [x, B0Vals_Area, ...
         ubVal = ub_AreaFull(varNum);
         x0Val = x0(varNum);
         if lbVal > x0Val
-            myfprintf(verbose, "TimePeriod = %d, Area = %d and itr = %d: Oh no! x0(%d) < lb(%d) as %f < %f.\n", timePeriodNum, Area, itr, varNum, varNum, x0Val, lbVal);
+            myfprintf(verbose, "TimePeriod = %d, Area = %d and macroItr = %d: Oh no! x0(%d) < lb(%d) as %f < %f.\n", timePeriodNum, Area, macroItr, varNum, varNum, x0Val, lbVal);
             flaggedForLimitViolation = true;
         end
         if ubVal < x0Val
-            myfprintf(verbose, "TimePeriod = %d, Area = %d and itr = %d: Oh no! x0_NoLoss(%d) > ub(%d) as %f > %f.\n", timePeriodNum, Area, itr, varNum, varNum, x0Val, ubVal);
+            myfprintf(verbose, "TimePeriod = %d, Area = %d and macroItr = %d: Oh no! x0_NoLoss(%d) > ub(%d) as %f > %f.\n", timePeriodNum, Area, macroItr, varNum, varNum, x0Val, ubVal);
             flaggedForLimitViolation = true;
         end
     end
     
     if checkOptimalSolutionWithinBounds(x0, lb_AreaFull, ub_AreaFull)
-        myfprintf(verbose, "TimePeriod = %d, Area = %d and itr = %d:  My native bound checker says that bounds are Actually being violated.\n", timePeriodNum, Area, itr);
+        myfprintf(verbose, "TimePeriod = %d, Area = %d and macroItr = %d:  My native bound checker says that bounds are Actually being violated.\n", timePeriodNum, Area, macroItr);
         error("Nani?");
     elseif flaggedForLimitViolation
-        myfprintf(verbose, "TimePeriod = %d, Area = %d and itr = %d:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.\n", timePeriodNum, Area, itr)
+        myfprintf(verbose, "TimePeriod = %d, Area = %d and macroItr = %d:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.\n", timePeriodNum, Area, macroItr)
     else
-        myfprintf(verbose, "TimePeriod = %d, Area = %d and itr = %d:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.\n", timePeriodNum, Area, itr);
+        myfprintf(verbose, "TimePeriod = %d, Area = %d and macroItr = %d:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.\n", timePeriodNum, Area, macroItr);
     end
 
-    myfprintf(verbose, "TimePeriod = %d, Area = %d and itr = %d:  Now solving for the real deal.\n", timePeriodNum, Area, itr);
+    myfprintf(verbose, "TimePeriod = %d, Area = %d and macroItr = %d:  Now solving for the real deal.\n", timePeriodNum, Area, macroItr);
 
     [x, ~, ~, ~] = fmincon( @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, 'mainObjFun', "loss_min", 'secondObjFun', "SCD_min"), ...
                               x0, [], [], Aeq_Full, beq_Full, lb_AreaFull, ub_AreaFull, ...
                               @(x)eqcons(x, Area, N_Area, ...
                               fb_Area, tb_Area, indices_P, indices_Q, indices_l, indices_vAll, ...
-                              itr, systemName, numAreas, "verbose", false, "saveToFile", false),...
+                              macroItr, systemName, numAreas, "verbose", false, "saveToFile", false),...
                               options);
     
     optimizationSolutionTime = toc(startSolvingForOptimization);
     
-    time_dist(itr+1, Area) = optimizationSolutionTime;
+    time_dist(macroItr+1, Area) = optimizationSolutionTime;
     
     % Result
     P_Area = x(indices_P); %m_Areax1
@@ -495,8 +495,8 @@ function [x, B0Vals_Area, ...
     PLoss = P_inFlowArea + P_der_Total + Pd_Total - PLoad_Total - Pc_Total;
     percentageSavings = 100*(1 - P_inFlowArea/(P_inFlowArea + Pd_Total - Pc_Total) );
 
-    myfprintf(true, "TimePeriod = %d, Area = %d and itr = %d: Projected savings in substation power flow by using batteries: %f percent.\n", timePeriodNum, Area, itr, percentageSavings); % always true
+    myfprintf(true, "TimePeriod = %d, Area = %d and macroItr = %d: Projected savings in substation power flow by using batteries: %f percent.\n", timePeriodNum, Area, macroItr, percentageSavings); % always true
 
-    microIterationLosses(itr + 1, Area) = PLoss;
+    macroIterationLosses(macroItr + 1, Area) = PLoss;
 
 end

@@ -1,4 +1,4 @@
-function postProcessResults(N, numAreas, N_Areas, isRoot, v2, actualBusNums, microIterationLosses, timePeriodNum, itr, time_dist, kVA_B, displaySimulationResultPlots, R_max, saveSimulationResultPlots, systemName, S_child, start, saveSimulationResults)
+function postProcessResults(N, numAreas, N_Areas, isRoot, v2, actualBusNums, microIterationLosses, timePeriodNum, macroItr, time_dist, kVA_B, displaySimulationResultPlots, R_max, saveSimulationResultPlots, systemName, S_child, start, saveSimulationResults)
 %% 
 % Post Processing
     verbose = true;
@@ -28,33 +28,34 @@ function postProcessResults(N, numAreas, N_Areas, isRoot, v2, actualBusNums, mic
     V_node_sq_actual( actualBusNums ) = V_node_sq;
     v1_actual = transpose(sqrt(V_node_sq_actual));
     
-    microIterationLosses = microIterationLosses(1:itr, :);
-    time_dist = time_dist(1:itr, :);
+    microIterationLosses = microIterationLosses(1:macroItr, :);
+    time_dist = time_dist(1:macroItr, :);
     
     macroIterationLossesTotal = kVA_B * sum(microIterationLosses, 2); %sum over each row
     %representing each iteration
     dist_timeTotal = sum(time_dist, 2);
     
     if displaySimulationResultPlots
-        displayAndSaveSimulationResultPlots(itr, macroIterationLossesTotal, dist_timeTotal, R_max, v1_actual, saveSimulationResultPlots, Area, systemName, numAreas);
+        displayAndSaveSimulationResultPlots(macroItr, macroIterationLossesTotal, dist_timeTotal, R_max, v1_actual, saveSimulationResultPlots, Area, systemName, numAreas);
     end
     
-    lineLoss_kW = macroIterationLossesTotal(itr);
+    lineLoss_kW = macroIterationLossesTotal(macroItr);
     substationPower_kW = real(S_child(1))*kVA_B;
     timeToSolveOPFs_s = max(sum(time_dist));
     
     disp('------------------------------------------------------------')
+    disp(['Machine ID: ', getenv("COMPUTERNAME")])
     disp(['Time Period: ', num2str(timePeriodNum)]);
     disp(['Line Loss: ', num2str(lineLoss_kW),' kW'])                       
     disp(['Substation Power: ', num2str(substationPower_kW),' kW'])
-    disp(['Number of Iterations: ', num2str(itr)])
+    disp(['Number of Iterations: ', num2str(macroItr)])
     disp(['Time to Solve: ', num2str(timeToSolveOPFs_s), 's'])
     disp('------------------------------------------------------------')
     
     programRunTime = toc(start);
     
     if saveSimulationResults
-        saveResults(systemName, numAreas, lineLoss_kW, substationPower_kW, timeToSolveOPFs_s, timePeriodNum, itr, programRunTime);
+        saveResults(systemName, numAreas, lineLoss_kW, substationPower_kW, timeToSolveOPFs_s, timePeriodNum, macroItr, programRunTime);
     end
     
 end
