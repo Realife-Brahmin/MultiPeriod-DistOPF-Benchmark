@@ -492,7 +492,7 @@ function [x, B0Vals_Area, ...
     Pc_Total = sum(Pc_Area);
     PLoad_Total = sum(P_L_Area);
 
-    PLoss = P_inFlowArea + P_der_Total + Pd_Total - PLoad_Total - Pc_Total;
+    PLoss = P_inFlowArea + P_der_Total + Pd_Total - PLoad_Total - Pc_Total
     percentageSavings = 100*(1 - P_inFlowArea/(P_inFlowArea + Pd_Total - Pc_Total) );
 
     myfprintf(true, "TimePeriod = %d, Area = %d and macroItr = %d: Projected savings in substation power flow by using batteries: %f percent.\n", timePeriodNum, Area, macroItr, percentageSavings); % always true

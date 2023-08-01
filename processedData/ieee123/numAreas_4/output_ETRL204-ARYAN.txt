@@ -1,0 +1,35 @@
+Simulations run on machine: ETRL204-ARYAN
+Time Period = 1 or Time = 0.25 hours.
+Line Loss = 2.87kW
+Substation Power = 351.83kW
+Run Time for this OPF = 12.903s
+Number of Macro-iterations = 6
+Simulation has been running for: 73.80s
+Simulations run on machine: ETRL204-ARYAN
+Time Period = 2 or Time = 0.50 hours.
+Line Loss = 0.00kW
+Substation Power = 351.83kW
+Run Time for this OPF = 0.000s
+Number of Macro-iterations = 1
+Simulation has been running for: 86.00s
+Simulations run on machine: ETRL204-ARYAN
+Time Period = 3 or Time = 0.75 hours.
+Line Loss = 0.00kW
+Substation Power = 351.83kW
+Run Time for this OPF = 0.000s
+Number of Macro-iterations = 1
+Simulation has been running for: 98.57s
+Simulations run on machine: ETRL204-ARYAN
+Time Period = 4 or Time = 1.00 hours.
+Line Loss = 0.00kW
+Substation Power = 351.83kW
+Run Time for this OPF = 0.000s
+Number of Macro-iterations = 1
+Simulation has been running for: 110.65s
+Simulations run on machine: ETRL204-ARYAN
+Time Period = 5 or Time = 1.25 hours.
+Line Loss = 9.59kW
+Substation Power = 700.53kW
+Run Time for this OPF = 18.315s
+Number of Macro-iterations = 6
+Simulation has been running for: 196.93s
