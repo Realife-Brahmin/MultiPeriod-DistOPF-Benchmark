@@ -15,5 +15,6 @@ function saveResults(systemName, numAreas, lineLoss_kW, substationPower_kW, time
     fprintf(fid, "Run Time for this OPF = %.3fs\n", timeToSolveOPFs_s);    
     fprintf(fid, "Number of Macro-iterations = %d\n", numMacroIterations);
     fprintf(fid, "Simulation has been running for: %.2fs\n", programRunTime);
+    fprintf(fid, "---------------------------------------\n");
     fclose(fid);
 end
