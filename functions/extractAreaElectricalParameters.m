@@ -1,11 +1,15 @@
 function [busDataTable_pu_Area, branchDataTable_Area, ...
     edgeMatrix_Area, R_Area, X_Area] = ...
-    extractAreaElectricalParameters(Area, timePeriodNum, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, varargin)
+    extractAreaElectricalParameters(Area, t, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, varargin)
 
  % Default values for optional arguments
+    verbose = false;
+    logging = false;
     displayTables = false;
     displayNetworkGraphs = true;
     displayActualBusNumbersInGraphs = false;
+    saveLocationName = "logfiles/";
+    fileExtension = ".txt";
     savePlots = true;
     kV_B = 4.16/sqrt(3);
     kVA_B = 1000;
@@ -19,7 +23,7 @@ function [busDataTable_pu_Area, branchDataTable_Area, ...
         error('Optional arguments must be specified as name-value pairs.');
     end
     
-    validArgs = ["displayTables", "displayNetworkGraphs", ...
+    validArgs = ["verbose", "logging", "displayTables", "displayNetworkGraphs", ...
         "displayActualNumbersInGraphs", "savePlots", "kV_B", ...
         "kVA_B", "load_mult", "gen_mult"];
     
@@ -32,6 +36,10 @@ function [busDataTable_pu_Area, branchDataTable_Area, ...
         end
         
         switch argName
+            case "verbose"
+                verbose = argValue;
+            case "logging"
+                logging = argValue;
             case "displayTables"
                 displayTables = argValue;
             case "displayNetworkGraphs"
@@ -50,9 +58,30 @@ function [busDataTable_pu_Area, branchDataTable_Area, ...
                 gen_mult = argValue;
             case "systemDataFolder"
                 systemDataFolder = argValue;
+            case "fileExtension"
+                fileExtension = argValue;
         end
     end
+    
+    saveLocationFilename = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
 
+    fileOpenedFlag = false;
+
+    if logging && verbose
+        error("Kindly specify ONLY one of the following arguments as true: verbose and logging.")
+    elseif logging && ~verbose && macroItr == 1
+        fileOpenedFlag = true;
+        if t == 1
+            fid = fopen(saveLocationFilename, 'w');
+        else
+            fid = fopen(saveLocationFilename, 'a');
+        end
+    elseif ~logging && macroItr == 1
+        logging = verbose;
+        fid = 1;
+    else
+        logging = false;
+    end
 
     filenameBusData_Area = strcat(systemDataFolder, "area", num2str(Area), filesep, 'powerdata.csv');
     busData_Area = readmatrix(filenameBusData_Area);
@@ -84,13 +113,12 @@ function [busDataTable_pu_Area, branchDataTable_Area, ...
     
 % Optional: Plot Graphs which highlight the relationships between different Areas.
 
-    verboseGraphs = 1;
-    if macroItr == 1 && timePeriodNum == 1
-        plotGraphs(displayNetworkGraphs, macroItr, Area, ...
-        N_Area, displayActualBusNumbersInGraphs, ...
+    if macroItr == 1 && t == 1
+        plotGraphs(t, macroItr, Area, ...
+        N_Area, ...
         busDataActualBusNumsTable_Area, graph_Area, ...
-        isRoot_Area, systemName, numAreas, CB_FullTable, ...
-        numChildAreas_Area, savePlots, verboseGraphs);
+        isRoot_Area, numAreas, CB_FullTable, ...
+        numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', displayNetworkGraphs, 'displayActualBusNumbersInGraphs', displayActualBusNumbersInGraphs, 'savePlots', savePlots);
     end
     
     % Line Data

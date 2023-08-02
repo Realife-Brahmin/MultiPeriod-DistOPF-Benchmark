@@ -1,7 +1,72 @@
-function plotGraphs(displayNetworkGraphs, itr, Area, N_Area, displayActualBusNumbersInGraphs, busDataActualBusNumsTable_Area, ...
-    G_Area, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, savePlots, verbose)
+function plotGraphs(t, macroItr, Area, N_Area, busDataActualBusNumsTable_Area, ...
+    G_Area, isRoot_Area, numAreas, CB_FullTable, numChildAreas_Area, varargin)
     
-    myfprintf(verbose, "Plotting for Area %d:\n", Area);
+ % Default values for optional arguments
+    verbose = false;
+    logging = false;
+    displayNetworkGraphs = true;
+    displayActualBusNumbersInGraphs = false;
+    systemName = "ieee123";
+    loggingLocationName = "logfiles/";
+    fileExtension = ".txt";
+    savePlots = false;
+
+    % Process optional arguments
+    numArgs = numel(varargin);
+    if mod(numArgs, 2) ~= 0
+        error('Optional arguments must be specified as name-value pairs.');
+    end
+    
+    validArgs = ["verbose", "logging", "systemName", "displayNetworkGraphs", ...
+        "displayActualBusNumbersInGraphs", "savePlots"];
+    
+    for i = 1:2:numArgs
+        argName = varargin{i};
+        argValue = varargin{i+1};
+        
+        if ~ischar(argName) || ~any(argName == validArgs)
+            error('Invalid optional argument name.');
+        end
+        
+        switch argName
+            case "verbose"
+                verbose = argValue;
+            case "logging"
+                logging = argValue;
+            case "systemName"
+                systemName = argValue;
+            case "displayNetworkGraphs"
+                displayNetworkGraphs = argValue;
+            case "displayActualBusNumbersInGraphs"
+                displayActualBusNumbersInGraphs = argValue;
+            case "savePlots"
+                savePlots = argValue;
+            case "fileExtension"
+                fileExtension = argValue;
+        end
+    end
+    
+    saveLocationFilename = strcat(loggingLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
+
+    fileOpenedFlag = false;
+
+    if logging && verbose
+        error("Kindly specify ONLY one of the following arguments as true: verbose and logging.")
+    elseif logging && ~verbose && macroItr == 1
+        fileOpenedFlag = true;
+        if t == 1
+            fid = fopen(saveLocationFilename, 'w');
+        else
+            fid = fopen(saveLocationFilename, 'a');
+        end
+    elseif ~logging && macroItr == 1
+        logging = verbose;
+        fid = 1;
+    else
+        logging = false;
+    end
+
+    myfprintf(displayNetworkGraphs, fid,  "Plotting for Area %d:\n", Area);
 
 
     if ~isRoot_Area
@@ -10,10 +75,10 @@ function plotGraphs(displayNetworkGraphs, itr, Area, N_Area, displayActualBusNum
         parentNode = CB_FullTable.conBus_childAreaFrom(parentAreaIndices);
         childNode = CB_FullTable.conBus_childAreaTo(parentAreaIndices);
 
-        myfprintf(verbose, "This area's parent is Area %d.\n", parentArea);
+        myfprintf(logging, fid,  "This area's parent is Area %d.\n", parentArea);
     else
 
-        myfprintf(verbose, "This area has only the substation as its 'parent area'.\n");
+        myfprintf(logging, fid,  "This area has only the substation as its 'parent area'.\n");
 
     end
 
@@ -23,24 +88,23 @@ function plotGraphs(displayNetworkGraphs, itr, Area, N_Area, displayActualBusNum
         parentNodes = CB_FullTable.conBus_parentAreaFrom(childAreaIndices);
         childNodes = CB_FullTable.conBus_parentAreaTo(childAreaIndices);
 
-        myfprintf(verbose, "This area has %d child area", numChildAreas_Area);
+        myfprintf(logging, fid,  "This area has %d child area", numChildAreas_Area);
 
         if numChildAreas_Area == 1
-            myfprintf(verbose, ": Area %d.\n", childAreas(numChildAreas_Area) );
+            myfprintf(logging, fid,  ": Area %d.\n", childAreas(numChildAreas_Area) );
         else
-            myfprintf(verbose, "s, which include the Areas: ");
+            myfprintf(logging, fid,  "s, which include the Areas: ");
             for i = 1:numChildAreas_Area-2
                 fprintf("Area %d, ", childAreas(i) );
             end
-            fprintf("Area %d and Areas %d.\n", childAreas(numChildAreas_Area-1:numChildAreas_Area) )
-            % fprintf("and Area %d.\n", childAreas(numChildAreas_Area) );s
+            myfprintf(logging, fid, "Area %d and Areas %d.\n", childAreas(numChildAreas_Area-1:numChildAreas_Area) )
         end
 
     else
-        myfprintf(verbose, "This area has no child areas.\n");
+        myfprintf(logging, fid,  "This area has no child areas.\n");
     end
 
-    if displayNetworkGraphs && itr == 1
+    if displayNetworkGraphs && macroItr == 1
         numLegendItems = 1 + ~isRoot_Area + 2*numChildAreas_Area;  
         legendList = cell(numLegendItems, 1);
         legendItr = 1;
@@ -117,6 +181,10 @@ function plotGraphs(displayNetworkGraphs, itr, Area, N_Area, displayActualBusNum
             exportgraphics(f, filenameSavedPlot, 'Resolution', 300)
         end
 
+    end
+    
+    if fileOpenedFlag
+        fclose(fid);
     end
     
 end
