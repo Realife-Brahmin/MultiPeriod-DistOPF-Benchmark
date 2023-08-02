@@ -1,4 +1,4 @@
-function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, varargin)
+function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, X_Area_Matrix, varargin)
     
  % Default values for optional arguments
     verbose = false;
@@ -6,8 +6,8 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
     etta_D = 0.80;
     % alpha = 0.5;
     alpha = 3e-5;
-    mainObjFun = "loss_min";
-    secondObjFun = "SCD_min";
+    mainObjFun = "func_PLoss";
+    secondObjFun = "func_SCD";
     m_Area = length(fb_Area);
     indices_P = 1:m_Area;
     indices_Q = indices_P + m_Area;
@@ -71,7 +71,7 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
 
     f = 0;
     
-    if strcmp(mainObjFun, "loss_min")
+    if strcmp(mainObjFun, "func_PLoss")
         for currentBusNum = 2 : N_Area
             parentBusIdx = find(tb_Area == currentBusNum);
             parentBusNum = fb_Area(parentBusIdx);
@@ -81,7 +81,7 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
             end
             
         end
-    elseif strcmp(mainObjFun, "loss_min-fake")
+    elseif strcmp(mainObjFun, "func_PLoss-fake")
           if ~exist("v0Vals", "var")
               error("Fake Loss Minimization to be performed, but v0Vals NOT inserted.")
           end
@@ -97,19 +97,26 @@ function f = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_M
 
               f = f + l0_fake(parentBusIdx) * R_Area_Matrix( parentBusNum, currentBusNum );
           end
+    elseif strcmp(mainObjFun, "func_QLoss")
+        l = x(indices_l);
+        for currentBusNum = 2:N_Area
+            parentBusIdx = find(tb_Area == currentBusNum);
+            parentBusNum = fb_Area(parentBusIdx);
+            f = f + l(parentBusIdx) * X_Area_Matrix(parentBusNum, currentBusNum);
+        end
     elseif strcmp(mainObjFun, "none")
         myfprintf(verbose, "Okay, no primary objective function component.\n");
     else
         error("Unknown Primary Objective Function");
     end
     
-    if strcmp(secondObjFun, "SCD_min")
+    if strcmp(secondObjFun, "func_SCD")
         myfprintf(verbose, "Complementarity Needs to Be Respected.\n");
 
-        if ~exist('indices_Pc', 'var') && strcmp(mainObjFun, "loss_min")
+        if ~exist('indices_Pc', 'var') && strcmp(mainObjFun, "func_PLoss")
             indices_Pc = indices_Pc_Full;
             indices_Pd = indices_Pd_Full;
-        elseif ~exist('indices_Pc', 'var') && ~strcmp(mainObjFun, "loss_min")
+        elseif ~exist('indices_Pc', 'var') && ~strcmp(mainObjFun, "func_PLoss")
             indices_Pc = indices_Pc_NoLoss;
             indices_Pd = indices_Pd_NoLoss;
         elseif strcmp(mainObjFun, "none")
