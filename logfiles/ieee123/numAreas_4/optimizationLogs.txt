@@ -2,12 +2,13 @@ Time Period = 1, macroItr = 6 and Area = 4: Performing Initialization Phase 1.
 Time Period = 1, macroItr = 6 and Area = 4: Lossless Initialization WITHOUT batteries accomTime Period = 1, macroItr = 6 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 1, macroItr = 6 and Area = 4:  Now solving for the real deal.
 Time Period = 1, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 53.727145 percent.
-a = 4:  Oh no! x0_NoLoss(186) < lb(186) as -0.003095 < -0.003095.
+a = 4:  Oh no!Time Period = 1, Converged in 6 macro-iterations!
+.
 Time Period = 1, macroItr = 6 and Area = 4:  Oh no! x0_NoLoss(193) < lb(193) as -0.001548 < -0.001548.
 Time Period = 1, macroItr = 6 and Area = 4: x0_NoLoss within limits anyway? More like MATLAB stupid? Phase 1 of Initialization successful. Proceeding to Phase 2 of Initialization.
 Time Period = 1, macroItr = 6 and Area = 4: Performing Initialization Phase 2
 Time Period = 1, macroItr = 6 and Area = 4: Lossless Initialization WITH batteries accomplished.
-Time Period = 1, Converged in 6 macro-iterations!
+A total of 7 time-periods (of 15 minutes each, so 1.75 hours in total) will be run.
 ********Running OPF for the system for Time Period = 2.********
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -370,6 +371,7 @@ Time Period = 2, macroItr = 6 and Area = 4:  x0 within limits. Initialization su
 Time Period = 2, macroItr = 6 and Area = 4:  Now solving for the real deal.
 Time Period = 2, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 53.727145 percent.
 Time Period = 2, Converged in 6 macro-iterations!
+A total of 7 time-periods (of 15 minutes each, so 1.75 hours in total) will be run.
 ********Running OPF for the system for Time Period = 3.********
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -722,6 +724,7 @@ Time Period = 3, macroItr = 6 and Area = 4:  x0 within limits. Initialization su
 Time Period = 3, macroItr = 6 and Area = 4:  Now solving for the real deal.
 Time Period = 3, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 53.727145 percent.
 Time Period = 3, Converged in 6 macro-iterations!
+A total of 7 time-periods (of 15 minutes each, so 1.75 hours in total) will be run.
 ********Running OPF for the system for Time Period = 4.********
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1075,6 +1078,7 @@ Time Period = 4, macroItr = 6 and Area = 4:  x0 within limits anyway? More like 
 Time Period = 4, macroItr = 6 and Area = 4:  Now solving for the real deal.
 Time Period = 4, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 53.727145 percent.
 Time Period = 4, Converged in 6 macro-iterations!
+A total of 7 time-periods (of 15 minutes each, so 1.75 hours in total) will be run.
 ********Running OPF for the system for Time Period = 5.********
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1472,6 +1476,7 @@ Time Period = 5, macroItr = 7 and Area = 4:  x0 within limits. Initialization su
 Time Period = 5, macroItr = 7 and Area = 4:  Now solving for the real deal.
 Time Period = 5, macroItr = 7 and Area = 4: Projected savings in substation power flow by using batteries: 8.584593 percent.
 Time Period = 5, Converged in 7 macro-iterations!
+A total of 7 time-periods (of 15 minutes each, so 1.75 hours in total) will be run.
 ********Running OPF for the system for Time Period = 6.********
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1890,6 +1895,7 @@ Time Period = 6, macroItr = 7 and Area = 4:  x0 within limits. Initialization su
 Time Period = 6, macroItr = 7 and Area = 4:  Now solving for the real deal.
 Time Period = 6, macroItr = 7 and Area = 4: Projected savings in substation power flow by using batteries: 0.000000 percent.
 Time Period = 6, Converged in 7 macro-iterations!
+A total of 7 time-periods (of 15 minutes each, so 1.75 hours in total) will be run.
 ********Running OPF for the system for Time Period = 7.********
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
