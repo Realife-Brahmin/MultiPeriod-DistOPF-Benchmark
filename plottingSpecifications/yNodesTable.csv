@@ -1,7 +1,6 @@
 Names,VarNames,Units,FullNames,FigureNames,Legends,yLabelNames
 P_ij,P_ij,kW,Branch Real Power Flow,branchRealPowerFlow,P_{ij},P_{ij} \thinspace [kW]
 Q_ij,Q_ij,kVAr,Branch Reactive Power Flow,branchReactivePowerFlow,Q_{ij},Q_{ij} \thinspace [kVAr]
-S_ij,S_ij,kVA,Branch Apparent Power Flow,branchApparentPowerFlow,S_{ij},S_{ij} \thinspace [kVA]
 l_ij,l_ij,pu,Branch Squared Current Flow,branchSquaredCurrentFlow,l_{ij},l_{ij} \thinspace [pu]
 v_j,v_j,pu,Bus Squared Voltage,busSquaredVoltage,v_j,v_j \thinspace [pu]
 qD_j,qD_j,kVAr,DER Reactive Power,DERReactivePower,q_{D_j},q_{D_j} \thinspace [kVAr]

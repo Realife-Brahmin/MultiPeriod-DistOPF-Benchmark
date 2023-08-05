@@ -44,31 +44,41 @@ function plotSimulationResults(results, varargin)
     xSys = results.xSys;
     ySys = results.ySys;
     yArs = results.yArs;
+    yNodes = results.yNodes;
     strObjectiveFunction = results.objFun;
     suffixObj = results.suffixObj;
-    varyingIndependentParam = xSys.varyingIndependentParam;
-    
-    [PLoss, QLoss, delV, PSubs, QSubs, QDER, P12, Q12, V] = deal(ySys.PLoss, ySys.QLoss, ySys.delV, ySys.PSubs, ySys.QSubs, ySys.QDER, yArs.P12, yArs.Q12, yArs.V);
-    
+    varyingIndependentParam = xSys.Name;
+        
     if ~isempty(ySys)
-        numTimePeriods = length(PLoss);
+        numTimePeriods = length(ySys.Names);
     elseif ~isempty(yArs)
-        numTimePeriods = size(P12, 1);
+        numTimePeriods = size(yArs.Vars(1), 1);
+    elseif ~isempty(yNodes)
+        numTimePeriods = size(yNodes.Vars(1), 1);
     else
-        error("Empty results for both Systems and Areas.");
+        error("Empty results for both Systems, Areas and Nodes.");
     end
-    myfprintf(verbose,  "Plotter detects that %d simulations were run.\n", numTimePeriods);
+    myfprintf(logging,  "Plotter detects that %d simulations were run.\n", numTimePeriods);
     
     if ~isempty(yArs)
-        numAreas = size(P12, 2);
+        numAreas = size(yArs.Vars, 2);
+    elseif ~isempty(yNodes)
+        numAreas = size(yArs.Vars, 2);
     else
         numAreas = 1;
     end
-    myfprintf(verbose,  "Plotter detects that the system had %d areas.\n", numAreas);
+    myfprintf(logging,  "Plotter detects that the system had %d areas.\n", numAreas);
+    
+    if ~istempty(yNodes)
+        NMax = size(yNodes.Vars, 3);
+    else
+        warning("No nodal variable?");
+    end
 
-    if strcmp(varyingIndependentParam, "Impedance")
+    myfprintf(logging, "Plotter detects a maximum of %d nodes in any of the areas.\n", NMax);
+
+    if strcmp(varyingIndependentParam, "Time Period")
         indParamString = "t";
-        % indParamStringLatex = strcat("$", indParamString, "$");
         xLabelString = "Time-step $t$";
         titleStrAppendix = sprintf(" $t \\in [0, %d]$", 0, numTimePeriods);
     else
