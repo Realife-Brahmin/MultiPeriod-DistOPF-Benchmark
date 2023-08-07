@@ -1,5 +1,5 @@
 Names,Units,VarNames,FullNames,FigureNames,Legends,yLabelNames
-P12,kW,P12s,Boundary Real Powers,boundaryRealPowersFigure,V_1,V_1 \thinspace [kW]
-Q12,kVAr,Q12s,Boundary Reactive Powers,boundaryReactivePowersFigure,P_{12},P_{12} \thinspace [kVAr]
-V1,pu,V1s,Boundary Voltages,boundaryVoltagesFigure,Q_{12},Q_{12} \thinspace [pu]
-PSave,%,PSaves,Saved Power Percentage,savedPowerPercentage,P_{Save},P_{Save} \thinspace [%]
+P12,kW,P12s,Boundary Real Powers,boundaryRealPowersFigure,V_1,V_1
+Q12,kVAr,Q12s,Boundary Reactive Powers,boundaryReactivePowersFigure,P_{12},P_{12}
+V1,pu,V1s,Boundary Voltages,boundaryVoltagesFigure,Q_{12},Q_{12}
+PSave,\%,PSaves,Saved Power Percentage,savedPowerPercentage,P_{Save},P_{Save}
