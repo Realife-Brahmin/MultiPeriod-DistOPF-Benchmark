@@ -1,0 +1,56 @@
+Simulations run on machine: LAPTOP-CP5R08SK
+Time Period = 1 or Time = 0.25 hours.
+Line Loss = 2.87kW
+Substation Power = 351.83kW
+Run Time for this OPF = 15.592s
+Number of Macro-iterations = 6
+Simulation has been running for: 92.29s
+---------------------------------------
+Simulations run on machine: LAPTOP-CP5R08SK
+Time Period = 2 or Time = 0.50 hours.
+Line Loss = 2.87kW
+Substation Power = 351.83kW
+Run Time for this OPF = 16.109s
+Number of Macro-iterations = 6
+Simulation has been running for: 175.74s
+---------------------------------------
+Simulations run on machine: LAPTOP-CP5R08SK
+Time Period = 3 or Time = 0.75 hours.
+Line Loss = 2.87kW
+Substation Power = 351.83kW
+Run Time for this OPF = 15.874s
+Number of Macro-iterations = 6
+Simulation has been running for: 259.05s
+---------------------------------------
+Simulations run on machine: LAPTOP-CP5R08SK
+Time Period = 4 or Time = 1.00 hours.
+Line Loss = 2.87kW
+Substation Power = 351.83kW
+Run Time for this OPF = 15.746s
+Number of Macro-iterations = 6
+Simulation has been running for: 341.75s
+---------------------------------------
+Simulations run on machine: LAPTOP-CP5R08SK
+Time Period = 5 or Time = 1.25 hours.
+Line Loss = 9.60kW
+Substation Power = 700.53kW
+Run Time for this OPF = 24.715s
+Number of Macro-iterations = 7
+Simulation has been running for: 454.97s
+---------------------------------------
+Simulations run on machine: LAPTOP-CP5R08SK
+Time Period = 6 or Time = 1.50 hours.
+Line Loss = 11.40kW
+Substation Power = 767.46kW
+Run Time for this OPF = 26.566s
+Number of Macro-iterations = 7
+Simulation has been running for: 561.52s
+---------------------------------------
+Simulations run on machine: LAPTOP-CP5R08SK
+Time Period = 7 or Time = 1.75 hours.
+Line Loss = 11.40kW
+Substation Power = 767.46kW
+Run Time for this OPF = 25.816s
+Number of Macro-iterations = 7
+Simulation has been running for: 666.53s
+---------------------------------------
