@@ -1,46 +1,57 @@
 function plotSimulationResults(results, varargin)
 
     % Default values for optional arguments
-        verbose = false;
-        logging = false;
-        systemName = "ieee123";
-        fileExtension = '.png';
-        saveSimulationResultPlots = true;
-        processedDataFolder = strcat("processedData", filesep);
+    verbose = false;
+    logging = false;
+    systemName = "ieee123";
+    fileExtensionImage = '.png';
+    fileExtensionData = ".csv";
+    saveSimulationResultPlots = true;
+    processedDataFolder = strcat("processedData", filesep);
+    chosenArea = 1;
+    chosenBatteryNodes = 1;
+    % Process optional arguments
+    numArgs = numel(varargin);
+
+    if mod(numArgs, 2) ~= 0
+        error('Optional arguments must be specified as name-value pairs.');
+    end
     
-        % Process optional arguments
-        numArgs = numel(varargin);
+    validArgs = ["verbose", "logging", "systemName", "processedDataFolder", ...
+        "fileExtensionImage", "fileExtensionData", "saveSimulationResultPlots", ...
+        "chosenArea", "chosenBatteryNodes"];
     
-        if mod(numArgs, 2) ~= 0
-            error('Optional arguments must be specified as name-value pairs.');
+    for i = 1:2:numArgs
+        argName = varargin{i};
+        argValue = varargin{i+1};
+        
+        if ~ischar(argName) || ~any(argName == validArgs)
+            error('Invalid optional argument name.');
         end
         
-        validArgs = ["verbose", "logging", "systemName", "processedDataFolder", "fileExtension", "saveSimulationResultPlots"];
-        
-        for i = 1:2:numArgs
-            argName = varargin{i};
-            argValue = varargin{i+1};
-            
-            if ~ischar(argName) || ~any(argName == validArgs)
-                error('Invalid optional argument name.');
-            end
-            
-            switch argName
-                case "verbose"
-                    verbose = argValue;
-                case "logging"
-                    logging = argValue;
-                case "systemName"
-                    systemName = argValue;
-                case "processedDataFolder"
-                    processedDataFolder = argValue;
-                case "fileExtension"
-                    fileExtension = argValue;
-                case "saveSimulationResultPlots"
-                    saveSimulationResultPlots = argValue;
-            end
+        switch argName
+            case "verbose"
+                verbose = argValue;
+            case "logging"
+                logging = argValue;
+            case "systemName"
+                systemName = argValue;
+            case "processedDataFolder"
+                processedDataFolder = argValue;
+            case "fileExtensionImage"
+                fileExtensionImage = argValue;
+            case "fileExtensionData"
+                fileExtensionData = argValue;
+            case "saveSimulationResultPlots"
+                saveSimulationResultPlots = argValue;
+            case "chosenArea"
+                chosenArea = argValue;
+            case "chosenBatteryNodes"
+                chosenBatteryNodes = argValue;
         end
-         
+    end
+        
+    %Unpack results    
     xSys = results.xSys;
     ySys = results.ySys;
     yArs = results.yArs;
@@ -50,27 +61,27 @@ function plotSimulationResults(results, varargin)
     varyingIndependentParam = xSys.Names{1};
         
     if ~isempty(ySys)
-        numTimePeriods = length(ySys.Names);
+        numTimePeriods = length(ySys.Vars{1});
     elseif ~isempty(yArs)
-        numTimePeriods = size(yArs.Vars(1), 1);
+        numTimePeriods = size(yArs.Vars{1}, 1);
     elseif ~isempty(yNodes)
-        numTimePeriods = size(yNodes.Vars(1), 1);
+        numTimePeriods = size(yNodes.Vars{1}, 1);
     else
         error("Empty results for both Systems, Areas and Nodes.");
     end
     myfprintf(logging,  "Plotter detects that %d simulations were run.\n", numTimePeriods);
     
     if ~isempty(yArs)
-        numAreas = size(yArs.Vars, 2);
+        numAreas = size(yArs.Vars{1}, 2);
     elseif ~isempty(yNodes)
-        numAreas = size(yArs.Vars, 2);
+        numAreas = size(yNodes.Vars{1}, 2);
     else
         numAreas = 1;
     end
     myfprintf(logging,  "Plotter detects that the system had %d areas.\n", numAreas);
     
     if ~isempty(yNodes)
-        NMax = size(yNodes.Vars, 3);
+        NMax = size(yNodes.Vars{1}, 3);
     else
         warning("No nodal variable?");
     end
@@ -80,7 +91,7 @@ function plotSimulationResults(results, varargin)
     if strcmp(varyingIndependentParam, "Time Period")
         indParamString = "t";
         xLabelString = "Time-step $t$";
-        titleStrAppendix = sprintf(" $t \\in [0, %d]$", numTimePeriods);
+        titleStrAppendix = sprintf(" $t \\in [1, %d], t \\in \\mathcal{N}$", numTimePeriods);
     else
         error("What is the independently varying parameter?")
     end
@@ -106,83 +117,144 @@ function plotSimulationResults(results, varargin)
     % Loop through each dependent variable and create corresponding plot
     dependentVariablesSys = ySys.Vars;
     dependentVariablesArs = yArs.Vars;
+    dependentVariablesNodes = yNodes.Vars;
 
     yLabelStringsSys = ySys.yLabelNames;
     yLabelStringsArs = yArs.yLabelNames;
+    yLabelStringsNodes = yNodes.yLabelNames;
+
     legendEntriesSys = ySys.Legends;
-    legendEntriesArs = yArs.yLabelNames;
+    legendEntriesArs = yArs.Legends;
+    legendEntriesNodes = yNodes.Legends;
 
     AreaNames = cell(numAreas, 1);
     for i = 1:numAreas
         AreaNames{i} = sprintf('Area %d', i);
     end
 
-    dependentVariableNamesSys = ySys.FullNames;
-    dependentVariableNamesArs = yArs.FullNames;
+    dependentVariableFullNamesSys = ySys.FullNames;
+    dependentVariableFullNamesArs = yArs.FullNames;
+    dependentVariableFullNamesNodes = yNodes.FullNames;
+    
+    dependentVariableNamesNodes = yNodes.Names;
+
     figureNamesSys = ySys.FigureNames;
     figureNamesArs = yArs.FigureNames;
+    figureNamesNodes = yNodes.FigureNames;
     
-    for i = 1:numel(dependentVariablesSys)
-        dependentVariable = dependentVariablesSys{i};
-        figureName = figureNamesSys{i};
-        dependentVariableName = dependentVariableNamesSys{i};
-        legendEntrySys = dollaSign(legendEntriesSys{i});
-        yLabelStrSys = dollaSign(yLabelStringsSys{i});
-
-        figureHandle = figure('Name', strcat(dependentVariableName, " vs ", indParamString));
+    % for i = 1:numel(dependentVariablesSys)
+    %     dependentVariable = dependentVariablesSys{i};
+    %     figureName = figureNamesSys{i};
+    %     dependentVariableName = dependentVariableFullNamesSys{i};
+    %     legendEntrySys = dollaSign(legendEntriesSys{i});
+    %     yLabelStrSys = dollaSign(yLabelStringsSys{i});
+    % 
+    %     figureHandle = figure('Name', strcat(dependentVariableName, " vs ", indParamString));
+    % 
+    %     plot(independentVariable, dependentVariable, ...
+    %         'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
+    %         'Color', colors{mod(i, numColours)+1}, 'LineWidth', 2.5);
+    % 
+    %     legend(legendEntrySys);
+    %     titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableName, varyingIndependentParam) + ...
+    %         titleStrAppendix;
+    %     title(titleStr);
+    %     xlabel(xLabelString);
+    % 
+    %     ylabel(yLabelStrSys);
+    % 
+    %     grid minor;
+    %     hold off;
+    % 
+    %     saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
+    %     filenamePNG = strcat(saveLocation, figureName, " vs ", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtensionImage);
+    %     myexportgraphics(saveSimulationResultPlots, figureHandle, filenamePNG, 'Resolution', 300);
+    %     filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
+    %     writematrix(dependentVariable, filenameCSV)
+    % end
+    % 
+    % for i = 1:numel(dependentVariablesArs)
+    %     dependentVariable = dependentVariablesArs{i};
+    %     figureName = figureNamesArs{i};
+    %     dependentVariableName = dependentVariableFullNamesArs{i};
+    %     legendPrefix = dollaSign(legendEntriesArs{i});
+    %     legendEntriesAllAreas = cell(numAreas, 1);
+    % 
+    %     yLabelStrArs = dollaSign(yLabelStringsArs{i});
+    % 
+    %     figureHandle = figure('Name', strcat(dependentVariableName, "_vs_", indParamString));
+    %     hold on;
+    %     for area = 1:numAreas
+    %         plot(independentVariable, dependentVariable(:, area), ...
+    %             'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
+    %                 'Color', colors{mod(area, numColours)+1}, 'LineWidth', 2.5);
+    % 
+    %         legendEntriesAllAreas{area} = strcat(legendPrefix, " ", AreaNames{area});
+    %     end
+    % 
+    %     legend(legendEntriesAllAreas)
+    %     titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableName, varyingIndependentParam) + ...
+    %         titleStrAppendix;
+    %     title(titleStr);
+    %     xlabel(xLabelString);
+    %     ylabel(yLabelStrArs);
+    % 
+    %     grid minor;
+    %     hold off;
+    % 
+    %     saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
+    %     filenamePNG = strcat(saveLocation, figureName, "_vs_", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtensionImage);
+    %     myexportgraphics(saveSimulationResultPlots, figureHandle, filenamePNG, 'Resolution', 300);
+    %     filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
+    %     writematrix(dependentVariable, filenameCSV)
+    % end
     
-        plot(independentVariable, dependentVariable, ...
-            'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
-            'Color', colors{mod(i, numColours)+1}, 'LineWidth', 2.5);
-    
-        legend(legendEntrySys);
-        titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableName, varyingIndependentParam) + ...
-            titleStrAppendix;
-        title(titleStr);
-        xlabel(xLabelString);
+    nodalVariablesDesiredForPlotting = {'B_j', 'Pc_j', 'Pd_j'};
+    for i = 1:numel(dependentVariablesNodes)
+        dependentVariableName = dependentVariableNamesNodes{i};
         
-        ylabel(yLabelStrSys);
-        
-        grid minor;
-        hold off;
+        if ~ismember(dependentVariableName, nodalVariablesDesiredForPlotting) 
+            continue;
+        elseif strcmp(dependentVariableName, 'B_j')
+            independentVariable1 = 1:(numTimePeriods+1);
+        else
+            independentVariable1 = independentVariable;
+        end
 
-        saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-        filename = strcat(saveLocation, figureName, " vs ", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtension);
-        myexportgraphics(saveSimulationResultPlots, figureHandle, filename, 'Resolution', 300);
-    end
-
-    for i = 1:numel(dependentVariablesArs)
-        dependentVariable = dependentVariablesArs{i};
-        figureName = figureNamesArs{i};
-        dependentVariableName = dependentVariableNamesArs{i};
-        legendPrefix = dollaSign(legendEntriesArs{i});
-        legendEntriesAllAreas = cell(numAreas, 1);
+        dependentVariableFullName = dependentVariableFullNamesNodes{i};
+        dependentVariable = dependentVariablesNodes{i};
+        figureName = figureNamesNodes{i};
+        legendPrefix = dollaSign(legendEntriesNodes{i});
+        legendEntriesAllNodesInArea = cell(numel(chosenBatteryNodes), 1);
  
-        yLabelStrArs = dollaSign(yLabelStringsArs{i});
+        yLabelStrNodes = dollaSign(yLabelStringsNodes{i});
 
         figureHandle = figure('Name', strcat(dependentVariableName, "_vs_", indParamString));
         hold on;
-        for area = 1:numAreas
-            plot(independentVariable, dependentVariable(:, area), ...
+        for nodeNum = 1:numel(chosenBatteryNodes)
+            node = chosenBatteryNodes(nodeNum);
+            plot(independentVariable1, dependentVariable(:, chosenArea, node), ...
                 'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
-                    'Color', colors{mod(area, numColours)+1}, 'LineWidth', 2.5);
+                    'Color', colors{mod(node, numColours)+1}, 'LineWidth', 2.5);
 
-            legendEntriesAllAreas{area} = strcat(legendPrefix, " ", AreaNames{area});
+            legendEntriesAllNodesInArea{chosenArea} = strcat(legendPrefix, " ", AreaNames{chosenArea}, " Node ", num2str(node));
         end
     
-        legend(legendEntriesAllAreas)
-        titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableName, varyingIndependentParam) + ...
+        legend(legendEntriesAllNodesInArea)
+        titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableFullName, varyingIndependentParam) + ...
             titleStrAppendix;
         title(titleStr);
         xlabel(xLabelString);
-        ylabel(yLabelStrArs);
+        ylabel(yLabelStrNodes);
         
         grid minor;
         hold off;
-
+        
         saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-        filename = strcat(saveLocation, figureName, "_vs_", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtension);
-        myexportgraphics(saveSimulationResultPlots, figureHandle, filename, 'Resolution', 300);
+        filenamePNG = strcat(saveLocation, figureName, "_vs_", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtensionImage);
+        myexportgraphics(saveSimulationResultPlots, figureHandle, filenamePNG, 'Resolution', 300);
+        filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
+        writematrix(dependentVariable, filenameCSV)
     end
 
 end
