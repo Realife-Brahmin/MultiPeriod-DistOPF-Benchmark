@@ -1,7 +1,7 @@
 Time Period = 1, macroItr = 6 and Area = 4: Performing Initialization Phase 1.
 Time Period = 1, macroItr = 6 and Area = 4: Lossless Initialization WITHOUT batteries accomTime Period = 1, macroItr = 6 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 1, macroItr = 6 and Area = 4:  Now solving for the real deal.
-Time Period = 1, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 53.727145 percent.
+Time Period = 1, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 34.949680 percent.
 a = 4:  Oh no!Time Period = 1, Converged in 6 macro-iterations!
 .
 Time Period = 1, macroItr = 6 and Area = 4:  Oh no! x0_NoLoss(193) < lb(193) as -0.001548 < -0.001548.
@@ -23,7 +23,7 @@ Time Period = 2, macroItr = 1 and Area = 1: Performing Initialization Phase 2
 Time Period = 2, macroItr = 1 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 1 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 1 and Area = 1:  Now solving for the real deal.
-Time Period = 2, macroItr = 1 and Area = 1: Projected savings in substation power flow by using batteries: 53.824150 percent.
+Time Period = 2, macroItr = 1 and Area = 1: Projected savings in substation power flow by using batteries: 34.990702 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 2, macroItr = 1 and Area = 2: Performing Initialization Phase 1.
@@ -33,7 +33,7 @@ Time Period = 2, macroItr = 1 and Area = 2: Performing Initialization Phase 2
 Time Period = 2, macroItr = 1 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 1 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 1 and Area = 2:  Now solving for the real deal.
-Time Period = 2, macroItr = 1 and Area = 2: Projected savings in substation power flow by using batteries: 53.810953 percent.
+Time Period = 2, macroItr = 1 and Area = 2: Projected savings in substation power flow by using batteries: 34.985124 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 2, macroItr = 1 and Area = 3: Performing Initialization Phase 1.
@@ -43,7 +43,7 @@ Time Period = 2, macroItr = 1 and Area = 3: Performing Initialization Phase 2
 Time Period = 2, macroItr = 1 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 1 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 1 and Area = 3:  Now solving for the real deal.
-Time Period = 2, macroItr = 1 and Area = 3: Projected savings in substation power flow by using batteries: 53.822028 percent.
+Time Period = 2, macroItr = 1 and Area = 3: Projected savings in substation power flow by using batteries: 34.989805 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 2, macroItr = 1 and Area = 4: Performing Initialization Phase 1.
@@ -65,7 +65,7 @@ Time Period = 2, macroItr = 1 and Area = 4: Lossless Initialization WITH batteri
 Time Period = 2, macroItr = 1 and Area = 4: Oh no! x0(315) < lb(315) as -0.000000 < 0.000000.
 Time Period = 2, macroItr = 1 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 2, macroItr = 1 and Area = 4:  Now solving for the real deal.
-Time Period = 2, macroItr = 1 and Area = 4: Projected savings in substation power flow by using batteries: 53.728965 percent.
+Time Period = 2, macroItr = 1 and Area = 4: Projected savings in substation power flow by using batteries: 34.950450 percent.
 Time Period = 2, Still yet to converge after 1 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -83,7 +83,7 @@ Time Period = 2, macroItr = 2 and Area = 1: Performing Initialization Phase 2
 Time Period = 2, macroItr = 2 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 2 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 2 and Area = 1:  Now solving for the real deal.
-Time Period = 2, macroItr = 2 and Area = 1: Projected savings in substation power flow by using batteries: 29.961725 percent.
+Time Period = 2, macroItr = 2 and Area = 1: Projected savings in substation power flow by using batteries: 23.054268 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 2, macroItr = 2 and Area = 2: Performing Initialization Phase 1.
@@ -93,7 +93,7 @@ Time Period = 2, macroItr = 2 and Area = 2: Performing Initialization Phase 2
 Time Period = 2, macroItr = 2 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 2 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 2 and Area = 2:  Now solving for the real deal.
-Time Period = 2, macroItr = 2 and Area = 2: Projected savings in substation power flow by using batteries: 24.399334 percent.
+Time Period = 2, macroItr = 2 and Area = 2: Projected savings in substation power flow by using batteries: 19.613718 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 2, macroItr = 2 and Area = 3: Performing Initialization Phase 1.
@@ -103,7 +103,7 @@ Time Period = 2, macroItr = 2 and Area = 3: Performing Initialization Phase 2
 Time Period = 2, macroItr = 2 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 2 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 2 and Area = 3:  Now solving for the real deal.
-Time Period = 2, macroItr = 2 and Area = 3: Projected savings in substation power flow by using batteries: 53.821966 percent.
+Time Period = 2, macroItr = 2 and Area = 3: Projected savings in substation power flow by using batteries: 34.989779 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 2, macroItr = 2 and Area = 4: Performing Initialization Phase 1.
@@ -125,7 +125,7 @@ Time Period = 2, macroItr = 2 and Area = 4: Lossless Initialization WITH batteri
 Time Period = 2, macroItr = 2 and Area = 4: Oh no! x0(287) < lb(287) as -0.000000 < 0.000000.
 Time Period = 2, macroItr = 2 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 2, macroItr = 2 and Area = 4:  Now solving for the real deal.
-Time Period = 2, macroItr = 2 and Area = 4: Projected savings in substation power flow by using batteries: 53.728669 percent.
+Time Period = 2, macroItr = 2 and Area = 4: Projected savings in substation power flow by using batteries: 34.950325 percent.
 Time Period = 2, Still yet to converge after 2 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -143,7 +143,7 @@ Time Period = 2, macroItr = 3 and Area = 1: Performing Initialization Phase 2
 Time Period = 2, macroItr = 3 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 3 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 3 and Area = 1:  Now solving for the real deal.
-Time Period = 2, macroItr = 3 and Area = 1: Projected savings in substation power flow by using batteries: 20.126401 percent.
+Time Period = 2, macroItr = 3 and Area = 1: Projected savings in substation power flow by using batteries: 16.754353 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 2, macroItr = 3 and Area = 2: Performing Initialization Phase 1.
@@ -153,7 +153,7 @@ Time Period = 2, macroItr = 3 and Area = 2: Performing Initialization Phase 2
 Time Period = 2, macroItr = 3 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 3 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 3 and Area = 2:  Now solving for the real deal.
-Time Period = 2, macroItr = 3 and Area = 2: Projected savings in substation power flow by using batteries: 24.398829 percent.
+Time Period = 2, macroItr = 3 and Area = 2: Projected savings in substation power flow by using batteries: 19.613391 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 2, macroItr = 3 and Area = 3: Performing Initialization Phase 1.
@@ -163,7 +163,7 @@ Time Period = 2, macroItr = 3 and Area = 3: Performing Initialization Phase 2
 Time Period = 2, macroItr = 3 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 3 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 3 and Area = 3:  Now solving for the real deal.
-Time Period = 2, macroItr = 3 and Area = 3: Projected savings in substation power flow by using batteries: 53.821769 percent.
+Time Period = 2, macroItr = 3 and Area = 3: Projected savings in substation power flow by using batteries: 34.989696 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 2, macroItr = 3 and Area = 4: Performing Initialization Phase 1.
@@ -184,7 +184,7 @@ Time Period = 2, macroItr = 3 and Area = 4: Performing Initialization Phase 2
 Time Period = 2, macroItr = 3 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 3 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 3 and Area = 4:  Now solving for the real deal.
-Time Period = 2, macroItr = 3 and Area = 4: Projected savings in substation power flow by using batteries: 53.728051 percent.
+Time Period = 2, macroItr = 3 and Area = 4: Projected savings in substation power flow by using batteries: 34.950063 percent.
 Time Period = 2, Still yet to converge after 3 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -202,7 +202,7 @@ Time Period = 2, macroItr = 4 and Area = 1: Performing Initialization Phase 2
 Time Period = 2, macroItr = 4 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 4 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 4 and Area = 1:  Now solving for the real deal.
-Time Period = 2, macroItr = 4 and Area = 1: Projected savings in substation power flow by using batteries: 20.462594 percent.
+Time Period = 2, macroItr = 4 and Area = 1: Projected savings in substation power flow by using batteries: 16.986679 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 2, macroItr = 4 and Area = 2: Performing Initialization Phase 1.
@@ -212,7 +212,7 @@ Time Period = 2, macroItr = 4 and Area = 2: Performing Initialization Phase 2
 Time Period = 2, macroItr = 4 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 4 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 4 and Area = 2:  Now solving for the real deal.
-Time Period = 2, macroItr = 4 and Area = 2: Projected savings in substation power flow by using batteries: 24.398507 percent.
+Time Period = 2, macroItr = 4 and Area = 2: Projected savings in substation power flow by using batteries: 19.613183 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 2, macroItr = 4 and Area = 3: Performing Initialization Phase 1.
@@ -222,7 +222,7 @@ Time Period = 2, macroItr = 4 and Area = 3: Performing Initialization Phase 2
 Time Period = 2, macroItr = 4 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 4 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 4 and Area = 3:  Now solving for the real deal.
-Time Period = 2, macroItr = 4 and Area = 3: Projected savings in substation power flow by using batteries: 53.821734 percent.
+Time Period = 2, macroItr = 4 and Area = 3: Projected savings in substation power flow by using batteries: 34.989681 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 2, macroItr = 4 and Area = 4: Performing Initialization Phase 1.
@@ -243,7 +243,7 @@ Time Period = 2, macroItr = 4 and Area = 4: Performing Initialization Phase 2
 Time Period = 2, macroItr = 4 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 4 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 4 and Area = 4:  Now solving for the real deal.
-Time Period = 2, macroItr = 4 and Area = 4: Projected savings in substation power flow by using batteries: 53.727620 percent.
+Time Period = 2, macroItr = 4 and Area = 4: Projected savings in substation power flow by using batteries: 34.949881 percent.
 Time Period = 2, Still yet to converge after 4 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -261,7 +261,7 @@ Time Period = 2, macroItr = 5 and Area = 1: Performing Initialization Phase 2
 Time Period = 2, macroItr = 5 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 5 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 5 and Area = 1:  Now solving for the real deal.
-Time Period = 2, macroItr = 5 and Area = 1: Projected savings in substation power flow by using batteries: 20.126021 percent.
+Time Period = 2, macroItr = 5 and Area = 1: Projected savings in substation power flow by using batteries: 16.754090 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 2, macroItr = 5 and Area = 2: Performing Initialization Phase 1.
@@ -271,7 +271,7 @@ Time Period = 2, macroItr = 5 and Area = 2: Performing Initialization Phase 2
 Time Period = 2, macroItr = 5 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 5 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 5 and Area = 2:  Now solving for the real deal.
-Time Period = 2, macroItr = 5 and Area = 2: Projected savings in substation power flow by using batteries: 24.398202 percent.
+Time Period = 2, macroItr = 5 and Area = 2: Projected savings in substation power flow by using batteries: 19.612986 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 2, macroItr = 5 and Area = 3: Performing Initialization Phase 1.
@@ -281,7 +281,7 @@ Time Period = 2, macroItr = 5 and Area = 3: Performing Initialization Phase 2
 Time Period = 2, macroItr = 5 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 5 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 5 and Area = 3:  Now solving for the real deal.
-Time Period = 2, macroItr = 5 and Area = 3: Projected savings in substation power flow by using batteries: 53.821710 percent.
+Time Period = 2, macroItr = 5 and Area = 3: Projected savings in substation power flow by using batteries: 34.989671 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 2, macroItr = 5 and Area = 4: Performing Initialization Phase 1.
@@ -303,7 +303,7 @@ Time Period = 2, macroItr = 5 and Area = 4: Lossless Initialization WITH batteri
 Time Period = 2, macroItr = 5 and Area = 4: Oh no! x0(286) < lb(286) as -0.000000 < 0.000000.
 Time Period = 2, macroItr = 5 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 2, macroItr = 5 and Area = 4:  Now solving for the real deal.
-Time Period = 2, macroItr = 5 and Area = 4: Projected savings in substation power flow by using batteries: 53.727294 percent.
+Time Period = 2, macroItr = 5 and Area = 4: Projected savings in substation power flow by using batteries: 34.949743 percent.
 Time Period = 2, Still yet to converge after 5 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -321,7 +321,7 @@ Time Period = 2, macroItr = 6 and Area = 1: Performing Initialization Phase 2
 Time Period = 2, macroItr = 6 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 6 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 6 and Area = 1:  Now solving for the real deal.
-Time Period = 2, macroItr = 6 and Area = 1: Projected savings in substation power flow by using batteries: 20.125860 percent.
+Time Period = 2, macroItr = 6 and Area = 1: Projected savings in substation power flow by using batteries: 16.753978 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 2, macroItr = 6 and Area = 2: Performing Initialization Phase 1.
@@ -331,7 +331,7 @@ Time Period = 2, macroItr = 6 and Area = 2: Performing Initialization Phase 2
 Time Period = 2, macroItr = 6 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 6 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 6 and Area = 2:  Now solving for the real deal.
-Time Period = 2, macroItr = 6 and Area = 2: Projected savings in substation power flow by using batteries: 24.397994 percent.
+Time Period = 2, macroItr = 6 and Area = 2: Projected savings in substation power flow by using batteries: 19.612852 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 2, macroItr = 6 and Area = 3: Performing Initialization Phase 1.
@@ -341,7 +341,7 @@ Time Period = 2, macroItr = 6 and Area = 3: Performing Initialization Phase 2
 Time Period = 2, macroItr = 6 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 6 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 6 and Area = 3:  Now solving for the real deal.
-Time Period = 2, macroItr = 6 and Area = 3: Projected savings in substation power flow by using batteries: 53.821705 percent.
+Time Period = 2, macroItr = 6 and Area = 3: Projected savings in substation power flow by using batteries: 34.989669 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 2, macroItr = 6 and Area = 4: Performing Initialization Phase 1.
@@ -356,7 +356,7 @@ Time Period = 2, macroItr = 6 and Area = 4: Performing Initialization Phase 2
 Time Period = 2, macroItr = 6 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 2, macroItr = 6 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 2, macroItr = 6 and Area = 4:  Now solving for the real deal.
-Time Period = 2, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 53.727145 percent.
+Time Period = 2, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 34.949680 percent.
 Time Period = 2, Converged in 6 macro-iterations!
 ********Running OPF for the system for Time Period = 3.********
 Number of DERs in Area 1 : 23.
@@ -373,7 +373,7 @@ Time Period = 3, macroItr = 1 and Area = 1: Performing Initialization Phase 2
 Time Period = 3, macroItr = 1 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 1 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 1 and Area = 1:  Now solving for the real deal.
-Time Period = 3, macroItr = 1 and Area = 1: Projected savings in substation power flow by using batteries: 53.824150 percent.
+Time Period = 3, macroItr = 1 and Area = 1: Projected savings in substation power flow by using batteries: 34.990702 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 3, macroItr = 1 and Area = 2: Performing Initialization Phase 1.
@@ -383,7 +383,7 @@ Time Period = 3, macroItr = 1 and Area = 2: Performing Initialization Phase 2
 Time Period = 3, macroItr = 1 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 1 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 1 and Area = 2:  Now solving for the real deal.
-Time Period = 3, macroItr = 1 and Area = 2: Projected savings in substation power flow by using batteries: 53.810953 percent.
+Time Period = 3, macroItr = 1 and Area = 2: Projected savings in substation power flow by using batteries: 34.985124 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 3, macroItr = 1 and Area = 3: Performing Initialization Phase 1.
@@ -393,7 +393,7 @@ Time Period = 3, macroItr = 1 and Area = 3: Performing Initialization Phase 2
 Time Period = 3, macroItr = 1 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 1 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 1 and Area = 3:  Now solving for the real deal.
-Time Period = 3, macroItr = 1 and Area = 3: Projected savings in substation power flow by using batteries: 53.822028 percent.
+Time Period = 3, macroItr = 1 and Area = 3: Projected savings in substation power flow by using batteries: 34.989805 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 3, macroItr = 1 and Area = 4: Performing Initialization Phase 1.
@@ -416,7 +416,7 @@ Time Period = 3, macroItr = 1 and Area = 4: Oh no! x0(302) < lb(302) as -0.00000
 Time Period = 3, macroItr = 1 and Area = 4: Oh no! x0(315) < lb(315) as -0.000000 < 0.000000.
 Time Period = 3, macroItr = 1 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 3, macroItr = 1 and Area = 4:  Now solving for the real deal.
-Time Period = 3, macroItr = 1 and Area = 4: Projected savings in substation power flow by using batteries: 53.728965 percent.
+Time Period = 3, macroItr = 1 and Area = 4: Projected savings in substation power flow by using batteries: 34.950450 percent.
 Time Period = 3, Still yet to converge after 1 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -434,7 +434,7 @@ Time Period = 3, macroItr = 2 and Area = 1: Performing Initialization Phase 2
 Time Period = 3, macroItr = 2 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 2 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 2 and Area = 1:  Now solving for the real deal.
-Time Period = 3, macroItr = 2 and Area = 1: Projected savings in substation power flow by using batteries: 29.961725 percent.
+Time Period = 3, macroItr = 2 and Area = 1: Projected savings in substation power flow by using batteries: 23.054268 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 3, macroItr = 2 and Area = 2: Performing Initialization Phase 1.
@@ -444,7 +444,7 @@ Time Period = 3, macroItr = 2 and Area = 2: Performing Initialization Phase 2
 Time Period = 3, macroItr = 2 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 2 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 2 and Area = 2:  Now solving for the real deal.
-Time Period = 3, macroItr = 2 and Area = 2: Projected savings in substation power flow by using batteries: 24.399334 percent.
+Time Period = 3, macroItr = 2 and Area = 2: Projected savings in substation power flow by using batteries: 19.613718 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 3, macroItr = 2 and Area = 3: Performing Initialization Phase 1.
@@ -454,7 +454,7 @@ Time Period = 3, macroItr = 2 and Area = 3: Performing Initialization Phase 2
 Time Period = 3, macroItr = 2 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 2 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 2 and Area = 3:  Now solving for the real deal.
-Time Period = 3, macroItr = 2 and Area = 3: Projected savings in substation power flow by using batteries: 53.821966 percent.
+Time Period = 3, macroItr = 2 and Area = 3: Projected savings in substation power flow by using batteries: 34.989779 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 3, macroItr = 2 and Area = 4: Performing Initialization Phase 1.
@@ -475,7 +475,7 @@ Time Period = 3, macroItr = 2 and Area = 4: Performing Initialization Phase 2
 Time Period = 3, macroItr = 2 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 2 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 2 and Area = 4:  Now solving for the real deal.
-Time Period = 3, macroItr = 2 and Area = 4: Projected savings in substation power flow by using batteries: 53.728669 percent.
+Time Period = 3, macroItr = 2 and Area = 4: Projected savings in substation power flow by using batteries: 34.950325 percent.
 Time Period = 3, Still yet to converge after 2 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -493,7 +493,7 @@ Time Period = 3, macroItr = 3 and Area = 1: Performing Initialization Phase 2
 Time Period = 3, macroItr = 3 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 3 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 3 and Area = 1:  Now solving for the real deal.
-Time Period = 3, macroItr = 3 and Area = 1: Projected savings in substation power flow by using batteries: 20.126401 percent.
+Time Period = 3, macroItr = 3 and Area = 1: Projected savings in substation power flow by using batteries: 16.754353 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 3, macroItr = 3 and Area = 2: Performing Initialization Phase 1.
@@ -503,7 +503,7 @@ Time Period = 3, macroItr = 3 and Area = 2: Performing Initialization Phase 2
 Time Period = 3, macroItr = 3 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 3 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 3 and Area = 2:  Now solving for the real deal.
-Time Period = 3, macroItr = 3 and Area = 2: Projected savings in substation power flow by using batteries: 24.398829 percent.
+Time Period = 3, macroItr = 3 and Area = 2: Projected savings in substation power flow by using batteries: 19.613391 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 3, macroItr = 3 and Area = 3: Performing Initialization Phase 1.
@@ -513,7 +513,7 @@ Time Period = 3, macroItr = 3 and Area = 3: Performing Initialization Phase 2
 Time Period = 3, macroItr = 3 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 3 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 3 and Area = 3:  Now solving for the real deal.
-Time Period = 3, macroItr = 3 and Area = 3: Projected savings in substation power flow by using batteries: 53.821769 percent.
+Time Period = 3, macroItr = 3 and Area = 3: Projected savings in substation power flow by using batteries: 34.989696 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 3, macroItr = 3 and Area = 4: Performing Initialization Phase 1.
@@ -534,7 +534,7 @@ Time Period = 3, macroItr = 3 and Area = 4: Performing Initialization Phase 2
 Time Period = 3, macroItr = 3 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 3 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 3 and Area = 4:  Now solving for the real deal.
-Time Period = 3, macroItr = 3 and Area = 4: Projected savings in substation power flow by using batteries: 53.728051 percent.
+Time Period = 3, macroItr = 3 and Area = 4: Projected savings in substation power flow by using batteries: 34.950063 percent.
 Time Period = 3, Still yet to converge after 3 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -553,7 +553,7 @@ Time Period = 3, macroItr = 4 and Area = 1: Lossless Initialization WITH batteri
 Time Period = 3, macroItr = 4 and Area = 1: Oh no! x0(228) < lb(228) as -0.000000 < 0.000000.
 Time Period = 3, macroItr = 4 and Area = 1:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 3, macroItr = 4 and Area = 1:  Now solving for the real deal.
-Time Period = 3, macroItr = 4 and Area = 1: Projected savings in substation power flow by using batteries: 20.462594 percent.
+Time Period = 3, macroItr = 4 and Area = 1: Projected savings in substation power flow by using batteries: 16.986679 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 3, macroItr = 4 and Area = 2: Performing Initialization Phase 1.
@@ -563,7 +563,7 @@ Time Period = 3, macroItr = 4 and Area = 2: Performing Initialization Phase 2
 Time Period = 3, macroItr = 4 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 4 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 4 and Area = 2:  Now solving for the real deal.
-Time Period = 3, macroItr = 4 and Area = 2: Projected savings in substation power flow by using batteries: 24.398507 percent.
+Time Period = 3, macroItr = 4 and Area = 2: Projected savings in substation power flow by using batteries: 19.613183 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 3, macroItr = 4 and Area = 3: Performing Initialization Phase 1.
@@ -573,7 +573,7 @@ Time Period = 3, macroItr = 4 and Area = 3: Performing Initialization Phase 2
 Time Period = 3, macroItr = 4 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 4 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 4 and Area = 3:  Now solving for the real deal.
-Time Period = 3, macroItr = 4 and Area = 3: Projected savings in substation power flow by using batteries: 53.821734 percent.
+Time Period = 3, macroItr = 4 and Area = 3: Projected savings in substation power flow by using batteries: 34.989681 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 3, macroItr = 4 and Area = 4: Performing Initialization Phase 1.
@@ -594,7 +594,7 @@ Time Period = 3, macroItr = 4 and Area = 4: Performing Initialization Phase 2
 Time Period = 3, macroItr = 4 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 4 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 4 and Area = 4:  Now solving for the real deal.
-Time Period = 3, macroItr = 4 and Area = 4: Projected savings in substation power flow by using batteries: 53.727620 percent.
+Time Period = 3, macroItr = 4 and Area = 4: Projected savings in substation power flow by using batteries: 34.949881 percent.
 Time Period = 3, Still yet to converge after 4 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -612,7 +612,7 @@ Time Period = 3, macroItr = 5 and Area = 1: Performing Initialization Phase 2
 Time Period = 3, macroItr = 5 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 5 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 5 and Area = 1:  Now solving for the real deal.
-Time Period = 3, macroItr = 5 and Area = 1: Projected savings in substation power flow by using batteries: 20.126021 percent.
+Time Period = 3, macroItr = 5 and Area = 1: Projected savings in substation power flow by using batteries: 16.754090 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 3, macroItr = 5 and Area = 2: Performing Initialization Phase 1.
@@ -622,7 +622,7 @@ Time Period = 3, macroItr = 5 and Area = 2: Performing Initialization Phase 2
 Time Period = 3, macroItr = 5 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 5 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 5 and Area = 2:  Now solving for the real deal.
-Time Period = 3, macroItr = 5 and Area = 2: Projected savings in substation power flow by using batteries: 24.398202 percent.
+Time Period = 3, macroItr = 5 and Area = 2: Projected savings in substation power flow by using batteries: 19.612986 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 3, macroItr = 5 and Area = 3: Performing Initialization Phase 1.
@@ -632,7 +632,7 @@ Time Period = 3, macroItr = 5 and Area = 3: Performing Initialization Phase 2
 Time Period = 3, macroItr = 5 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 5 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 5 and Area = 3:  Now solving for the real deal.
-Time Period = 3, macroItr = 5 and Area = 3: Projected savings in substation power flow by using batteries: 53.821710 percent.
+Time Period = 3, macroItr = 5 and Area = 3: Projected savings in substation power flow by using batteries: 34.989671 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 3, macroItr = 5 and Area = 4: Performing Initialization Phase 1.
@@ -654,7 +654,7 @@ Time Period = 3, macroItr = 5 and Area = 4: Lossless Initialization WITH batteri
 Time Period = 3, macroItr = 5 and Area = 4: Oh no! x0(307) < lb(307) as -0.000000 < 0.000000.
 Time Period = 3, macroItr = 5 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 3, macroItr = 5 and Area = 4:  Now solving for the real deal.
-Time Period = 3, macroItr = 5 and Area = 4: Projected savings in substation power flow by using batteries: 53.727294 percent.
+Time Period = 3, macroItr = 5 and Area = 4: Projected savings in substation power flow by using batteries: 34.949743 percent.
 Time Period = 3, Still yet to converge after 5 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -672,7 +672,7 @@ Time Period = 3, macroItr = 6 and Area = 1: Performing Initialization Phase 2
 Time Period = 3, macroItr = 6 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 6 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 6 and Area = 1:  Now solving for the real deal.
-Time Period = 3, macroItr = 6 and Area = 1: Projected savings in substation power flow by using batteries: 20.125860 percent.
+Time Period = 3, macroItr = 6 and Area = 1: Projected savings in substation power flow by using batteries: 16.753978 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 3, macroItr = 6 and Area = 2: Performing Initialization Phase 1.
@@ -682,7 +682,7 @@ Time Period = 3, macroItr = 6 and Area = 2: Performing Initialization Phase 2
 Time Period = 3, macroItr = 6 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 6 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 6 and Area = 2:  Now solving for the real deal.
-Time Period = 3, macroItr = 6 and Area = 2: Projected savings in substation power flow by using batteries: 24.397994 percent.
+Time Period = 3, macroItr = 6 and Area = 2: Projected savings in substation power flow by using batteries: 19.612852 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 3, macroItr = 6 and Area = 3: Performing Initialization Phase 1.
@@ -692,7 +692,7 @@ Time Period = 3, macroItr = 6 and Area = 3: Performing Initialization Phase 2
 Time Period = 3, macroItr = 6 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 6 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 6 and Area = 3:  Now solving for the real deal.
-Time Period = 3, macroItr = 6 and Area = 3: Projected savings in substation power flow by using batteries: 53.821705 percent.
+Time Period = 3, macroItr = 6 and Area = 3: Projected savings in substation power flow by using batteries: 34.989669 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 3, macroItr = 6 and Area = 4: Performing Initialization Phase 1.
@@ -707,7 +707,7 @@ Time Period = 3, macroItr = 6 and Area = 4: Performing Initialization Phase 2
 Time Period = 3, macroItr = 6 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 3, macroItr = 6 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 3, macroItr = 6 and Area = 4:  Now solving for the real deal.
-Time Period = 3, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 53.727145 percent.
+Time Period = 3, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 34.949680 percent.
 Time Period = 3, Converged in 6 macro-iterations!
 ********Running OPF for the system for Time Period = 4.********
 Number of DERs in Area 1 : 23.
@@ -724,7 +724,7 @@ Time Period = 4, macroItr = 1 and Area = 1: Performing Initialization Phase 2
 Time Period = 4, macroItr = 1 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 1 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 1 and Area = 1:  Now solving for the real deal.
-Time Period = 4, macroItr = 1 and Area = 1: Projected savings in substation power flow by using batteries: 53.824150 percent.
+Time Period = 4, macroItr = 1 and Area = 1: Projected savings in substation power flow by using batteries: 34.990702 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 4, macroItr = 1 and Area = 2: Performing Initialization Phase 1.
@@ -734,7 +734,7 @@ Time Period = 4, macroItr = 1 and Area = 2: Performing Initialization Phase 2
 Time Period = 4, macroItr = 1 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 1 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 1 and Area = 2:  Now solving for the real deal.
-Time Period = 4, macroItr = 1 and Area = 2: Projected savings in substation power flow by using batteries: 53.810953 percent.
+Time Period = 4, macroItr = 1 and Area = 2: Projected savings in substation power flow by using batteries: 34.985124 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 4, macroItr = 1 and Area = 3: Performing Initialization Phase 1.
@@ -744,7 +744,7 @@ Time Period = 4, macroItr = 1 and Area = 3: Performing Initialization Phase 2
 Time Period = 4, macroItr = 1 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 1 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 1 and Area = 3:  Now solving for the real deal.
-Time Period = 4, macroItr = 1 and Area = 3: Projected savings in substation power flow by using batteries: 53.822028 percent.
+Time Period = 4, macroItr = 1 and Area = 3: Projected savings in substation power flow by using batteries: 34.989805 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 4, macroItr = 1 and Area = 4: Performing Initialization Phase 1.
@@ -766,7 +766,7 @@ Time Period = 4, macroItr = 1 and Area = 4: Lossless Initialization WITH batteri
 Time Period = 4, macroItr = 1 and Area = 4: Oh no! x0(302) < lb(302) as -0.000000 < 0.000000.
 Time Period = 4, macroItr = 1 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 4, macroItr = 1 and Area = 4:  Now solving for the real deal.
-Time Period = 4, macroItr = 1 and Area = 4: Projected savings in substation power flow by using batteries: 53.728965 percent.
+Time Period = 4, macroItr = 1 and Area = 4: Projected savings in substation power flow by using batteries: 34.950450 percent.
 Time Period = 4, Still yet to converge after 1 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -785,7 +785,7 @@ Time Period = 4, macroItr = 2 and Area = 1: Lossless Initialization WITH batteri
 Time Period = 4, macroItr = 2 and Area = 1: Oh no! x0(218) < lb(218) as -0.000000 < 0.000000.
 Time Period = 4, macroItr = 2 and Area = 1:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 4, macroItr = 2 and Area = 1:  Now solving for the real deal.
-Time Period = 4, macroItr = 2 and Area = 1: Projected savings in substation power flow by using batteries: 29.961725 percent.
+Time Period = 4, macroItr = 2 and Area = 1: Projected savings in substation power flow by using batteries: 23.054268 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 4, macroItr = 2 and Area = 2: Performing Initialization Phase 1.
@@ -795,7 +795,7 @@ Time Period = 4, macroItr = 2 and Area = 2: Performing Initialization Phase 2
 Time Period = 4, macroItr = 2 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 2 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 2 and Area = 2:  Now solving for the real deal.
-Time Period = 4, macroItr = 2 and Area = 2: Projected savings in substation power flow by using batteries: 24.399334 percent.
+Time Period = 4, macroItr = 2 and Area = 2: Projected savings in substation power flow by using batteries: 19.613718 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 4, macroItr = 2 and Area = 3: Performing Initialization Phase 1.
@@ -805,7 +805,7 @@ Time Period = 4, macroItr = 2 and Area = 3: Performing Initialization Phase 2
 Time Period = 4, macroItr = 2 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 2 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 2 and Area = 3:  Now solving for the real deal.
-Time Period = 4, macroItr = 2 and Area = 3: Projected savings in substation power flow by using batteries: 53.821966 percent.
+Time Period = 4, macroItr = 2 and Area = 3: Projected savings in substation power flow by using batteries: 34.989779 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 4, macroItr = 2 and Area = 4: Performing Initialization Phase 1.
@@ -827,7 +827,7 @@ Time Period = 4, macroItr = 2 and Area = 4: Lossless Initialization WITH batteri
 Time Period = 4, macroItr = 2 and Area = 4: Oh no! x0(287) < lb(287) as -0.000000 < 0.000000.
 Time Period = 4, macroItr = 2 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 4, macroItr = 2 and Area = 4:  Now solving for the real deal.
-Time Period = 4, macroItr = 2 and Area = 4: Projected savings in substation power flow by using batteries: 53.728669 percent.
+Time Period = 4, macroItr = 2 and Area = 4: Projected savings in substation power flow by using batteries: 34.950325 percent.
 Time Period = 4, Still yet to converge after 2 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -845,7 +845,7 @@ Time Period = 4, macroItr = 3 and Area = 1: Performing Initialization Phase 2
 Time Period = 4, macroItr = 3 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 3 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 3 and Area = 1:  Now solving for the real deal.
-Time Period = 4, macroItr = 3 and Area = 1: Projected savings in substation power flow by using batteries: 20.126401 percent.
+Time Period = 4, macroItr = 3 and Area = 1: Projected savings in substation power flow by using batteries: 16.754353 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 4, macroItr = 3 and Area = 2: Performing Initialization Phase 1.
@@ -855,7 +855,7 @@ Time Period = 4, macroItr = 3 and Area = 2: Performing Initialization Phase 2
 Time Period = 4, macroItr = 3 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 3 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 3 and Area = 2:  Now solving for the real deal.
-Time Period = 4, macroItr = 3 and Area = 2: Projected savings in substation power flow by using batteries: 24.398829 percent.
+Time Period = 4, macroItr = 3 and Area = 2: Projected savings in substation power flow by using batteries: 19.613391 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 4, macroItr = 3 and Area = 3: Performing Initialization Phase 1.
@@ -865,7 +865,7 @@ Time Period = 4, macroItr = 3 and Area = 3: Performing Initialization Phase 2
 Time Period = 4, macroItr = 3 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 3 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 3 and Area = 3:  Now solving for the real deal.
-Time Period = 4, macroItr = 3 and Area = 3: Projected savings in substation power flow by using batteries: 53.821769 percent.
+Time Period = 4, macroItr = 3 and Area = 3: Projected savings in substation power flow by using batteries: 34.989696 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 4, macroItr = 3 and Area = 4: Performing Initialization Phase 1.
@@ -888,7 +888,7 @@ Time Period = 4, macroItr = 3 and Area = 4: Oh no! x0(304) < lb(304) as -0.00000
 Time Period = 4, macroItr = 3 and Area = 4: Oh no! x0(318) < lb(318) as -0.000000 < 0.000000.
 Time Period = 4, macroItr = 3 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 4, macroItr = 3 and Area = 4:  Now solving for the real deal.
-Time Period = 4, macroItr = 3 and Area = 4: Projected savings in substation power flow by using batteries: 53.728051 percent.
+Time Period = 4, macroItr = 3 and Area = 4: Projected savings in substation power flow by using batteries: 34.950063 percent.
 Time Period = 4, Still yet to converge after 3 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -907,7 +907,7 @@ Time Period = 4, macroItr = 4 and Area = 1: Lossless Initialization WITH batteri
 Time Period = 4, macroItr = 4 and Area = 1: Oh no! x0(223) < lb(223) as -0.000000 < 0.000000.
 Time Period = 4, macroItr = 4 and Area = 1:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 4, macroItr = 4 and Area = 1:  Now solving for the real deal.
-Time Period = 4, macroItr = 4 and Area = 1: Projected savings in substation power flow by using batteries: 20.462594 percent.
+Time Period = 4, macroItr = 4 and Area = 1: Projected savings in substation power flow by using batteries: 16.986679 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 4, macroItr = 4 and Area = 2: Performing Initialization Phase 1.
@@ -917,7 +917,7 @@ Time Period = 4, macroItr = 4 and Area = 2: Performing Initialization Phase 2
 Time Period = 4, macroItr = 4 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 4 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 4 and Area = 2:  Now solving for the real deal.
-Time Period = 4, macroItr = 4 and Area = 2: Projected savings in substation power flow by using batteries: 24.398507 percent.
+Time Period = 4, macroItr = 4 and Area = 2: Projected savings in substation power flow by using batteries: 19.613183 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 4, macroItr = 4 and Area = 3: Performing Initialization Phase 1.
@@ -927,7 +927,7 @@ Time Period = 4, macroItr = 4 and Area = 3: Performing Initialization Phase 2
 Time Period = 4, macroItr = 4 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 4 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 4 and Area = 3:  Now solving for the real deal.
-Time Period = 4, macroItr = 4 and Area = 3: Projected savings in substation power flow by using batteries: 53.821734 percent.
+Time Period = 4, macroItr = 4 and Area = 3: Projected savings in substation power flow by using batteries: 34.989681 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 4, macroItr = 4 and Area = 4: Performing Initialization Phase 1.
@@ -948,7 +948,7 @@ Time Period = 4, macroItr = 4 and Area = 4: Performing Initialization Phase 2
 Time Period = 4, macroItr = 4 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 4 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 4 and Area = 4:  Now solving for the real deal.
-Time Period = 4, macroItr = 4 and Area = 4: Projected savings in substation power flow by using batteries: 53.727620 percent.
+Time Period = 4, macroItr = 4 and Area = 4: Projected savings in substation power flow by using batteries: 34.949881 percent.
 Time Period = 4, Still yet to converge after 4 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -966,7 +966,7 @@ Time Period = 4, macroItr = 5 and Area = 1: Performing Initialization Phase 2
 Time Period = 4, macroItr = 5 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 5 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 5 and Area = 1:  Now solving for the real deal.
-Time Period = 4, macroItr = 5 and Area = 1: Projected savings in substation power flow by using batteries: 20.126021 percent.
+Time Period = 4, macroItr = 5 and Area = 1: Projected savings in substation power flow by using batteries: 16.754090 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 4, macroItr = 5 and Area = 2: Performing Initialization Phase 1.
@@ -976,7 +976,7 @@ Time Period = 4, macroItr = 5 and Area = 2: Performing Initialization Phase 2
 Time Period = 4, macroItr = 5 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 5 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 5 and Area = 2:  Now solving for the real deal.
-Time Period = 4, macroItr = 5 and Area = 2: Projected savings in substation power flow by using batteries: 24.398202 percent.
+Time Period = 4, macroItr = 5 and Area = 2: Projected savings in substation power flow by using batteries: 19.612986 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 4, macroItr = 5 and Area = 3: Performing Initialization Phase 1.
@@ -987,7 +987,7 @@ Time Period = 4, macroItr = 5 and Area = 3: Lossless Initialization WITH batteri
 Time Period = 4, macroItr = 5 and Area = 3: Oh no! x0(107) < lb(107) as -0.000000 < 0.000000.
 Time Period = 4, macroItr = 5 and Area = 3:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 4, macroItr = 5 and Area = 3:  Now solving for the real deal.
-Time Period = 4, macroItr = 5 and Area = 3: Projected savings in substation power flow by using batteries: 53.821710 percent.
+Time Period = 4, macroItr = 5 and Area = 3: Projected savings in substation power flow by using batteries: 34.989671 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 4, macroItr = 5 and Area = 4: Performing Initialization Phase 1.
@@ -1008,7 +1008,7 @@ Time Period = 4, macroItr = 5 and Area = 4: Performing Initialization Phase 2
 Time Period = 4, macroItr = 5 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 5 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 5 and Area = 4:  Now solving for the real deal.
-Time Period = 4, macroItr = 5 and Area = 4: Projected savings in substation power flow by using batteries: 53.727294 percent.
+Time Period = 4, macroItr = 5 and Area = 4: Projected savings in substation power flow by using batteries: 34.949743 percent.
 Time Period = 4, Still yet to converge after 5 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1026,7 +1026,7 @@ Time Period = 4, macroItr = 6 and Area = 1: Performing Initialization Phase 2
 Time Period = 4, macroItr = 6 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 6 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 6 and Area = 1:  Now solving for the real deal.
-Time Period = 4, macroItr = 6 and Area = 1: Projected savings in substation power flow by using batteries: 20.125860 percent.
+Time Period = 4, macroItr = 6 and Area = 1: Projected savings in substation power flow by using batteries: 16.753978 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 4, macroItr = 6 and Area = 2: Performing Initialization Phase 1.
@@ -1036,7 +1036,7 @@ Time Period = 4, macroItr = 6 and Area = 2: Performing Initialization Phase 2
 Time Period = 4, macroItr = 6 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 6 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 6 and Area = 2:  Now solving for the real deal.
-Time Period = 4, macroItr = 6 and Area = 2: Projected savings in substation power flow by using batteries: 24.397994 percent.
+Time Period = 4, macroItr = 6 and Area = 2: Projected savings in substation power flow by using batteries: 19.612852 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 4, macroItr = 6 and Area = 3: Performing Initialization Phase 1.
@@ -1046,7 +1046,7 @@ Time Period = 4, macroItr = 6 and Area = 3: Performing Initialization Phase 2
 Time Period = 4, macroItr = 6 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 6 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 6 and Area = 3:  Now solving for the real deal.
-Time Period = 4, macroItr = 6 and Area = 3: Projected savings in substation power flow by using batteries: 53.821705 percent.
+Time Period = 4, macroItr = 6 and Area = 3: Projected savings in substation power flow by using batteries: 34.989669 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 4, macroItr = 6 and Area = 4: Performing Initialization Phase 1.
@@ -1061,7 +1061,7 @@ Time Period = 4, macroItr = 6 and Area = 4: Performing Initialization Phase 2
 Time Period = 4, macroItr = 6 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 4, macroItr = 6 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 4, macroItr = 6 and Area = 4:  Now solving for the real deal.
-Time Period = 4, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 53.727145 percent.
+Time Period = 4, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 34.949680 percent.
 Time Period = 4, Converged in 6 macro-iterations!
 ********Running OPF for the system for Time Period = 5.********
 Number of DERs in Area 1 : 23.
@@ -1078,7 +1078,7 @@ Time Period = 5, macroItr = 1 and Area = 1: Performing Initialization Phase 2
 Time Period = 5, macroItr = 1 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 1 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 1 and Area = 1:  Now solving for the real deal.
-Time Period = 5, macroItr = 1 and Area = 1: Projected savings in substation power flow by using batteries: 8.601715 percent.
+Time Period = 5, macroItr = 1 and Area = 1: Projected savings in substation power flow by using batteries: 5.594222 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 5, macroItr = 1 and Area = 2: Performing Initialization Phase 1.
@@ -1088,7 +1088,7 @@ Time Period = 5, macroItr = 1 and Area = 2: Performing Initialization Phase 2
 Time Period = 5, macroItr = 1 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 1 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 1 and Area = 2:  Now solving for the real deal.
-Time Period = 5, macroItr = 1 and Area = 2: Projected savings in substation power flow by using batteries: 8.595124 percent.
+Time Period = 5, macroItr = 1 and Area = 2: Projected savings in substation power flow by using batteries: 5.591433 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 5, macroItr = 1 and Area = 3: Performing Initialization Phase 1.
@@ -1098,7 +1098,7 @@ Time Period = 5, macroItr = 1 and Area = 3: Performing Initialization Phase 2
 Time Period = 5, macroItr = 1 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 1 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 1 and Area = 3:  Now solving for the real deal.
-Time Period = 5, macroItr = 1 and Area = 3: Projected savings in substation power flow by using batteries: 8.603205 percent.
+Time Period = 5, macroItr = 1 and Area = 3: Projected savings in substation power flow by using batteries: 5.594851 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 5, macroItr = 1 and Area = 4: Performing Initialization Phase 1.
@@ -1119,7 +1119,7 @@ Time Period = 5, macroItr = 1 and Area = 4: Performing Initialization Phase 2
 Time Period = 5, macroItr = 1 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 1 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 1 and Area = 4:  Now solving for the real deal.
-Time Period = 5, macroItr = 1 and Area = 4: Projected savings in substation power flow by using batteries: 8.585506 percent.
+Time Period = 5, macroItr = 1 and Area = 4: Projected savings in substation power flow by using batteries: 5.587361 percent.
 Time Period = 5, Still yet to converge after 1 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1137,7 +1137,7 @@ Time Period = 5, macroItr = 2 and Area = 1: Performing Initialization Phase 2
 Time Period = 5, macroItr = 2 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 2 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 2 and Area = 1:  Now solving for the real deal.
-Time Period = 5, macroItr = 2 and Area = 1: Projected savings in substation power flow by using batteries: 3.331905 percent.
+Time Period = 5, macroItr = 2 and Area = 1: Projected savings in substation power flow by using batteries: 2.757643 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 5, macroItr = 2 and Area = 2: Performing Initialization Phase 1.
@@ -1147,7 +1147,7 @@ Time Period = 5, macroItr = 2 and Area = 2: Performing Initialization Phase 2
 Time Period = 5, macroItr = 2 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 2 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 2 and Area = 2:  Now solving for the real deal.
-Time Period = 5, macroItr = 2 and Area = 2: Projected savings in substation power flow by using batteries: 2.535327 percent.
+Time Period = 5, macroItr = 2 and Area = 2: Projected savings in substation power flow by using batteries: 2.188536 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 5, macroItr = 2 and Area = 3: Performing Initialization Phase 1.
@@ -1157,7 +1157,7 @@ Time Period = 5, macroItr = 2 and Area = 3: Performing Initialization Phase 2
 Time Period = 5, macroItr = 2 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 2 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 2 and Area = 3:  Now solving for the real deal.
-Time Period = 5, macroItr = 2 and Area = 3: Projected savings in substation power flow by using batteries: 8.603148 percent.
+Time Period = 5, macroItr = 2 and Area = 3: Projected savings in substation power flow by using batteries: 5.594828 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 5, macroItr = 2 and Area = 4: Performing Initialization Phase 1.
@@ -1178,7 +1178,7 @@ Time Period = 5, macroItr = 2 and Area = 4: Performing Initialization Phase 2
 Time Period = 5, macroItr = 2 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 2 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 2 and Area = 4:  Now solving for the real deal.
-Time Period = 5, macroItr = 2 and Area = 4: Projected savings in substation power flow by using batteries: 8.585384 percent.
+Time Period = 5, macroItr = 2 and Area = 4: Projected savings in substation power flow by using batteries: 5.587309 percent.
 Time Period = 5, Still yet to converge after 2 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1194,7 +1194,7 @@ Time Period = 5, macroItr = 3 and Area = 1: Performing Initialization Phase 2
 Time Period = 5, macroItr = 3 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 3 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 3 and Area = 1:  Now solving for the real deal.
-Time Period = 5, macroItr = 3 and Area = 1: Projected savings in substation power flow by using batteries: 1.984774 percent.
+Time Period = 5, macroItr = 3 and Area = 1: Projected savings in substation power flow by using batteries: 1.765738 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 5, macroItr = 3 and Area = 2: Performing Initialization Phase 1.
@@ -1205,7 +1205,7 @@ Time Period = 5, macroItr = 3 and Area = 2: Lossless Initialization WITH batteri
 Time Period = 5, macroItr = 3 and Area = 2: Oh no! x0(106) < lb(106) as -0.000000 < 0.000000.
 Time Period = 5, macroItr = 3 and Area = 2:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 5, macroItr = 3 and Area = 2:  Now solving for the real deal.
-Time Period = 5, macroItr = 3 and Area = 2: Projected savings in substation power flow by using batteries: 2.535156 percent.
+Time Period = 5, macroItr = 3 and Area = 2: Projected savings in substation power flow by using batteries: 2.188409 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 5, macroItr = 3 and Area = 3: Performing Initialization Phase 1.
@@ -1215,7 +1215,7 @@ Time Period = 5, macroItr = 3 and Area = 3: Performing Initialization Phase 2
 Time Period = 5, macroItr = 3 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 3 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 3 and Area = 3:  Now solving for the real deal.
-Time Period = 5, macroItr = 3 and Area = 3: Projected savings in substation power flow by using batteries: 8.602995 percent.
+Time Period = 5, macroItr = 3 and Area = 3: Projected savings in substation power flow by using batteries: 5.594763 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 5, macroItr = 3 and Area = 4: Performing Initialization Phase 1.
@@ -1230,7 +1230,7 @@ Time Period = 5, macroItr = 3 and Area = 4: Performing Initialization Phase 2
 Time Period = 5, macroItr = 3 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 3 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 3 and Area = 4:  Now solving for the real deal.
-Time Period = 5, macroItr = 3 and Area = 4: Projected savings in substation power flow by using batteries: 8.585034 percent.
+Time Period = 5, macroItr = 3 and Area = 4: Projected savings in substation power flow by using batteries: 5.587161 percent.
 Time Period = 5, Still yet to converge after 3 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1246,7 +1246,7 @@ Time Period = 5, macroItr = 4 and Area = 1: Performing Initialization Phase 2
 Time Period = 5, macroItr = 4 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 4 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 4 and Area = 1:  Now solving for the real deal.
-Time Period = 5, macroItr = 4 and Area = 1: Projected savings in substation power flow by using batteries: 2.025797 percent.
+Time Period = 5, macroItr = 4 and Area = 1: Projected savings in substation power flow by using batteries: 1.798131 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 5, macroItr = 4 and Area = 2: Performing Initialization Phase 1.
@@ -1256,7 +1256,7 @@ Time Period = 5, macroItr = 4 and Area = 2: Performing Initialization Phase 2
 Time Period = 5, macroItr = 4 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 4 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 4 and Area = 2:  Now solving for the real deal.
-Time Period = 5, macroItr = 4 and Area = 2: Projected savings in substation power flow by using batteries: 2.535040 percent.
+Time Period = 5, macroItr = 4 and Area = 2: Projected savings in substation power flow by using batteries: 2.188322 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 5, macroItr = 4 and Area = 3: Performing Initialization Phase 1.
@@ -1266,7 +1266,7 @@ Time Period = 5, macroItr = 4 and Area = 3: Performing Initialization Phase 2
 Time Period = 5, macroItr = 4 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 4 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 4 and Area = 3:  Now solving for the real deal.
-Time Period = 5, macroItr = 4 and Area = 3: Projected savings in substation power flow by using batteries: 8.602951 percent.
+Time Period = 5, macroItr = 4 and Area = 3: Projected savings in substation power flow by using batteries: 5.594744 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 5, macroItr = 4 and Area = 4: Performing Initialization Phase 1.
@@ -1282,7 +1282,7 @@ Time Period = 5, macroItr = 4 and Area = 4: Lossless Initialization WITH batteri
 Time Period = 5, macroItr = 4 and Area = 4: Oh no! x0(316) < lb(316) as -0.000000 < 0.000000.
 Time Period = 5, macroItr = 4 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 5, macroItr = 4 and Area = 4:  Now solving for the real deal.
-Time Period = 5, macroItr = 4 and Area = 4: Projected savings in substation power flow by using batteries: 8.584866 percent.
+Time Period = 5, macroItr = 4 and Area = 4: Projected savings in substation power flow by using batteries: 5.587090 percent.
 Time Period = 5, Still yet to converge after 4 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1298,7 +1298,7 @@ Time Period = 5, macroItr = 5 and Area = 1: Performing Initialization Phase 2
 Time Period = 5, macroItr = 5 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 5 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 5 and Area = 1:  Now solving for the real deal.
-Time Period = 5, macroItr = 5 and Area = 1: Projected savings in substation power flow by using batteries: 1.984655 percent.
+Time Period = 5, macroItr = 5 and Area = 1: Projected savings in substation power flow by using batteries: 1.765643 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 5, macroItr = 5 and Area = 2: Performing Initialization Phase 1.
@@ -1308,7 +1308,7 @@ Time Period = 5, macroItr = 5 and Area = 2: Performing Initialization Phase 2
 Time Period = 5, macroItr = 5 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 5 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 5 and Area = 2:  Now solving for the real deal.
-Time Period = 5, macroItr = 5 and Area = 2: Projected savings in substation power flow by using batteries: 2.534963 percent.
+Time Period = 5, macroItr = 5 and Area = 2: Projected savings in substation power flow by using batteries: 2.188265 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 5, macroItr = 5 and Area = 3: Performing Initialization Phase 1.
@@ -1318,7 +1318,7 @@ Time Period = 5, macroItr = 5 and Area = 3: Performing Initialization Phase 2
 Time Period = 5, macroItr = 5 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 5 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 5 and Area = 3:  Now solving for the real deal.
-Time Period = 5, macroItr = 5 and Area = 3: Projected savings in substation power flow by using batteries: 8.602927 percent.
+Time Period = 5, macroItr = 5 and Area = 3: Projected savings in substation power flow by using batteries: 5.594734 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 5, macroItr = 5 and Area = 4: Performing Initialization Phase 1.
@@ -1340,7 +1340,7 @@ Time Period = 5, macroItr = 5 and Area = 4: Lossless Initialization WITH batteri
 Time Period = 5, macroItr = 5 and Area = 4: Oh no! x0(297) < lb(297) as -0.000000 < 0.000000.
 Time Period = 5, macroItr = 5 and Area = 4:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 5, macroItr = 5 and Area = 4:  Now solving for the real deal.
-Time Period = 5, macroItr = 5 and Area = 4: Projected savings in substation power flow by using batteries: 8.584701 percent.
+Time Period = 5, macroItr = 5 and Area = 4: Projected savings in substation power flow by using batteries: 5.587020 percent.
 Time Period = 5, Still yet to converge after 5 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1356,7 +1356,7 @@ Time Period = 5, macroItr = 6 and Area = 1: Performing Initialization Phase 2
 Time Period = 5, macroItr = 6 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 6 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 6 and Area = 1:  Now solving for the real deal.
-Time Period = 5, macroItr = 6 and Area = 1: Projected savings in substation power flow by using batteries: 1.984612 percent.
+Time Period = 5, macroItr = 6 and Area = 1: Projected savings in substation power flow by using batteries: 1.765609 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 5, macroItr = 6 and Area = 2: Performing Initialization Phase 1.
@@ -1366,7 +1366,7 @@ Time Period = 5, macroItr = 6 and Area = 2: Performing Initialization Phase 2
 Time Period = 5, macroItr = 6 and Area = 2: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 6 and Area = 2:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 6 and Area = 2:  Now solving for the real deal.
-Time Period = 5, macroItr = 6 and Area = 2: Projected savings in substation power flow by using batteries: 2.534916 percent.
+Time Period = 5, macroItr = 6 and Area = 2: Projected savings in substation power flow by using batteries: 2.188230 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 5, macroItr = 6 and Area = 3: Performing Initialization Phase 1.
@@ -1376,7 +1376,7 @@ Time Period = 5, macroItr = 6 and Area = 3: Performing Initialization Phase 2
 Time Period = 5, macroItr = 6 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 6 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 6 and Area = 3:  Now solving for the real deal.
-Time Period = 5, macroItr = 6 and Area = 3: Projected savings in substation power flow by using batteries: 8.602922 percent.
+Time Period = 5, macroItr = 6 and Area = 3: Projected savings in substation power flow by using batteries: 5.594732 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 5, macroItr = 6 and Area = 4: Performing Initialization Phase 1.
@@ -1397,7 +1397,7 @@ Time Period = 5, macroItr = 6 and Area = 4: Performing Initialization Phase 2
 Time Period = 5, macroItr = 6 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 6 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 6 and Area = 4:  Now solving for the real deal.
-Time Period = 5, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 8.584622 percent.
+Time Period = 5, macroItr = 6 and Area = 4: Projected savings in substation power flow by using batteries: 5.586986 percent.
 Time Period = 5, Still yet to converge after 6 macro-iterations, continuing.
 Number of DERs in Area 1 : 23.
 Number of Batteries in Area 1 : 23.
@@ -1413,7 +1413,7 @@ Time Period = 5, macroItr = 7 and Area = 1: Performing Initialization Phase 2
 Time Period = 5, macroItr = 7 and Area = 1: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 7 and Area = 1:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 7 and Area = 1:  Now solving for the real deal.
-Time Period = 5, macroItr = 7 and Area = 1: Projected savings in substation power flow by using batteries: 1.984586 percent.
+Time Period = 5, macroItr = 7 and Area = 1: Projected savings in substation power flow by using batteries: 1.765588 percent.
 Number of DERs in Area 2 : 12.
 Number of Batteries in Area 2 : 12.
 Time Period = 5, macroItr = 7 and Area = 2: Performing Initialization Phase 1.
@@ -1424,7 +1424,7 @@ Time Period = 5, macroItr = 7 and Area = 2: Lossless Initialization WITH batteri
 Time Period = 5, macroItr = 7 and Area = 2: Oh no! x0(102) < lb(102) as -0.000000 < 0.000000.
 Time Period = 5, macroItr = 7 and Area = 2:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.
 Time Period = 5, macroItr = 7 and Area = 2:  Now solving for the real deal.
-Time Period = 5, macroItr = 7 and Area = 2: Projected savings in substation power flow by using batteries: 2.534891 percent.
+Time Period = 5, macroItr = 7 and Area = 2: Projected savings in substation power flow by using batteries: 2.188211 percent.
 Number of DERs in Area 3 : 14.
 Number of Batteries in Area 3 : 14.
 Time Period = 5, macroItr = 7 and Area = 3: Performing Initialization Phase 1.
@@ -1434,7 +1434,7 @@ Time Period = 5, macroItr = 7 and Area = 3: Performing Initialization Phase 2
 Time Period = 5, macroItr = 7 and Area = 3: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 7 and Area = 3:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 7 and Area = 3:  Now solving for the real deal.
-Time Period = 5, macroItr = 7 and Area = 3: Projected savings in substation power flow by using batteries: 8.602921 percent.
+Time Period = 5, macroItr = 7 and Area = 3: Projected savings in substation power flow by using batteries: 5.594732 percent.
 Number of DERs in Area 4 : 36.
 Number of Batteries in Area 4 : 36.
 Time Period = 5, macroItr = 7 and Area = 4: Performing Initialization Phase 1.
@@ -1455,7 +1455,7 @@ Time Period = 5, macroItr = 7 and Area = 4: Performing Initialization Phase 2
 Time Period = 5, macroItr = 7 and Area = 4: Lossless Initialization WITH batteries accomplished.
 Time Period = 5, macroItr = 7 and Area = 4:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.
 Time Period = 5, macroItr = 7 and Area = 4:  Now solving for the real deal.
-Time Period = 5, macroItr = 7 and Area = 4: Projected savings in substation power flow by using batteries: 8.584593 percent.
+Time Period = 5, macroItr = 7 and Area = 4: Projected savings in substation power flow by using batteries: 5.586974 percent.
 Time Period = 5, Converged in 7 macro-iterations!
 ********Running OPF for the system for Time Period = 6.********
 Number of DERs in Area 1 : 23.
