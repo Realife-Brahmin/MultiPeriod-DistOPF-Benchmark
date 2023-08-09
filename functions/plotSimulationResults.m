@@ -9,6 +9,7 @@ function plotSimulationResults(results, varargin)
     saveSimulationResultPlots = true;
     processedDataFolder = strcat("processedData", filesep);
     chosenArea = 1;
+    % chosenBatteryNodes = [1, 5, 13];
     chosenBatteryNodes = 1;
     % Process optional arguments
     numArgs = numel(varargin);
@@ -142,74 +143,76 @@ function plotSimulationResults(results, varargin)
     figureNamesArs = yArs.FigureNames;
     figureNamesNodes = yNodes.FigureNames;
     
-    % for i = 1:numel(dependentVariablesSys)
-    %     dependentVariable = dependentVariablesSys{i};
-    %     figureName = figureNamesSys{i};
-    %     dependentVariableName = dependentVariableFullNamesSys{i};
-    %     legendEntrySys = dollaSign(legendEntriesSys{i});
-    %     yLabelStrSys = dollaSign(yLabelStringsSys{i});
-    % 
-    %     figureHandle = figure('Name', strcat(dependentVariableName, " vs ", indParamString));
-    % 
-    %     plot(independentVariable, dependentVariable, ...
-    %         'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
-    %         'Color', colors{mod(i, numColours)+1}, 'LineWidth', 2.5);
-    % 
-    %     legend(legendEntrySys);
-    %     titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableName, varyingIndependentParam) + ...
-    %         titleStrAppendix;
-    %     title(titleStr);
-    %     xlabel(xLabelString);
-    % 
-    %     ylabel(yLabelStrSys);
-    % 
-    %     grid minor;
-    %     hold off;
-    % 
-    %     saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-    %     filenamePNG = strcat(saveLocation, figureName, " vs ", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtensionImage);
-    %     myexportgraphics(saveSimulationResultPlots, figureHandle, filenamePNG, 'Resolution', 300);
-    %     filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
-    %     writematrix(dependentVariable, filenameCSV)
-    % end
-    % 
-    % for i = 1:numel(dependentVariablesArs)
-    %     dependentVariable = dependentVariablesArs{i};
-    %     figureName = figureNamesArs{i};
-    %     dependentVariableName = dependentVariableFullNamesArs{i};
-    %     legendPrefix = dollaSign(legendEntriesArs{i});
-    %     legendEntriesAllAreas = cell(numAreas, 1);
-    % 
-    %     yLabelStrArs = dollaSign(yLabelStringsArs{i});
-    % 
-    %     figureHandle = figure('Name', strcat(dependentVariableName, "_vs_", indParamString));
-    %     hold on;
-    %     for area = 1:numAreas
-    %         plot(independentVariable, dependentVariable(:, area), ...
-    %             'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
-    %                 'Color', colors{mod(area, numColours)+1}, 'LineWidth', 2.5);
-    % 
-    %         legendEntriesAllAreas{area} = strcat(legendPrefix, " ", AreaNames{area});
-    %     end
-    % 
-    %     legend(legendEntriesAllAreas)
-    %     titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableName, varyingIndependentParam) + ...
-    %         titleStrAppendix;
-    %     title(titleStr);
-    %     xlabel(xLabelString);
-    %     ylabel(yLabelStrArs);
-    % 
-    %     grid minor;
-    %     hold off;
-    % 
-    %     saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-    %     filenamePNG = strcat(saveLocation, figureName, "_vs_", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtensionImage);
-    %     myexportgraphics(saveSimulationResultPlots, figureHandle, filenamePNG, 'Resolution', 300);
-    %     filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
-    %     writematrix(dependentVariable, filenameCSV)
-    % end
+    for i = 1:numel(dependentVariablesSys)
+        dependentVariable = dependentVariablesSys{i};
+        figureName = figureNamesSys{i};
+        dependentVariableName = dependentVariableFullNamesSys{i};
+        legendEntrySys = dollaSign(legendEntriesSys{i});
+        yLabelStrSys = dollaSign(yLabelStringsSys{i});
+
+        figureHandle = figure('Name', strcat(dependentVariableName, " vs ", indParamString));
+
+        plot(independentVariable, dependentVariable, ...
+            'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
+            'Color', colors{mod(i, numColours)+1}, 'LineWidth', 2.5);
+
+        legend(legendEntrySys);
+        titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableName, varyingIndependentParam) + ...
+            titleStrAppendix;
+        title(titleStr);
+        xlabel(xLabelString);
+
+        ylabel(yLabelStrSys);
+
+        grid minor;
+        hold off;
+
+        saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
+        filenamePNG = strcat(saveLocation, figureName, " vs ", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtensionImage);
+        myexportgraphics(saveSimulationResultPlots, figureHandle, filenamePNG, 'Resolution', 300);
+        filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
+        writematrix(dependentVariable, filenameCSV)
+    end
+
+    for i = 1:numel(dependentVariablesArs)
+        dependentVariable = dependentVariablesArs{i};
+        figureName = figureNamesArs{i};
+        dependentVariableName = dependentVariableFullNamesArs{i};
+        legendPrefix = dollaSign(legendEntriesArs{i});
+        legendEntriesAllAreas = cell(numAreas, 1);
+
+        yLabelStrArs = dollaSign(yLabelStringsArs{i});
+
+        figureHandle = figure('Name', strcat(dependentVariableName, "_vs_", indParamString));
+        hold on;
+        for area = 1:numAreas
+            plot(independentVariable, dependentVariable(:, area), ...
+                'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
+                    'Color', colors{mod(area, numColours)+1}, 'LineWidth', 2.5);
+
+            legendEntriesAllAreas{area} = strcat(legendPrefix, " ", AreaNames{area});
+        end
+
+        legend(legendEntriesAllAreas)
+        titleStr = sprintf('%s%s vs %s\n', titleCommon, dependentVariableName, varyingIndependentParam) + ...
+            titleStrAppendix;
+        title(titleStr);
+        xlabel(xLabelString);
+        ylabel(yLabelStrArs);
+
+        grid minor;
+        hold off;
+
+        saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
+        filenamePNG = strcat(saveLocation, figureName, "_vs_", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtensionImage);
+        myexportgraphics(saveSimulationResultPlots, figureHandle, filenamePNG, 'Resolution', 300);
+        filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
+        writematrix(dependentVariable, filenameCSV)
+    end
     
     nodalVariablesDesiredForPlotting = {'B_j', 'Pc_j', 'Pd_j'};
+    PcPlotted = false;
+    PdPlotted = false;
     for i = 1:numel(dependentVariablesNodes)
         dependentVariableName = dependentVariableNamesNodes{i};
         
@@ -237,7 +240,7 @@ function plotSimulationResults(results, varargin)
                 'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
                     'Color', colors{mod(node, numColours)+1}, 'LineWidth', 2.5);
 
-            legendEntriesAllNodesInArea{chosenArea} = strcat(legendPrefix, " ", AreaNames{chosenArea}, " Node ", num2str(node));
+            legendEntriesAllNodesInArea{nodeNum} = strcat(legendPrefix, " ", AreaNames{chosenArea}, " Node ", num2str(node));
         end
     
         legend(legendEntriesAllNodesInArea)
@@ -248,7 +251,6 @@ function plotSimulationResults(results, varargin)
         ylabel(yLabelStrNodes);
         
         grid minor;
-        hold off;
         
         saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
         filenamePNG = strcat(saveLocation, figureName, "_vs_", varyingIndependentParam, '_', num2str(numTimePeriods), "_for_", suffixObj, fileExtensionImage);
