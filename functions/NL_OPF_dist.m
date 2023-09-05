@@ -397,7 +397,9 @@ function [x, B0Vals_pu_Area, ...
         Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, timePeriodNum, macroItr, 'verbose', false, 'logging', true);
 
 
+    % numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
     numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
+
     ranges_noLoss = generateRangesFromValues(numVarsNoLoss);
 
     indices_P_noLoss = ranges_noLoss{1};
