@@ -1,12 +1,14 @@
 function [x, B0Vals_pu_Area, ...
-    macroIterationPLosses, macroIterationQLosses, macroIterationPSaves, macroItr, ...
-    time_dist, N_Area, m_Area, nDER_Area, nBatt_Area, busDataTable_pu_Area, ...
-    branchDataTable_Area] = ...
+    macroIterationPLosses, macroIterationQLosses, ...
+    macroIterationPSaves, macroItr, time_dist, ...
+    N_Area, m_Area, nDER_Area, nBatt_Area, ...
+    busDataTable_pu_Area, branchDataTable_Area] = ...
     ...
     NL_OPF_dist(v_parent_Area, S_connection_Area, B0Vals_pu_Area, ...
+    lambdaVal, pvCoeff, ...
     Area, isLeaf_Area, isRoot_Area, numChildAreas_Area, numAreas, ...
     macroIterationPLosses, macroIterationQLosses, macroIterationPSaves, ...
-    time_dist, timePeriodNum, macroItr, ...
+    macroItr, time_dist, t, ...
     CB_FullTable, varargin)
     
  % Default values for optional arguments
@@ -109,7 +111,7 @@ function [x, B0Vals_pu_Area, ...
         error("Kindly specify ONLY one of the following arguments as true: verbose and logging.")
     elseif logging && ~verbose
         fileOpenedFlag = true;
-        if timePeriodNum == 1
+        if t == 1
             fid = fopen(saveLocationFilename, 'w');
         else
             fid = fopen(saveLocationFilename, 'a');
@@ -120,19 +122,19 @@ function [x, B0Vals_pu_Area, ...
     end
 
     [busDataTable_pu_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
-        = extractAreaElectricalParameters(Area, timePeriodNum, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false);
+        = extractAreaElectricalParameters(Area, t, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false);
     
     N_Area = length(busDataTable_pu_Area.bus);
     m_Area = length(branchDataTable_Area.fb);
     fb_Area = branchDataTable_Area.fb;
     tb_Area = branchDataTable_Area.tb;
-    P_L_Area = busDataTable_pu_Area.P_L;
-    Q_L_Area = busDataTable_pu_Area.Q_L;
+    P_L_Area = lambdaVal*busDataTable_pu_Area.P_L;
+    Q_L_Area = lambdaVal*busDataTable_pu_Area.Q_L;
     Q_C_Area = busDataTable_pu_Area.Q_C;
-    P_der_Area = busDataTable_pu_Area.P_der;
+    P_der_Area = pvCoeff*busDataTable_pu_Area.P_der;
     S_der_Area = busDataTable_pu_Area.S_der;
-    S_battMax_Area = S_der_Area;
-    P_battMax_Area = P_der_Area;
+    S_battMax_Area = busDataTable_pu_Area.S_der;
+    P_battMax_Area = busDataTable_pu_Area.P_der;
 
     Emax_batt_Area = chargeToPowerRatio.*P_battMax_Area;
 
@@ -183,7 +185,7 @@ function [x, B0Vals_pu_Area, ...
     lb_qB_onlyBattBuses_Area = -sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
     ub_qB_onlyBattBuses_Area = sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
     
-    if timePeriodNum == 1
+    if t == 1
         myfprintf(logging, fid, "First Time Period, will initialize Battery SOCs for Area %d at the middle of the permissible bandwidth.\n", Area);
         B0Vals_pu_Area = mean([lb_B_onlyBattBuses_Area, ub_B_onlyBattBuses_Area], 2);
     end
@@ -393,8 +395,9 @@ function [x, B0Vals_pu_Area, ...
         fclose(fid_Aeq_beq);
     end
     
-    x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v_parent_Area, S_connection_Area, B0Vals_pu_Area, isLeaf_Area, ...
-        Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, timePeriodNum, macroItr, 'verbose', false, 'logging', true);
+    x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v_parent_Area, S_connection_Area, ...
+        lambdaVal, pvCoeff, B0Vals_pu_Area, isLeaf_Area, ...
+        Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, t, macroItr, 'verbose', false, 'logging', true);
 
 
     % numVarsNoLoss = [m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
@@ -448,25 +451,25 @@ function [x, B0Vals_pu_Area, ...
         ubVal = ub_AreaFull(varNum);
         x0Val = x0(varNum);
         if lbVal > x0Val
-            myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0(%d) < lb(%d) as %f < %f.\n", timePeriodNum, macroItr, Area, varNum, varNum, x0Val, lbVal);
+            myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0(%d) < lb(%d) as %f < %f.\n", t, macroItr, Area, varNum, varNum, x0Val, lbVal);
             flaggedForLimitViolation = true;
         end
         if ubVal < x0Val
-            myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0_NoLoss(%d) > ub(%d) as %f > %f.\n", timePeriodNum, macroItr, Area, varNum, varNum, x0Val, ubVal);
+            myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0_NoLoss(%d) > ub(%d) as %f > %f.\n", t, macroItr, Area, varNum, varNum, x0Val, ubVal);
             flaggedForLimitViolation = true;
         end
     end
     
     if checkOptimalSolutionWithinBounds(x0, lb_AreaFull, ub_AreaFull)
-        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  My native bound checker says that bounds are Actually being violated.\n", timePeriodNum, macroItr, Area);
+        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  My native bound checker says that bounds are Actually being violated.\n", t, macroItr, Area);
         error("Nani?");
     elseif flaggedForLimitViolation
-        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.\n", timePeriodNum, macroItr, Area)
+        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.\n", t, macroItr, Area)
     else
-        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.\n", timePeriodNum, macroItr, Area);
+        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.\n", t, macroItr, Area);
     end
 
-    myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  Now solving for the real deal.\n", timePeriodNum, macroItr, Area);
+    myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  Now solving for the real deal.\n", t, macroItr, Area);
 
     [x, fval, ~, ~] = fmincon( @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, X_Area_Matrix, 'mainObjFun', "func_PLoss", 'secondObjFun', "func_SCD"), ...
                               x0, [], [], Aeq_Full, beq_Full, lb_AreaFull, ub_AreaFull, ...
@@ -477,7 +480,7 @@ function [x, B0Vals_pu_Area, ...
     
     % macroIterationPLoss = fval;
     macroIterationQLoss = objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, X_Area_Matrix, 'mainObjFun', "func_QLoss", 'secondObjFun', "none");
-    % if timePeriodNum == 1 && macroItr == 1 && Area == 4
+    % if t == 1 && macroItr == 1 && Area == 4
     %     display(x(indices_l));
     %     X_Area = reshape(X_Area_Matrix, [], 1);
     %     display(X_Area(1:m_Area));
@@ -536,7 +539,7 @@ function [x, B0Vals_pu_Area, ...
 
     myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: " + ...
         "Projected savings in substation power flow by using batteries: " + ...
-        "%f percent.\n", timePeriodNum, macroItr, Area, percentageSavings); % always true
+        "%f percent.\n", t, macroItr, Area, percentageSavings); % always true
 
     macroIterationPLosses(macroItr, Area) = PLoss;
     macroIterationQLosses(macroItr, Area) = macroIterationQLoss;

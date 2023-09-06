@@ -1,5 +1,7 @@
-function x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v2_parent_Area, S_connection_Area, B0Vals_Area, isLeaf_Area, ...
-    Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, timePeriodNum, macroItr, varargin)
+function x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, ...
+    v2_parent_Area, S_connection_Area, lambdaVal, pvCoeff, B0Vals_Area, isLeaf_Area, ...
+    Area, numAreas, graphDFS_Area_Table, R_Area_Matrix, X_Area_Matrix, ...
+    timePeriodNum, macroItr, varargin)
 
  % Default values for optional arguments
     verbose = false;
@@ -126,13 +128,13 @@ function x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v
     m_Area = length(branchDataTable_Area.fb);
     fb_Area = branchDataTable_Area.fb;
     tb_Area = branchDataTable_Area.tb;
-    P_L_Area = busDataTable_pu_Area.P_L;
-    Q_L_Area = busDataTable_pu_Area.Q_L;
+    P_L_Area = lambdaVal*busDataTable_pu_Area.P_L;
+    Q_L_Area = lambdaVal*busDataTable_pu_Area.Q_L;
     Q_C_Area = busDataTable_pu_Area.Q_C;
-    P_der_Area = busDataTable_pu_Area.P_der;
+    P_der_Area = pvCoeff*busDataTable_pu_Area.P_der;
     S_der_Area = busDataTable_pu_Area.S_der;
-    S_battMax_Area = S_der_Area;
-    P_battMax_Area = P_der_Area;
+    S_battMax_Area = busDataTable_pu_Area.S_der;
+    P_battMax_Area = busDataTable_pu_Area.P_der;
     
     Emax_batt_Area = chargeToPowerRatio.*P_battMax_Area;
 
@@ -427,9 +429,12 @@ function x_NoLoss = singlephaselin(busDataTable_pu_Area, branchDataTable_Area, v
     options = optimoptions('fmincon', 'Display', 'off', 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
     
     myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Performing Initialization Phase 2\n", timePeriodNum, macroItr, Area);
-
+    
+    % display([lb_NoLoss ub_NoLoss])
     [x_NoLoss, ~, ~, ~] = ...
-        fmincon(@(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, X_Area_Matrix, 'mainObjFun', "func_PLoss-fake", 'secondObjFun', "none", 'indices_Pd', indices_Pd_noLoss, 'indices_Pc', indices_Pc_noLoss, 'voltageVals', x0_NoLoss(indices_vFull_noLoss)), ...
+        fmincon(@(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, ...
+        R_Area_Matrix, X_Area_Matrix, 'mainObjFun', "func_PLoss-fake", 'secondObjFun', "none", 'indices_Pd', ...
+        indices_Pd_noLoss, 'indices_Pc', indices_Pc_noLoss, 'voltageVals', x0_NoLoss(indices_vFull_noLoss)), ...
         x0_NoLoss, [], [], Aeq_NoLoss, beq_NoLoss, lb_NoLoss, ub_NoLoss, [], options);
     
     if ~isempty(x_NoLoss)
