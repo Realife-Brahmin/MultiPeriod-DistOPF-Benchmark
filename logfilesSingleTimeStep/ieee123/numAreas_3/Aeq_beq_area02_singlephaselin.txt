@@ -1,0 +1,1878 @@
+Area 2 does NOT have any child areas.
+**********Constructing Aeq and beq for Area 2.
+***********
+*****
+Checking for bus 2.
+*****
+The parent of bus 2 is bus 1 at index 1.
+Aeq(1, P(1)) = 1.
+Aeq(1, P(2)) = -1
+Aeq(71, Q(1)) = 1.
+Aeq(71, Q(2)) = -1
+Aeq(141, v(1)) = 1
+The siblings of bus 2
+include these buses: 2
+at indices 1.
+which makes bus 2 at index 1 as the eldest sibling.
+Aeq(141, v_Full(1)) = -1
+Aeq(141, P(1)) = 2*r(1, 2).
+Aeq(141, Q(1)) = 2*x(1, 2).
+beq(1) = (1 - 0.5*CVR_P)*(P_L(2) - P_der(2))
+beq(71) = (1 - 0.5*CVR_Q)*(Q_L(2) - Q_C(2))
+*****
+Checking for bus 3.
+*****
+The parent of bus 3 is bus 2 at index 2.
+Aeq(2, P(2)) = 1.
+Aeq(2, P(3)) = -1
+Aeq(72, Q(2)) = 1.
+Aeq(72, Q(3)) = -1
+Aeq(142, v(2)) = 1
+The siblings of bus 3
+include these buses: 3
+at indices 2.
+which makes bus 3 at index 2 as the eldest sibling.
+Aeq(142, v_Full(2)) = -1
+Aeq(142, P(2)) = 2*r(2, 3).
+Aeq(142, Q(2)) = 2*x(2, 3).
+beq(2) = (1 - 0.5*CVR_P)*(P_L(3) - P_der(3))
+beq(72) = (1 - 0.5*CVR_Q)*(Q_L(3) - Q_C(3))
+*****
+Checking for bus 4.
+*****
+The parent of bus 4 is bus 3 at index 3.
+Aeq(3, P(3)) = 1.
+Aeq(3, P(4)) = -1
+Aeq(73, Q(3)) = 1.
+Aeq(73, Q(4)) = -1
+Aeq(143, v(3)) = 1
+The siblings of bus 4
+include these buses: 4
+at indices 3.
+which makes bus 4 at index 3 as the eldest sibling.
+Aeq(143, v_Full(3)) = -1
+Aeq(143, P(3)) = 2*r(3, 4).
+Aeq(143, Q(3)) = 2*x(3, 4).
+beq(3) = (1 - 0.5*CVR_P)*(P_L(4) - P_der(4))
+beq(73) = (1 - 0.5*CVR_Q)*(Q_L(4) - Q_C(4))
+*****
+Checking for bus 5.
+*****
+The parent of bus 5 is bus 4 at index 4.
+Aeq(4, P(4)) = 1.
+Aeq(4, P(5)) = -1
+Aeq(4, P(7)) = -1
+Aeq(74, Q(4)) = 1.
+Aeq(74, Q(5)) = -1
+Aeq(74, Q(7)) = -1
+Aeq(144, v(4)) = 1
+The siblings of bus 5
+include these buses: 5
+at indices 4.
+which makes bus 5 at index 4 as the eldest sibling.
+Aeq(144, v_Full(4)) = -1
+Aeq(144, P(4)) = 2*r(4, 5).
+Aeq(144, Q(4)) = 2*x(4, 5).
+beq(4) = (1 - 0.5*CVR_P)*(P_L(5) - P_der(5))
+beq(74) = (1 - 0.5*CVR_Q)*(Q_L(5) - Q_C(5))
+*****
+Checking for bus 6.
+*****
+The parent of bus 6 is bus 5 at index 5.
+Aeq(5, P(5)) = 1.
+Aeq(5, P(6)) = -1
+Aeq(75, Q(5)) = 1.
+Aeq(75, Q(6)) = -1
+Aeq(145, v(5)) = 1
+The siblings of bus 6
+include these buses: 6
+include these buses: 8
+at indices 5.
+at indices 7.
+which makes bus 6 at index 5 as the eldest sibling.
+Aeq(145, v_Full(5)) = -1
+Aeq(145, P(5)) = 2*r(5, 6).
+Aeq(145, Q(5)) = 2*x(5, 6).
+beq(5) = (1 - 0.5*CVR_P)*(P_L(6) - P_der(6))
+beq(75) = (1 - 0.5*CVR_Q)*(Q_L(6) - Q_C(6))
+*****
+Checking for bus 7.
+*****
+The parent of bus 7 is bus 6 at index 6.
+Aeq(6, P(6)) = 1.
+Aeq(76, Q(6)) = 1.
+Aeq(146, v(6)) = 1
+The siblings of bus 7
+include these buses: 7
+at indices 6.
+which makes bus 7 at index 6 as the eldest sibling.
+Aeq(146, v_Full(6)) = -1
+Aeq(146, P(6)) = 2*r(6, 7).
+Aeq(146, Q(6)) = 2*x(6, 7).
+beq(6) = (1 - 0.5*CVR_P)*(P_L(7) - P_der(7))
+beq(76) = (1 - 0.5*CVR_Q)*(Q_L(7) - Q_C(7))
+*****
+Checking for bus 8.
+*****
+The parent of bus 8 is bus 5 at index 7.
+Aeq(7, P(7)) = 1.
+Aeq(7, P(8)) = -1
+Aeq(7, P(10)) = -1
+Aeq(77, Q(7)) = 1.
+Aeq(77, Q(8)) = -1
+Aeq(77, Q(10)) = -1
+Aeq(147, v(7)) = 1
+The siblings of bus 8
+include these buses: 6
+include these buses: 8
+at indices 5.
+at indices 7.
+which makes bus 6 at index 5 as the eldest sibling.
+Aeq(147, v_Full(5)) = -1
+Aeq(147, P(7)) = 2*r(5, 8).
+Aeq(147, Q(7)) = 2*x(5, 8).
+beq(7) = (1 - 0.5*CVR_P)*(P_L(8) - P_der(8))
+beq(77) = (1 - 0.5*CVR_Q)*(Q_L(8) - Q_C(8))
+*****
+Checking for bus 9.
+*****
+The parent of bus 9 is bus 8 at index 8.
+Aeq(8, P(8)) = 1.
+Aeq(8, P(9)) = -1
+Aeq(78, Q(8)) = 1.
+Aeq(78, Q(9)) = -1
+Aeq(148, v(8)) = 1
+The siblings of bus 9
+include these buses: 9
+include these buses: 11
+at indices 8.
+at indices 10.
+which makes bus 9 at index 8 as the eldest sibling.
+Aeq(148, v_Full(8)) = -1
+Aeq(148, P(8)) = 2*r(8, 9).
+Aeq(148, Q(8)) = 2*x(8, 9).
+beq(8) = (1 - 0.5*CVR_P)*(P_L(9) - P_der(9))
+beq(78) = (1 - 0.5*CVR_Q)*(Q_L(9) - Q_C(9))
+*****
+Checking for bus 10.
+*****
+The parent of bus 10 is bus 9 at index 9.
+Aeq(9, P(9)) = 1.
+Aeq(79, Q(9)) = 1.
+Aeq(149, v(9)) = 1
+The siblings of bus 10
+include these buses: 10
+at indices 9.
+which makes bus 10 at index 9 as the eldest sibling.
+Aeq(149, v_Full(9)) = -1
+Aeq(149, P(9)) = 2*r(9, 10).
+Aeq(149, Q(9)) = 2*x(9, 10).
+beq(9) = (1 - 0.5*CVR_P)*(P_L(10) - P_der(10))
+beq(79) = (1 - 0.5*CVR_Q)*(Q_L(10) - Q_C(10))
+*****
+Checking for bus 11.
+*****
+The parent of bus 11 is bus 8 at index 10.
+Aeq(10, P(10)) = 1.
+Aeq(10, P(11)) = -1
+Aeq(10, P(12)) = -1
+Aeq(10, P(18)) = -1
+Aeq(80, Q(10)) = 1.
+Aeq(80, Q(11)) = -1
+Aeq(80, Q(12)) = -1
+Aeq(80, Q(18)) = -1
+Aeq(150, v(10)) = 1
+The siblings of bus 11
+include these buses: 9
+include these buses: 11
+at indices 8.
+at indices 10.
+which makes bus 9 at index 8 as the eldest sibling.
+Aeq(150, v_Full(8)) = -1
+Aeq(150, P(10)) = 2*r(8, 11).
+Aeq(150, Q(10)) = 2*x(8, 11).
+beq(10) = (1 - 0.5*CVR_P)*(P_L(11) - P_der(11))
+beq(80) = (1 - 0.5*CVR_Q)*(Q_L(11) - Q_C(11))
+*****
+Checking for bus 12.
+*****
+The parent of bus 12 is bus 11 at index 11.
+Aeq(11, P(11)) = 1.
+Aeq(11, P(17)) = -1
+Aeq(81, Q(11)) = 1.
+Aeq(81, Q(17)) = -1
+Aeq(151, v(11)) = 1
+The siblings of bus 12
+include these buses: 12
+include these buses: 13
+include these buses: 19
+at indices 11.
+at indices 12.
+at indices 18.
+which makes bus 12 at index 11 as the eldest sibling.
+Aeq(151, v_Full(11)) = -1
+Aeq(151, P(11)) = 2*r(11, 12).
+Aeq(151, Q(11)) = 2*x(11, 12).
+beq(11) = (1 - 0.5*CVR_P)*(P_L(12) - P_der(12))
+beq(81) = (1 - 0.5*CVR_Q)*(Q_L(12) - Q_C(12))
+*****
+Checking for bus 13.
+*****
+The parent of bus 13 is bus 11 at index 12.
+Aeq(12, P(12)) = 1.
+Aeq(12, P(13)) = -1
+Aeq(82, Q(12)) = 1.
+Aeq(82, Q(13)) = -1
+Aeq(152, v(12)) = 1
+The siblings of bus 13
+include these buses: 12
+include these buses: 13
+include these buses: 19
+at indices 11.
+at indices 12.
+at indices 18.
+which makes bus 12 at index 11 as the eldest sibling.
+Aeq(152, v_Full(11)) = -1
+Aeq(152, P(12)) = 2*r(11, 13).
+Aeq(152, Q(12)) = 2*x(11, 13).
+beq(12) = (1 - 0.5*CVR_P)*(P_L(13) - P_der(13))
+beq(82) = (1 - 0.5*CVR_Q)*(Q_L(13) - Q_C(13))
+*****
+Checking for bus 14.
+*****
+The parent of bus 14 is bus 13 at index 13.
+Aeq(13, P(13)) = 1.
+Aeq(13, P(14)) = -1
+Aeq(83, Q(13)) = 1.
+Aeq(83, Q(14)) = -1
+Aeq(153, v(13)) = 1
+The siblings of bus 14
+include these buses: 14
+at indices 13.
+which makes bus 14 at index 13 as the eldest sibling.
+Aeq(153, v_Full(13)) = -1
+Aeq(153, P(13)) = 2*r(13, 14).
+Aeq(153, Q(13)) = 2*x(13, 14).
+beq(13) = (1 - 0.5*CVR_P)*(P_L(14) - P_der(14))
+beq(83) = (1 - 0.5*CVR_Q)*(Q_L(14) - Q_C(14))
+*****
+Checking for bus 15.
+*****
+The parent of bus 15 is bus 14 at index 14.
+Aeq(14, P(14)) = 1.
+Aeq(14, P(15)) = -1
+Aeq(84, Q(14)) = 1.
+Aeq(84, Q(15)) = -1
+Aeq(154, v(14)) = 1
+The siblings of bus 15
+include these buses: 15
+at indices 14.
+which makes bus 15 at index 14 as the eldest sibling.
+Aeq(154, v_Full(14)) = -1
+Aeq(154, P(14)) = 2*r(14, 15).
+Aeq(154, Q(14)) = 2*x(14, 15).
+beq(14) = (1 - 0.5*CVR_P)*(P_L(15) - P_der(15))
+beq(84) = (1 - 0.5*CVR_Q)*(Q_L(15) - Q_C(15))
+*****
+Checking for bus 16.
+*****
+The parent of bus 16 is bus 15 at index 15.
+Aeq(15, P(15)) = 1.
+Aeq(15, P(16)) = -1
+Aeq(85, Q(15)) = 1.
+Aeq(85, Q(16)) = -1
+Aeq(155, v(15)) = 1
+The siblings of bus 16
+include these buses: 16
+at indices 15.
+which makes bus 16 at index 15 as the eldest sibling.
+Aeq(155, v_Full(15)) = -1
+Aeq(155, P(15)) = 2*r(15, 16).
+Aeq(155, Q(15)) = 2*x(15, 16).
+beq(15) = (1 - 0.5*CVR_P)*(P_L(16) - P_der(16))
+beq(85) = (1 - 0.5*CVR_Q)*(Q_L(16) - Q_C(16))
+*****
+Checking for bus 17.
+*****
+The parent of bus 17 is bus 16 at index 16.
+Aeq(16, P(16)) = 1.
+Aeq(86, Q(16)) = 1.
+Aeq(156, v(16)) = 1
+The siblings of bus 17
+include these buses: 17
+at indices 16.
+which makes bus 17 at index 16 as the eldest sibling.
+Aeq(156, v_Full(16)) = -1
+Aeq(156, P(16)) = 2*r(16, 17).
+Aeq(156, Q(16)) = 2*x(16, 17).
+beq(16) = (1 - 0.5*CVR_P)*(P_L(17) - P_der(17))
+beq(86) = (1 - 0.5*CVR_Q)*(Q_L(17) - Q_C(17))
+*****
+Checking for bus 18.
+*****
+The parent of bus 18 is bus 12 at index 17.
+Aeq(17, P(17)) = 1.
+Aeq(87, Q(17)) = 1.
+Aeq(157, v(17)) = 1
+The siblings of bus 18
+include these buses: 18
+at indices 17.
+which makes bus 18 at index 17 as the eldest sibling.
+Aeq(157, v_Full(17)) = -1
+Aeq(157, P(17)) = 2*r(12, 18).
+Aeq(157, Q(17)) = 2*x(12, 18).
+beq(17) = (1 - 0.5*CVR_P)*(P_L(18) - P_der(18))
+beq(87) = (1 - 0.5*CVR_Q)*(Q_L(18) - Q_C(18))
+*****
+Checking for bus 19.
+*****
+The parent of bus 19 is bus 11 at index 18.
+Aeq(18, P(18)) = 1.
+Aeq(18, P(19)) = -1
+Aeq(88, Q(18)) = 1.
+Aeq(88, Q(19)) = -1
+Aeq(158, v(18)) = 1
+The siblings of bus 19
+include these buses: 12
+include these buses: 13
+include these buses: 19
+at indices 11.
+at indices 12.
+at indices 18.
+which makes bus 12 at index 11 as the eldest sibling.
+Aeq(158, v_Full(11)) = -1
+Aeq(158, P(18)) = 2*r(11, 19).
+Aeq(158, Q(18)) = 2*x(11, 19).
+beq(18) = (1 - 0.5*CVR_P)*(P_L(19) - P_der(19))
+beq(88) = (1 - 0.5*CVR_Q)*(Q_L(19) - Q_C(19))
+*****
+Checking for bus 20.
+*****
+The parent of bus 20 is bus 19 at index 19.
+Aeq(19, P(19)) = 1.
+Aeq(19, P(20)) = -1
+Aeq(89, Q(19)) = 1.
+Aeq(89, Q(20)) = -1
+Aeq(159, v(19)) = 1
+The siblings of bus 20
+include these buses: 20
+at indices 19.
+which makes bus 20 at index 19 as the eldest sibling.
+Aeq(159, v_Full(19)) = -1
+Aeq(159, P(19)) = 2*r(19, 20).
+Aeq(159, Q(19)) = 2*x(19, 20).
+beq(19) = (1 - 0.5*CVR_P)*(P_L(20) - P_der(20))
+beq(89) = (1 - 0.5*CVR_Q)*(Q_L(20) - Q_C(20))
+*****
+Checking for bus 21.
+*****
+The parent of bus 21 is bus 20 at index 20.
+Aeq(20, P(20)) = 1.
+Aeq(20, P(21)) = -1
+Aeq(20, P(25)) = -1
+Aeq(20, P(50)) = -1
+Aeq(90, Q(20)) = 1.
+Aeq(90, Q(21)) = -1
+Aeq(90, Q(25)) = -1
+Aeq(90, Q(50)) = -1
+Aeq(160, v(20)) = 1
+The siblings of bus 21
+include these buses: 21
+at indices 20.
+which makes bus 21 at index 20 as the eldest sibling.
+Aeq(160, v_Full(20)) = -1
+Aeq(160, P(20)) = 2*r(20, 21).
+Aeq(160, Q(20)) = 2*x(20, 21).
+beq(20) = (1 - 0.5*CVR_P)*(P_L(21) - P_der(21))
+beq(90) = (1 - 0.5*CVR_Q)*(Q_L(21) - Q_C(21))
+*****
+Checking for bus 22.
+*****
+The parent of bus 22 is bus 21 at index 21.
+Aeq(21, P(21)) = 1.
+Aeq(21, P(22)) = -1
+Aeq(91, Q(21)) = 1.
+Aeq(91, Q(22)) = -1
+Aeq(161, v(21)) = 1
+The siblings of bus 22
+include these buses: 22
+include these buses: 26
+include these buses: 51
+at indices 21.
+at indices 25.
+at indices 50.
+which makes bus 22 at index 21 as the eldest sibling.
+Aeq(161, v_Full(21)) = -1
+Aeq(161, P(21)) = 2*r(21, 22).
+Aeq(161, Q(21)) = 2*x(21, 22).
+beq(21) = (1 - 0.5*CVR_P)*(P_L(22) - P_der(22))
+beq(91) = (1 - 0.5*CVR_Q)*(Q_L(22) - Q_C(22))
+*****
+Checking for bus 23.
+*****
+The parent of bus 23 is bus 22 at index 22.
+Aeq(22, P(22)) = 1.
+Aeq(22, P(23)) = -1
+Aeq(92, Q(22)) = 1.
+Aeq(92, Q(23)) = -1
+Aeq(162, v(22)) = 1
+The siblings of bus 23
+include these buses: 23
+at indices 22.
+which makes bus 23 at index 22 as the eldest sibling.
+Aeq(162, v_Full(22)) = -1
+Aeq(162, P(22)) = 2*r(22, 23).
+Aeq(162, Q(22)) = 2*x(22, 23).
+beq(22) = (1 - 0.5*CVR_P)*(P_L(23) - P_der(23))
+beq(92) = (1 - 0.5*CVR_Q)*(Q_L(23) - Q_C(23))
+*****
+Checking for bus 24.
+*****
+The parent of bus 24 is bus 23 at index 23.
+Aeq(23, P(23)) = 1.
+Aeq(23, P(24)) = -1
+Aeq(93, Q(23)) = 1.
+Aeq(93, Q(24)) = -1
+Aeq(163, v(23)) = 1
+The siblings of bus 24
+include these buses: 24
+at indices 23.
+which makes bus 24 at index 23 as the eldest sibling.
+Aeq(163, v_Full(23)) = -1
+Aeq(163, P(23)) = 2*r(23, 24).
+Aeq(163, Q(23)) = 2*x(23, 24).
+beq(23) = (1 - 0.5*CVR_P)*(P_L(24) - P_der(24))
+beq(93) = (1 - 0.5*CVR_Q)*(Q_L(24) - Q_C(24))
+*****
+Checking for bus 25.
+*****
+The parent of bus 25 is bus 24 at index 24.
+Aeq(24, P(24)) = 1.
+Aeq(94, Q(24)) = 1.
+Aeq(164, v(24)) = 1
+The siblings of bus 25
+include these buses: 25
+at indices 24.
+which makes bus 25 at index 24 as the eldest sibling.
+Aeq(164, v_Full(24)) = -1
+Aeq(164, P(24)) = 2*r(24, 25).
+Aeq(164, Q(24)) = 2*x(24, 25).
+beq(24) = (1 - 0.5*CVR_P)*(P_L(25) - P_der(25))
+beq(94) = (1 - 0.5*CVR_Q)*(Q_L(25) - Q_C(25))
+*****
+Checking for bus 26.
+*****
+The parent of bus 26 is bus 21 at index 25.
+Aeq(25, P(25)) = 1.
+Aeq(25, P(26)) = -1
+Aeq(25, P(29)) = -1
+Aeq(95, Q(25)) = 1.
+Aeq(95, Q(26)) = -1
+Aeq(95, Q(29)) = -1
+Aeq(165, v(25)) = 1
+The siblings of bus 26
+include these buses: 22
+include these buses: 26
+include these buses: 51
+at indices 21.
+at indices 25.
+at indices 50.
+which makes bus 22 at index 21 as the eldest sibling.
+Aeq(165, v_Full(21)) = -1
+Aeq(165, P(25)) = 2*r(21, 26).
+Aeq(165, Q(25)) = 2*x(21, 26).
+beq(25) = (1 - 0.5*CVR_P)*(P_L(26) - P_der(26))
+beq(95) = (1 - 0.5*CVR_Q)*(Q_L(26) - Q_C(26))
+*****
+Checking for bus 27.
+*****
+The parent of bus 27 is bus 26 at index 26.
+Aeq(26, P(26)) = 1.
+Aeq(26, P(27)) = -1
+Aeq(96, Q(26)) = 1.
+Aeq(96, Q(27)) = -1
+Aeq(166, v(26)) = 1
+The siblings of bus 27
+include these buses: 27
+include these buses: 30
+at indices 26.
+at indices 29.
+which makes bus 27 at index 26 as the eldest sibling.
+Aeq(166, v_Full(26)) = -1
+Aeq(166, P(26)) = 2*r(26, 27).
+Aeq(166, Q(26)) = 2*x(26, 27).
+beq(26) = (1 - 0.5*CVR_P)*(P_L(27) - P_der(27))
+beq(96) = (1 - 0.5*CVR_Q)*(Q_L(27) - Q_C(27))
+*****
+Checking for bus 28.
+*****
+The parent of bus 28 is bus 27 at index 27.
+Aeq(27, P(27)) = 1.
+Aeq(27, P(28)) = -1
+Aeq(97, Q(27)) = 1.
+Aeq(97, Q(28)) = -1
+Aeq(167, v(27)) = 1
+The siblings of bus 28
+include these buses: 28
+at indices 27.
+which makes bus 28 at index 27 as the eldest sibling.
+Aeq(167, v_Full(27)) = -1
+Aeq(167, P(27)) = 2*r(27, 28).
+Aeq(167, Q(27)) = 2*x(27, 28).
+beq(27) = (1 - 0.5*CVR_P)*(P_L(28) - P_der(28))
+beq(97) = (1 - 0.5*CVR_Q)*(Q_L(28) - Q_C(28))
+*****
+Checking for bus 29.
+*****
+The parent of bus 29 is bus 28 at index 28.
+Aeq(28, P(28)) = 1.
+Aeq(98, Q(28)) = 1.
+Aeq(168, v(28)) = 1
+The siblings of bus 29
+include these buses: 29
+at indices 28.
+which makes bus 29 at index 28 as the eldest sibling.
+Aeq(168, v_Full(28)) = -1
+Aeq(168, P(28)) = 2*r(28, 29).
+Aeq(168, Q(28)) = 2*x(28, 29).
+beq(28) = (1 - 0.5*CVR_P)*(P_L(29) - P_der(29))
+beq(98) = (1 - 0.5*CVR_Q)*(Q_L(29) - Q_C(29))
+*****
+Checking for bus 30.
+*****
+The parent of bus 30 is bus 26 at index 29.
+Aeq(29, P(29)) = 1.
+Aeq(29, P(30)) = -1
+Aeq(29, P(39)) = -1
+Aeq(99, Q(29)) = 1.
+Aeq(99, Q(30)) = -1
+Aeq(99, Q(39)) = -1
+Aeq(169, v(29)) = 1
+The siblings of bus 30
+include these buses: 27
+include these buses: 30
+at indices 26.
+at indices 29.
+which makes bus 27 at index 26 as the eldest sibling.
+Aeq(169, v_Full(26)) = -1
+Aeq(169, P(29)) = 2*r(26, 30).
+Aeq(169, Q(29)) = 2*x(26, 30).
+beq(29) = (1 - 0.5*CVR_P)*(P_L(30) - P_der(30))
+beq(99) = (1 - 0.5*CVR_Q)*(Q_L(30) - Q_C(30))
+*****
+Checking for bus 31.
+*****
+The parent of bus 31 is bus 30 at index 30.
+Aeq(30, P(30)) = 1.
+Aeq(30, P(31)) = -1
+Aeq(100, Q(30)) = 1.
+Aeq(100, Q(31)) = -1
+Aeq(170, v(30)) = 1
+The siblings of bus 31
+include these buses: 31
+include these buses: 40
+at indices 30.
+at indices 39.
+which makes bus 31 at index 30 as the eldest sibling.
+Aeq(170, v_Full(30)) = -1
+Aeq(170, P(30)) = 2*r(30, 31).
+Aeq(170, Q(30)) = 2*x(30, 31).
+beq(30) = (1 - 0.5*CVR_P)*(P_L(31) - P_der(31))
+beq(100) = (1 - 0.5*CVR_Q)*(Q_L(31) - Q_C(31))
+*****
+Checking for bus 32.
+*****
+The parent of bus 32 is bus 31 at index 31.
+Aeq(31, P(31)) = 1.
+Aeq(31, P(32)) = -1
+Aeq(31, P(33)) = -1
+Aeq(101, Q(31)) = 1.
+Aeq(101, Q(32)) = -1
+Aeq(101, Q(33)) = -1
+Aeq(171, v(31)) = 1
+The siblings of bus 32
+include these buses: 32
+at indices 31.
+which makes bus 32 at index 31 as the eldest sibling.
+Aeq(171, v_Full(31)) = -1
+Aeq(171, P(31)) = 2*r(31, 32).
+Aeq(171, Q(31)) = 2*x(31, 32).
+beq(31) = (1 - 0.5*CVR_P)*(P_L(32) - P_der(32))
+beq(101) = (1 - 0.5*CVR_Q)*(Q_L(32) - Q_C(32))
+*****
+Checking for bus 33.
+*****
+The parent of bus 33 is bus 32 at index 32.
+Aeq(32, P(32)) = 1.
+Aeq(102, Q(32)) = 1.
+Aeq(172, v(32)) = 1
+The siblings of bus 33
+include these buses: 33
+include these buses: 34
+at indices 32.
+at indices 33.
+which makes bus 33 at index 32 as the eldest sibling.
+Aeq(172, v_Full(32)) = -1
+Aeq(172, P(32)) = 2*r(32, 33).
+Aeq(172, Q(32)) = 2*x(32, 33).
+beq(32) = (1 - 0.5*CVR_P)*(P_L(33) - P_der(33))
+beq(102) = (1 - 0.5*CVR_Q)*(Q_L(33) - Q_C(33))
+*****
+Checking for bus 34.
+*****
+The parent of bus 34 is bus 32 at index 33.
+Aeq(33, P(33)) = 1.
+Aeq(33, P(34)) = -1
+Aeq(103, Q(33)) = 1.
+Aeq(103, Q(34)) = -1
+Aeq(173, v(33)) = 1
+The siblings of bus 34
+include these buses: 33
+include these buses: 34
+at indices 32.
+at indices 33.
+which makes bus 33 at index 32 as the eldest sibling.
+Aeq(173, v_Full(32)) = -1
+Aeq(173, P(33)) = 2*r(32, 34).
+Aeq(173, Q(33)) = 2*x(32, 34).
+beq(33) = (1 - 0.5*CVR_P)*(P_L(34) - P_der(34))
+beq(103) = (1 - 0.5*CVR_Q)*(Q_L(34) - Q_C(34))
+*****
+Checking for bus 35.
+*****
+The parent of bus 35 is bus 34 at index 34.
+Aeq(34, P(34)) = 1.
+Aeq(34, P(35)) = -1
+Aeq(34, P(37)) = -1
+Aeq(104, Q(34)) = 1.
+Aeq(104, Q(35)) = -1
+Aeq(104, Q(37)) = -1
+Aeq(174, v(34)) = 1
+The siblings of bus 35
+include these buses: 35
+at indices 34.
+which makes bus 35 at index 34 as the eldest sibling.
+Aeq(174, v_Full(34)) = -1
+Aeq(174, P(34)) = 2*r(34, 35).
+Aeq(174, Q(34)) = 2*x(34, 35).
+beq(34) = (1 - 0.5*CVR_P)*(P_L(35) - P_der(35))
+beq(104) = (1 - 0.5*CVR_Q)*(Q_L(35) - Q_C(35))
+*****
+Checking for bus 36.
+*****
+The parent of bus 36 is bus 35 at index 35.
+Aeq(35, P(35)) = 1.
+Aeq(35, P(36)) = -1
+Aeq(105, Q(35)) = 1.
+Aeq(105, Q(36)) = -1
+Aeq(175, v(35)) = 1
+The siblings of bus 36
+include these buses: 36
+include these buses: 38
+at indices 35.
+at indices 37.
+which makes bus 36 at index 35 as the eldest sibling.
+Aeq(175, v_Full(35)) = -1
+Aeq(175, P(35)) = 2*r(35, 36).
+Aeq(175, Q(35)) = 2*x(35, 36).
+beq(35) = (1 - 0.5*CVR_P)*(P_L(36) - P_der(36))
+beq(105) = (1 - 0.5*CVR_Q)*(Q_L(36) - Q_C(36))
+*****
+Checking for bus 37.
+*****
+The parent of bus 37 is bus 36 at index 36.
+Aeq(36, P(36)) = 1.
+Aeq(106, Q(36)) = 1.
+Aeq(176, v(36)) = 1
+The siblings of bus 37
+include these buses: 37
+at indices 36.
+which makes bus 37 at index 36 as the eldest sibling.
+Aeq(176, v_Full(36)) = -1
+Aeq(176, P(36)) = 2*r(36, 37).
+Aeq(176, Q(36)) = 2*x(36, 37).
+beq(36) = (1 - 0.5*CVR_P)*(P_L(37) - P_der(37))
+beq(106) = (1 - 0.5*CVR_Q)*(Q_L(37) - Q_C(37))
+*****
+Checking for bus 38.
+*****
+The parent of bus 38 is bus 35 at index 37.
+Aeq(37, P(37)) = 1.
+Aeq(37, P(38)) = -1
+Aeq(107, Q(37)) = 1.
+Aeq(107, Q(38)) = -1
+Aeq(177, v(37)) = 1
+The siblings of bus 38
+include these buses: 36
+include these buses: 38
+at indices 35.
+at indices 37.
+which makes bus 36 at index 35 as the eldest sibling.
+Aeq(177, v_Full(35)) = -1
+Aeq(177, P(37)) = 2*r(35, 38).
+Aeq(177, Q(37)) = 2*x(35, 38).
+beq(37) = (1 - 0.5*CVR_P)*(P_L(38) - P_der(38))
+beq(107) = (1 - 0.5*CVR_Q)*(Q_L(38) - Q_C(38))
+*****
+Checking for bus 39.
+*****
+The parent of bus 39 is bus 38 at index 38.
+Aeq(38, P(38)) = 1.
+Aeq(108, Q(38)) = 1.
+Aeq(178, v(38)) = 1
+The siblings of bus 39
+include these buses: 39
+at indices 38.
+which makes bus 39 at index 38 as the eldest sibling.
+Aeq(178, v_Full(38)) = -1
+Aeq(178, P(38)) = 2*r(38, 39).
+Aeq(178, Q(38)) = 2*x(38, 39).
+beq(38) = (1 - 0.5*CVR_P)*(P_L(39) - P_der(39))
+beq(108) = (1 - 0.5*CVR_Q)*(Q_L(39) - Q_C(39))
+*****
+Checking for bus 40.
+*****
+The parent of bus 40 is bus 30 at index 39.
+Aeq(39, P(39)) = 1.
+Aeq(39, P(40)) = -1
+Aeq(109, Q(39)) = 1.
+Aeq(109, Q(40)) = -1
+Aeq(179, v(39)) = 1
+The siblings of bus 40
+include these buses: 31
+include these buses: 40
+at indices 30.
+at indices 39.
+which makes bus 31 at index 30 as the eldest sibling.
+Aeq(179, v_Full(30)) = -1
+Aeq(179, P(39)) = 2*r(30, 40).
+Aeq(179, Q(39)) = 2*x(30, 40).
+beq(39) = (1 - 0.5*CVR_P)*(P_L(40) - P_der(40))
+beq(109) = (1 - 0.5*CVR_Q)*(Q_L(40) - Q_C(40))
+*****
+Checking for bus 41.
+*****
+The parent of bus 41 is bus 40 at index 40.
+Aeq(40, P(40)) = 1.
+Aeq(40, P(41)) = -1
+Aeq(40, P(42)) = -1
+Aeq(110, Q(40)) = 1.
+Aeq(110, Q(41)) = -1
+Aeq(110, Q(42)) = -1
+Aeq(180, v(40)) = 1
+The siblings of bus 41
+include these buses: 41
+at indices 40.
+which makes bus 41 at index 40 as the eldest sibling.
+Aeq(180, v_Full(40)) = -1
+Aeq(180, P(40)) = 2*r(40, 41).
+Aeq(180, Q(40)) = 2*x(40, 41).
+beq(40) = (1 - 0.5*CVR_P)*(P_L(41) - P_der(41))
+beq(110) = (1 - 0.5*CVR_Q)*(Q_L(41) - Q_C(41))
+*****
+Checking for bus 42.
+*****
+The parent of bus 42 is bus 41 at index 41.
+Aeq(41, P(41)) = 1.
+Aeq(111, Q(41)) = 1.
+Aeq(181, v(41)) = 1
+The siblings of bus 42
+include these buses: 42
+include these buses: 43
+at indices 41.
+at indices 42.
+which makes bus 42 at index 41 as the eldest sibling.
+Aeq(181, v_Full(41)) = -1
+Aeq(181, P(41)) = 2*r(41, 42).
+Aeq(181, Q(41)) = 2*x(41, 42).
+beq(41) = (1 - 0.5*CVR_P)*(P_L(42) - P_der(42))
+beq(111) = (1 - 0.5*CVR_Q)*(Q_L(42) - Q_C(42))
+*****
+Checking for bus 43.
+*****
+The parent of bus 43 is bus 41 at index 42.
+Aeq(42, P(42)) = 1.
+Aeq(42, P(43)) = -1
+Aeq(42, P(44)) = -1
+Aeq(112, Q(42)) = 1.
+Aeq(112, Q(43)) = -1
+Aeq(112, Q(44)) = -1
+Aeq(182, v(42)) = 1
+The siblings of bus 43
+include these buses: 42
+include these buses: 43
+at indices 41.
+at indices 42.
+which makes bus 42 at index 41 as the eldest sibling.
+Aeq(182, v_Full(41)) = -1
+Aeq(182, P(42)) = 2*r(41, 43).
+Aeq(182, Q(42)) = 2*x(41, 43).
+beq(42) = (1 - 0.5*CVR_P)*(P_L(43) - P_der(43))
+beq(112) = (1 - 0.5*CVR_Q)*(Q_L(43) - Q_C(43))
+*****
+Checking for bus 44.
+*****
+The parent of bus 44 is bus 43 at index 43.
+Aeq(43, P(43)) = 1.
+Aeq(113, Q(43)) = 1.
+Aeq(183, v(43)) = 1
+The siblings of bus 44
+include these buses: 44
+include these buses: 45
+at indices 43.
+at indices 44.
+which makes bus 44 at index 43 as the eldest sibling.
+Aeq(183, v_Full(43)) = -1
+Aeq(183, P(43)) = 2*r(43, 44).
+Aeq(183, Q(43)) = 2*x(43, 44).
+beq(43) = (1 - 0.5*CVR_P)*(P_L(44) - P_der(44))
+beq(113) = (1 - 0.5*CVR_Q)*(Q_L(44) - Q_C(44))
+*****
+Checking for bus 45.
+*****
+The parent of bus 45 is bus 43 at index 44.
+Aeq(44, P(44)) = 1.
+Aeq(44, P(45)) = -1
+Aeq(44, P(46)) = -1
+Aeq(114, Q(44)) = 1.
+Aeq(114, Q(45)) = -1
+Aeq(114, Q(46)) = -1
+Aeq(184, v(44)) = 1
+The siblings of bus 45
+include these buses: 44
+include these buses: 45
+at indices 43.
+at indices 44.
+which makes bus 44 at index 43 as the eldest sibling.
+Aeq(184, v_Full(43)) = -1
+Aeq(184, P(44)) = 2*r(43, 45).
+Aeq(184, Q(44)) = 2*x(43, 45).
+beq(44) = (1 - 0.5*CVR_P)*(P_L(45) - P_der(45))
+beq(114) = (1 - 0.5*CVR_Q)*(Q_L(45) - Q_C(45))
+*****
+Checking for bus 46.
+*****
+The parent of bus 46 is bus 45 at index 45.
+Aeq(45, P(45)) = 1.
+Aeq(115, Q(45)) = 1.
+Aeq(185, v(45)) = 1
+The siblings of bus 46
+include these buses: 46
+include these buses: 47
+at indices 45.
+at indices 46.
+which makes bus 46 at index 45 as the eldest sibling.
+Aeq(185, v_Full(45)) = -1
+Aeq(185, P(45)) = 2*r(45, 46).
+Aeq(185, Q(45)) = 2*x(45, 46).
+beq(45) = (1 - 0.5*CVR_P)*(P_L(46) - P_der(46))
+beq(115) = (1 - 0.5*CVR_Q)*(Q_L(46) - Q_C(46))
+*****
+Checking for bus 47.
+*****
+The parent of bus 47 is bus 45 at index 46.
+Aeq(46, P(46)) = 1.
+Aeq(46, P(47)) = -1
+Aeq(46, P(48)) = -1
+Aeq(116, Q(46)) = 1.
+Aeq(116, Q(47)) = -1
+Aeq(116, Q(48)) = -1
+Aeq(186, v(46)) = 1
+The siblings of bus 47
+include these buses: 46
+include these buses: 47
+at indices 45.
+at indices 46.
+which makes bus 46 at index 45 as the eldest sibling.
+Aeq(186, v_Full(45)) = -1
+Aeq(186, P(46)) = 2*r(45, 47).
+Aeq(186, Q(46)) = 2*x(45, 47).
+beq(46) = (1 - 0.5*CVR_P)*(P_L(47) - P_der(47))
+beq(116) = (1 - 0.5*CVR_Q)*(Q_L(47) - Q_C(47))
+*****
+Checking for bus 48.
+*****
+The parent of bus 48 is bus 47 at index 47.
+Aeq(47, P(47)) = 1.
+Aeq(117, Q(47)) = 1.
+Aeq(187, v(47)) = 1
+The siblings of bus 48
+include these buses: 48
+include these buses: 49
+at indices 47.
+at indices 48.
+which makes bus 48 at index 47 as the eldest sibling.
+Aeq(187, v_Full(47)) = -1
+Aeq(187, P(47)) = 2*r(47, 48).
+Aeq(187, Q(47)) = 2*x(47, 48).
+beq(47) = (1 - 0.5*CVR_P)*(P_L(48) - P_der(48))
+beq(117) = (1 - 0.5*CVR_Q)*(Q_L(48) - Q_C(48))
+*****
+Checking for bus 49.
+*****
+The parent of bus 49 is bus 47 at index 48.
+Aeq(48, P(48)) = 1.
+Aeq(48, P(49)) = -1
+Aeq(118, Q(48)) = 1.
+Aeq(118, Q(49)) = -1
+Aeq(188, v(48)) = 1
+The siblings of bus 49
+include these buses: 48
+include these buses: 49
+at indices 47.
+at indices 48.
+which makes bus 48 at index 47 as the eldest sibling.
+Aeq(188, v_Full(47)) = -1
+Aeq(188, P(48)) = 2*r(47, 49).
+Aeq(188, Q(48)) = 2*x(47, 49).
+beq(48) = (1 - 0.5*CVR_P)*(P_L(49) - P_der(49))
+beq(118) = (1 - 0.5*CVR_Q)*(Q_L(49) - Q_C(49))
+*****
+Checking for bus 50.
+*****
+The parent of bus 50 is bus 49 at index 49.
+Aeq(49, P(49)) = 1.
+Aeq(119, Q(49)) = 1.
+Aeq(189, v(49)) = 1
+The siblings of bus 50
+include these buses: 50
+at indices 49.
+which makes bus 50 at index 49 as the eldest sibling.
+Aeq(189, v_Full(49)) = -1
+Aeq(189, P(49)) = 2*r(49, 50).
+Aeq(189, Q(49)) = 2*x(49, 50).
+beq(49) = (1 - 0.5*CVR_P)*(P_L(50) - P_der(50))
+beq(119) = (1 - 0.5*CVR_Q)*(Q_L(50) - Q_C(50))
+*****
+Checking for bus 51.
+*****
+The parent of bus 51 is bus 21 at index 50.
+Aeq(50, P(50)) = 1.
+Aeq(50, P(51)) = -1
+Aeq(50, P(70)) = -1
+Aeq(120, Q(50)) = 1.
+Aeq(120, Q(51)) = -1
+Aeq(120, Q(70)) = -1
+Aeq(190, v(50)) = 1
+The siblings of bus 51
+include these buses: 22
+include these buses: 26
+include these buses: 51
+at indices 21.
+at indices 25.
+at indices 50.
+which makes bus 22 at index 21 as the eldest sibling.
+Aeq(190, v_Full(21)) = -1
+Aeq(190, P(50)) = 2*r(21, 51).
+Aeq(190, Q(50)) = 2*x(21, 51).
+beq(50) = (1 - 0.5*CVR_P)*(P_L(51) - P_der(51))
+beq(120) = (1 - 0.5*CVR_Q)*(Q_L(51) - Q_C(51))
+*****
+Checking for bus 52.
+*****
+The parent of bus 52 is bus 51 at index 51.
+Aeq(51, P(51)) = 1.
+Aeq(51, P(52)) = -1
+Aeq(121, Q(51)) = 1.
+Aeq(121, Q(52)) = -1
+Aeq(191, v(51)) = 1
+The siblings of bus 52
+include these buses: 52
+include these buses: 71
+at indices 51.
+at indices 70.
+which makes bus 52 at index 51 as the eldest sibling.
+Aeq(191, v_Full(51)) = -1
+Aeq(191, P(51)) = 2*r(51, 52).
+Aeq(191, Q(51)) = 2*x(51, 52).
+beq(51) = (1 - 0.5*CVR_P)*(P_L(52) - P_der(52))
+beq(121) = (1 - 0.5*CVR_Q)*(Q_L(52) - Q_C(52))
+*****
+Checking for bus 53.
+*****
+The parent of bus 53 is bus 52 at index 52.
+Aeq(52, P(52)) = 1.
+Aeq(52, P(53)) = -1
+Aeq(122, Q(52)) = 1.
+Aeq(122, Q(53)) = -1
+Aeq(192, v(52)) = 1
+The siblings of bus 53
+include these buses: 53
+at indices 52.
+which makes bus 53 at index 52 as the eldest sibling.
+Aeq(192, v_Full(52)) = -1
+Aeq(192, P(52)) = 2*r(52, 53).
+Aeq(192, Q(52)) = 2*x(52, 53).
+beq(52) = (1 - 0.5*CVR_P)*(P_L(53) - P_der(53))
+beq(122) = (1 - 0.5*CVR_Q)*(Q_L(53) - Q_C(53))
+*****
+Checking for bus 54.
+*****
+The parent of bus 54 is bus 53 at index 53.
+Aeq(53, P(53)) = 1.
+Aeq(53, P(69)) = -1
+Aeq(123, Q(53)) = 1.
+Aeq(123, Q(69)) = -1
+Aeq(193, v(53)) = 1
+The siblings of bus 54
+include these buses: 54
+at indices 53.
+which makes bus 54 at index 53 as the eldest sibling.
+Aeq(193, v_Full(53)) = -1
+Aeq(193, P(53)) = 2*r(53, 54).
+Aeq(193, Q(53)) = 2*x(53, 54).
+beq(53) = (1 - 0.5*CVR_P)*(P_L(54) - P_der(54))
+beq(123) = (1 - 0.5*CVR_Q)*(Q_L(54) - Q_C(54))
+*****
+Checking for bus 55.
+*****
+The parent of bus 55 is bus 71 at index 54.
+Aeq(54, P(54)) = 1.
+Aeq(54, P(55)) = -1
+Aeq(54, P(58)) = -1
+Aeq(124, Q(54)) = 1.
+Aeq(124, Q(55)) = -1
+Aeq(124, Q(58)) = -1
+Aeq(194, v(54)) = 1
+The siblings of bus 55
+include these buses: 55
+at indices 54.
+which makes bus 55 at index 54 as the eldest sibling.
+Aeq(194, v_Full(54)) = -1
+Aeq(194, P(54)) = 2*r(71, 55).
+Aeq(194, Q(54)) = 2*x(71, 55).
+beq(54) = (1 - 0.5*CVR_P)*(P_L(55) - P_der(55))
+beq(124) = (1 - 0.5*CVR_Q)*(Q_L(55) - Q_C(55))
+*****
+Checking for bus 56.
+*****
+The parent of bus 56 is bus 55 at index 55.
+Aeq(55, P(55)) = 1.
+Aeq(55, P(56)) = -1
+Aeq(125, Q(55)) = 1.
+Aeq(125, Q(56)) = -1
+Aeq(195, v(55)) = 1
+The siblings of bus 56
+include these buses: 56
+include these buses: 59
+at indices 55.
+at indices 58.
+which makes bus 56 at index 55 as the eldest sibling.
+Aeq(195, v_Full(55)) = -1
+Aeq(195, P(55)) = 2*r(55, 56).
+Aeq(195, Q(55)) = 2*x(55, 56).
+beq(55) = (1 - 0.5*CVR_P)*(P_L(56) - P_der(56))
+beq(125) = (1 - 0.5*CVR_Q)*(Q_L(56) - Q_C(56))
+*****
+Checking for bus 57.
+*****
+The parent of bus 57 is bus 56 at index 56.
+Aeq(56, P(56)) = 1.
+Aeq(56, P(57)) = -1
+Aeq(126, Q(56)) = 1.
+Aeq(126, Q(57)) = -1
+Aeq(196, v(56)) = 1
+The siblings of bus 57
+include these buses: 57
+at indices 56.
+which makes bus 57 at index 56 as the eldest sibling.
+Aeq(196, v_Full(56)) = -1
+Aeq(196, P(56)) = 2*r(56, 57).
+Aeq(196, Q(56)) = 2*x(56, 57).
+beq(56) = (1 - 0.5*CVR_P)*(P_L(57) - P_der(57))
+beq(126) = (1 - 0.5*CVR_Q)*(Q_L(57) - Q_C(57))
+*****
+Checking for bus 58.
+*****
+The parent of bus 58 is bus 57 at index 57.
+Aeq(57, P(57)) = 1.
+Aeq(127, Q(57)) = 1.
+Aeq(197, v(57)) = 1
+The siblings of bus 58
+include these buses: 58
+at indices 57.
+which makes bus 58 at index 57 as the eldest sibling.
+Aeq(197, v_Full(57)) = -1
+Aeq(197, P(57)) = 2*r(57, 58).
+Aeq(197, Q(57)) = 2*x(57, 58).
+beq(57) = (1 - 0.5*CVR_P)*(P_L(58) - P_der(58))
+beq(127) = (1 - 0.5*CVR_Q)*(Q_L(58) - Q_C(58))
+*****
+Checking for bus 59.
+*****
+The parent of bus 59 is bus 55 at index 58.
+Aeq(58, P(58)) = 1.
+Aeq(58, P(59)) = -1
+Aeq(58, P(61)) = -1
+Aeq(128, Q(58)) = 1.
+Aeq(128, Q(59)) = -1
+Aeq(128, Q(61)) = -1
+Aeq(198, v(58)) = 1
+The siblings of bus 59
+include these buses: 56
+include these buses: 59
+at indices 55.
+at indices 58.
+which makes bus 56 at index 55 as the eldest sibling.
+Aeq(198, v_Full(55)) = -1
+Aeq(198, P(58)) = 2*r(55, 59).
+Aeq(198, Q(58)) = 2*x(55, 59).
+beq(58) = (1 - 0.5*CVR_P)*(P_L(59) - P_der(59))
+beq(128) = (1 - 0.5*CVR_Q)*(Q_L(59) - Q_C(59))
+*****
+Checking for bus 60.
+*****
+The parent of bus 60 is bus 59 at index 59.
+Aeq(59, P(59)) = 1.
+Aeq(59, P(60)) = -1
+Aeq(129, Q(59)) = 1.
+Aeq(129, Q(60)) = -1
+Aeq(199, v(59)) = 1
+The siblings of bus 60
+include these buses: 60
+include these buses: 62
+at indices 59.
+at indices 61.
+which makes bus 60 at index 59 as the eldest sibling.
+Aeq(199, v_Full(59)) = -1
+Aeq(199, P(59)) = 2*r(59, 60).
+Aeq(199, Q(59)) = 2*x(59, 60).
+beq(59) = (1 - 0.5*CVR_P)*(P_L(60) - P_der(60))
+beq(129) = (1 - 0.5*CVR_Q)*(Q_L(60) - Q_C(60))
+*****
+Checking for bus 61.
+*****
+The parent of bus 61 is bus 60 at index 60.
+Aeq(60, P(60)) = 1.
+Aeq(130, Q(60)) = 1.
+Aeq(200, v(60)) = 1
+The siblings of bus 61
+include these buses: 61
+at indices 60.
+which makes bus 61 at index 60 as the eldest sibling.
+Aeq(200, v_Full(60)) = -1
+Aeq(200, P(60)) = 2*r(60, 61).
+Aeq(200, Q(60)) = 2*x(60, 61).
+beq(60) = (1 - 0.5*CVR_P)*(P_L(61) - P_der(61))
+beq(130) = (1 - 0.5*CVR_Q)*(Q_L(61) - Q_C(61))
+*****
+Checking for bus 62.
+*****
+The parent of bus 62 is bus 59 at index 61.
+Aeq(61, P(61)) = 1.
+Aeq(61, P(62)) = -1
+Aeq(61, P(68)) = -1
+Aeq(131, Q(61)) = 1.
+Aeq(131, Q(62)) = -1
+Aeq(131, Q(68)) = -1
+Aeq(201, v(61)) = 1
+The siblings of bus 62
+include these buses: 60
+include these buses: 62
+at indices 59.
+at indices 61.
+which makes bus 60 at index 59 as the eldest sibling.
+Aeq(201, v_Full(59)) = -1
+Aeq(201, P(61)) = 2*r(59, 62).
+Aeq(201, Q(61)) = 2*x(59, 62).
+beq(61) = (1 - 0.5*CVR_P)*(P_L(62) - P_der(62))
+beq(131) = (1 - 0.5*CVR_Q)*(Q_L(62) - Q_C(62))
+*****
+Checking for bus 63.
+*****
+The parent of bus 63 is bus 62 at index 62.
+Aeq(62, P(62)) = 1.
+Aeq(62, P(63)) = -1
+Aeq(132, Q(62)) = 1.
+Aeq(132, Q(63)) = -1
+Aeq(202, v(62)) = 1
+The siblings of bus 63
+include these buses: 63
+include these buses: 69
+at indices 62.
+at indices 68.
+which makes bus 63 at index 62 as the eldest sibling.
+Aeq(202, v_Full(62)) = -1
+Aeq(202, P(62)) = 2*r(62, 63).
+Aeq(202, Q(62)) = 2*x(62, 63).
+beq(62) = (1 - 0.5*CVR_P)*(P_L(63) - P_der(63))
+beq(132) = (1 - 0.5*CVR_Q)*(Q_L(63) - Q_C(63))
+*****
+Checking for bus 64.
+*****
+The parent of bus 64 is bus 63 at index 63.
+Aeq(63, P(63)) = 1.
+Aeq(63, P(64)) = -1
+Aeq(63, P(65)) = -1
+Aeq(133, Q(63)) = 1.
+Aeq(133, Q(64)) = -1
+Aeq(133, Q(65)) = -1
+Aeq(203, v(63)) = 1
+The siblings of bus 64
+include these buses: 64
+at indices 63.
+which makes bus 64 at index 63 as the eldest sibling.
+Aeq(203, v_Full(63)) = -1
+Aeq(203, P(63)) = 2*r(63, 64).
+Aeq(203, Q(63)) = 2*x(63, 64).
+beq(63) = (1 - 0.5*CVR_P)*(P_L(64) - P_der(64))
+beq(133) = (1 - 0.5*CVR_Q)*(Q_L(64) - Q_C(64))
+*****
+Checking for bus 65.
+*****
+The parent of bus 65 is bus 64 at index 64.
+Aeq(64, P(64)) = 1.
+Aeq(134, Q(64)) = 1.
+Aeq(204, v(64)) = 1
+The siblings of bus 65
+include these buses: 65
+include these buses: 66
+at indices 64.
+at indices 65.
+which makes bus 65 at index 64 as the eldest sibling.
+Aeq(204, v_Full(64)) = -1
+Aeq(204, P(64)) = 2*r(64, 65).
+Aeq(204, Q(64)) = 2*x(64, 65).
+beq(64) = (1 - 0.5*CVR_P)*(P_L(65) - P_der(65))
+beq(134) = (1 - 0.5*CVR_Q)*(Q_L(65) - Q_C(65))
+*****
+Checking for bus 66.
+*****
+The parent of bus 66 is bus 64 at index 65.
+Aeq(65, P(65)) = 1.
+Aeq(65, P(66)) = -1
+Aeq(135, Q(65)) = 1.
+Aeq(135, Q(66)) = -1
+Aeq(205, v(65)) = 1
+The siblings of bus 66
+include these buses: 65
+include these buses: 66
+at indices 64.
+at indices 65.
+which makes bus 65 at index 64 as the eldest sibling.
+Aeq(205, v_Full(64)) = -1
+Aeq(205, P(65)) = 2*r(64, 66).
+Aeq(205, Q(65)) = 2*x(64, 66).
+beq(65) = (1 - 0.5*CVR_P)*(P_L(66) - P_der(66))
+beq(135) = (1 - 0.5*CVR_Q)*(Q_L(66) - Q_C(66))
+*****
+Checking for bus 67.
+*****
+The parent of bus 67 is bus 66 at index 66.
+Aeq(66, P(66)) = 1.
+Aeq(66, P(67)) = -1
+Aeq(136, Q(66)) = 1.
+Aeq(136, Q(67)) = -1
+Aeq(206, v(66)) = 1
+The siblings of bus 67
+include these buses: 67
+at indices 66.
+which makes bus 67 at index 66 as the eldest sibling.
+Aeq(206, v_Full(66)) = -1
+Aeq(206, P(66)) = 2*r(66, 67).
+Aeq(206, Q(66)) = 2*x(66, 67).
+beq(66) = (1 - 0.5*CVR_P)*(P_L(67) - P_der(67))
+beq(136) = (1 - 0.5*CVR_Q)*(Q_L(67) - Q_C(67))
+*****
+Checking for bus 68.
+*****
+The parent of bus 68 is bus 67 at index 67.
+Aeq(67, P(67)) = 1.
+Aeq(137, Q(67)) = 1.
+Aeq(207, v(67)) = 1
+The siblings of bus 68
+include these buses: 68
+at indices 67.
+which makes bus 68 at index 67 as the eldest sibling.
+Aeq(207, v_Full(67)) = -1
+Aeq(207, P(67)) = 2*r(67, 68).
+Aeq(207, Q(67)) = 2*x(67, 68).
+beq(67) = (1 - 0.5*CVR_P)*(P_L(68) - P_der(68))
+beq(137) = (1 - 0.5*CVR_Q)*(Q_L(68) - Q_C(68))
+*****
+Checking for bus 69.
+*****
+The parent of bus 69 is bus 62 at index 68.
+Aeq(68, P(68)) = 1.
+Aeq(138, Q(68)) = 1.
+Aeq(208, v(68)) = 1
+The siblings of bus 69
+include these buses: 63
+include these buses: 69
+at indices 62.
+at indices 68.
+which makes bus 63 at index 62 as the eldest sibling.
+Aeq(208, v_Full(62)) = -1
+Aeq(208, P(68)) = 2*r(62, 69).
+Aeq(208, Q(68)) = 2*x(62, 69).
+beq(68) = (1 - 0.5*CVR_P)*(P_L(69) - P_der(69))
+beq(138) = (1 - 0.5*CVR_Q)*(Q_L(69) - Q_C(69))
+*****
+Checking for bus 70.
+*****
+The parent of bus 70 is bus 54 at index 69.
+Aeq(69, P(69)) = 1.
+Aeq(139, Q(69)) = 1.
+Aeq(209, v(69)) = 1
+The siblings of bus 70
+include these buses: 70
+at indices 69.
+which makes bus 70 at index 69 as the eldest sibling.
+Aeq(209, v_Full(69)) = -1
+Aeq(209, P(69)) = 2*r(54, 70).
+Aeq(209, Q(69)) = 2*x(54, 70).
+beq(69) = (1 - 0.5*CVR_P)*(P_L(70) - P_der(70))
+beq(139) = (1 - 0.5*CVR_Q)*(Q_L(70) - Q_C(70))
+*****
+Checking for bus 71.
+*****
+The parent of bus 71 is bus 51 at index 70.
+Aeq(70, P(70)) = 1.
+Aeq(70, P(54)) = -1
+Aeq(140, Q(70)) = 1.
+Aeq(140, Q(54)) = -1
+Aeq(210, v(70)) = 1
+The siblings of bus 71
+include these buses: 52
+include these buses: 71
+at indices 51.
+at indices 70.
+which makes bus 52 at index 51 as the eldest sibling.
+Aeq(210, v_Full(51)) = -1
+Aeq(210, P(70)) = 2*r(51, 71).
+Aeq(210, Q(70)) = 2*x(51, 71).
+beq(70) = (1 - 0.5*CVR_P)*(P_L(71) - P_der(71))
+beq(140) = (1 - 0.5*CVR_Q)*(Q_L(71) - Q_C(71))
+And who can forget the substation voltage equation..
+Aeq(211, v_Full(1)) = 1
+beq(211) = 1.061
+Now adding the required 48 coefficients to model the 48 DERs in just as many equations from among the 70 branch reactive flow equations.
+Aeq(72, qD(1)) = 1
+Aeq(73, qD(2)) = 1
+Aeq(75, qD(3)) = 1
+Aeq(76, qD(4)) = 1
+Aeq(78, qD(5)) = 1
+Aeq(79, qD(6)) = 1
+Aeq(80, qD(7)) = 1
+Aeq(82, qD(8)) = 1
+Aeq(83, qD(9)) = 1
+Aeq(84, qD(10)) = 1
+Aeq(85, qD(11)) = 1
+Aeq(86, qD(12)) = 1
+Aeq(91, qD(13)) = 1
+Aeq(92, qD(14)) = 1
+Aeq(93, qD(15)) = 1
+Aeq(94, qD(16)) = 1
+Aeq(96, qD(17)) = 1
+Aeq(97, qD(18)) = 1
+Aeq(98, qD(19)) = 1
+Aeq(99, qD(20)) = 1
+Aeq(100, qD(21)) = 1
+Aeq(102, qD(22)) = 1
+Aeq(103, qD(23)) = 1
+Aeq(105, qD(24)) = 1
+Aeq(106, qD(25)) = 1
+Aeq(107, qD(26)) = 1
+Aeq(108, qD(27)) = 1
+Aeq(109, qD(28)) = 1
+Aeq(110, qD(29)) = 1
+Aeq(111, qD(30)) = 1
+Aeq(113, qD(31)) = 1
+Aeq(115, qD(32)) = 1
+Aeq(117, qD(33)) = 1
+Aeq(118, qD(34)) = 1
+Aeq(119, qD(35)) = 1
+Aeq(121, qD(36)) = 1
+Aeq(122, qD(37)) = 1
+Aeq(123, qD(38)) = 1
+Aeq(125, qD(39)) = 1
+Aeq(126, qD(40)) = 1
+Aeq(127, qD(41)) = 1
+Aeq(129, qD(42)) = 1
+Aeq(130, qD(43)) = 1
+Aeq(132, qD(44)) = 1
+Aeq(134, qD(45)) = 1
+Aeq(135, qD(46)) = 1
+Aeq(136, qD(47)) = 1
+Aeq(137, qD(48)) = 1
+Now adding the required 48 + 48 = 96 coefficients in just as many equations from among existing 70 real and 70 reactive branch flow equations, as well as 48 new equations to model the SOCs for the batteries.
+Battery number 1 is actually bus number 3.
+Whose parent is bus 2 at index 2.
+Obviously, this additional battery will go into equation #212.
+Aeq(2, Pc(1)) = -1
+Aeq(2, Pd(1)) = 1
+Aeq(72, qB(1)) = 1
+Aeq(212, B(1)) = 1
+Aeq(212, Pc(1)) = -delta_t*etta_C
+Aeq(212, Pd(1)) = delta_t/etta_D
+beq(212) = B0(1) = 0.011664
+Battery number 2 is actually bus number 4.
+Whose parent is bus 3 at index 3.
+Obviously, this additional battery will go into equation #213.
+Aeq(3, Pc(2)) = -1
+Aeq(3, Pd(2)) = 1
+Aeq(73, qB(2)) = 1
+Aeq(213, B(2)) = 1
+Aeq(213, Pc(2)) = -delta_t*etta_C
+Aeq(213, Pd(2)) = delta_t/etta_D
+beq(213) = B0(2) = 0.011664
+Battery number 3 is actually bus number 6.
+Whose parent is bus 5 at index 5.
+Obviously, this additional battery will go into equation #214.
+Aeq(5, Pc(3)) = -1
+Aeq(5, Pd(3)) = 1
+Aeq(75, qB(3)) = 1
+Aeq(214, B(3)) = 1
+Aeq(214, Pc(3)) = -delta_t*etta_C
+Aeq(214, Pd(3)) = delta_t/etta_D
+beq(214) = B0(3) = 0.005834
+Battery number 4 is actually bus number 7.
+Whose parent is bus 6 at index 6.
+Obviously, this additional battery will go into equation #215.
+Aeq(6, Pc(4)) = -1
+Aeq(6, Pd(4)) = 1
+Aeq(76, qB(4)) = 1
+Aeq(215, B(4)) = 1
+Aeq(215, Pc(4)) = -delta_t*etta_C
+Aeq(215, Pd(4)) = delta_t/etta_D
+beq(215) = B0(4) = 0.005834
+Battery number 5 is actually bus number 9.
+Whose parent is bus 8 at index 8.
+Obviously, this additional battery will go into equation #216.
+Aeq(8, Pc(5)) = -1
+Aeq(8, Pd(5)) = 1
+Aeq(78, qB(5)) = 1
+Aeq(216, B(5)) = 1
+Aeq(216, Pc(5)) = -delta_t*etta_C
+Aeq(216, Pd(5)) = delta_t/etta_D
+beq(216) = B0(5) = 0.005834
+Battery number 6 is actually bus number 10.
+Whose parent is bus 9 at index 9.
+Obviously, this additional battery will go into equation #217.
+Aeq(9, Pc(6)) = -1
+Aeq(9, Pd(6)) = 1
+Aeq(79, qB(6)) = 1
+Aeq(217, B(6)) = 1
+Aeq(217, Pc(6)) = -delta_t*etta_C
+Aeq(217, Pd(6)) = delta_t/etta_D
+beq(217) = B0(6) = 0.005834
+Battery number 7 is actually bus number 11.
+Whose parent is bus 8 at index 10.
+Obviously, this additional battery will go into equation #218.
+Aeq(10, Pc(7)) = -1
+Aeq(10, Pd(7)) = 1
+Aeq(80, qB(7)) = 1
+Aeq(218, B(7)) = 1
+Aeq(218, Pc(7)) = -delta_t*etta_C
+Aeq(218, Pd(7)) = delta_t/etta_D
+beq(218) = B0(7) = 0.005834
+Battery number 8 is actually bus number 13.
+Whose parent is bus 11 at index 12.
+Obviously, this additional battery will go into equation #219.
+Aeq(12, Pc(8)) = -1
+Aeq(12, Pd(8)) = 1
+Aeq(82, qB(8)) = 1
+Aeq(219, B(8)) = 1
+Aeq(219, Pc(8)) = -delta_t*etta_C
+Aeq(219, Pd(8)) = delta_t/etta_D
+beq(219) = B0(8) = 0.011664
+Battery number 9 is actually bus number 14.
+Whose parent is bus 13 at index 13.
+Obviously, this additional battery will go into equation #220.
+Aeq(13, Pc(9)) = -1
+Aeq(13, Pd(9)) = 1
+Aeq(83, qB(9)) = 1
+Aeq(220, B(9)) = 1
+Aeq(220, Pc(9)) = -delta_t*etta_C
+Aeq(220, Pd(9)) = delta_t/etta_D
+beq(220) = B0(9) = 0.011664
+Battery number 10 is actually bus number 15.
+Whose parent is bus 14 at index 14.
+Obviously, this additional battery will go into equation #221.
+Aeq(14, Pc(10)) = -1
+Aeq(14, Pd(10)) = 1
+Aeq(84, qB(10)) = 1
+Aeq(221, B(10)) = 1
+Aeq(221, Pc(10)) = -delta_t*etta_C
+Aeq(221, Pd(10)) = delta_t/etta_D
+beq(221) = B0(10) = 0.021875
+Battery number 11 is actually bus number 16.
+Whose parent is bus 15 at index 15.
+Obviously, this additional battery will go into equation #222.
+Aeq(15, Pc(11)) = -1
+Aeq(15, Pd(11)) = 1
+Aeq(85, qB(11)) = 1
+Aeq(222, B(11)) = 1
+Aeq(222, Pc(11)) = -delta_t*etta_C
+Aeq(222, Pd(11)) = delta_t/etta_D
+beq(222) = B0(11) = 0.040836
+Battery number 12 is actually bus number 17.
+Whose parent is bus 16 at index 16.
+Obviously, this additional battery will go into equation #223.
+Aeq(16, Pc(12)) = -1
+Aeq(16, Pd(12)) = 1
+Aeq(86, qB(12)) = 1
+Aeq(223, B(12)) = 1
+Aeq(223, Pc(12)) = -delta_t*etta_C
+Aeq(223, Pd(12)) = delta_t/etta_D
+beq(223) = B0(12) = 0.021875
+Battery number 13 is actually bus number 22.
+Whose parent is bus 21 at index 21.
+Obviously, this additional battery will go into equation #224.
+Aeq(21, Pc(13)) = -1
+Aeq(21, Pd(13)) = 1
+Aeq(91, qB(13)) = 1
+Aeq(224, B(13)) = 1
+Aeq(224, Pc(13)) = -delta_t*etta_C
+Aeq(224, Pd(13)) = delta_t/etta_D
+beq(224) = B0(13) = 0.005834
+Battery number 14 is actually bus number 23.
+Whose parent is bus 22 at index 22.
+Obviously, this additional battery will go into equation #225.
+Aeq(22, Pc(14)) = -1
+Aeq(22, Pd(14)) = 1
+Aeq(92, qB(14)) = 1
+Aeq(225, B(14)) = 1
+Aeq(225, Pc(14)) = -delta_t*etta_C
+Aeq(225, Pd(14)) = delta_t/etta_D
+beq(225) = B0(14) = 0.011664
+Battery number 15 is actually bus number 24.
+Whose parent is bus 23 at index 23.
+Obviously, this additional battery will go into equation #226.
+Aeq(23, Pc(15)) = -1
+Aeq(23, Pd(15)) = 1
+Aeq(93, qB(15)) = 1
+Aeq(226, B(15)) = 1
+Aeq(226, Pc(15)) = -delta_t*etta_C
+Aeq(226, Pd(15)) = delta_t/etta_D
+beq(226) = B0(15) = 0.005834
+Battery number 16 is actually bus number 25.
+Whose parent is bus 24 at index 24.
+Obviously, this additional battery will go into equation #227.
+Aeq(24, Pc(16)) = -1
+Aeq(24, Pd(16)) = 1
+Aeq(94, qB(16)) = 1
+Aeq(227, B(16)) = 1
+Aeq(227, Pc(16)) = -delta_t*etta_C
+Aeq(227, Pd(16)) = delta_t/etta_D
+beq(227) = B0(16) = 0.011664
+Battery number 17 is actually bus number 27.
+Whose parent is bus 26 at index 26.
+Obviously, this additional battery will go into equation #228.
+Aeq(26, Pc(17)) = -1
+Aeq(26, Pd(17)) = 1
+Aeq(96, qB(17)) = 1
+Aeq(228, B(17)) = 1
+Aeq(228, Pc(17)) = -delta_t*etta_C
+Aeq(228, Pd(17)) = delta_t/etta_D
+beq(228) = B0(17) = 0.011664
+Battery number 18 is actually bus number 28.
+Whose parent is bus 27 at index 27.
+Obviously, this additional battery will go into equation #229.
+Aeq(27, Pc(18)) = -1
+Aeq(27, Pd(18)) = 1
+Aeq(97, qB(18)) = 1
+Aeq(229, B(18)) = 1
+Aeq(229, Pc(18)) = -delta_t*etta_C
+Aeq(229, Pd(18)) = delta_t/etta_D
+beq(229) = B0(18) = 0.011664
+Battery number 19 is actually bus number 29.
+Whose parent is bus 28 at index 28.
+Obviously, this additional battery will go into equation #230.
+Aeq(28, Pc(19)) = -1
+Aeq(28, Pd(19)) = 1
+Aeq(98, qB(19)) = 1
+Aeq(230, B(19)) = 1
+Aeq(230, Pc(19)) = -delta_t*etta_C
+Aeq(230, Pd(19)) = delta_t/etta_D
+beq(230) = B0(19) = 0.011664
+Battery number 20 is actually bus number 30.
+Whose parent is bus 26 at index 29.
+Obviously, this additional battery will go into equation #231.
+Aeq(29, Pc(20)) = -1
+Aeq(29, Pd(20)) = 1
+Aeq(99, qB(20)) = 1
+Aeq(231, B(20)) = 1
+Aeq(231, Pc(20)) = -delta_t*etta_C
+Aeq(231, Pd(20)) = delta_t/etta_D
+beq(231) = B0(20) = 0.071461
+Battery number 21 is actually bus number 31.
+Whose parent is bus 30 at index 30.
+Obviously, this additional battery will go into equation #232.
+Aeq(30, Pc(21)) = -1
+Aeq(30, Pd(21)) = 1
+Aeq(100, qB(21)) = 1
+Aeq(232, B(21)) = 1
+Aeq(232, Pc(21)) = -delta_t*etta_C
+Aeq(232, Pd(21)) = delta_t/etta_D
+beq(232) = B0(21) = 0.011664
+Battery number 22 is actually bus number 33.
+Whose parent is bus 32 at index 32.
+Obviously, this additional battery will go into equation #233.
+Aeq(32, Pc(22)) = -1
+Aeq(32, Pd(22)) = 1
+Aeq(102, qB(22)) = 1
+Aeq(233, B(22)) = 1
+Aeq(233, Pc(22)) = -delta_t*etta_C
+Aeq(233, Pd(22)) = delta_t/etta_D
+beq(233) = B0(22) = 0.011664
+Battery number 23 is actually bus number 34.
+Whose parent is bus 32 at index 33.
+Obviously, this additional battery will go into equation #234.
+Aeq(33, Pc(23)) = -1
+Aeq(33, Pd(23)) = 1
+Aeq(103, qB(23)) = 1
+Aeq(234, B(23)) = 1
+Aeq(234, Pc(23)) = -delta_t*etta_C
+Aeq(234, Pd(23)) = delta_t/etta_D
+beq(234) = B0(23) = 0.011664
+Battery number 24 is actually bus number 36.
+Whose parent is bus 35 at index 35.
+Obviously, this additional battery will go into equation #235.
+Aeq(35, Pc(24)) = -1
+Aeq(35, Pd(24)) = 1
+Aeq(105, qB(24)) = 1
+Aeq(235, B(24)) = 1
+Aeq(235, Pc(24)) = -delta_t*etta_C
+Aeq(235, Pd(24)) = delta_t/etta_D
+beq(235) = B0(24) = 0.011664
+Battery number 25 is actually bus number 37.
+Whose parent is bus 36 at index 36.
+Obviously, this additional battery will go into equation #236.
+Aeq(36, Pc(25)) = -1
+Aeq(36, Pd(25)) = 1
+Aeq(106, qB(25)) = 1
+Aeq(236, B(25)) = 1
+Aeq(236, Pc(25)) = -delta_t*etta_C
+Aeq(236, Pd(25)) = delta_t/etta_D
+beq(236) = B0(25) = 0.005834
+Battery number 26 is actually bus number 38.
+Whose parent is bus 35 at index 37.
+Obviously, this additional battery will go into equation #237.
+Aeq(37, Pc(26)) = -1
+Aeq(37, Pd(26)) = 1
+Aeq(107, qB(26)) = 1
+Aeq(237, B(26)) = 1
+Aeq(237, Pc(26)) = -delta_t*etta_C
+Aeq(237, Pd(26)) = delta_t/etta_D
+beq(237) = B0(26) = 0.005834
+Battery number 27 is actually bus number 39.
+Whose parent is bus 38 at index 38.
+Obviously, this additional battery will go into equation #238.
+Aeq(38, Pc(27)) = -1
+Aeq(38, Pd(27)) = 1
+Aeq(108, qB(27)) = 1
+Aeq(238, B(27)) = 1
+Aeq(238, Pc(27)) = -delta_t*etta_C
+Aeq(238, Pd(27)) = delta_t/etta_D
+beq(238) = B0(27) = 0.011664
+Battery number 28 is actually bus number 40.
+Whose parent is bus 30 at index 39.
+Obviously, this additional battery will go into equation #239.
+Aeq(39, Pc(28)) = -1
+Aeq(39, Pd(28)) = 1
+Aeq(109, qB(28)) = 1
+Aeq(239, B(28)) = 1
+Aeq(239, Pc(28)) = -delta_t*etta_C
+Aeq(239, Pd(28)) = delta_t/etta_D
+beq(239) = B0(28) = 0.005834
+Battery number 29 is actually bus number 41.
+Whose parent is bus 40 at index 40.
+Obviously, this additional battery will go into equation #240.
+Aeq(40, Pc(29)) = -1
+Aeq(40, Pd(29)) = 1
+Aeq(110, qB(29)) = 1
+Aeq(240, B(29)) = 1
+Aeq(240, Pc(29)) = -delta_t*etta_C
+Aeq(240, Pd(29)) = delta_t/etta_D
+beq(240) = B0(29) = 0.011664
+Battery number 30 is actually bus number 42.
+Whose parent is bus 41 at index 41.
+Obviously, this additional battery will go into equation #241.
+Aeq(41, Pc(30)) = -1
+Aeq(41, Pd(30)) = 1
+Aeq(111, qB(30)) = 1
+Aeq(241, B(30)) = 1
+Aeq(241, Pc(30)) = -delta_t*etta_C
+Aeq(241, Pd(30)) = delta_t/etta_D
+beq(241) = B0(30) = 0.011664
+Battery number 31 is actually bus number 44.
+Whose parent is bus 43 at index 43.
+Obviously, this additional battery will go into equation #242.
+Aeq(43, Pc(31)) = -1
+Aeq(43, Pd(31)) = 1
+Aeq(113, qB(31)) = 1
+Aeq(242, B(31)) = 1
+Aeq(242, Pc(31)) = -delta_t*etta_C
+Aeq(242, Pd(31)) = delta_t/etta_D
+beq(242) = B0(31) = 0.011664
+Battery number 32 is actually bus number 46.
+Whose parent is bus 45 at index 45.
+Obviously, this additional battery will go into equation #243.
+Aeq(45, Pc(32)) = -1
+Aeq(45, Pd(32)) = 1
+Aeq(115, qB(32)) = 1
+Aeq(243, B(32)) = 1
+Aeq(243, Pc(32)) = -delta_t*etta_C
+Aeq(243, Pd(32)) = delta_t/etta_D
+beq(243) = B0(32) = 0.011664
+Battery number 33 is actually bus number 48.
+Whose parent is bus 47 at index 47.
+Obviously, this additional battery will go into equation #244.
+Aeq(47, Pc(33)) = -1
+Aeq(47, Pd(33)) = 1
+Aeq(117, qB(33)) = 1
+Aeq(244, B(33)) = 1
+Aeq(244, Pc(33)) = -delta_t*etta_C
+Aeq(244, Pd(33)) = delta_t/etta_D
+beq(244) = B0(33) = 0.011664
+Battery number 34 is actually bus number 49.
+Whose parent is bus 47 at index 48.
+Obviously, this additional battery will go into equation #245.
+Aeq(48, Pc(34)) = -1
+Aeq(48, Pd(34)) = 1
+Aeq(118, qB(34)) = 1
+Aeq(245, B(34)) = 1
+Aeq(245, Pc(34)) = -delta_t*etta_C
+Aeq(245, Pd(34)) = delta_t/etta_D
+beq(245) = B0(34) = 0.005834
+Battery number 35 is actually bus number 50.
+Whose parent is bus 49 at index 49.
+Obviously, this additional battery will go into equation #246.
+Aeq(49, Pc(35)) = -1
+Aeq(49, Pd(35)) = 1
+Aeq(119, qB(35)) = 1
+Aeq(246, B(35)) = 1
+Aeq(246, Pc(35)) = -delta_t*etta_C
+Aeq(246, Pd(35)) = delta_t/etta_D
+beq(246) = B0(35) = 0.005834
+Battery number 36 is actually bus number 52.
+Whose parent is bus 51 at index 51.
+Obviously, this additional battery will go into equation #247.
+Aeq(51, Pc(36)) = -1
+Aeq(51, Pd(36)) = 1
+Aeq(121, qB(36)) = 1
+Aeq(247, B(36)) = 1
+Aeq(247, Pc(36)) = -delta_t*etta_C
+Aeq(247, Pd(36)) = delta_t/etta_D
+beq(247) = B0(36) = 0.011664
+Battery number 37 is actually bus number 53.
+Whose parent is bus 52 at index 52.
+Obviously, this additional battery will go into equation #248.
+Aeq(52, Pc(37)) = -1
+Aeq(52, Pd(37)) = 1
+Aeq(122, qB(37)) = 1
+Aeq(248, B(37)) = 1
+Aeq(248, Pc(37)) = -delta_t*etta_C
+Aeq(248, Pd(37)) = delta_t/etta_D
+beq(248) = B0(37) = 0.011664
+Battery number 38 is actually bus number 54.
+Whose parent is bus 53 at index 53.
+Obviously, this additional battery will go into equation #249.
+Aeq(53, Pc(38)) = -1
+Aeq(53, Pd(38)) = 1
+Aeq(123, qB(38)) = 1
+Aeq(249, B(38)) = 1
+Aeq(249, Pc(38)) = -delta_t*etta_C
+Aeq(249, Pd(38)) = delta_t/etta_D
+beq(249) = B0(38) = 0.011664
+Battery number 39 is actually bus number 56.
+Whose parent is bus 55 at index 55.
+Obviously, this additional battery will go into equation #250.
+Aeq(55, Pc(39)) = -1
+Aeq(55, Pd(39)) = 1
+Aeq(125, qB(39)) = 1
+Aeq(250, B(39)) = 1
+Aeq(250, Pc(39)) = -delta_t*etta_C
+Aeq(250, Pd(39)) = delta_t/etta_D
+beq(250) = B0(39) = 0.005834
+Battery number 40 is actually bus number 57.
+Whose parent is bus 56 at index 56.
+Obviously, this additional battery will go into equation #251.
+Aeq(56, Pc(40)) = -1
+Aeq(56, Pd(40)) = 1
+Aeq(126, qB(40)) = 1
+Aeq(251, B(40)) = 1
+Aeq(251, Pc(40)) = -delta_t*etta_C
+Aeq(251, Pd(40)) = delta_t/etta_D
+beq(251) = B0(40) = 0.011664
+Battery number 41 is actually bus number 58.
+Whose parent is bus 57 at index 57.
+Obviously, this additional battery will go into equation #252.
+Aeq(57, Pc(41)) = -1
+Aeq(57, Pd(41)) = 1
+Aeq(127, qB(41)) = 1
+Aeq(252, B(41)) = 1
+Aeq(252, Pc(41)) = -delta_t*etta_C
+Aeq(252, Pd(41)) = delta_t/etta_D
+beq(252) = B0(41) = 0.011664
+Battery number 42 is actually bus number 60.
+Whose parent is bus 59 at index 59.
+Obviously, this additional battery will go into equation #253.
+Aeq(59, Pc(42)) = -1
+Aeq(59, Pd(42)) = 1
+Aeq(129, qB(42)) = 1
+Aeq(253, B(42)) = 1
+Aeq(253, Pc(42)) = -delta_t*etta_C
+Aeq(253, Pd(42)) = delta_t/etta_D
+beq(253) = B0(42) = 0.011664
+Battery number 43 is actually bus number 61.
+Whose parent is bus 60 at index 60.
+Obviously, this additional battery will go into equation #254.
+Aeq(60, Pc(43)) = -1
+Aeq(60, Pd(43)) = 1
+Aeq(130, qB(43)) = 1
+Aeq(254, B(43)) = 1
+Aeq(254, Pc(43)) = -delta_t*etta_C
+Aeq(254, Pd(43)) = delta_t/etta_D
+beq(254) = B0(43) = 0.011664
+Battery number 44 is actually bus number 63.
+Whose parent is bus 62 at index 62.
+Obviously, this additional battery will go into equation #255.
+Aeq(62, Pc(44)) = -1
+Aeq(62, Pd(44)) = 1
+Aeq(132, qB(44)) = 1
+Aeq(255, B(44)) = 1
+Aeq(255, Pc(44)) = -delta_t*etta_C
+Aeq(255, Pd(44)) = delta_t/etta_D
+beq(255) = B0(44) = 0.011664
+Battery number 45 is actually bus number 65.
+Whose parent is bus 64 at index 64.
+Obviously, this additional battery will go into equation #256.
+Aeq(64, Pc(45)) = -1
+Aeq(64, Pd(45)) = 1
+Aeq(134, qB(45)) = 1
+Aeq(256, B(45)) = 1
+Aeq(256, Pc(45)) = -delta_t*etta_C
+Aeq(256, Pd(45)) = delta_t/etta_D
+beq(256) = B0(45) = 0.005834
+Battery number 46 is actually bus number 66.
+Whose parent is bus 64 at index 65.
+Obviously, this additional battery will go into equation #257.
+Aeq(65, Pc(46)) = -1
+Aeq(65, Pd(46)) = 1
+Aeq(135, qB(46)) = 1
+Aeq(257, B(46)) = 1
+Aeq(257, Pc(46)) = -delta_t*etta_C
+Aeq(257, Pd(46)) = delta_t/etta_D
+beq(257) = B0(46) = 0.005834
+Battery number 47 is actually bus number 67.
+Whose parent is bus 66 at index 66.
+Obviously, this additional battery will go into equation #258.
+Aeq(66, Pc(47)) = -1
+Aeq(66, Pd(47)) = 1
+Aeq(136, qB(47)) = 1
+Aeq(258, B(47)) = 1
+Aeq(258, Pc(47)) = -delta_t*etta_C
+Aeq(258, Pd(47)) = delta_t/etta_D
+beq(258) = B0(47) = 0.011664
+Battery number 48 is actually bus number 68.
+Whose parent is bus 67 at index 67.
+Obviously, this additional battery will go into equation #259.
+Aeq(67, Pc(48)) = -1
+Aeq(67, Pd(48)) = 1
+Aeq(137, qB(48)) = 1
+Aeq(259, B(48)) = 1
+Aeq(259, Pc(48)) = -delta_t*etta_C
+Aeq(259, Pd(48)) = delta_t/etta_D
+beq(259) = B0(48) = 0.005834

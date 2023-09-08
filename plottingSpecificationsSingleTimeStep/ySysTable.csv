@@ -1,0 +1,6 @@
+Names,VarNames,Units,FullNames,FigureNames,Legends,yLabelNames
+PLoss,PLosses,kW,Line Losses,lossesFigure,P_{Loss},P_{Loss} \thinspace [kW]
+QLoss,QLosses,kVAr,Line Reactive Losses,reactiveLossesFigure,Q_{Loss},Q_{Loss} \thinspace [kVAr]
+PSubs,PSubs,kW,Substation Power,substationPowerFigure,P_{Subs},P_{Subs} \thinspace [kW]
+QSubs,QSubs,kVAr,Substation Reactive Power,substationReactiveFigure,Q_{Subs},Q_{Subs} \thinspace [kVAr]
+TimeToSolve,solutionTimes,s,Solution Times,solutionTimesFigure,t,t \thinspace [s]

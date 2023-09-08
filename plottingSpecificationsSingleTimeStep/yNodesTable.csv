@@ -1,0 +1,10 @@
+Names,VarNames,Units,FullNames,FigureNames,Legends,yLabelNames
+P_ij,P_ij,kW,Branch Real Power Flow,branchRealPowerFlow,P_{ij},P_{ij} \thinspace [kW]
+Q_ij,Q_ij,kVAr,Branch Reactive Power Flow,branchReactivePowerFlow,Q_{ij},Q_{ij} \thinspace [kVAr]
+l_ij,l_ij,pu,Branch Squared Current Flow,branchSquaredCurrentFlow,l_{ij},l_{ij} \thinspace [pu]
+v_j,v_j,pu,Bus Squared Voltage,busSquaredVoltage,v_j,v_j \thinspace [pu]
+qD_j,qD_j,kVAr,DER Reactive Power,DERReactivePower,q_{D_j},q_{D_j} \thinspace [kVAr]
+B_j,B_j,\%,Battery State of Charge,batterySOC,B_j,B_j \thinspace [\%]
+Pc_j,Pc_j,kW,Battery Average Charging Power,batteryChargingPower,P_{c_j},P_{c_j} \thinspace [kW]
+Pd_j,Pd_j,kW,Battery Average Discharging Power,batteryDischargingPower,P_{d_j},P_{d_j} \thinspace [kW]
+qB_j,qB_j,kVAr,Battery Reactive Power,batteryReactivePower,q_{B_j},q_{B_j} \thinspace [kVAr]
