@@ -125,7 +125,7 @@ function [x, B0Vals_pu_Area, ...
         = extractAreaElectricalParameters(Area, t, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false);
     
     % N_Area = length(busDataTable_pu_Area.bus);
-    % m_Area = length(branchDataTable_Area.fb);
+    % m_Area = length(branchDataTable_Area.fb); 
     % fb_Area = branchDataTable_Area.fb;
     % tb_Area = branchDataTable_Area.tb;
     % P_L_Area = lambdaVal*busDataTable_pu_Area.P_L;
