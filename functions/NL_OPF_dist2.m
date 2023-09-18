@@ -324,17 +324,17 @@ function [x, B0Vals_pu_Area, ...
 
         %Return the rows with the list of 'children' buses of 'under' the PARENT of our currentBus:
         %our currentBus will obviously also be included in the list.
-        siblingBusesIndices = find(fb_Area == parentBusNum);
-        siblingBuses = tb_Area(siblingBusesIndices);
+        js_indices = find(fb_Area == parentBusNum);
+        js = tb_Area(js_indices);
 
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The siblings of bus %d\n", currentBusNum);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "include these buses: %d\n", siblingBuses)
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "at indices %d.\n", siblingBusesIndices);
-        eldestSiblingIdx = siblingBusesIndices(1);
-        eldestSiblingBus = siblingBuses(1);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq,  "which makes bus %d at index %d as the eldest sibling.\n", eldestSiblingBus, eldestSiblingIdx);
-        Aeq_Full( vIdx, indices_vAll( eldestSiblingIdx ) ) = -1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, eldestSiblingIdx);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "include these buses: %d\n", js)
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "at indices %d.\n", js_indices);
+        jes_Idx = js_indices(1);
+        jes = js(1);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq,  "which makes bus %d at index %d as the eldest sibling.\n", jes, jes_Idx);
+        Aeq_Full( vIdx, indices_vAll( jes_Idx ) ) = -1;
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, jes_Idx);
         Aeq_Full( vIdx, indices_P(i_Idx) ) = 2 * R_Area_Matrix( parentBusNum, currentBusNum );
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, i_Idx, parentBusNum, currentBusNum);
         Aeq_Full( vIdx, indices_Q(i_Idx) ) = 2 * X_Area_Matrix( parentBusNum, currentBusNum );

@@ -185,11 +185,11 @@ function [x, B0Vals_pu_Area, ...
 
     numChildAreas = size(S_connection_Area, 1); %could even be zero for a child-less area
     
-    for j = 1:numChildAreas %nodes are numbered such that the last numChildAreas nodes are actually the interconnection nodes too.
+    for k_num = 1:numChildAreas %nodes are numbered such that the last numChildAreas nodes are actually the interconnection nodes too.
         %The load of parent area at the node of interconnection is
         %basically the interconnection area power
-        P_L_Area(end-j+1) = real(S_connection_Area(end-j+1));                 %in PU
-        Q_L_Area(end-j+1) = imag(S_connection_Area(end-j+1));     
+        P_L_Area(end-k_num+1) = real(S_connection_Area(end-k_num+1));                 %in PU
+        Q_L_Area(end-k_num+1) = imag(S_connection_Area(end-k_num+1));     
     end
     
     % % DER Configuration:
@@ -247,21 +247,6 @@ function [x, B0Vals_pu_Area, ...
         X_Area_Matrix(fb_Area(currentBusNum), tb_Area(currentBusNum)) = X_Area(currentBusNum);
         X_Area_Matrix(tb_Area(currentBusNum), fb_Area(currentBusNum)) = X_Area_Matrix(fb_Area(currentBusNum), tb_Area(currentBusNum)) ;
     end
-% Initializing vectors to be used in the Optimization Problem formulation
-    
-    % numVarsFull = [m_Area, m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
-    % ranges_Full = generateRangesFromValues(numVarsFull);
-    % 
-    % indices_P = ranges_Full{1};
-    % indices_Q = ranges_Full{2};
-    % indices_l = ranges_Full{3};
-    % indices_vAll = ranges_Full{4};
-    % indices_v = indices_vAll(2:end);
-    % indices_qD = ranges_Full{5};
-    % indices_B = ranges_Full{6};
-    % indices_Pc = ranges_Full{7};
-    % indices_Pd = ranges_Full{8};
-    % indices_qB = ranges_Full{9};
     
      myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
         "Constructing Aeq and beq for Area %d.\n" + ...
@@ -307,16 +292,16 @@ function [x, B0Vals_pu_Area, ...
 
         
        % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
-        childBusIndices = find(fb_Area == currentBusNum);
-        if ~isempty(childBusIndices)
-            Aeq_Full(PIdx, indices_P(childBusIndices) ) = -1;   % for P
-            Aeq_Full(QIdx, indices_Q(childBusIndices) ) = -1;   % for Q
+        k_indices = find(fb_Area == currentBusNum);
+        if ~isempty(k_indices)
+            Aeq_Full(PIdx, indices_P(k_indices) ) = -1;   % for P
+            Aeq_Full(QIdx, indices_Q(k_indices) ) = -1;   % for Q
         end
         
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 1.\n", PIdx, i_Idx);
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, i_Idx, parentBusNum, currentBusNum);
-        for k = 1:length(childBusIndices)
-            myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = -1\n", PIdx, childBusIndices(k));
+        for k_num = 1:length(k_indices)
+            myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = -1\n", PIdx, k_indices(k_num));
         end
         if CVR_P
             myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = -0.5 * CVR_P * P_L(%d).\n", PIdx, i_Idx, currentBusNum);
@@ -325,8 +310,8 @@ function [x, B0Vals_pu_Area, ...
 
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 1.\n", QIdx, i_Idx);
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, i_Idx, parentBusNum, currentBusNum);
-        for k = 1:length(childBusIndices)
-            myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = -1\n", QIdx, childBusIndices(k));
+        for k_num = 1:length(k_indices)
+            myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = -1\n", QIdx, k_indices(k_num));
         end
         if CVR_Q
             myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = -0.5 * CVR_Q * Q_L(%d).\n", QIdx, i_Idx, currentBusNum);
@@ -339,14 +324,14 @@ function [x, B0Vals_pu_Area, ...
 
         %Return the rows with the list of 'children' buses of 'under' the PARENT of our currentBus:
         %our currentBus will obviously also be included in the list.
-        siblingBusesIndices = find(fb_Area == parentBusNum);
-        siblingBuses = tb_Area(siblingBusesIndices);
+        js_indices = find(fb_Area == parentBusNum);
+        js = tb_Area(js_indices);
 
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The siblings of bus %d\n", currentBusNum);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "include these buses: %d\n", siblingBuses)
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "at indices %d.\n", siblingBusesIndices);
-        eldestSiblingIdx = siblingBusesIndices(1);
-        eldestSiblingBus = siblingBuses(1);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "include these buses: %d\n", js)
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "at indices %d.\n", js_indices);
+        eldestSiblingIdx = js_indices(1);
+        eldestSiblingBus = js(1);
         myfprintf(logging_Aeq_beq, fid_Aeq_beq,  "which makes bus %d at index %d as the eldest sibling.\n", eldestSiblingBus, eldestSiblingIdx);
         Aeq_Full( vIdx, indices_vAll( eldestSiblingIdx ) ) = -1;
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, eldestSiblingIdx);
