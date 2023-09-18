@@ -275,19 +275,20 @@ function [x, B0Vals_pu_Area, ...
         % The row index showing the 'parent' bus of our currentBus:
         
         i_Idx = find(tb_Area == currentBusNum);
-        parentBusNum = fb_Area(i_Idx);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The parent of bus %d is bus %d at index %d.\n", currentBusNum, parentBusNum, i_Idx);
+        i = fb_Area(i_Idx);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The parent of bus %d is bus %d at index %d.\n", currentBusNum, i, i_Idx);
+        
 
         PIdx = i_Idx;
         Aeq_Full( PIdx, indices_P(i_Idx) ) = 1;
-        Aeq_Full( PIdx, indices_l(i_Idx) ) = -R_Area_Matrix( parentBusNum, currentBusNum );
+        Aeq_Full( PIdx, indices_l(i_Idx) ) = -R_Area_Matrix( i, currentBusNum );
         Aeq_Full( PIdx, indices_v(i_Idx) ) = -0.5 * CVR_P * P_L_Area( currentBusNum );
 
         
         %Q equations
         QIdx = PIdx + m_Area;
         Aeq_Full( QIdx, indices_Q(i_Idx) ) = 1;
-        Aeq_Full( QIdx, indices_l(i_Idx) ) = -X_Area_Matrix( parentBusNum, currentBusNum );
+        Aeq_Full( QIdx, indices_l(i_Idx) ) = -X_Area_Matrix( i, currentBusNum );
         Aeq_Full( QIdx, indices_v(i_Idx) ) = -0.5 * CVR_Q * Q_L_Area( currentBusNum );
 
         
@@ -299,7 +300,7 @@ function [x, B0Vals_pu_Area, ...
         end
         
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 1.\n", PIdx, i_Idx);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, i_Idx, parentBusNum, currentBusNum);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, i_Idx, i, currentBusNum);
         for k_num = 1:length(k_indices)
             myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = -1\n", PIdx, k_indices(k_num));
         end
@@ -309,7 +310,7 @@ function [x, B0Vals_pu_Area, ...
         
 
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 1.\n", QIdx, i_Idx);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, i_Idx, parentBusNum, currentBusNum);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, i_Idx, i, currentBusNum);
         for k_num = 1:length(k_indices)
             myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = -1\n", QIdx, k_indices(k_num));
         end
@@ -324,7 +325,7 @@ function [x, B0Vals_pu_Area, ...
 
         %Return the rows with the list of 'children' buses of 'under' the PARENT of our currentBus:
         %our currentBus will obviously also be included in the list.
-        js_indices = find(fb_Area == parentBusNum);
+        js_indices = find(fb_Area == i);
         js = tb_Area(js_indices);
 
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The siblings of bus %d\n", currentBusNum);
@@ -335,14 +336,14 @@ function [x, B0Vals_pu_Area, ...
         myfprintf(logging_Aeq_beq, fid_Aeq_beq,  "which makes bus %d at index %d as the eldest sibling.\n", jes, jes_Idx);
         Aeq_Full( vIdx, indices_vAll( jes_Idx ) ) = -1;
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, jes_Idx);
-        Aeq_Full( vIdx, indices_P(i_Idx) ) = 2 * R_Area_Matrix( parentBusNum, currentBusNum );
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, i_Idx, parentBusNum, currentBusNum);
-        Aeq_Full( vIdx, indices_Q(i_Idx) ) = 2 * X_Area_Matrix( parentBusNum, currentBusNum );
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 2*x(%d, %d).\n", vIdx, i_Idx, parentBusNum, currentBusNum);
+        Aeq_Full( vIdx, indices_P(i_Idx) ) = 2 * R_Area_Matrix( i, currentBusNum );
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, i_Idx, i, currentBusNum);
+        Aeq_Full( vIdx, indices_Q(i_Idx) ) = 2 * X_Area_Matrix( i, currentBusNum );
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 2*x(%d, %d).\n", vIdx, i_Idx, i, currentBusNum);
         Aeq_Full( vIdx, indices_l(i_Idx) ) = ...
-            -R_Area_Matrix( parentBusNum, currentBusNum )^2 + ...
-            -X_Area_Matrix( parentBusNum, currentBusNum )^2 ;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d)^2 -x(%d, %d)^2.\n", vIdx, i_Idx, parentBusNum, currentBusNum, parentBusNum, currentBusNum);
+            -R_Area_Matrix( i, currentBusNum )^2 + ...
+            -X_Area_Matrix( i, currentBusNum )^2 ;
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d)^2 -x(%d, %d)^2.\n", vIdx, i_Idx, i, currentBusNum, i, currentBusNum);
         
 
         beq_Full(PIdx) = ...
