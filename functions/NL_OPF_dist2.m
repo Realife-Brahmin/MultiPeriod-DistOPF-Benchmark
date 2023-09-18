@@ -279,6 +279,24 @@ function [x, B0Vals_pu_Area, ...
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The parent of bus %d is bus %d at index %d.\n", j, i, i_Idx);
         
         k_indices = find(fb==j);
+        ks = tbus(k_indices);
+
+        js_indices = find(fb==i);
+        js = tbus(js_indices);
+
+        jes_Idx = js_indices(1);
+        jes = js(1);
+
+        indices_Pflow_ij_T = getIndicesT(indices_Pflow, i_Idx);
+        indices_Qflow_ij_T = getIndicesT(indices_Qflow, i_Idx);
+        indices_KVL_ij_T = getIndicesT(indices_KVL, i_Idx);
+        % indices_SOC_j_T = getIndicesT(indices_SOC, i_Idx)
+        
+        indices_Pij_T = getIndicesT(indices_Pij, i_Idx);
+        indices_Qij_T = getIndicesT(indices_Qij, i_Idx);
+        indices_lij_T = getIndicesT(indices_lij, i_Idx);
+        indices_vAllj_T = getIndicesT(indices_vAllj, i_Idx);
+        indices_vj_T = getIndicesT(indices_vj, i_Idx);
 
         PIdx = i_Idx;
         Aeq_Full( PIdx, indices_P(i_Idx) ) = 1;
@@ -373,6 +391,8 @@ function [x, B0Vals_pu_Area, ...
     for der_num = 1:nDER_Area
         j = busesWithDERs_Area(der_num);
         i_Idx = find(tb_Area == j);
+        indices_qDj_T = getIndicesT(indices_qDj, der_num);
+
         QIdx = i_Idx + m_Area;
         qD_Idx = indices_qD(der_num);
         Aeq_Full(QIdx, qD_Idx) = 1;
@@ -390,8 +410,17 @@ function [x, B0Vals_pu_Area, ...
     end
     
     for batt_num = 1:nBatt_Area
+
         j = busesWithBatts_Area(batt_num);
         i_Idx = find(tb_Area == j);
+        
+        indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
+        
+        indices_Bj_T = getIndicesT(indices_Bj, batt_num);
+        indices_Pdj_T = getIndicesT(indices_Pdj, batt_num);
+        indices_Pcj_T = getIndicesT(indices_Pcj, batt_num);
+        indices_qBj_T = getIndicesT(indices_qBj, batt_num);
+
         PEqnIdx = i_Idx;
         QEqnIdx = i_Idx + m_Area;
         BEqnIdx = numLinOptEquationsBFM + batt_num;
