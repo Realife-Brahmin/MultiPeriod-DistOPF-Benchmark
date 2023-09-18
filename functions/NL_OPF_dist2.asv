@@ -150,13 +150,20 @@ function [x, B0Vals_pu_Area, ...
     listNumEqns1 = [m_Area*ones(1, 2), N_Area, nBatt_Area];
     nEqns1 = sum(listNumEqns1);
     nEqnsT = nEqns1 * T;
-
+    
+    listNumNonlinEqns1 = [N_Area];
+    nNonLinEqns1 = sum(listNumNonlinEqns1);
+    nNonLinEqnsT = nNonLinEqns1 * T;
+    eqnNonLinIndicesT = generateRangesFromValuesT(listNumNonlinEqns1, T);
+    indices_NonLin = eqnNonLinIndicesT{1};
+    
     Aeq = zeros(nEqnsT, nVarsT);
     beq = zeros(nEqnsT);
     
     eqnIndicesT = generateRangesFromValuesT(listNumEqns1, T);
     varIndicesT = generateRangesFromValuesT(listNumVars1, T);
     
+
     indices_Pflow = eqnIndicesT{1};
     indices_Qflow = eqnIndicesT{2};
     indices_KVL = eqnIndicesT{3};
@@ -221,10 +228,10 @@ function [x, B0Vals_pu_Area, ...
     lb_qB_onlyBattBuses_Area = -sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
     ub_qB_onlyBattBuses_Area = sqrt( S_onlyBattBusesMax_Area.^2 - P_onlyBattBusesMax_Area.^2);
     
-    if t == 1
-        myfprintf(logging, fid, "First Time Period, will initialize Battery SOCs for Area %d at the middle of the permissible bandwidth.\n", Area);
+    % if t == 1
+        % myfprintf(logging, fid, "First Time Period, will initialize Battery SOCs for Area %d at the middle of the permissible bandwidth.\n", Area);
         B0Vals_pu_Area = mean([lb_B_onlyBattBuses_Area, ub_B_onlyBattBuses_Area], 2);
-    end
+    % end
 
     graphDFS_Area = edgeMatrix_Area; %not doing any DFS
     graphDFS_Area_Table = array2table(graphDFS_Area, 'VariableNames', {'fbus', 'tbus'});
@@ -242,19 +249,19 @@ function [x, B0Vals_pu_Area, ...
     end
 % Initializing vectors to be used in the Optimization Problem formulation
     
-    numVarsFull = [m_Area, m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
-    ranges_Full = generateRangesFromValues(numVarsFull);
-
-    indices_P = ranges_Full{1};
-    indices_Q = ranges_Full{2};
-    indices_l = ranges_Full{3};
-    indices_vAll = ranges_Full{4};
-    indices_v = indices_vAll(2:end);
-    indices_qD = ranges_Full{5};
-    indices_B = ranges_Full{6};
-    indices_Pc = ranges_Full{7};
-    indices_Pd = ranges_Full{8};
-    indices_qB = ranges_Full{9};
+    % numVarsFull = [m_Area, m_Area, m_Area, N_Area, nDER_Area, nBatt_Area, nBatt_Area, nBatt_Area, nBatt_Area];
+    % ranges_Full = generateRangesFromValues(numVarsFull);
+    % 
+    % indices_P = ranges_Full{1};
+    % indices_Q = ranges_Full{2};
+    % indices_l = ranges_Full{3};
+    % indices_vAll = ranges_Full{4};
+    % indices_v = indices_vAll(2:end);
+    % indices_qD = ranges_Full{5};
+    % indices_B = ranges_Full{6};
+    % indices_Pc = ranges_Full{7};
+    % indices_Pd = ranges_Full{8};
+    % indices_qB = ranges_Full{9};
     
      myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
         "Constructing Aeq and beq for Area %d.\n" + ...
