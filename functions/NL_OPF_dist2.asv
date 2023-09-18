@@ -158,7 +158,9 @@ function [x, B0Vals_pu_Area, ...
     indices_NonLin = eqnNonLinIndicesT{1};
 
     Aeq = zeros(nEqnsT, nVarsT);
+    szAeq = size(Aeq);
     beq = zeros(nEqnsT);
+    szbeq = size(beq);
     
     eqnIndicesT = generateRangesFromValuesT(listNumEqns1, T);
     varIndicesT = generateRangesFromValuesT(listNumVars1, T);
@@ -295,12 +297,23 @@ function [x, B0Vals_pu_Area, ...
         indices_Pij_T = getIndicesT(indices_Pij, i_Idx);
         indices_Qij_T = getIndicesT(indices_Qij, i_Idx);
         indices_lij_T = getIndicesT(indices_lij, i_Idx);
-        indices_vAllj_T
-
-        PIdx = i_Idx;
-        Aeq_Full( PIdx, indices_P(i_Idx) ) = 1;
-        Aeq_Full( PIdx, indices_l(i_Idx) ) = -R_Area_Matrix( i, j );
-        Aeq_Full( PIdx, indices_v(i_Idx) ) = -0.5 * CVR_P * P_L_Area( j );
+        indices_vAllj_T = getIndicesT(indices_vAllj, i_Idx);
+        indices_vj_T = getIndicesT(indices_vj, i_Idx);
+        
+        % PFlow equations in Aeq, beq | BFM variables only
+        row = indices_Pflow_ij_T;
+        Aeq(sub2ind(szAeq, row, indices_Pij_T)) = 1;
+        for k_Idx = k_indices
+            indices_Pjk_T = getIndicesT(indices_Pij_T, k_Idx);
+            Aeq(sub2ind(szAeq, row, indices_Pjk_T)) = -1;
+        end
+        Aeq(sub2ind(szAeq, row, indices_lij_T)) = -R_Area_Matrix(i, j);
+        
+        
+        % PIdx = i_Idx;
+        % Aeq_Full( PIdx, indices_P(i_Idx) ) = 1;
+        % Aeq_Full( PIdx, indices_l(i_Idx) ) = -R_Area_Matrix( i, j );
+        % Aeq_Full( PIdx, indices_v(i_Idx) ) = -0.5 * CVR_P * P_L_Area( j );
 
         
         %Q equations
@@ -390,6 +403,10 @@ function [x, B0Vals_pu_Area, ...
     for der_num = 1:nDER_Area
         j = busesWithDERs_Area(der_num);
         i_Idx = find(tb_Area == j);
+        indices_qDj_T = getIndicesT(indices_qDj, der_num);
+        
+        row = indices_Pflow_ij_T;
+        beq(row) = beq(row) - pvCoeffVals()
         QIdx = i_Idx + m_Area;
         qD_Idx = indices_qD(der_num);
         Aeq_Full(QIdx, qD_Idx) = 1;
@@ -412,15 +429,26 @@ function [x, B0Vals_pu_Area, ...
         i_Idx = find(tb_Area == j);
         
         indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
-
-        PEqnIdx = i_Idx;
-        QEqnIdx = i_Idx + m_Area;
-        BEqnIdx = numLinOptEquationsBFM + batt_num;
         
-        B_Idx = indices_B(batt_num);
-        Pc_Idx = indices_Pc(batt_num);
-        Pd_Idx = indices_Pd(batt_num);
-        qB_Idx = indices_qB(batt_num);
+        indices_Bj_T = getIndicesT(indices_Bj, batt_num);
+        indices_Pdj_T = getIndicesT(indices_Pdj, batt_num);
+        indices_Pcj_T = getIndicesT(indices_Pcj, batt_num);
+        indices_qBj_T = getIndicesT(indices_qBj, batt_num);
+        
+        row = indices_Pflow_ij_T;
+        Aeq(row, indices_Pdj_T) = 1;
+        Aeq(row, indices_Pcj_T) = -1;
+        
+
+
+        % PEqnIdx = i_Idx;
+        % QEqnIdx = i_Idx + m_Area;
+        % BEqnIdx = numLinOptEquationsBFM + batt_num;
+        % 
+        % B_Idx = indices_B(batt_num);
+        % Pc_Idx = indices_Pc(batt_num);
+        % Pd_Idx = indices_Pd(batt_num);
+        % qB_Idx = indices_qB(batt_num);
 
         Aeq_Full(PEqnIdx, Pc_Idx) = -1;
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, batt_num);
