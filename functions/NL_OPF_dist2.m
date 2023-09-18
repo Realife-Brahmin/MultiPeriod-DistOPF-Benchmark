@@ -46,9 +46,9 @@ function [x, B0Vals_pu_Area, ...
         "Vref_DER", "fileExtension", "delta_t", "etta_C", "etta_D", ...
         "chargeToPowerRatio", "soc_min", "soc_max"];
     
-    for i = 1:2:numArgs
-        argName = varargin{i};
-        argValue = varargin{i+1};
+    for kwarg_num = 1:2:numArgs
+        argName = varargin{kwarg_num};
+        argValue = varargin{kwarg_num+1};
         
         if ~ischar(argName) || ~any(argName == validArgs)
             error('Invalid optional argument name.');
@@ -315,8 +315,8 @@ function [x, B0Vals_pu_Area, ...
         
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 1.\n", PIdx, i_Idx);
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, i_Idx, parentBusNum, currentBusNum);
-        for i = 1:length(childBusIndices)
-            myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = -1\n", PIdx, childBusIndices(i));
+        for k = 1:length(childBusIndices)
+            myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = -1\n", PIdx, childBusIndices(k));
         end
         if CVR_P
             myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = -0.5 * CVR_P * P_L(%d).\n", PIdx, i_Idx, currentBusNum);
@@ -325,8 +325,8 @@ function [x, B0Vals_pu_Area, ...
 
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 1.\n", QIdx, i_Idx);
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, i_Idx, parentBusNum, currentBusNum);
-        for i = 1:length(childBusIndices)
-            myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = -1\n", QIdx, childBusIndices(i));
+        for k = 1:length(childBusIndices)
+            myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = -1\n", QIdx, childBusIndices(k));
         end
         if CVR_Q
             myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = -0.5 * CVR_Q * Q_L(%d).\n", QIdx, i_Idx, currentBusNum);
@@ -383,55 +383,55 @@ function [x, B0Vals_pu_Area, ...
     % DER equation addition
     Table_DER = zeros(nDER_Area, 5);
     
-    for i = 1:nDER_Area
-        currentBusNum = busesWithDERs_Area(i);
+    for der_num = 1:nDER_Area
+        currentBusNum = busesWithDERs_Area(der_num);
         i_Idx = find(tb_Area == currentBusNum);
         QIdx = i_Idx + m_Area;
-        qD_Idx = indices_qD(i);
+        qD_Idx = indices_qD(der_num);
         Aeq_Full(QIdx, qD_Idx) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, qD(%d)) = 1\n", QIdx, i);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, qD(%d)) = 1\n", QIdx, der_num);
         
         %setting other parameters for DGs:
-        Table_DER(i, 2) = qD_Idx;
+        Table_DER(der_num, 2) = qD_Idx;
         
         % slope kq definiton:
-        Table_DER(i, 3) = 2*ub_qD_onlyDERbuses_Area(i)/(V_max-V_min); % Qmax at Vmin, and vice versa
+        Table_DER(der_num, 3) = 2*ub_qD_onlyDERbuses_Area(der_num)/(V_max-V_min); % Qmax at Vmin, and vice versa
         
         % Q_ref, V_ref definition:
-        Table_DER(i, 4) = Qref_DER;  %Qref
-        Table_DER(i, 5) = Vref_DER;  %Vref
+        Table_DER(der_num, 4) = Qref_DER;  %Qref
+        Table_DER(der_num, 5) = Vref_DER;  %Vref
     end
     
-    for i = 1:nBatt_Area
-        currentBusNum = busesWithBatts_Area(i);
+    for batt_num = 1:nBatt_Area
+        currentBusNum = busesWithBatts_Area(batt_num);
         i_Idx = find(tb_Area == currentBusNum);
         PEqnIdx = i_Idx;
         QEqnIdx = i_Idx + m_Area;
-        BEqnIdx = numLinOptEquationsBFM + i;
+        BEqnIdx = numLinOptEquationsBFM + batt_num;
         
-        B_Idx = indices_B(i);
-        Pc_Idx = indices_Pc(i);
-        Pd_Idx = indices_Pd(i);
-        qB_Idx = indices_qB(i);
+        B_Idx = indices_B(batt_num);
+        Pc_Idx = indices_Pc(batt_num);
+        Pd_Idx = indices_Pd(batt_num);
+        qB_Idx = indices_qB(batt_num);
 
         Aeq_Full(PEqnIdx, Pc_Idx) = -1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, i);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, batt_num);
 
         Aeq_Full(PEqnIdx, Pd_Idx) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pd(%d)) = 1\n", PEqnIdx, i);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pd(%d)) = 1\n", PEqnIdx, batt_num);
 
         Aeq_Full(QEqnIdx, qB_Idx) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, i);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, batt_num);
         
         Aeq_Full(BEqnIdx, B_Idx) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, B(%d)) = 1\n", BEqnIdx, i);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, B(%d)) = 1\n", BEqnIdx, batt_num);
         Aeq_Full(BEqnIdx, Pc_Idx) = -delta_t*etta_C;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -delta_t*etta_C\n", BEqnIdx, i);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -delta_t*etta_C\n", BEqnIdx, batt_num);
         Aeq_Full(BEqnIdx, Pd_Idx) = delta_t/etta_D;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pd(%d)) = delta_t*etta_D\n", BEqnIdx, i);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pd(%d)) = delta_t*etta_D\n", BEqnIdx, batt_num);
 
-        beq_Full(BEqnIdx) = B0Vals_pu_Area(i);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = B0(%d) = %f\n", BEqnIdx, i, B0Vals_pu_Area(i));
+        beq_Full(BEqnIdx) = B0Vals_pu_Area(batt_num);
+        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = B0(%d) = %f\n", BEqnIdx, batt_num, B0Vals_pu_Area(batt_num));
     end
 
     if fileOpenedFlag_Aeq_beq
@@ -514,19 +514,19 @@ function [x, B0Vals_pu_Area, ...
 
     qD_AllBuses = zeros(N_Area, 1);
 
-    for i = 1 : nDER_Area
-        busNum = busesWithDERs_Area(i);
-        qD_AllBuses(busNum) = qD_Area(i);
+    for der_num = 1 : nDER_Area
+        busNum = busesWithDERs_Area(der_num);
+        qD_AllBuses(busNum) = qD_Area(der_num);
     end
     
     [B_AllBuses, Pd_AllBuses, Pc_AllBuses, qB_AllBuses] = deal(zeros(N_Area, 1));
 
-    for i = 1 : nBatt_Area
-        busNum = busesWithBatts_Area(i); 
-        B_AllBuses(busNum) = B_Area(i);
-        Pc_AllBuses(busNum) = Pc_Area(i);
-        Pd_AllBuses(busNum) = Pd_Area(i);
-        qB_AllBuses(busNum) = qB_Area(i);
+    for batt_num = 1 : nBatt_Area
+        busNum = busesWithBatts_Area(batt_num); 
+        B_AllBuses(busNum) = B_Area(batt_num);
+        Pc_AllBuses(busNum) = Pc_Area(batt_num);
+        Pd_AllBuses(busNum) = Pd_Area(batt_num);
+        qB_AllBuses(busNum) = qB_Area(batt_num);
     end
     
     P_inFlowArea = P_Area(1);
