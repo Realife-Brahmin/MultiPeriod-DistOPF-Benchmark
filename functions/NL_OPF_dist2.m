@@ -241,11 +241,11 @@ function [x, B0Vals_pu_Area, ...
     X_Area_Matrix = zeros(N_Area, N_Area);
     
     % Matrix form of R and X in terms of graph
-    for j = 1: N_Area - 1
-        R_Area_Matrix(fb_Area(j), tb_Area(j)) = R_Area(j);
-        R_Area_Matrix(tb_Area(j), fb_Area(j)) = R_Area_Matrix(fb_Area(j), tb_Area(j)) ;
-        X_Area_Matrix(fb_Area(j), tb_Area(j)) = X_Area(j);
-        X_Area_Matrix(tb_Area(j), fb_Area(j)) = X_Area_Matrix(fb_Area(j), tb_Area(j)) ;
+    for ij = 1: m_Area
+        R_Area_Matrix(fb_Area(ij), tb_Area(ij)) = R_Area(ij);
+        R_Area_Matrix(tb_Area(ij), fb_Area(ij)) = R_Area_Matrix(fb_Area(ij), tb_Area(ij)) ;
+        X_Area_Matrix(fb_Area(ij), tb_Area(ij)) = X_Area(ij);
+        X_Area_Matrix(tb_Area(ij), fb_Area(ij)) = X_Area_Matrix(fb_Area(ij), tb_Area(ij)) ;
     end
     
      myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
