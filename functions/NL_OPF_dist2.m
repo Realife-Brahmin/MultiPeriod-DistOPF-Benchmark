@@ -185,11 +185,11 @@ function [x, B0Vals_pu_Area, ...
 
     numChildAreas = size(S_connection_Area, 1); %could even be zero for a child-less area
     
-    for k_num = 1:numChildAreas %nodes are numbered such that the last numChildAreas nodes are actually the interconnection nodes too.
+    for childArea_num = 1:numChildAreas %nodes are numbered such that the last numChildAreas nodes are actually the interconnection nodes too.
         %The load of parent area at the node of interconnection is
         %basically the interconnection area power
-        P_L_Area(end-k_num+1) = real(S_connection_Area(end-k_num+1));                 %in PU
-        Q_L_Area(end-k_num+1) = imag(S_connection_Area(end-k_num+1));     
+        P_L_Area(end-childArea_num+1) = real(S_connection_Area(end-childArea_num+1));                 %in PU
+        Q_L_Area(end-childArea_num+1) = imag(S_connection_Area(end-childArea_num+1));     
     end
     
     % % DER Configuration:
