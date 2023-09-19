@@ -160,8 +160,8 @@ function [x, B0Vals_pu_Area, ...
 
     Aeq = zeros(nEqnsT, nVarsT);
     sz = size(Aeq);
-    beq = zeros(nEqnsT);
-    szbeq = size(beq);
+    beq = zeros(nEqnsT, 1);
+    % szbeq = size(beq);
     
     eqnIndicesT = generateRangesFromValuesT(listNumEqns1, T);
     varIndicesT = generateRangesFromValuesT(listNumVars1, T);
@@ -303,8 +303,8 @@ function [x, B0Vals_pu_Area, ...
         indices_vj_T = getIndicesT(indices_vj, i_Idx);
         
         % PFlow equations in Aeq, beq | BFM variables only
-        row = indices_Pflow_ij_T
-        indices_Pij_T
+        row = indices_Pflow_ij_T;
+        % indices_Pij_T
         Aeq(sub2ind(sz, row, indices_Pij_T)) = 1;
         for k_num = 1:length(k_indices)
             k_Idx = k_indices(k_num);
@@ -320,9 +320,9 @@ function [x, B0Vals_pu_Area, ...
         % Aeq_Full( PIdx, indices_v(i_Idx) ) = -0.5 * CVR_P * P_L_Area( j );
 
         % QFlow equations in Aeq, beq | BFM variables only
-        row = indices_Qflow_ij_T
-        indices_Qij_T
-        indices_Qij
+        row = indices_Qflow_ij_T;
+        % indices_Qij_T
+        % indices_Qij
 
         Aeq(sub2ind(sz, row, indices_Qij_T)) = 1;
         for k_num = 1:length(k_indices)
@@ -422,7 +422,7 @@ function [x, B0Vals_pu_Area, ...
     
     % 'Substation' Bus KVL | BFM variables required only
     indices_KVL_12_T = getIndicesT(indices_KVL, N_Area);
-    indices_vAll1_T = getIndicesT(indices_vAllj_T, 1);
+    indices_vAll1_T = getIndicesT(indices_vAllj, 1);
     row = indices_KVL_12_T;
     Aeq(sub2ind(sz, row, indices_vAll1_T)) = 1;
     beq(row) = v_parent_Area;
@@ -444,7 +444,7 @@ function [x, B0Vals_pu_Area, ...
         indices_qDj_T = getIndicesT(indices_qDj, der_num);
         
         row = indices_Pflow_ij_T;
-        beq(row) = beq(row) - pvCoeffVals.*P_der_Area(j);
+        beq(row) = beq(row) - transpose(P_der_Area(j).*pvCoeffVals);
 
         row = indices_Qflow_ij_T;
         Aeq(sub2ind(sz, row, indices_qDj_T)) = 1;
@@ -491,8 +491,8 @@ function [x, B0Vals_pu_Area, ...
         % SOC equations | Battery Variables | First Time Interval
         row = indices_SOC_j_T_1;
         Aeq(row, indices_Bj_T(1)) = -1;
-        Aeq(row, indices_Pdj(1)) = delta_t*etta_C;
-        Aeq(row, indices_Pcj(1)) = -delta_t/etta_D;
+        Aeq(row, indices_Pdj_T(1)) = delta_t*etta_C;
+        Aeq(row, indices_Pcj_T(1)) = -delta_t/etta_D;
         beq(row) = -B0Vals_pu_Area(batt_num);
 
         % SOC equations | Battery Variables | First Time Interval
@@ -535,6 +535,17 @@ function [x, B0Vals_pu_Area, ...
         fclose(fid_Aeq_beq);
     end
     
+    figure;
+    subplot(1,2,1);
+    spy(Aeq);
+    title('Sparsity pattern of Aeq');
+    
+    subplot(1,2,2);
+    spy(beq);
+    title('Sparsity pattern of beq');
+    
+    drawnow;
+    keyboard;
     % define these values.
     x0 = [P0_NoLoss; Q0_NoLoss; l0_NoLoss; v0_NoLoss; qD0_NoLoss; B0_NoLoss; Pc0_NoLoss; Pd0_NoLoss; qB0_NoLoss];
     
