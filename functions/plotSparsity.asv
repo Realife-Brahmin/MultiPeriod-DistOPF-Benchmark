@@ -1,0 +1,47 @@
+function plotSparsity(Aeq, beq)
+    % plotSparsity: Plot sparsity patterns of Aeq and beq with visually aligned rows.
+    % 
+    % Inputs:
+    %   - Aeq: Sparse matrix
+    %   - beq: Sparse vector
+
+    % Create the figure and set its size and properties
+    figure('Color', 'white', 'Units', 'normalized', 'Position', [0.1, 0.1, 0.8, 0.5]);
+
+    % Use a visually appealing colormap
+    colormap(jet);
+
+    % Convert sparse matrices to full to capture the sparsity using scatter
+    [iAeq, jAeq] = find(Aeq);
+    [ibeq, ~] = find(beq);
+
+    % Plot Aeq using scatter for bigger markers and better colors
+    subplot(1, 2, 1);
+    scatter(jAeq, -iAeq, 50, 'filled');  % 50 defines the marker size
+    title('Sparsity pattern of Aeq', 'FontWeight', 'bold', 'FontSize', 14);
+    axis equal;
+    xlim([0, size(Aeq, 2)]);
+    ylim([-size(Aeq, 1), 0]);
+    grid on;
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold');
+
+    % Plot beq using scatter
+    subplot(1, 2, 2);
+    scatter(ones(size(ibeq)), -ibeq, 50, 'filled');
+    title('Sparsity pattern of beq', 'FontWeight', 'bold', 'FontSize', 14);
+    axis equal;
+    xlim([0, 2]);  % just a bit of padding for visualization
+    ylim([-size(Aeq, 1), 0]);
+    grid on;
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold');
+
+    % Add a title for the entire figure using annotation
+    annotation('textbox', [0, 0.9, 1, 0.1], ...
+               'String', 'Sparsity Patterns of Aeq and beq', ...
+               'EdgeColor', 'none', ...
+               'HorizontalAlignment', 'center', ...
+               'FontSize', 16, ...
+               'FontWeight', 'bold');
+
+    drawnow;
+end

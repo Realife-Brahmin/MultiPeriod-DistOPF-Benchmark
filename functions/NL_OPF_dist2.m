@@ -535,16 +535,8 @@ function [x, B0Vals_pu_Area, ...
         fclose(fid_Aeq_beq);
     end
     
-    figure;
-    subplot(1,2,1);
-    spy(Aeq);
-    title('Sparsity pattern of Aeq');
-    
-    subplot(1,2,2);
-    spy(beq);
-    title('Sparsity pattern of beq');
-    
-    drawnow;
+    plotSparsity(Aeq, beq);
+
     keyboard;
     % define these values.
     x0 = [P0_NoLoss; Q0_NoLoss; l0_NoLoss; v0_NoLoss; qD0_NoLoss; B0_NoLoss; Pc0_NoLoss; Pd0_NoLoss; qB0_NoLoss];
