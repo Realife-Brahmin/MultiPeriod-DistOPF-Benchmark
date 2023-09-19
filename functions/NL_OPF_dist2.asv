@@ -416,10 +416,6 @@ function [x, B0Vals_pu_Area, ...
         
         row = indices_Pflow_ij_T;
         beq(row) = beq(row) - pvCoeffVals.*P_der_Area(j);
-
-        row = indices_Qflow_ij_T;
-        Aeq(sub2ind(szAeq, row, indices_qDj_T)) = 1;
-        
         % QIdx = i_Idx + m_Area;
         % qD_Idx = indices_qD(der_num);
         % Aeq_Full(QIdx, qD_Idx) = 1;
@@ -452,8 +448,6 @@ function [x, B0Vals_pu_Area, ...
         Aeq(sub2ind(szAeq, row, indices_Pdj_T)) = 1;
         Aeq(sub2ind(szAeq, row, indices_Pcj_T)) = -1;
         
-        row = indices_Qflow_ij_T;
-        Aeq(sub2ind(szAeq, row, indices_qBj_T)) = 1;
 
 
         % PEqnIdx = i_Idx;
