@@ -5,11 +5,15 @@ function plotSparsity(Aeq, beq)
     %   - Aeq: Sparse matrix
     %   - beq: Sparse vector
 
+    % Define custom colors
+    wineRed = [0.6, 0.2, 0.2];
+    sexyGreen = [0, 0.6, 0.3];
+
     % Create the figure and set its size and properties
     figure('Color', 'white', 'Units', 'normalized', 'Position', [0.1, 0.1, 0.8, 0.8]);
 
     % Convert sparse matrices to full to capture the sparsity using scatter
-    [iAeq, jAeq] = find(Aeq);
+    [iAeq, jAeq, vAeq] = find(Aeq);
     [ibeq, ~] = find(beq);
 
     % Determine positions for the axes objects
@@ -18,12 +22,15 @@ function plotSparsity(Aeq, beq)
     axPosAeq = [0.05, 0.1, axWidthAeq, 0.8];
     axPosBeq = [0.78, 0.1, axWidthBeq, 0.8];
 
-    % Plot Aeq using scatter with wine red color and adjusted marker size
+    % Plot Aeq using scatter. Positive values are wine red and negative ones are sexy green.
     ax1 = axes('Position', axPosAeq);
-    scatter(jAeq, iAeq, 20, [0.5, 0, 0.5], 'filled');  % wine red color
+    scatter(jAeq(vAeq < 0), iAeq(vAeq < 0), 20, sexyGreen, 'filled');  % Negative values: sexy green
+    hold on;
+    scatter(jAeq(vAeq > 0), iAeq(vAeq > 0), 20, wineRed, 'filled');  % Positive values: wine red
     title('Sparsity pattern of Aeq', 'FontWeight', 'bold', 'FontSize', 14);
     axis equal tight;
     set(ax1, 'FontSize', 12, 'FontWeight', 'bold', 'YDir', 'reverse');
+    hold off;
 
     % Plot beq using scatter with dark green color
     ax2 = axes('Position', axPosBeq);
