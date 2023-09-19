@@ -120,7 +120,8 @@ function [x, B0Vals_pu_Area, ...
         logging = verbose;
         fid = 1;
     end
-
+    
+    logging_Aeq_beq = false;
     [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
         = extractAreaElectricalParameters(Area, t, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false);
     
@@ -463,19 +464,36 @@ function [x, B0Vals_pu_Area, ...
         i_Idx = find(tb_Area == j);
         
         indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
+        indices_SOC_j_T_2toT = indices_SOC_j_T(2:T);
+        indices_SOC_j_T_1 = indices_SOC_j_T(1);
         
         indices_Bj_T = getIndicesT(indices_Bj, batt_num);
         indices_Pdj_T = getIndicesT(indices_Pdj, batt_num);
         indices_Pcj_T = getIndicesT(indices_Pcj, batt_num);
         indices_qBj_T = getIndicesT(indices_qBj, batt_num);
         
+        % Pflow equations | Battery Variables
         row = indices_Pflow_ij_T;
         Aeq(sub2ind(sz, row, indices_Pdj_T)) = 1;
         Aeq(sub2ind(sz, row, indices_Pcj_T)) = -1;
         
+        % Qflow equations | Battery Variables
         row = indices_Qflow_ij_T;
         Aeq(sub2ind(sz, row, indices_qBj_T)) = 1;
+        
+        % SOC equations | Battery Variables | First Time Interval
+        row = indices_SOC_j_T_1;
+        Aeq(row, indices_Bj_T(1)) = -1;
+        Aeq(row, indices_Pdj(1)) = delta_t*etta_C;
+        Aeq(row, indices_Pcj(1)) = -delta_t/etta_D;
+        beq(row) = -B0Vals_pu_Area(batt_num);
 
+        % SOC equations | Battery Variables | First Time Interval
+        row = indices_SOC_j_T_2toT;
+        Aeq(sub2ind(sz, row, indices_Bj_T(2:T))) = -1;
+        Aeq(sub2ind(sz, row, indices_Bj_T(1:T-1))) = 1;
+        Aeq(sub2ind(sz, row, indices_Pcj_T(2:T))) = delta_t*etta_C;
+        Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
 
         % PEqnIdx = i_Idx;
         % QEqnIdx = i_Idx + m_Area;
