@@ -120,7 +120,8 @@ function [x, B0Vals_pu_Area, ...
         logging = verbose;
         fid = 1;
     end
-
+    
+    logging_Aeq_beq = false;
     [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
         = extractAreaElectricalParameters(Area, t, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false);
     
@@ -270,7 +271,7 @@ function [x, B0Vals_pu_Area, ...
     % beq_Full = zeros(numLinOptEquations, 1);
 
     for j = 2 : N_Area
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "*****\n" + ...
+        myfprintf(true, 1, "*****\n" + ...
             "Checking for bus %d.\n" + ...
             "*****\n", j);       
  
@@ -280,11 +281,12 @@ function [x, B0Vals_pu_Area, ...
         i = fb_Area(i_Idx);
         myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The parent of bus %d is bus %d at index %d.\n", j, i, i_Idx);
         
-        k_indices = find(fb==j);
-        ks = tbus(k_indices);
+        k_indices = find(fb_Area == j);
+        % disp(k_indices);
+        ks = tb_Area(k_indices);
 
-        js_indices = find(fb==i);
-        js = tbus(js_indices);
+        js_indices = find(fb_Area==i);
+        js = tb_Area(js_indices);
 
         jes_Idx = js_indices(1);
         jes = js(1);
@@ -301,10 +303,12 @@ function [x, B0Vals_pu_Area, ...
         indices_vj_T = getIndicesT(indices_vj, i_Idx);
         
         % PFlow equations in Aeq, beq | BFM variables only
-        row = indices_Pflow_ij_T;
+        row = indices_Pflow_ij_T
+        indices_Pij_T
         Aeq(sub2ind(sz, row, indices_Pij_T)) = 1;
-        for k_Idx = k_indices
-            indices_Pjk_T = getIndicesT(indices_Pij_T, k_Idx);
+        for k_num = 1:length(k_indices)
+            k_Idx = k_indices(k_num);
+            indices_Pjk_T = getIndicesT(indices_Pij, k_Idx);
             Aeq(sub2ind(sz, row, indices_Pjk_T)) = -1;
         end
         Aeq(sub2ind(sz, row, indices_lij_T)) = -R_Area_Matrix(i, j);
@@ -316,10 +320,13 @@ function [x, B0Vals_pu_Area, ...
         % Aeq_Full( PIdx, indices_v(i_Idx) ) = -0.5 * CVR_P * P_L_Area( j );
 
         % QFlow equations in Aeq, beq | BFM variables only
-        row = indices_Qflow_ij_T;
+        row = indices_Qflow_ij_T
+        indices_Qij_T
+        indices_Qij
+
         Aeq(sub2ind(sz, row, indices_Qij_T)) = 1;
         for k_Idx = k_indices
-            indices_Qjk_T = getIndices(indices_Qij_T, k_Idx);
+            indices_Qjk_T = getIndicesT(indices_Qij, k_Idx);
             Aeq(sub2ind(sz, row, indices_Qjk_T)) = -1;
         end
         Aeq(sub2ind(sz, row, indices_lij_T)) = -X_Area_Matrix(i, j);
@@ -339,8 +346,8 @@ function [x, B0Vals_pu_Area, ...
         %     Aeq_Full(QIdx, indices_Q(k_indices) ) = -1;   % for Q
         % end
         
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 1.\n", PIdx, i_Idx);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, i_Idx, i, j);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 1.\n", PIdx, i_Idx);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, i_Idx, i, j);
         % for k_num = 1:length(k_indices)
         %     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = -1\n", PIdx, k_indices(k_num));
         % end
@@ -349,8 +356,8 @@ function [x, B0Vals_pu_Area, ...
         % end
         
 
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 1.\n", QIdx, i_Idx);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, i_Idx, i, j);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 1.\n", QIdx, i_Idx);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, i_Idx, i, j);
         % for k_num = 1:length(k_indices)
         %     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = -1\n", QIdx, k_indices(k_num));
         % end
@@ -363,10 +370,10 @@ function [x, B0Vals_pu_Area, ...
         % variables)
         row = indices_KVL_ij_T;
         Aeq(sub2ind(sz, row, indices_vj_T)) = 1;
-        js_indices = find(fb_Area == i);
-        jes_Idx = js_indices(1);
-        jes = tb_Area(jes_Idx);
-        indices_vjes_T = getIndices(indices_vj, jes);
+        % js_indices = find(fb_Area == i);
+        % jes_Idx = js_indices(1);
+        % jes = tb_Area(jes_Idx);
+        indices_vjes_T = getIndicesT(indices_vj, jes);
         Aeq(sub2ind(sz, row, indices_vjes_T)) = -1;
         Aeq(sub2ind(sz, row, indices_lij_T)) = R_Area_Matrix(i, j)^2 + X_Area_Matrix(i, j)^2;
         Aeq(sub2ind(sz, row, indices_Pij_T)) = -2*R_Area_Matrix(i, j);
@@ -375,40 +382,40 @@ function [x, B0Vals_pu_Area, ...
         % V equations
         % vIdx = QIdx + m_Area;
         % Aeq_Full( vIdx, indices_v(i_Idx) ) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = 1\n", vIdx, i_Idx);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = 1\n", vIdx, i_Idx);
 
         %Return the rows with the list of 'children' buses of 'under' the PARENT of our currentBus:
         %our currentBus will obviously also be included in the list.
-        js_indices = find(fb_Area == i);
-        js = tb_Area(js_indices);
+        % js_indices = find(fb_Area == i);
+        % js = tb_Area(js_indices);
 
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The siblings of bus %d\n", j);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "include these buses: %d\n", js)
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "at indices %d.\n", js_indices);
-        jes_Idx = js_indices(1);
-        jes = js(1);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq,  "which makes bus %d at index %d as the eldest sibling.\n", jes, jes_Idx);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The siblings of bus %d\n", j);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "include these buses: %d\n", js)
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "at indices %d.\n", js_indices);
+        % jes_Idx = js_indices(1);
+        % jes = js(1);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq,  "which makes bus %d at index %d as the eldest sibling.\n", jes, jes_Idx);
         % Aeq_Full( vIdx, indices_vAll( jes_Idx ) ) = -1;
         % % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v_Full(%d)) = -1\n", vIdx, jes_Idx);
         % Aeq_Full( vIdx, indices_P(i_Idx) ) = 2 * R_Area_Matrix( i, j );
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, i_Idx, i, j);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 2*r(%d, %d).\n", vIdx, i_Idx, i, j);
         % Aeq_Full( vIdx, indices_Q(i_Idx) ) = 2 * X_Area_Matrix( i, j );
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 2*x(%d, %d).\n", vIdx, i_Idx, i, j);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 2*x(%d, %d).\n", vIdx, i_Idx, i, j);
         % Aeq_Full( vIdx, indices_l(i_Idx) ) = ...
             % -R_Area_Matrix( i, j )^2 + ...
             % -X_Area_Matrix( i, j )^2 ;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d)^2 -x(%d, %d)^2.\n", vIdx, i_Idx, i, j, i, j);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d)^2 -x(%d, %d)^2.\n", vIdx, i_Idx, i, j, i, j);
         
 
         % beq_Full(PIdx) = ...
             % ( 1- 0.5 * CVR_P ) * ...
             % ( P_L_Area( j ) - P_der_Area( j ) );
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = (1 - 0.5*CVR_P)*(P_L(%d) - P_der(%d))\n", PIdx, j, j);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = (1 - 0.5*CVR_P)*(P_L(%d) - P_der(%d))\n", PIdx, j, j);
     
         % beq_Full(QIdx) =  ...
             % ( 1- 0.5*CVR_Q ) * ...
             % ( Q_L_Area( j ) - Q_C_Area( j ) );
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = (1 - 0.5*CVR_Q)*(Q_L(%d) - Q_C(%d))\n", QIdx, j, j);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = (1 - 0.5*CVR_Q)*(Q_L(%d) - Q_C(%d))\n", QIdx, j, j);
 
     end
     
@@ -422,17 +429,17 @@ function [x, B0Vals_pu_Area, ...
     % substation voltage equation
     % vSubIdx = 3*m_Area + 1;
     % Aeq_Full( vSubIdx, indices_vAll(1) ) = 1;
-    myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v_Full(1)) = 1\n", vSubIdx);
+    % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v_Full(1)) = 1\n", vSubIdx);
 
     % beq_Full(vSubIdx) = v_parent_Area;
-    myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = %.3f\n", vSubIdx, v_parent_Area);
+    % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = %.3f\n", vSubIdx, v_parent_Area);
     
     % DER equation addition
     % Table_DER = zeros(nDER_Area, 5);
     
     for der_num = 1:nDER_Area
         j = busesWithDERs_Area(der_num);
-        i_Idx = find(tb_Area == j);
+        % i_Idx = find(tb_Area == j);
         indices_qDj_T = getIndicesT(indices_qDj, der_num);
         
         row = indices_Pflow_ij_T;
@@ -444,7 +451,7 @@ function [x, B0Vals_pu_Area, ...
         % QIdx = i_Idx + m_Area;
         % qD_Idx = indices_qD(der_num);
         % Aeq_Full(QIdx, qD_Idx) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, qD(%d)) = 1\n", QIdx, der_num);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, qD(%d)) = 1\n", QIdx, der_num);
         
         %setting other parameters for DGs:
         % Table_DER(der_num, 2) = qD_Idx;
@@ -460,7 +467,7 @@ function [x, B0Vals_pu_Area, ...
     for batt_num = 1:nBatt_Area
 
         j = busesWithBatts_Area(batt_num);
-        i_Idx = find(tb_Area == j);
+        % i_Idx = find(tb_Area == j);
         
         indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
         indices_SOC_j_T_2toT = indices_SOC_j_T(2:T);
@@ -493,7 +500,7 @@ function [x, B0Vals_pu_Area, ...
         Aeq(sub2ind(sz, row, indices_Bj_T(1:T-1))) = 1;
         Aeq(sub2ind(sz, row, indices_Pcj_T(2:T))) = delta_t*etta_C;
         Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
-        
+
         % PEqnIdx = i_Idx;
         % QEqnIdx = i_Idx + m_Area;
         % BEqnIdx = numLinOptEquationsBFM + batt_num;
@@ -504,23 +511,23 @@ function [x, B0Vals_pu_Area, ...
         % qB_Idx = indices_qB(batt_num);
 
         % Aeq_Full(PEqnIdx, Pc_Idx) = -1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, batt_num);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -1\n", PEqnIdx, batt_num);
 
         % Aeq_Full(PEqnIdx, Pd_Idx) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pd(%d)) = 1\n", PEqnIdx, batt_num);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pd(%d)) = 1\n", PEqnIdx, batt_num);
 
         % Aeq_Full(QEqnIdx, qB_Idx) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, batt_num);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, qB(%d)) = 1\n", QEqnIdx, batt_num);
         
         % Aeq_Full(BEqnIdx, B_Idx) = 1;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, B(%d)) = 1\n", BEqnIdx, batt_num);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, B(%d)) = 1\n", BEqnIdx, batt_num);
         % Aeq_Full(BEqnIdx, Pc_Idx) = -delta_t*etta_C;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -delta_t*etta_C\n", BEqnIdx, batt_num);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pc(%d)) = -delta_t*etta_C\n", BEqnIdx, batt_num);
         % Aeq_Full(BEqnIdx, Pd_Idx) = delta_t/etta_D;
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pd(%d)) = delta_t*etta_D\n", BEqnIdx, batt_num);
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Pd(%d)) = delta_t*etta_D\n", BEqnIdx, batt_num);
 
         % beq_Full(BEqnIdx) = B0Vals_pu_Area(batt_num);
-        myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = B0(%d) = %f\n", BEqnIdx, batt_num, B0Vals_pu_Area(batt_num));
+        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "beq(%d) = B0(%d) = %f\n", BEqnIdx, batt_num, B0Vals_pu_Area(batt_num));
     end
 
     if fileOpenedFlag_Aeq_beq
