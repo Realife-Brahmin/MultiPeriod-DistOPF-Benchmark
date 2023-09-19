@@ -414,10 +414,9 @@ function [x, B0Vals_pu_Area, ...
     
     % 'Substation' Bus KVL | BFM variables required only
     indices_KVL_12_T = getIndicesT(indices_KVL, N_Area);
-    indices_vAll1_T = getIndicesT(indices_vAllj_T, 1);
+    indices_vAll
     row = indices_KVL_12_T;
-    Aeq(sub2ind(sz, row, indices_vAll1_T)) = 1;
-    beq(row) = v_parent_Area;
+    Aeq(sub2ind(sz, row, indices_vAllj_T(1)))
 
     % substation voltage equation
     % vSubIdx = 3*m_Area + 1;
