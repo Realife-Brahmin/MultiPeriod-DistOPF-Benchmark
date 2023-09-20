@@ -1,4 +1,4 @@
-function [c, ceq] = NonLinEqualities(x, Area, N_Area, fbus_Area, tbus_Area, indices_P_Area, indices_Q_Area, indices_l_Area, indices_v_Full_Area, itr, systemName, numAreas, varargin)
+function [c, ceq] = NonLinEqualities(x, ceq, Area, m_Area, fbus_Area, tbus_Area, indices_Pij, indices_Qij, indices_lij, indices_vAllj, itr, systemName, numAreas, varargin)
     
     verbose = false;
     saveToFile = false;
@@ -38,8 +38,34 @@ function [c, ceq] = NonLinEqualities(x, Area, N_Area, fbus_Area, tbus_Area, indi
         fid = 1;
     end
     
+    % listNumVars1 = [m_Area*ones(1, 3), N_Area, nDER_Area, nBatt_Area*ones(1, 4)];
+    % nVars1 = sum(listNumVars1);
+    % nVarsT = nVars1 * T;
+    % listNumEqns1 = m_Area;
+    % nEqns1 = sum(listNumEqns1);
+    % nEqnsT = nEqns1 * T;
+    
+    % listNumNonlinEqns1 = m_Area;
+    % nNonLinEqns1 = sum(listNumNonlinEqns1);
+    % nNonLinEqnsT = nNonLinEqns1 * T;
+    % eqnNonLinIndicesT = generateRangesFromValuesT(listNumNonlinEqns1, T);
+    % indices_NonLin = eqnNonLinIndicesT{1};
+    % ceq = zeros(nNonLinEqnsT, 1);
+
+    % Aeq = zeros(nEqnsT, nVarsT);
+    % sz = size(Aeq);
+    % beq = zeros(nEqnsT, 1);
+    % szbeq = size(beq);
+    
+    % eqnIndicesT = generateRangesFromValuesT(listNumNonEqns1, T);
+    % varIndicesT = generateRangesFromValuesT(listNumVars1, T);
+    
+
+    % indices_currentMag = eqnIndicesT{1};
+    
+
     c = [];
-    ceq = zeros(N_Area, 1);
+    % ceq = zeros(m_Area*T, 1);
     myfprintf(verbose, fid, "**********" + ...
         "Constructing ceq for Area %d.\n" + ...
         "***********\n", Area);
@@ -61,8 +87,16 @@ function [c, ceq] = NonLinEqualities(x, Area, N_Area, fbus_Area, tbus_Area, indi
             myfprintf(verbose, fid, "\nlocated at:\n");
             myfprintf(verbose, fid, "%d ", js_indices);
             myfprintf(verbose, fid, "\nceq(%d) = l(%d) * v(%d) -  ( P(%d)^2 +  Q(%d)^2 )\n", i_Idx, i_Idx, js_indices(1), i_Idx, i_Idx)
-            myfprintf(verbose, fid, "ceq(%d) = x(%d) * x(%d) -  ( x(%d)^2 +  x(%d)^2 )\n", i_Idx, indices_l_Area(i_Idx), indices_v_Full_Area(jes_Idx), indices_P_Area(i_Idx), indices_Q_Area(i_Idx))
-            ceq(i_Idx) = x( indices_l_Area(i_Idx) ) * x( indices_v_Full_Area(jes_Idx) ) -  ( x( indices_P_Area(i_Idx) )^2 +  x( indices_Q_Area(i_Idx) )^2 );
+            % myfprintf(verbose, fid, "ceq(%d) = x(%d) * x(%d) -  ( x(%d)^2 +  x(%d)^2 )\n", i_Idx, indices_l_Area(i_Idx), indices_v_Full_Area(jes_Idx), indices_P_Area(i_Idx), indices_Q_Area(i_Idx))
+            
+            indices_Pij_T = getIndicesT(indices_Pij, i_Idx);
+            indices_Qij_T = getIndicesT(indices_Qij, i_Idx);
+            indices_lij_T = getIndicesT(indices_lij, i_Idx);
+            indices_vi_T = getIndicesT(indices_vAllj, jes_Idx);
+            
+            row = getIndices(indices_currentMag, i_Idx);
+            
+            ceq(row) = x(indices_lij_T) * x(indices_vi_T) -  ( x(indices_Pij_T)^2 +  x(indices_Qij_T)^2 );
         else
             myfprintf(verbose, fid, "It has NO parent bus.\n");
         end
