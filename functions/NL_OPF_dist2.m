@@ -156,14 +156,6 @@ function [x, B0Vals_pu_Area, ...
     sz = size(Aeq);
     beq = zeros(nEqnsT, 1);
 
-    listNumNonlinEqns1 = m_Area;
-    nNonLinEqns1 = sum(listNumNonlinEqns1);
-    nNonLinEqnsT = nNonLinEqns1 * T;
-    eqnNonLinIndicesT = generateRangesFromValuesT(listNumNonlinEqns1, T);
-    indices_currentMag = eqnNonLinIndicesT{1};
-    
-    ceq = zeros(nNonLinEqnsT, 1);
-
     % szbeq = size(beq);
     
     eqnIndicesT = generateRangesFromValuesT(listNumEqns1, T);
