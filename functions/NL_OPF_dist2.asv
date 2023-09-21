@@ -181,17 +181,15 @@ function [x, B0Vals_pu_Area, ...
 
 % Update the Parent Complex Power Vector with values from interconnection. 
 
-    % numChildAreas = size(S_connection_Area, 1); %could even be zero for a child-less area
-    % 
-    % for childArea_num = 1:numChildAreas %nodes are numbered such that the last numChildAreas nodes are actually the interconnection nodes too.
-    %     %The load of parent area at the node of interconnection is
-    %     %basically the interconnection area power
-    %     P_L_Area(end-childArea_num+1) = real(S_connection_Area(end-childArea_num+1));                 %in PU
-    %     Q_L_Area(end-childArea_num+1) = imag(S_connection_Area(end-childArea_num+1));     
-    % end
+    numChildAreas = size(S_connection_Area, 1); %could even be zero for a child-less area
     
-    [P_L_Area, Q_L_Area] = exchangeCompVars(S_connection_Area, P_L_Area, Q_L_Area);
-
+    for childArea_num = 1:numChildAreas %nodes are numbered such that the last numChildAreas nodes are actually the interconnection nodes too.
+        %The load of parent area at the node of interconnection is
+        %basically the interconnection area power
+        P_L_Area(end-childArea_num+1) = real(S_connection_Area(end-childArea_num+1));                 %in PU
+        Q_L_Area(end-childArea_num+1) = imag(S_connection_Area(end-childArea_num+1));     
+    end
+    
     % % DER Configuration:
     % busesWithDERs_Area = find(S_der_Area); %all nnz element indices
     % nDER_Area = length(busesWithDERs_Area);
