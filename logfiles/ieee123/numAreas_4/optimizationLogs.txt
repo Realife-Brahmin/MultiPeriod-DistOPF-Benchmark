@@ -1,3 +1,2 @@
-Number of DERs in Area 1 : 23.
-Number of Batteries in Area 1 : 23.
-as 2 child areas, which include the Areas: Area 2 and Areas 3.
+This area has only the substation as its 'parent area'.
+This area has 2 child areas, which include the Areas: Area 2 and Areas 3.
