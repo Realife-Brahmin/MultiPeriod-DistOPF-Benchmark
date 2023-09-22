@@ -1,21 +1,24 @@
-function [P_L_Parent, Q_L_Parent] = exchangeCompVars(P_L_Parent, Q_L_Parent, S_connection_Child)
-    % EXCHANGECOMPVARS exchanges results from OPF iterations of the child area to the parent area.
+function areaInfo = exchangeCompVars(areaInfo, S_connection_Area)
+    %EXCHANGECOMPVARS Updates the P_L_Area and Q_L_Area in areaInfo based on S_connection_Area.
+    %
+    % Description:
+    %   Given the S_connection_Area which contains the power information of interconnection nodes,
+    %   this function updates the respective loads P_L_Area and Q_L_Area in the areaInfo structure.
     %
     % Input:
-    %   - P_L_Parent: Pre-existing active power values in the parent area.
-    %   - Q_L_Parent: Pre-existing reactive power values in the parent area.
-    %   - S_connection_Child: Complex power from the child area for interconnection nodes.
+    %   - areaInfo: Structure containing various power system parameters of the area.
+    %   - S_connection_Area: Complex power values at the interconnection nodes.
     %
     % Output:
-    %   - P_L_Parent: Updated active power values in the parent area after receiving data from the child.
-    %   - Q_L_Parent: Updated reactive power values in the parent area after receiving data from the child.
-    
-    numChildAreas = size(S_connection_Child, 1); % Could even be zero for a child-less area
-    
+    %   - areaInfo: Updated areaInfo structure.
+    %
+
+    numChildAreas = size(S_connection_Area, 1); % Could even be zero for a child-less area
+
     for childArea_num = 1:numChildAreas
         % The load of the parent area at the node of interconnection is
         % basically the interconnection area power
-        P_L_Parent(end-childArea_num+1) = real(S_connection_Child(end-childArea_num+1));   % in PU
-        Q_L_Parent(end-childArea_num+1) = imag(S_connection_Child(end-childArea_num+1));
+        areaInfo.P_L_Area(end-childArea_num+1) = real(S_connection_Area(end-childArea_num+1));
+        areaInfo.Q_L_Area(end-childArea_num+1) = imag(S_connection_Area(end-childArea_num+1));
     end
 end
