@@ -258,7 +258,7 @@ function [x, B0Vals_pu_Area, ...
     CVR_P = CVR(1);
     CVR_Q = CVR(2);
     
-    [Aeq, beq] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area);
+    [Aeq, beq, lb, ub] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area);
 
     plotSparsity(Aeq, beq);
 
@@ -544,12 +544,12 @@ function [x, B0Vals_pu_Area, ...
     % define these values.
     x0 = [P0_NoLoss; Q0_NoLoss; l0_NoLoss; v0_NoLoss; qD0_NoLoss; B0_NoLoss; Pc0_NoLoss; Pd0_NoLoss; qB0_NoLoss];
     
-    numVarsForBoundsFull = [1, numVarsFull(1) - 1, numVarsFull(2:4) ]; % qD limits are specific to each machine, will be appended later.
-    lbVals = [0, -5, -15, 0, V_min^2];
-    ubVals = [5, 5, 5, 15, V_max^2];
-    [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsFull, lbVals, ubVals);
-    lb_AreaFull = [lb_Area; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area];
-    ub_AreaFull = [ub_Area; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area];
+    % numVarsForBoundsFull = [1, (1) - 1, numVarsFull(2:4) ]; % qD limits are specific to each machine, will be appended later.
+    % lbVals = [0, -5, -15, 0, V_min^2];
+    % ubVals = [5, 5, 5, 15, V_max^2];
+    % [lb_Area, ub_Area] = constructBoundVectors(numVarsForBoundsFull, lbVals, ubVals);
+    % lb_AreaFull = [lb_Area; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area]*T;
+    % ub_AreaFull = [ub_Area; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area]*T;
 
     options = optimoptions('fmincon', 'Display', 'off', 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
     
@@ -558,8 +558,8 @@ function [x, B0Vals_pu_Area, ...
     flaggedForLimitViolation = false;
 
     for varNum = 1:numOptVarsFull
-        lbVal = lb_AreaFull(varNum);
-        ubVal = ub_AreaFull(varNum);
+        lbVal = lb(varNum);
+        ubVal = ub(varNum);
         x0Val = x0(varNum);
         if lbVal > x0Val
             myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0(%d) < lb(%d) as %f < %f.\n", t, macroItr, Area, varNum, varNum, x0Val, lbVal);
@@ -571,7 +571,7 @@ function [x, B0Vals_pu_Area, ...
         end
     end
     
-    if checkOptimalSolutionWithinBounds(x0, lb_AreaFull, ub_AreaFull)
+    if checkOptimalSolutionWithinBounds(x0, lb, ub)
         myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  My native bound checker says that bounds are Actually being violated.\n", t, macroItr, Area);
         error("Nani?");
     elseif flaggedForLimitViolation
@@ -583,7 +583,7 @@ function [x, B0Vals_pu_Area, ...
     myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  Now solving for the real deal.\n", t, macroItr, Area);
 
     [x, fval, ~, ~] = fmincon( @(x)objfun(x, N_Area, nDER_Area, nBatt_Area, fb_Area, tb_Area, R_Area_Matrix, X_Area_Matrix, 'mainObjFun', "func_PLoss", 'secondObjFun', "func_SCD"), ...
-                              x0, [], [], Aeq_Full, beq_Full, lb_AreaFull, ub_AreaFull, ...
+                              x0, [], [], Aeq_Full, beq_Full, lb, ub, ...
                               @(x)eqcons(x, Area, N_Area, ...
                               fb_Area, tb_Area, indices_P, indices_Q, indices_l, indices_vAll, ...
                               macroItr, systemName, numAreas, "verbose", false, "saveToFile", false),...

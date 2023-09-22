@@ -1,4 +1,4 @@
-function [Aeq, beq] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
+function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
 
     % Default values
     defaultDeltaT = 0.25;
@@ -9,12 +9,16 @@ function [Aeq, beq] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_pare
     addParameter(p, 'delta_t', defaultDeltaT, @isnumeric);
     addParameter(p, 'etta_C', 0.95, @isnumeric);
     addParameter(p, 'etta_D', 0.95, @isnumeric)
+    addParameter(p, 'V_max', 1.05, @isnumeric)
+    addParameter(p, 'V_min', 0.95, @isnumeric)
 
     parse(p, varargin{:});
     kwargs = p.Results;
     delta_t = kwargs.delta_t;
     etta_C = kwargs.etta_C;
     etta_D = kwargs.etta_D;
+    V_max = kwargs.V_max;
+    V_min = kwargs.V_min;
 
     % Unpacking areaInfo
     N_Area = areaInfo.N_Area;
@@ -38,16 +42,16 @@ function [Aeq, beq] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_pare
     % S_onlyBattBusesMax_Area = areaInfo.S_onlyBattBusesMax_Area;
     % P_onlyBattBusesMax_Area = areaInfo.P_onlyBattBusesMax_Area;
     % E_onlyBattBusesMax_Area = areaInfo.E_onlyBattBusesMax_Area;
-    % lb_Pc_onlyBattBuses_Area = areaInfo.lb_Pc_onlyBattBuses_Area;
-    % ub_Pc_onlyBattBuses_Area = areaInfo.ub_Pc_onlyBattBuses_Area;
-    % lb_Pd_onlyBattBuses_Area = areaInfo.lb_Pd_onlyBattBuses_Area;
-    % ub_Pd_onlyBattBuses_Area = areaInfo.ub_Pd_onlyBattBuses_Area;
-    % lb_B_onlyBattBuses_Area = areaInfo.lb_B_onlyBattBuses_Area;
-    % ub_B_onlyBattBuses_Area = areaInfo.ub_B_onlyBattBuses_Area;
-    % lb_qD_onlyDERbuses_Area = areaInfo.lb_qD_onlyDERbuses_Area;
-    % ub_qD_onlyDERbuses_Area = areaInfo.ub_qD_onlyDERbuses_Area;
-    % lb_qB_onlyBattBuses_Area = areaInfo.lb_qB_onlyBattBuses_Area;
-    % ub_qB_onlyBattBuses_Area = areaInfo.ub_qB_onlyBattBuses_Area;
+    lb_Pc_onlyBattBuses_Area = areaInfo.lb_Pc_onlyBattBuses_Area;
+    ub_Pc_onlyBattBuses_Area = areaInfo.ub_Pc_onlyBattBuses_Area;
+    lb_Pd_onlyBattBuses_Area = areaInfo.lb_Pd_onlyBattBuses_Area;
+    ub_Pd_onlyBattBuses_Area = areaInfo.ub_Pd_onlyBattBuses_Area;
+    lb_B_onlyBattBuses_Area = areaInfo.lb_B_onlyBattBuses_Area;
+    ub_B_onlyBattBuses_Area = areaInfo.ub_B_onlyBattBuses_Area;
+    lb_qD_onlyDERbuses_Area = areaInfo.lb_qD_onlyDERbuses_Area;
+    ub_qD_onlyDERbuses_Area = areaInfo.ub_qD_onlyDERbuses_Area;
+    lb_qB_onlyBattBuses_Area = areaInfo.lb_qB_onlyBattBuses_Area;
+    ub_qB_onlyBattBuses_Area = areaInfo.ub_qB_onlyBattBuses_Area;
     B0Vals_pu_Area = areaInfo.B0Vals_pu_Area;
     R_Area_Matrix = areaInfo.R_Area_Matrix;
     X_Area_Matrix = areaInfo.X_Area_Matrix;
@@ -347,6 +351,11 @@ function [Aeq, beq] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_pare
     % if fileOpenedFlag_Aeq_beq
     %     fclose(fid_Aeq_beq);
     % end
-    
-    % plotSparsity(Aeq, beq);
+    numVarsBFM4 = [1, listNumVars1(1) - 1, listNumVars1(2:4) ]; % qD limits are specific to each machine, will be appended later.
+    lbVals4 = [0, -5, -15, 0, V_min^2];
+    ubVals4 = [5, 5, 5, 15, V_max^2];
+    [lb_Area4, ub_Area4] = constructBoundVectors(numVarsBFM4, lbVals4, ubVals4);
+    lb_Area9 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area], T, 1);
+    ub_Area9 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area], T, 1);
+
 end
