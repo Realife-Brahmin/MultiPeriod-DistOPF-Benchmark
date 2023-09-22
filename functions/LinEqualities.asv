@@ -1,4 +1,4 @@
-function [Aeq, beq] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
+function [Aeq, beq, lb, ub] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
 
     % Default values
     defaultDeltaT = 0.25;
@@ -348,5 +348,5 @@ function [Aeq, beq] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_pare
     %     fclose(fid_Aeq_beq);
     % end
     
-    % plotSparsity(Aeq, beq);
+    plotSparsity(Aeq, beq);
 end
