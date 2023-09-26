@@ -1,5 +1,5 @@
 % function [c, ceq] = NonLinEqualities(x, Area, m_Area, fb_Area, tb_Area, indices_Pij, indices_Qij, indices_lij, indices_vAllj, itr, systemName, numAreas, varargin)
-function [c, ceq] = NonLinEqualities(x, areaInfo, varargin)
+function [c, ceq] = NonLinEqualities(x, areaInfo, T, varargin)
     
     verbose = false;
     saveToFile = false;
@@ -27,9 +27,9 @@ function [c, ceq] = NonLinEqualities(x, areaInfo, varargin)
         end
     end
     
-    strArea = convert2doubleDigits(Area);
-    saveLocationFilename = strcat(saveLocation, systemName, "/numAreas_", num2str(numAreas), "/eqcons_area", strArea, fileExtension);
-    fileOpenedFlag = false;
+    % strArea = convert2doubleDigits(areaInfo.Area);
+    % saveLocationFilename = strcat(saveLocation, systemName, "/numAreas_", num2str(numAreas), "/eqcons_area", strArea, fileExtension);
+    % fileOpenedFlag = false;
 
     if verbose && saveToFile && itr == 0 && Area == 2
         fileOpenedFlag = true;
@@ -42,9 +42,11 @@ function [c, ceq] = NonLinEqualities(x, areaInfo, varargin)
     % Unpacking areaInfo
     N_Area = areaInfo.N_Area;
     m_Area = areaInfo.m_Area;
+    nDER_Area = areaInfo.nDER_Area;
+    nBatt_Area = areaInfo.nBatt_Area;
     fb_Area = areaInfo.fb_Area;
     tb_Area = areaInfo.tb_Area;
-
+    Area = areaInfo.Area;
 
     listNumVars1 = [m_Area*ones(1, 3), N_Area, nDER_Area, nBatt_Area*ones(1, 4)];
 
@@ -93,16 +95,16 @@ function [c, ceq] = NonLinEqualities(x, areaInfo, varargin)
             indices_lij_T = getIndicesT(indices_lij, i_Idx);
             indices_vi_T = getIndicesT(indices_vAllj, jes_Idx);
             
-            row = getIndices(indices_currentMag, i_Idx);
+            row = getIndicesT(indices_currentMag, i_Idx);
             
-            ceq(row) = x(indices_lij_T) * x(indices_vi_T) -  ( x(indices_Pij_T)^2 +  x(indices_Qij_T)^2 );
+            ceq(row) = x(indices_lij_T) .* x(indices_vi_T) -  ( x(indices_Pij_T).^2 +  x(indices_Qij_T).^2 );
         else
             myfprintf(verbose, fid, "It has NO parent bus.\n");
         end
     end
 
-    if fileOpenedFlag
-        fclose(fid);
-    end
+    % if fileOpenedFlag
+    %     fclose(fid);
+    % end
 
 end
