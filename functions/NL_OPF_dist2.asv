@@ -122,7 +122,6 @@ function [x, B0Vals_pu_Area, ...
     end
     
     logging_Aeq_beq = false;
-
     [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
         = extractAreaElectricalParameters(Area, t, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false);
     
@@ -141,7 +140,7 @@ function [x, B0Vals_pu_Area, ...
 
     plotSparsity(Aeq, beq);
 
-    % keyboard;
+    keyboard;
    
     x0 = mean(lb, ub);
 
@@ -149,39 +148,38 @@ function [x, B0Vals_pu_Area, ...
     
     t3Start = tic;
     
-    % flaggedForLimitViolation = false;
-    % 
-    % for varNum = 1:nVarsT
-    %     lbVal = lb(varNum);
-    %     ubVal = ub(varNum);
-    %     x0Val = x0(varNum);
-    %     if lbVal > x0Val
-    %         myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0(%d) < lb(%d) as %f < %f.\n", t, macroItr, Area, varNum, varNum, x0Val, lbVal);
-    %         flaggedForLimitViolation = true;
-    %     end
-    %     if ubVal < x0Val
-    %         myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0_NoLoss(%d) > ub(%d) as %f > %f.\n", t, macroItr, Area, varNum, varNum, x0Val, ubVal);
-    %         flaggedForLimitViolation = true;
-    %     end
-    % end
+    flaggedForLimitViolation = false;
+
+    for varNum = 1:numOptVarsFull
+        lbVal = lb(varNum);
+        ubVal = ub(varNum);
+        x0Val = x0(varNum);
+        if lbVal > x0Val
+            myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0(%d) < lb(%d) as %f < %f.\n", t, macroItr, Area, varNum, varNum, x0Val, lbVal);
+            flaggedForLimitViolation = true;
+        end
+        if ubVal < x0Val
+            myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: Oh no! x0_NoLoss(%d) > ub(%d) as %f > %f.\n", t, macroItr, Area, varNum, varNum, x0Val, ubVal);
+            flaggedForLimitViolation = true;
+        end
+    end
     
-    % if checkOptimalSolutionWithinBounds(x0, lb, ub)
-    %     myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  My native bound checker says that bounds are Actually being violated.\n", t, macroItr, Area);
-    %     error("Nani?");
-    % elseif flaggedForLimitViolation
-    %     myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.\n", t, macroItr, Area)
-    % else
-    %     myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.\n", t, macroItr, Area);
-    % end
-    % 
-    % myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  Now solving for the real deal.\n", t, macroItr, Area);
+    if checkOptimalSolutionWithinBounds(x0, lb, ub)
+        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  My native bound checker says that bounds are Actually being violated.\n", t, macroItr, Area);
+        error("Nani?");
+    elseif flaggedForLimitViolation
+        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  x0 within limits anyway? More like MATLAB stupid? Initialization successful. Proceeding to solving for full optimization problem.\n", t, macroItr, Area)
+    else
+        myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  x0 within limits. Initialization successful. Proceeding to solving for the full optimization problem.\n", t, macroItr, Area);
+    end
+
+    myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  Now solving for the real deal.\n", t, macroItr, Area);
 
     [x, fval, ~, ~] = fmincon( @(x)objfun(x, areaInfo, 'mainObjFun', "func_PLoss", 'secondObjFun', "func_SCD"), ...
                               x0, [], [], Aeq, beq, lb, ub, ...
                               @(x)NonLinEqualities(x, areaInfo, "verbose", false, "saveToFile", false),...
                               options);
     
-    keyboard;
     % macroIterationPLoss = fval;
     macroIterationQLoss = objfun(x, areaInfo, 'mainObjFun', "func_QLoss", 'secondObjFun', "none");
     % if t == 1 && macroItr == 1 && Area == 4
@@ -190,7 +188,7 @@ function [x, B0Vals_pu_Area, ...
     %     display(X_Area(1:m_Area));
     %     display(macroIterationQLoss);
     % end
-    
+
     t3 = toc(t3Start);
     
     time_dist(macroItr, Area) = t3;
