@@ -1,18 +1,18 @@
-function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
+function [Aeq, beq, lb_Area9, ub_Area9, x0] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
 
     % Default values
-    defaultDeltaT = 0.25;
-    logging_Aeq_beq = false;
+    % logging_Aeq_beq = false;
 
     % Input parser
     p = inputParser;
-    addParameter(p, 'delta_t', defaultDeltaT, @isnumeric);
+    addParameter(p, 'delta_t', 0.25, @isnumeric);
     addParameter(p, 'etta_C', 0.95, @isnumeric);
     addParameter(p, 'etta_D', 0.95, @isnumeric)
     addParameter(p, 'V_max', 1.05, @isnumeric)
     addParameter(p, 'V_min', 0.95, @isnumeric)
 
     parse(p, varargin{:});
+    
     kwargs = p.Results;
     delta_t = kwargs.delta_t;
     etta_C = kwargs.etta_C;
@@ -100,13 +100,13 @@ function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals,
         
         k_indices = find(fb_Area == j);
         % disp(k_indices);
-        ks = tb_Area(k_indices);
+        % ks = tb_Area(k_indices);
 
         js_indices = find(fb_Area==i);
-        js = tb_Area(js_indices);
+        % js = tb_Area(js_indices);
 
         jes_Idx = js_indices(1);
-        jes = js(1);
+        % jes = js(1);
 
         indices_Pflow_ij_T = getIndicesT(indices_Pflow, i_Idx);
         indices_Qflow_ij_T = getIndicesT(indices_Qflow, i_Idx);
@@ -116,7 +116,7 @@ function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals,
         indices_Pij_T = getIndicesT(indices_Pij, i_Idx);
         indices_Qij_T = getIndicesT(indices_Qij, i_Idx);
         indices_lij_T = getIndicesT(indices_lij, i_Idx);
-        indices_vAllj_T = getIndicesT(indices_vAllj, i_Idx);
+        % indices_vAllj_T = getIndicesT(indices_vAllj, i_Idx);
         indices_vj_T = getIndicesT(indices_vj, i_Idx);
         
         % PFlow equations in Aeq, beq | BFM variables only
@@ -130,16 +130,9 @@ function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals,
         end
         Aeq(sub2ind(sz, row, indices_lij_T)) = -R_Area_Matrix(i, j);
         beq(row) = lambdaVals.*P_L_Area(j);
-        
-        % PIdx = i_Idx;
-        % Aeq_Full( PIdx, indices_P(i_Idx) ) = 1;
-        % Aeq_Full( PIdx, indices_l(i_Idx) ) = -R_Area_Matrix( i, j );
-        % Aeq_Full( PIdx, indices_v(i_Idx) ) = -0.5 * CVR_P * P_L_Area( j );
 
         % QFlow equations in Aeq, beq | BFM variables only
         row = indices_Qflow_ij_T;
-        % indices_Qij_T
-        % indices_Qij
 
         Aeq(sub2ind(sz, row, indices_Qij_T)) = 1;
         for k_num = 1:length(k_indices)
@@ -150,53 +143,26 @@ function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals,
         Aeq(sub2ind(sz, row, indices_lij_T)) = -X_Area_Matrix(i, j);
         beq(row) = lambdaVals.*Q_L_Area(j) - Q_C_Area(j);
 
-        %Q equations
-        % QIdx = PIdx + m_Area;
-        % Aeq_Full( QIdx, indices_Q(i_Idx) ) = 1;
-        % Aeq_Full( QIdx, indices_l(i_Idx) ) = -X_Area_Matrix( i, j );
         % Aeq_Full( QIdx, indices_v(i_Idx) ) = -0.5 * CVR_Q * Q_L_Area( j );
 
-        
-       % List of Row Indices showing the set of 'children' buses 'under' our currentBus:
-        % k_indices = find(fb_Area == j);
-        % if ~isempty(k_indices)
-        %     Aeq_Full(PIdx, indices_P(k_indices) ) = -1;   % for P
-        %     Aeq_Full(QIdx, indices_Q(k_indices) ) = -1;   % for Q
-        % end
-        
-        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = 1.\n", PIdx, i_Idx);
-        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -r(%d, %d).\n", PIdx, i_Idx, i, j);
-        % for k_num = 1:length(k_indices)
-        %     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, P(%d)) = -1\n", PIdx, k_indices(k_num));
-        % end
         % if CVR_P
         %     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = -0.5 * CVR_P * P_L(%d).\n", PIdx, i_Idx, j);
         % end
         
-
-        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = 1.\n", QIdx, i_Idx);
-        % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, l(%d)) = -x(%d, %d).\n", QIdx, i_Idx, i, j);
-        % for k_num = 1:length(k_indices)
-        %     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, Q(%d)) = -1\n", QIdx, k_indices(k_num));
-        % end
         % if CVR_Q
         %     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = -0.5 * CVR_Q * Q_L(%d).\n", QIdx, i_Idx, j);
         % end
         
-
         % KVL equations in Aeq, beq | Full equation (contains only BFM
         % variables)
         row = indices_KVL_ij_T;
         Aeq(sub2ind(sz, row, indices_vj_T)) = 1;
-        % js_indices = find(fb_Area == i);
-        % jes_Idx = js_indices(1);
-        % jes = tb_Area(jes_Idx);
+
         indices_vi_T = getIndicesT(indices_vAllj, jes_Idx);
         Aeq(sub2ind(sz, row, indices_vi_T)) = -1;
         Aeq(sub2ind(sz, row, indices_lij_T)) = R_Area_Matrix(i, j)^2 + X_Area_Matrix(i, j)^2;
         Aeq(sub2ind(sz, row, indices_Pij_T)) = -2*R_Area_Matrix(i, j);
         Aeq(sub2ind(sz, row, indices_Qij_T)) = -2*X_Area_Matrix(i, j);
-   
 
     end
     
@@ -222,7 +188,7 @@ function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals,
     
     for batt_num = 1:nBatt_Area
 
-        j = busesWithBatts_Area(batt_num);
+        % j = busesWithBatts_Area(batt_num);
         % i_Idx = find(tb_Area == j);
         
         indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
@@ -268,5 +234,7 @@ function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals,
     [lb_Area4, ub_Area4] = constructBoundVectors(numVarsBFM4, lbVals4, ubVals4);
     lb_Area9 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area], T, 1);
     ub_Area9 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area], T, 1);
+
+    x0 = repmat([zeros(3*m_Area, 1); 1.00*ones(N_Area, 1); zeros(nDER_Area, 1); B0Vals_pu_Area; zeros(3*nBatt_Area, 1)], T, 1);
 
 end

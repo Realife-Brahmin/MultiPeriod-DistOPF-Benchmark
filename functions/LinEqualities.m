@@ -1,4 +1,4 @@
-function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
+function [Aeq, beq, lb_Area9, ub_Area9, x0] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
 
     % Default values
     % logging_Aeq_beq = false;
@@ -234,5 +234,7 @@ function [Aeq, beq, lb_Area9, ub_Area9] = LinEqualities(areaInfo, T, lambdaVals,
     [lb_Area4, ub_Area4] = constructBoundVectors(numVarsBFM4, lbVals4, ubVals4);
     lb_Area9 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area], T, 1);
     ub_Area9 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area], T, 1);
+
+    x0 = repmat([zeros(3*m_Area, 1); 1.00*ones(N_Area, 1); zeros(nDER_Area, 1); B0Vals_pu_Area; zeros(3*nBatt_Area, 1)], T, 1);
 
 end
