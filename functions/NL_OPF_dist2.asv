@@ -182,7 +182,7 @@ function [x, B0Vals_pu_Area, ...
         disp(['Current function value: ' num2str(optimValues.fval)]);
     end
     
-    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval, 'Diagonistics', 'on');
+    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     profile on
 
     [x, fval] = fmincon( @(x)objfun(x, areaInfo, T, 'mainObjFun', "func_PLoss", 'secondObjFun', "func_SCD"), ...
