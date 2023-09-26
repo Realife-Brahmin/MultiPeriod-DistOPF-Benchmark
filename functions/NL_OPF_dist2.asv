@@ -137,7 +137,7 @@ function [x, B0Vals_pu_Area, ...
     CVR_P = CVR(1);
     CVR_Q = CVR(2);
     
-    [Aeq, beq, lb, ub, x0] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area)
+    [Aeq, beq, lb, ub, x0] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area);
 
     % plotSparsity(Aeq, beq);
 
