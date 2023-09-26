@@ -1,4 +1,4 @@
-function f = objfun(x, areaInfo, varargin)
+function f = objfun(x, areaInfo, T, varargin)
     
  % Default values for optional arguments
     verbose = false;
@@ -120,7 +120,7 @@ function f = objfun(x, areaInfo, varargin)
             row = indices_lij_T;
 
             if ~isempty(i_Idx)
-               f = f + x(row) * R_Area_Matrix(i, j);
+               f = f + sum(x(row) * R_Area_Matrix(i, j));
             end
             
         end
@@ -146,7 +146,7 @@ function f = objfun(x, areaInfo, varargin)
             i = fb_Area(i_Idx);
             indices_lij_T = getIndicesT(indices_lij, i_Idx);
             row = indices_lij_T;
-            f = f + x(row) * X_Area_Matrix(i, j);
+            f = f + sum(x(row) * X_Area_Matrix(i, j));
         end
     elseif strcmp(mainObjFun, "none")
         myfprintf(verbose, "Okay, no primary objective function component. Pretty weird though!\n");
@@ -170,9 +170,9 @@ function f = objfun(x, areaInfo, varargin)
         % end
 
         for batt_num = 1:nBatt_Area
-            indices_Pcj_T = getIndices(indices_Pcj, batt_num);
-            indices_Pdj_T = getIndices(indices_Pdj, batt_num);     
-            f = f + alpha* ( x(indices_Pcj_T)*(1-etta_C) + x(indices_Pdj_T)*(1/etta_D - 1) );
+            indices_Pcj_T = getIndicesT(indices_Pcj, batt_num);
+            indices_Pdj_T = getIndicesT(indices_Pdj, batt_num);     
+            f = f + alpha* ( sum(x(indices_Pcj_T)*(1-etta_C)) + sum(x(indices_Pdj_T)*(1/etta_D - 1)) );
         end
     elseif strcmp(secondObjFun, "none")
         myfprintf(verbose, "No additional objective function.\n");
