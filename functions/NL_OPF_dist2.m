@@ -126,7 +126,7 @@ function [x, B0Vals_pu_Area, ...
     [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
         = extractAreaElectricalParameters(Area, t, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false);
     
-    areaInfo = getAreaParameters(busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
+    areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
     areaInfo = exchangeCompVars(areaInfo, S_connection_Area);
 
     
@@ -137,15 +137,15 @@ function [x, B0Vals_pu_Area, ...
     CVR_P = CVR(1);
     CVR_Q = CVR(2);
     
-    [Aeq, beq, lb, ub] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area);
+    [Aeq, beq, lb, ub, x0] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area)
 
-    plotSparsity(Aeq, beq);
+    % plotSparsity(Aeq, beq);
 
     % keyboard;
    
-    x0 = mean(lb, ub);
+    % x0 = mean([lb, ub], 2);
+    
 
-    options = optimoptions('fmincon', 'Display', 'off', 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
     
     t3Start = tic;
     
@@ -176,14 +176,23 @@ function [x, B0Vals_pu_Area, ...
     % 
     % myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d:  Now solving for the real deal.\n", t, macroItr, Area);
 
-    [x, fval, ~, ~] = fmincon( @(x)objfun(x, areaInfo, 'mainObjFun', "func_PLoss", 'secondObjFun', "func_SCD"), ...
-                              x0, [], [], Aeq, beq, lb, ub, ...
-                              @(x)NonLinEqualities(x, areaInfo, "verbose", false, "saveToFile", false),...
-                              options);
+    function stop = outfun(x, optimValues, state)
+        stop = false;
+        disp(['Current X: ' num2str(x)]);
+        disp(['Current function value: ' num2str(optimValues.fval)]);
+    end
     
+    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
+    profile on
+
+    [x, fval] = fmincon( @(x)objfun(x, areaInfo, T, 'mainObjFun', "func_PLoss", 'secondObjFun', "func_SCD"), ...
+                              x0, [], [], Aeq, beq, lb, ub, ...
+                              @(x)NonLinEqualities(x, areaInfo, T, "verbose", false, "saveToFile", false),...
+                              options);
+    profile viewer
     keyboard;
     % macroIterationPLoss = fval;
-    macroIterationQLoss = objfun(x, areaInfo, 'mainObjFun', "func_QLoss", 'secondObjFun', "none");
+    macroIterationQLoss = objfun(x, areaInfo, T, 'mainObjFun', "func_QLoss", 'secondObjFun', "none");
     % if t == 1 && macroItr == 1 && Area == 4
     %     display(x(indices_l));
     %     X_Area = reshape(X_Area_Matrix, [], 1);
