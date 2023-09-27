@@ -6,7 +6,8 @@ function f = objfun(x, areaInfo, T, varargin)
     etta_D = 0.95;
     % alpha = 3e-5;
     % alpha = 3e-4;
-    alpha = 3e-3;
+    % alpha = 3e-3;
+    alpha = 9e-4;
     mainObjFun = "func_PLoss";
     secondObjFun = "func_SCD";
     % Process optional arguments

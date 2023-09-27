@@ -149,8 +149,8 @@ function [x, B0Vals_pu_Area, ...
         disp(['Current function value: ' num2str(optimValues.fval)]);
     end
     
-    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
-    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
+    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 200, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
 
     % profile on
@@ -160,10 +160,10 @@ function [x, B0Vals_pu_Area, ...
                               @(x)NonLinEqualities(x, areaInfo, T, "verbose", false, "saveToFile", false), ...
                               options);
 
-    x
-    fval
-    areaInfo
-    T
+    % x
+    % fval
+    % areaInfo
+    % T
     % profile viewer
     % keyboard;
     % checkForSCD(areaInfo, T, x); 
