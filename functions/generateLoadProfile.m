@@ -1,4 +1,4 @@
-function result = generateLoadProfile(n, low, high)
+function result = generateLoadProfile(n, low, high, trend)
     % Given a number of time periods (n), the function generates an array,
     % which starts and ends at the provided low value, and goes to the high value in the middle.
     % Default low and high values are 1.0 and 1.4, respectively.
@@ -9,6 +9,15 @@ function result = generateLoadProfile(n, low, high)
 
     if nargin < 3
         high = 1.4;
+    end
+
+    if nargin < 4
+        trend = 'normal';
+    end
+    
+    if strcmp(trend, 'upwards')
+        result = linspace(low, high, n);
+        return;
     end
 
     % Check if n is even or odd
