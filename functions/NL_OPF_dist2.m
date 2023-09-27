@@ -153,61 +153,26 @@ function [x, B0Vals_pu_Area, ...
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 200, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
 
-    profile on
+    % profile on
 
     [x, fval] = fmincon( @(x)objfun(x, areaInfo, T, 'mainObjFun', "func_PLoss", 'secondObjFun', "func_SCD"), ...
                               x0, [], [], Aeq, beq, lb, ub, ...
-                              @(x)NonLinEqualities(x, areaInfo, T, "verbose", false, "saveToFile", false),...
+                              @(x)NonLinEqualities(x, areaInfo, T, "verbose", false, "saveToFile", false), ...
                               options);
-    profile viewer
-    
-    % hold off;
-    % indices_Pc3 = getIndicesT(areaInfo.indices_Pcj, 3);
-    % indices_Pd3 = getIndicesT(areaInfo.indices_Pdj, 3);
-    % indices_B3 = getIndicesT(areaInfo.indices_Bj, 3);
-    % hold on;
-    % plot(1:T, x(indices_Pc3))
-    % plot(1:T, x(indices_Pd3))
-    % plot(1:T, x(indices_B3))
-    % title("Battery Variables for Battery 3")
-    % legend({"Charging", "Discharging", "SOC"})
-   nBatt_Area = areaInfo.nBatt_Area;
-   % T = 7; % Assuming T is 7 as you used in previous code.
 
-    for batt = 1:nBatt_Area
-        figure(batt); % Create a new figure for each battery
-        
-        % Charging Subplot
-        indices_Pc = getIndicesT(areaInfo.indices_Pcj, batt);
-        subplot(3, 1, 1); % 3 rows, 1 column, 1st subplot
-        plot(1:T, x(indices_Pc));
-        title(sprintf("Charging for Battery %d", batt));
-        legend({"Charging"});
-        
-        % Discharging Subplot
-        indices_Pd = getIndicesT(areaInfo.indices_Pdj, batt);
-        subplot(3, 1, 2); % 3 rows, 1 column, 2nd subplot
-        plot(1:T, x(indices_Pd));
-        title(sprintf("Discharging for Battery %d", batt));
-        legend({"Discharging"});
-        
-        % SOC Subplot
-        indices_B = getIndicesT(areaInfo.indices_Bj, batt);
-        subplot(3, 1, 3); % 3 rows, 1 column, 3rd subplot
-        plot(1:T, x(indices_B));
-        title(sprintf("SOC for Battery %d", batt));
-        legend({"SOC"});
-    end
+    x
+    fval
+    areaInfo
+    T
+    % profile viewer
+    % keyboard;
+    % checkForSCD(areaInfo, T, x); 
+    checkForSCD(areaInfo, T, x)
 
     keyboard;
     % macroIterationPLoss = fval;
     macroIterationQLoss = objfun(x, areaInfo, T, 'mainObjFun', "func_QLoss", 'secondObjFun', "none");
-    % if t == 1 && macroItr == 1 && Area == 4
-    %     display(x(indices_l));
-    %     X_Area = reshape(X_Area_Matrix, [], 1);
-    %     display(X_Area(1:m_Area));
-    %     display(macroIterationQLoss);
-    % end
+
     
     t3 = toc(t3Start);
     
