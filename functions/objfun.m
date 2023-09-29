@@ -8,7 +8,7 @@ function f = objfun(x, areaInfo, T, varargin)
     % alpha = 3e-4;
     % alpha = 3e-3;
     alpha = 9e-4;
-    gamma = 1e-3;
+    gamma = 1e3;
     % mainObjFun = "func_PLoss";
     % secondObjFun = "func_SCD";
     % Process optional arguments
@@ -156,7 +156,7 @@ function f = objfun(x, areaInfo, T, varargin)
                 end
             
             case "func_netChangeInSOC"
-                myfprintf(verbose, "SOCs need to be brought back to original at the end of horizon");
+                myfprintf(true, "SOCs need to be brought back to original at the end of horizon.\n");
 
                 for batt_num = 1:nBatt_Area
                     indices_Bj_T = getIndicesT(indices_Bj, batt_num);

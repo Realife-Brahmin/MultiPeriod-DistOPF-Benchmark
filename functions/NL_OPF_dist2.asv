@@ -175,55 +175,55 @@ function [x, B0Vals_pu_Area, ...
     
     time_dist(macroItr, Area) = t3;
     
-    % Result
-    P_Area = x(indices_Pij_T); %m_Areax1
-    Q_Area = x(indices_Q); %m_Areax1
-    % S_Area = complex(P_Area, Q_Area); %m_Areax1
-    % l_Area = x(indices_l);
-    % v_Area = x(indices_vAll); %N_Areax1
-    qD_Area = x(indices_qD);
-    % v_Area(1) = v_parent_Area;
-    B_Area = x(indices_B);
-    Pd_Area = x(indices_Pd);
-    Pc_Area = x(indices_Pc);
-    qB_Area = x(indices_qB);
-
-    qD_AllBuses = zeros(N_Area, 1);
-
-    for der_num = 1 : nDER_Area
-        busNum = busesWithDERs_Area(der_num);
-        qD_AllBuses(busNum) = qD_Area(der_num);
-    end
+    % % Result
+    % P_Area = x(indices_Pij_T); %m_Areax1
+    % Q_Area = x(indices_Q); %m_Areax1
+    % % S_Area = complex(P_Area, Q_Area); %m_Areax1
+    % % l_Area = x(indices_l);
+    % % v_Area = x(indices_vAll); %N_Areax1
+    % qD_Area = x(indices_qD);
+    % % v_Area(1) = v_parent_Area;
+    % B_Area = x(indices_B);
+    % Pd_Area = x(indices_Pd);
+    % Pc_Area = x(indices_Pc);
+    % qB_Area = x(indices_qB);
+    % 
+    % qD_AllBuses = zeros(N_Area, 1);
+    % 
+    % for der_num = 1 : nDER_Area
+    %     busNum = busesWithDERs_Area(der_num);
+    %     qD_AllBuses(busNum) = qD_Area(der_num);
+    % end
+    % 
+    % [B_AllBuses, Pd_AllBuses, Pc_AllBuses, qB_AllBuses] = deal(zeros(N_Area, 1));
+    % 
+    % for batt_num = 1 : nBatt_Area
+    %     busNum = busesWithBatts_Area(batt_num); 
+    %     B_AllBuses(busNum) = B_Area(batt_num);
+    %     Pc_AllBuses(busNum) = Pc_Area(batt_num);
+    %     Pd_AllBuses(busNum) = Pd_Area(batt_num);
+    %     qB_AllBuses(busNum) = qB_Area(batt_num);
+    % end
     
-    [B_AllBuses, Pd_AllBuses, Pc_AllBuses, qB_AllBuses] = deal(zeros(N_Area, 1));
-
-    for batt_num = 1 : nBatt_Area
-        busNum = busesWithBatts_Area(batt_num); 
-        B_AllBuses(busNum) = B_Area(batt_num);
-        Pc_AllBuses(busNum) = Pc_Area(batt_num);
-        Pd_AllBuses(busNum) = Pd_Area(batt_num);
-        qB_AllBuses(busNum) = qB_Area(batt_num);
-    end
+    % P_inFlowArea = P_Area(1);
+    % P_der_Total = sum(P_der_Area);
+    % Pd_Total = sum(Pd_Area);
+    % Pc_Total = sum(Pc_Area);
+    % PLoad_Total = sum(P_L_Area);
+    % 
+    % PLoss = P_inFlowArea + P_der_Total + Pd_Total - PLoad_Total - Pc_Total;
+    % percentageSavings = 100* (Pd_Total - Pc_Total) / (P_inFlowArea + P_der_Total + Pd_Total - Pc_Total);
     
-    P_inFlowArea = P_Area(1);
-    P_der_Total = sum(P_der_Area);
-    Pd_Total = sum(Pd_Area);
-    Pc_Total = sum(Pc_Area);
-    PLoad_Total = sum(P_L_Area);
+    % Q_inFlowArea = Q_Area(1);
+    % qD_Total = sum(qD_Area);
+    % qB_Total = sum(qB_Area);
+    % QLoad_Total = sum(Q_L_Area);
+    % 
+    % QLoss = Q_inFlowArea + qD_Total + qB_Total - QLoad_Total;
 
-    PLoss = P_inFlowArea + P_der_Total + Pd_Total - PLoad_Total - Pc_Total;
-    percentageSavings = 100* (Pd_Total - Pc_Total) / (P_inFlowArea + P_der_Total + Pd_Total - Pc_Total);
-    
-    Q_inFlowArea = Q_Area(1);
-    qD_Total = sum(qD_Area);
-    qB_Total = sum(qB_Area);
-    QLoad_Total = sum(Q_L_Area);
-
-    QLoss = Q_inFlowArea + qD_Total + qB_Total - QLoad_Total;
-
-    myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: " + ...
-        "Projected savings in substation power flow by using batteries: " + ...
-        "%f percent.\n", t, macroItr, Area, percentageSavings); % always true
+    % myfprintf(logging, fid, "Time Period = %d, macroItr = %d and Area = %d: " + ...
+    %     "Projected savings in substation power flow by using batteries: " + ...
+    %     "%f percent.\n", t, macroItr, Area, percentageSavings); % always true
 
     macroIterationPLosses(macroItr, Area) = PLoss;
     macroIterationQLosses(macroItr, Area) = macroIterationQLoss;
