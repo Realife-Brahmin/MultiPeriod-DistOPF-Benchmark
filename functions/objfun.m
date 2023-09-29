@@ -14,7 +14,7 @@ function f = objfun(x, areaInfo, T, varargin)
     % Process optional arguments
 
     % Default objective functions
-    objectiveFuns = {"func_PLoss", "func_SCD"}; 
+    objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"}; 
 
     numArgs = numel(varargin);
 
@@ -22,8 +22,7 @@ function f = objfun(x, areaInfo, T, varargin)
         error('Optional arguments must be specified as name-value pairs.');
     end
     
-    validArgs = ["verbose", "etta_C", "etta_D", "alpha", "mainObjFun", ...
-        "secondObjFun"];
+    validArgs = ["verbose", "etta_C", "etta_D", "alpha", "gamma", "objectiveFuns"];
     
     for i = 1:2:numArgs
         argName = varargin{i};
@@ -40,7 +39,7 @@ function f = objfun(x, areaInfo, T, varargin)
                 etta_C = argValue;
             case "etta_D"
                 etta_D = argValue;
-            case "objective"
+            case "objectiveFuns"
                 objectiveFuns = argValue;
             case "alpha"
                 alpha = argValue;
@@ -161,9 +160,9 @@ function f = objfun(x, areaInfo, T, varargin)
 
                 for batt_num = 1:nBatt_Area
                     indices_Bj_T = getIndicesT(indices_Bj, batt_num);
-                    idx_Bj_T_T = indices_Bj_T(:, T);
-                    idx_Bj_T_0 = B0Vals_pu_Area(batt_num);
-                    f = f + gamma* ( x(idx_Bj_T_T) - x(idx_Bj_T_0) )^2;
+                    idx_Bj_T_T = indices_Bj_T(T);
+                    Bj_T_0 = B0Vals_pu_Area(batt_num);
+                    f = f + gamma* ( x(idx_Bj_T_T) - Bj_T_0 )^2;
                 end
 
             otherwise
