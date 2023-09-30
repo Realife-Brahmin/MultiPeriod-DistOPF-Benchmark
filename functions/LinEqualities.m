@@ -254,8 +254,13 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     lbVals4 = [0, -5, -15, 0, V_min^2];
     ubVals4 = [5, 5, 5, 15, V_max^2];
     [lb_Area4, ub_Area4] = constructBoundVectors(numVarsBFM4, lbVals4, ubVals4);
+    % lbLast = B0Vals_pu_Area;
+    % ubLast = B0Vals_pu_Area;
     lb_Area9 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area], T, 1);
+    % lb_Area5 = [lb_Area4; lb_qD_onlyDERbuses_Area]
+    % lb_Area9(length(lb_Area5)+1:length(lb_Area5)+nBatt_Area) = lbLast
     ub_Area9 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area], T, 1);
+    % ub_Area9(length(lb_Area5)+1:length(lb_Area5)+nBatt_Area) = ubLast
 
     x0 = repmat([zeros(3*m_Area, 1); 1.00*ones(N_Area, 1); zeros(nDER_Area, 1); B0Vals_pu_Area; zeros(3*nBatt_Area, 1)], T, 1);
 
