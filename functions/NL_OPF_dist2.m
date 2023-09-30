@@ -149,24 +149,39 @@ function [x, B0Vals_pu_Area, ...
         disp(['Current function value: ' num2str(optimValues.fval)]);
     end
     
+    % itermax = 50;
+    itermax = 20;
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
-    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 20, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
+    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 200, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
 
     profile on
+    % objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"};
+    objectiveFuns = {"func_PLoss", "func_SCD"};
+    % objectiveFuns = {"func_PLoss", "func_netChangeInSOC"};
+    try
+        [x, fval] = fmincon( @(x)objfun(x, areaInfo, T, 'objectiveFuns', objectiveFuns), ...
+            x0, [], [], Aeq, beq, lb, ub, ...
+            @(x)NonLinEqualities(x, areaInfo, T, "verbose", false, "saveToFile", false), ...
+            options);
 
-    [x, fval] = fmincon( @(x)objfun(x, areaInfo, T, 'objectiveFuns', {"func_PLoss", "func_SCD", "func_netChangeInSOC"}), ...
-                              x0, [], [], Aeq, beq, lb, ub, ...
-                              @(x)NonLinEqualities(x, areaInfo, T, "verbose", false, "saveToFile", false), ...
-                              options);
+        profile viewer;
+        keyboard;
 
-    profile viewer;
+        lineLosses = objfun(x, areaInfo, T, 'objectiveFuns', {"func_PLoss"});
+        scd = objfun(x, areaInfo, T, 'objectiveFuns', {"func_SCD"});
+        changeInSOC = objfun(x, areaInfo, T, 'objectiveFuns', {"func_netChangeInSOC"});
 
-    keyboard;
-
-    checkForSCD(areaInfo, T, x)
-
-    keyboard;
+        myfprintf(true, "Real Power Line Losses for Area %d for %d time periods = %d [kW]\n", Area, T, lineLosses*1000);
+        myfprintf(true, "SCD Constraint violation for Area %d for %d time periods = %d [kW]\n", Area, T, scd*1000);
+        myfprintf(true, "SOC Level constraint violation for Area %d for %d time period = %d [kWh]\n", Area, T, changeInSOC*1000);
+        checkForSCD(areaInfo, T, x)
+        keyboard;
+    catch ME
+        % Save the current workspace to a file for debugging
+        save('errorWorkspace.mat');
+        rethrow(ME);
+    end
     % macroIterationPLoss = fval;
     macroIterationQLoss = objfun(x, areaInfo, T, 'objectiveFuns', {"func_QLoss"});
 
