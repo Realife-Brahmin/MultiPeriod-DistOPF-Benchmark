@@ -109,7 +109,7 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     areaInfo.indices_Pcj = indices_Pcj;
     areaInfo.indices_qBj = indices_qBj;
 
-
+    % [areaInfo.fb_Area areaInfo.tb_Area]
      for j = 2 : N_Area
         myfprintf(verbose, 1, "*****\n" + ...
             "Checking for bus %d.\n" + ...
@@ -124,7 +124,7 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
         k_indices = find(fb_Area == j);
         % disp(k_indices);
         % ks = tb_Area(k_indices);
-
+        
         js_indices = find(fb_Area==i);
         % js = tb_Area(js_indices);
 
@@ -211,9 +211,6 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     end
     
     for batt_num = 1:nBatt_Area
-
-        % j = busesWithBatts_Area(batt_num);
-        % i_Idx = find(tb_Area == j);
         
         indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
         indices_SOC_j_T_2toT = indices_SOC_j_T(2:T);

@@ -1,6 +1,12 @@
-function checkForSCD(areaInfo, T, x)
+function checkForSCD(areaInfo, T, x, varargin)
     %checkForSCD Plots Charging, Discharging, and SOC for each battery in 
     % each area to check for simultaneous charging and discharging (SCD).
+
+    % Parse input arguments
+    p = inputParser;
+    addParameter(p, 'savePlots', false, @(x) islogical(x) || ismember(lower(x), {'true', 'false'}));
+    parse(p, varargin{:});
+    savePlots = p.Results.savePlots;
 
     nBatt_Area = areaInfo.nBatt_Area;
     fprintf('Checking for SCD for Area %d\n', areaInfo.Area);
@@ -46,6 +52,17 @@ function checkForSCD(areaInfo, T, x)
         legend('Battery State of Charge', 'Location', 'NorthWest');
         grid on;
         grid minor;
+
+        % Save plot if requested
+        if savePlots
+            saveDir = strcat("ProcessedData/BatteryVariables/Area_", num2str(areaInfo.Area), "/");
+            if ~exist(saveDir, 'dir')
+                mkdir(saveDir);
+            end
+            saveName = sprintf('BatteryVariables_Area_%d_Battery_%d.png', areaInfo.Area, batt_num);
+            savePath = fullfile(saveDir, saveName);
+            saveas(gcf, savePath);
+        end
     end
 end
 

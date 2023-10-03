@@ -105,6 +105,7 @@ function [busDataTable_pu_Area, branchDataTable_Area, ...
         display(busDataActualBusNumsTable_Area)
     end
     
+    writetable(sortrows(busDataTable_Area, "bus"))
     % Graph Formation
     fb_Area = branchDataTable_Area.fb;
     tb_Area = branchDataTable_Area.tb;
