@@ -1,0 +1,12 @@
+Machine this simulation was solved on: LAPTOP-CP5R08SK
+Optimization for Area 1 for 4 time periods took 2.262528e+02 [s] and 10 iterations.
+where a micro-iteration limit of 20 and a minimum improvement of 1.000000e-01 [kW] was imposed.
+Average time per iteration: 2.262528e+01 [s]
+Number of Linear Equations: 1868
+Number of Nonlinear Equalities: 508
+Number of Optimization Variables: 3736
+Total Objective Function Value for Area 1 for 4 time periods = 3.145163e+01 [kW]
+Total Real Power Line Losses for Area 1 for 4 time periods = 3.143057e+01 [kW]
+Total Battery Power losses for Area 1 for 4 time periods = 2.079253e+01 [kW]
+Average SOC Level constraint violation for Area 1 for 4 time periods = 5.698300e-02 [kWh]
+where alpha = 1.000000e-03 and gamma = 1
