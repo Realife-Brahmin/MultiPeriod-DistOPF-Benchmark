@@ -13,7 +13,7 @@ function f = objfun(x, areaInfo, T, varargin)
     % alpha = 9e-4;
     % gamma = 1e3;
     % gamma = 10;
-    gamma = 50;
+    gamma = 1e0;
     % mainObjFun = "func_PLoss";
     % secondObjFun = "func_SCD";
     % Process optional arguments
