@@ -138,10 +138,6 @@ function [x, B0Vals_pu_Area, ...
     areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
     areaInfo = exchangeCompVars(areaInfo, S_connection_Area);
     
-    % areaInfo.N_Area
-    % areaInfo.m_Area
-    % areaInfo.nDER_Area
-    % areaInfo.nBatt_Area
 
     
      myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
@@ -165,7 +161,16 @@ function [x, B0Vals_pu_Area, ...
     
     % itermax = 50;
     itermax = 20;
-    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+    tolfun = 1e-4;
+    stepTol = 1e-5;
+    constraintTol = 1e-4;
+    optimalityTol = 1e-5;
+    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+        'FunctionTolerance', tolfun, ...
+        'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    'OptimalityTolerance', optimalityTol);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 200, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
 
@@ -176,10 +181,18 @@ function [x, B0Vals_pu_Area, ...
     objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"};
     % objectiveFuns = {"func_PLoss", "func_SCD"};
     % objectiveFuns = {"func_PLoss", "func_netChangeInSOC"};
-    [x, fval] = fmincon( @(x)objfun(x, areaInfo, T, 'objectiveFuns', objectiveFuns, 'alpha', alpha, 'gamma', gamma), ...
-        x0, [], [], Aeq, beq, lb, ub, ...
-        @(x)NonLinEqualities(x, areaInfo, T, "verbose", false, "saveToFile", false), ...
-        options);
+    [x, fval, ~, output] = fmincon(@(x)objfun(x, areaInfo, T, 'objectiveFuns', objectiveFuns, 'alpha', alpha, 'gamma', gamma), ...
+    x0, [], [], Aeq, beq, lb, ub, ...
+    @(x)NonLinEqualities(x, areaInfo, T, "verbose", false, "saveToFile", false), ...
+    options);
+
+    iterations_taken = output.iterations;
+
+    prefixName = strcat("processedData", filesep, systemName, filesep, "numAreas_", num2str(numAreas), filesep, "area", num2str(Area), filesep, "Horizon_", num2str(T), "_macroItr_", num2str(macroItr));
+    areaSolutionName_x = strcat(prefixName, "_optimalSolutions.csv");
+    areaSolutionName_fval = strcat(prefixName, "_optimalObjectiveFunctionValue.txt");
+    
+    writematrix(x, areaSolutionName_x);
 
     if profiling
         profile viewer;
@@ -187,26 +200,50 @@ function [x, B0Vals_pu_Area, ...
     lineLosses = objfun(x, areaInfo, T, 'objectiveFuns', {"func_PLoss"});
     scd = objfun(x, areaInfo, T, 'objectiveFuns', {"func_SCD"});
     changeInSOC = objfun(x, areaInfo, T, 'objectiveFuns', {"func_netChangeInSOC"});
-
-    myfprintf(true, "Real Power Line Losses for Area %d for %d time periods = %d [kW]\n", Area, T, lineLosses*1000);
-    myfprintf(true, "SCD Constraint violation for Area %d for %d time periods = %d [kW]\n", Area, T, scd*1000/alpha);
-    myfprintf(true, "SOC Level constraint violation for Area %d for %d time periods = %d [kWh]\n", Area, T, changeInSOC*1000/gamma);
     
+    t3 = toc(t3Start);
+
+    % filename = sprintf('%s', areaSolutionName_fval);
+
+    % Open the file for writing
+    fid = fopen(areaSolutionName_fval, 'w');
+    fileOpenedFlag = true;
+
+    % Check if the file opened successfully
+    if fid == -1
+        error('Failed to open the file for writing.');
+    end
+
+    [nLinEqnsT, nNonLinEqnsT, nVarsT] = getProblemSize(areaInfo, T);
+    
+    myfprintf(true, fid, "Optimization for Area %d for %d time periods took %d [s] and %d iterations.\n", Area, T,  t3, iterations_taken);
+    myfprintf(true, fid, "where a micro-iteration limit of %d and a minimum improvement of %d [kW] was imposed.\n", itermax, tolfun*1e3);
+    myfprintf(true, fid, "Average time per iteration: %d [s/iteration]\n", t3/iterations_taken);
+    myfprintf(true, fid, "Number of Linear Equations: %d\n", nLinEqnsT);
+    myfprintf(true, fid, "Number of Nonlinear Equalities: %d\n", nNonLinEqnsT);
+    myfprintf(true, fid, "Number of Optimization Variables: %d\n", nVarsT);
+    myfprintf(true, fid, "Total Objective Function Value for Area %d for %d time periods = %d [kW]\n", Area, T, fval*1000);
+    myfprintf(true, fid, "Total Real Power Line Losses for Area %d for %d time periods = %d [kW]\n", Area, T, lineLosses*1000);
+    myfprintf(true, fid, "Total Battery Power losses for Area %d for %d time periods = %d [kW]\n", Area, T, scd*1000/alpha);
+    myfprintf(true, fid, "Average SOC Level constraint violation for Area %d for %d time periods = %d [kWh]\n", Area, T, sqrt( changeInSOC*(1000^2)/(gamma * areaInfo.nBatt_Area)));
+    myfprintf(true, fid, "where alpha = %d and gamma = %d\n", alpha, gamma);
+   
+
     if macroItr == 1
         saveSCDPlots = true;
     else
         saveSCDPlots = false;
     end
+
     checkForSCD(areaInfo, T, x, 'savePlots', saveSCDPlots);
+    error("Okay we're good for one area.")
 
     % keyboard;
 
     % macroIterationPLoss = fval;
     macroIterationQLoss = objfun(x, areaInfo, T, 'objectiveFuns', {"func_QLoss"});
-    error("Okay we're good for one area.")
 
     
-    t3 = toc(t3Start);
     
     time_dist(macroItr, Area) = t3;
 
