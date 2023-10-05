@@ -61,15 +61,15 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     listNumVars1 = [m_Area*ones(1, 3), N_Area, nDER_Area, nBatt_Area*ones(1, 4)];
     nVars1 = sum(listNumVars1);
     nVarsT = nVars1 * T;
-    listNumEqns1 = [m_Area*ones(1, 2), N_Area, nBatt_Area];
-    nEqns1 = sum(listNumEqns1);
-    nEqnsT = nEqns1 * T;
+    listNumLinEqns1 = [m_Area*ones(1, 2), N_Area, nBatt_Area];
+    nLinEqns1 = sum(listNumLinEqns1);
+    nLinEqnsT = nLinEqns1 * T;
     
-    Aeq = zeros(nEqnsT, nVarsT);
+    Aeq = zeros(nLinEqnsT, nVarsT);
     sz = size(Aeq);
-    beq = zeros(nEqnsT, 1);
+    beq = zeros(nLinEqnsT, 1);
 
-    eqnIndicesT = generateRangesFromValuesT(listNumEqns1, T);
+    eqnIndicesT = generateRangesFromValuesT(listNumLinEqns1, T);
     varIndicesT = generateRangesFromValuesT(listNumVars1, T);
     % keyboard;
     
