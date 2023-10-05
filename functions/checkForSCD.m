@@ -5,8 +5,11 @@ function checkForSCD(areaInfo, T, x, varargin)
     % Parse input arguments
     p = inputParser;
     addParameter(p, 'savePlots', false, @(x) islogical(x) || ismember(lower(x), {'true', 'false'}));
+    addParameter(p, 'showPlots', false, @(x) islogical(x) || ismember(lower(x), {'true', 'false'}));
+
     parse(p, varargin{:});
     savePlots = p.Results.savePlots;
+    showPlots = p.Results.showPlots;
 
     nBatt_Area = areaInfo.nBatt_Area;
     fprintf('Checking for SCD for Area %d\n', areaInfo.Area);
@@ -14,10 +17,15 @@ function checkForSCD(areaInfo, T, x, varargin)
     wineRed = [0.7, 0.0, 0.3];
     darkGreen = [0.0, 0.4, 0.0];
     gptPurple = [0.5, 0.2, 0.7];
+    
+    if showPlots
+        visible = 'on';
+    else
+        visible = 'off';
+    end
 
     for batt_num = 1:nBatt_Area
-        figure; % New figure for each battery
-        
+        f = figure('visible', visible);        
         SOC_Max = areaInfo.E_onlyBattBusesMax_Area(batt_num);
         
         % Charging and Discharging subplot
@@ -59,9 +67,10 @@ function checkForSCD(areaInfo, T, x, varargin)
             if ~exist(saveDir, 'dir')
                 mkdir(saveDir);
             end
-            saveName = sprintf('BatteryVariables_Area_%d_Battery_%d.png', areaInfo.Area, batt_num);
+            saveName = sprintf('BatteryVariables_Area_%d_Battery_%d_Horizon_%d.png', areaInfo.Area, batt_num, T);
             savePath = fullfile(saveDir, saveName);
-            saveas(gcf, savePath);
+
+            saveas(f, savePath);
         end
     end
 end
