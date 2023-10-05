@@ -1,0 +1,1 @@
+Optimization for Area 1 for 6 time periods took 6.460911e+02 [s] and 20 iterations.

@@ -1,0 +1,9 @@
+Optimization for Area 1 for 1 time periods took 6.514604e+00 [s]
+Number of Linear Equations: 467
+Number of Nonlinear Equalities: 127
+Number of Optimization Variables: 934
+Total Objective Function Value for Area 1 for 1 time periods = 8.685276e+00 [kW]
+Total Real Power Line Losses for Area 1 for 1 time periods = 8.659965e+00 [kW]
+Total Battery Power losses for Area 1 for 1 time periods = 8.401337e+00 [kW]
+Average SOC Level constraint violation for Area 1 for 1 time periods = 4.460122e-01 [kWh]
+where alpha = 1.000000e-03 and gamma = 1
