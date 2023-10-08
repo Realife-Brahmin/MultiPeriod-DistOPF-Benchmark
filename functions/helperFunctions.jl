@@ -3,7 +3,37 @@ using Glob
 using Plots
 using PrettyTables
 
-function extract_values_from_files(folder_name)
+"""
+    extract_values_from_files(folder_name::String)
+
+Extract various simulation results from text files contained within a specified folder.
+
+# Arguments
+- `folder_name::String`: The path to the folder containing the target `.txt` files.
+
+# Returns
+- `NamedTuple`: A named tuple containing the following fields:
+  * `totalTimes`: An array of total times for the optimization in each file.
+  * `microItrs`: An array of the number of iterations taken in each file.
+  * `avgTimes`: An array of the average times per iteration for each file.
+  * `nLinEqns`: An array of the number of linear equations in each file.
+  * `nNonLinEqns`: An array of the number of nonlinear equalities in each file.
+  * `nVars`: An array of the number of optimization variables in each file.
+  * `objFunVals`: An array of the objective function values for each file.
+  * `PLossVals`: An array of the real power line loss values for each file.
+  * `PBattLossVals`: An array of the battery power loss values for each file.
+  * `terminalSOCPenaltyVals`: An array of the average SOC level constraint violation values for each file.
+  * `horizonTimes`: An array indicating the time horizon for each file.
+
+# Notes
+The function searches for files matching the pattern `Horizon\_*_macroItr\_*_*\_optimalObjectiveFunctionValue.txt`
+in the specified folder and extracts the above values from them.
+
+# Example
+```julia
+results = extract_values_from_files("path/to/folder")
+"""
+function extract_values_from_files(folder_name::String)
     # Arrays to store extracted values
     totalTimes = Float64[]
     microItrs = Int[]
@@ -57,23 +87,3 @@ function extract_values_from_files(folder_name)
 
     return res
 end
-
-
-# Usage
-systemName = "ieee123";
-numAreas = 1;
-Area = 1;
-folderName = "processedData/"*systemName*"/numAreas_"*string(numAreas)* "/area"*string(Area)*"/"
-
-res = extract_values_from_files(folderName)
-
-df = DataFrame(res)
-
-selected_df = df[:, [:horizonTimes, :totalTimes, :nLinEqns, :nNonLinEqns, :nVars, :PLossVals]]
-
-rename!(selected_df, :totalTimes => "totalTimes [s]", :PLossVals => "PLoss [kW]")
-# names(selected_df)[[2, 6]] = ["totalTimes [s]", "PLoss [kW]"]
-
-pretty_table(selected_df, header=names(selected_df), crop=:none)
-
-
