@@ -1,4 +1,4 @@
-function plotGraphs(t, macroItr, Area, N_Area, busDataActualBusNumsTable_Area, ...
+function plotGraphs(macroItr, Area, N_Area, busDataActualBusNumsTable_Area, ...
     G_Area, isRoot_Area, numAreas, CB_FullTable, numChildAreas_Area, varargin)
     
  % Default values for optional arguments
@@ -54,11 +54,7 @@ function plotGraphs(t, macroItr, Area, N_Area, busDataActualBusNumsTable_Area, .
         error("Kindly specify ONLY one of the following arguments as true: verbose and logging.")
     elseif logging && ~verbose && macroItr == 1
         fileOpenedFlag = true;
-        if t == 1
-            fid = fopen(saveLocationFilename, 'w');
-        else
-            fid = fopen(saveLocationFilename, 'a');
-        end
+        fid = fopen(saveLocationFilename, 'w');
     elseif ~logging && macroItr == 1
         logging = verbose;
         fid = 1;
