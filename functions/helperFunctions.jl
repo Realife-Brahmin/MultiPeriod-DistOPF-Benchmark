@@ -58,6 +58,7 @@ function extract_values_from_files(folder_name)
     return res
 end
 
+
 # Usage
 systemName = "ieee123";
 numAreas = 1;
@@ -70,10 +71,9 @@ df = DataFrame(res)
 
 selected_df = df[:, [:horizonTimes, :totalTimes, :nLinEqns, :nNonLinEqns, :nVars, :PLossVals]]
 
-# pretty_table(df, header=Symbol.(fieldnames(typeof(res))), crop=:none)
-vscodedisplay(selected_df)
-# pretty_table(df, crop=:none)
-pretty_table(selected_df, header=names(selected_df), crop=:none)
+rename!(selected_df, :totalTimes => "totalTimes [s]", :PLossVals => "PLoss [kW]")
+# names(selected_df)[[2, 6]] = ["totalTimes [s]", "PLoss [kW]"]
 
+pretty_table(selected_df, header=names(selected_df), crop=:none)
 
 
