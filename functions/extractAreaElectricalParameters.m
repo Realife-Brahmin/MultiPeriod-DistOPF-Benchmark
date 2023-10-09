@@ -1,6 +1,6 @@
 function [busDataTable_pu_Area, branchDataTable_Area, ...
     edgeMatrix_Area, R_Area, X_Area] = ...
-    extractAreaElectricalParameters(Area, macroItr, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, varargin)
+    extractAreaElectricalParameters(Area, simInfo, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, varargin)
 
  % Default values for optional arguments
     verbose = false;
@@ -65,14 +65,16 @@ function [busDataTable_pu_Area, branchDataTable_Area, ...
     
     saveLocationFilename = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
 
+    macroItr = simInfo.macroItr; % completed macro-iterations, starts at 0
+
     fileOpenedFlag = false;
 
     if logging && verbose
         error("Kindly specify ONLY one of the following arguments as true: verbose and logging.")
-    elseif logging && ~verbose && macroItr == 1
+    elseif logging && ~verbose && macroItr == 0
         fileOpenedFlag = true;
         fid = fopen(saveLocationFilename, 'w');
-    elseif ~logging && macroItr == 1
+    elseif ~logging && macroItr == 0
         logging = verbose;
         fid = 1;
     else
@@ -109,9 +111,9 @@ function [busDataTable_pu_Area, branchDataTable_Area, ...
     edgeMatrix_Area = [fb_Area, tb_Area];
     
 % Optional: Plot Graphs which highlight the relationships between different Areas.
-
-    if macroItr == 1
-        plotGraphs(macroItr, Area, ...
+    
+    if macroItr == 0
+        plotGraphs(Area, simInfo, ...
         N_Area, ...
         busDataActualBusNumsTable_Area, graph_Area, ...
         isRoot_Area, numAreas, CB_FullTable, ...

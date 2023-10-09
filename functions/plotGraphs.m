@@ -1,4 +1,4 @@
-function plotGraphs(macroItr, Area, N_Area, busDataActualBusNumsTable_Area, ...
+function plotGraphs(Area, simInfo, N_Area, busDataActualBusNumsTable_Area, ...
     G_Area, isRoot_Area, numAreas, CB_FullTable, numChildAreas_Area, varargin)
     
  % Default values for optional arguments
@@ -46,16 +46,18 @@ function plotGraphs(macroItr, Area, N_Area, busDataActualBusNumsTable_Area, ...
         end
     end
     
+    macroItr = simInfo.macroItr; % completed macro-iterations, starts at 0
+
     saveLocationFilename = strcat(loggingLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
 
     fileOpenedFlag = false;
 
     if logging && verbose
         error("Kindly specify ONLY one of the following arguments as true: verbose and logging.")
-    elseif logging && ~verbose && macroItr == 1
+    elseif logging && ~verbose && macroItr == 0
         fileOpenedFlag = true;
         fid = fopen(saveLocationFilename, 'w');
-    elseif ~logging && macroItr == 1
+    elseif ~logging && macroItr == 0
         logging = verbose;
         fid = 1;
     else
@@ -100,7 +102,7 @@ function plotGraphs(macroItr, Area, N_Area, busDataActualBusNumsTable_Area, ...
         myfprintf(logging, fid,  "This area has no child areas.\n");
     end
 
-    if displayNetworkGraphs && macroItr == 1
+    if displayNetworkGraphs && macroItr == 0
         numLegendItems = 1 + ~isRoot_Area + 2*numChildAreas_Area;  
         legendList = cell(numLegendItems, 1);
         legendItr = 1;
