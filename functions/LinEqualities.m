@@ -1,8 +1,8 @@
-function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
+function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
 
     % Default values
     % logging_Aeq_beq = false;
-
+    T = simInfo.T;
     % Input parser
     p = inputParser;
     addParameter(p, 'delta_t', 0.25, @isnumeric);

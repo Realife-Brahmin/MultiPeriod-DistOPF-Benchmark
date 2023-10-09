@@ -1,11 +1,8 @@
 function [x, sysInfo, simInfo, ...
      time_dist] = ...
     ...
-    NL_OPF_dist2(sysInfo, simInfo, v_parent_Area, S_connection_Area,  ...
-    lambdaVals, pvCoeffVals, ...
-    Area, isLeaf_Area, isRoot_Area, numChildAreas_Area, numAreas,  ...
-    time_dist, T, ...
-    CB_FullTable, varargin)
+    NL_OPF_dist2(sysInfo, simInfo, areaInfo, v_parent_Area, S_connection_Area,  ...
+    lambdaVals, pvCoeffVals, time_dist, varargin)
     
  % Default values for optional arguments
     verbose = false;
@@ -27,6 +24,7 @@ function [x, sysInfo, simInfo, ...
     profiling = false;
 
     saveToFile = false;
+    Area = areaInfo.Area;
     strArea = convert2doubleDigits(Area);
     fileExtension = ".txt";
     systemName = "ieee123";
@@ -97,6 +95,8 @@ function [x, sysInfo, simInfo, ...
         end
     end
     
+    numAreas = sysInfo.numAreas;
+
     saveLocationFilename = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
     saveLocationFilename_Aeq_beq = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/Aeq_beq_area", strArea, fileExtension);
     
@@ -125,10 +125,15 @@ function [x, sysInfo, simInfo, ...
     end
     
     logging_Aeq_beq = false;
+    
+    isRoot_Area = sysInfo.isRoot(Area);
+    numAreas = sysInfo.numAreas;
+    systemName = sysInfo.systemName;
+    CB_FullTable = sysInfo.CBTable;
+    numChildAreas_Area = sysInfo.numChildAreas(Area);
 
-    % [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
-        areaInfo = extractAreaInfo(Area, simInfo, isRoot_Area, systemName, numAreas, ...
-        CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', true);
+    areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, numAreas, ...
+    CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', true);
     
     % areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
     areaInfo = exchangeCompVars(areaInfo, S_connection_Area);
@@ -143,7 +148,7 @@ function [x, sysInfo, simInfo, ...
     CVR_P = CVR(1);
     CVR_Q = CVR(2);
     
-    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area);
+    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area);
 
     % plotSparsity(Aeq, beq);
     
@@ -169,7 +174,9 @@ function [x, sysInfo, simInfo, ...
     'OptimalityTolerance', optimalityTol);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 200, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
-
+    
+    T = simInfo.T;
+    
     if T >= 7
         profiling = true;
         profile on

@@ -1,4 +1,4 @@
-function areaInfo = extractAreaInfo(Area, simInfo, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, varargin)
+function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, varargin)
 
  % Default values for optional arguments
     verbose = false;
@@ -79,10 +79,13 @@ function areaInfo = extractAreaInfo(Area, simInfo, isRoot_Area, systemName, numA
         logging = false;
     end
 
+    Area = areaInfo.Area;
+    
     filenameBusData_Area = strcat(systemDataFolder, "area", num2str(Area), filesep, 'powerdata.csv');
     busData_Area = readmatrix(filenameBusData_Area);
     busDataTable_Area = array2table(busData_Area, 'VariableNames', {'bus', 'P_L', 'Q_L', 'Q_C', 'P_der', 'busType'});
     
+    Area = areaInfo.Area;
     N_Area = size(busData_Area, 1);     % total number of nodes
     
     filenameBranchData_Area = strcat(systemDataFolder, "area", num2str(Area), '/linedata.csv');
