@@ -1,4 +1,4 @@
-function plotGraphs(Area, simInfo, N_Area, busDataActualBusNumsTable_Area, ...
+function plotGraphs(areaInfo, simInfo, busDataActualBusNumsTable_Area, ...
     G_Area, isRoot_Area, numAreas, CB_FullTable, numChildAreas_Area, varargin)
     
  % Default values for optional arguments
@@ -64,6 +64,8 @@ function plotGraphs(Area, simInfo, N_Area, busDataActualBusNumsTable_Area, ...
         logging = false;
     end
 
+    Area = areaInfo.Area;
+
     myfprintf(displayNetworkGraphs, fid,  "Plotting for Area %d:\n", Area);
 
 
@@ -106,7 +108,7 @@ function plotGraphs(Area, simInfo, N_Area, busDataActualBusNumsTable_Area, ...
         numLegendItems = 1 + ~isRoot_Area + 2*numChildAreas_Area;  
         legendList = cell(numLegendItems, 1);
         legendItr = 1;
-        figureTitle = "Graph for Area " + num2str(Area) + " with " + num2str(N_Area) + " nodes";
+        figureTitle = "Graph for Area " + num2str(Area) + " with " + num2str(areaInfo.N_Area) + " nodes";
         figure('Name', figureTitle);
         plotTitle = figureTitle;
         legendStr_base = strcat("Set of all branches in Area ", num2str(Area));

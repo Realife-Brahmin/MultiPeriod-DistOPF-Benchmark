@@ -1,15 +1,15 @@
-function areaInfo = getAreaParameters(Area, busDataTable, branchDataTable, R_Area, X_Area, varargin)
+function areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTable, R_Area, X_Area, varargin)
     %GETAREAPARAMETERS Extracts area-specific power system parameters.
     % 
     % Synopsis:
-    %   areaInfo = getAreaParameters(busDataTable, branchDataTable, varargin)
+    %   areaInfo = getAreaParameters(busDataTable_pu_Area, branchDataTable, varargin)
     %
     % Description:
     %   Given the data tables for buses and branches, this function extracts various power 
     %   system parameters specific to an area.
     %
     % Input:
-    %   - busDataTable: Table containing bus-specific data.
+    %   - busDataTable_pu_Area: Table containing bus-specific data.
     %   - branchDataTable: Table containing branch-specific data.
     %   - varargin: Name-Value pairs for 'chargeToPowerRatio', 'soc_min', and 'soc_max'
     %
@@ -28,18 +28,18 @@ function areaInfo = getAreaParameters(Area, busDataTable, branchDataTable, R_Are
     soc_max = p.Results.soc_max;
     
     areaInfo.Area = Area;
-    areaInfo.N_Area = length(busDataTable.bus);
+    areaInfo.N_Area = length(busDataTable_pu_Area.bus);
     areaInfo.m_Area = length(branchDataTable.fb);
     areaInfo.fb_Area = branchDataTable.fb;
     areaInfo.tb_Area = branchDataTable.tb;
 
-    areaInfo.P_L_Area = busDataTable.P_L;
-    areaInfo.Q_L_Area = busDataTable.Q_L;
-    areaInfo.Q_C_Area = busDataTable.Q_C;
-    areaInfo.P_der_Area = busDataTable.P_der;
-    areaInfo.S_der_Area = busDataTable.S_der;
-    areaInfo.S_battMax_Area = busDataTable.S_der;
-    areaInfo.P_battMax_Area = busDataTable.P_der;
+    areaInfo.P_L_Area = busDataTable_pu_Area.P_L;
+    areaInfo.Q_L_Area = busDataTable_pu_Area.Q_L;
+    areaInfo.Q_C_Area = busDataTable_pu_Area.Q_C;
+    areaInfo.P_der_Area = busDataTable_pu_Area.P_der;
+    areaInfo.S_der_Area = busDataTable_pu_Area.S_der;
+    areaInfo.S_battMax_Area = busDataTable_pu_Area.S_der;
+    areaInfo.P_battMax_Area = busDataTable_pu_Area.P_der;
     areaInfo.Emax_batt_Area = chargeToPowerRatio .* areaInfo.P_battMax_Area;
 
     % DER Configuration:

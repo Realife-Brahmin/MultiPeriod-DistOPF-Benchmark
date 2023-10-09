@@ -126,11 +126,11 @@ function [x, sysInfo, simInfo, ...
     
     logging_Aeq_beq = false;
 
-    [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
-        = extractAreaElectricalParameters(Area, simInfo, isRoot_Area, systemName, numAreas, ...
+    % [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
+        areaInfo = extractAreaInfo(Area, simInfo, isRoot_Area, systemName, numAreas, ...
         CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', true);
     
-    areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
+    % areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
     areaInfo = exchangeCompVars(areaInfo, S_connection_Area);
     
     sysInfo.Area{Area} = areaInfo;
@@ -230,11 +230,13 @@ function [x, sysInfo, simInfo, ...
     myfprintf(true, fid, "where alpha = %d and gamma = %d\n", alpha, gamma);
    
 
-    if macroItr == 0
-        saveSCDPlots = true;
-    else
-        saveSCDPlots = false;
-    end
+    % if macroItr == 0
+    %     saveSCDPlots = true;
+    % else
+    %     saveSCDPlots = false;
+    % end
+    
+    saveSCDPlots = false;
 
     checkForSCD(sysInfo, simInfo, areaInfo, T, x, 'savePlots', saveSCDPlots);
     error("Okay we're good for one area.")

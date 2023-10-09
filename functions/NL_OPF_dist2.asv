@@ -4,7 +4,7 @@ function [x, sysInfo, simInfo, ...
     NL_OPF_dist2(sysInfo, simInfo, v_parent_Area, S_connection_Area,  ...
     lambdaVals, pvCoeffVals, ...
     Area, isLeaf_Area, isRoot_Area, numChildAreas_Area, numAreas,  ...
-    macroItr, time_dist, T, ...
+    time_dist, T, ...
     CB_FullTable, varargin)
     
  % Default values for optional arguments
@@ -99,12 +99,14 @@ function [x, sysInfo, simInfo, ...
     
     saveLocationFilename = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
     saveLocationFilename_Aeq_beq = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/Aeq_beq_area", strArea, fileExtension);
+    
+    macroItr = simInfo.macroItr; % completed macro-iterations, starts at 0
 
-    if macroItr ~= 1
+    if macroItr ~= 0
         logging_Aeq_beq = false;
     end
 
-    if logging_Aeq_beq && saveToFile && macroItr == 1 && Area == 2
+    if logging_Aeq_beq && saveToFile && macroItr == 0 && Area == 2
         fileOpenedFlag_Aeq_beq = true;
         fid_Aeq_beq = fopen(saveLocationFilename_Aeq_beq, 'w');  % Open file for writing
     else
@@ -124,11 +126,12 @@ function [x, sysInfo, simInfo, ...
     
     logging_Aeq_beq = false;
 
-    [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
-        = extractAreaElectricalParameters(Area, macroItr, isRoot_Area, systemName, numAreas, ...
+    % [busDataTable_Area, branchDataTable_Area, edgeMatrix_Area, R_Area, X_Area] ...
+        areaInfo ...
+        = extractAreaInfo(Area, simInfo, isRoot_Area, systemName, numAreas, ...
         CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', true);
     
-    areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
+    % areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
     areaInfo = exchangeCompVars(areaInfo, S_connection_Area);
     
     sysInfo.Area{Area} = areaInfo;
@@ -186,7 +189,7 @@ function [x, sysInfo, simInfo, ...
     if ~exist(folderName, 'dir')
         mkdir(folderName)
     end
-    prefixName = strcat(folderName, filesep, "Horizon_", num2str(T), "_macroItr_", num2str(macroItr));
+    prefixName = strcat(folderName, filesep, "Horizon_", num2str(T), "_macroItr_", num2str(macroItr+1));
     areaSolutionName_x = strcat(prefixName, "_optimalSolutions.csv");
     areaSolutionName_fval = strcat(prefixName, "_", getenv('COMPUTERNAME'), "_optimalObjectiveFunctionValue.txt");
     
@@ -244,12 +247,12 @@ function [x, sysInfo, simInfo, ...
 
     
     
-    time_dist(macroItr, Area) = t3;
+    time_dist(macroItr+1, Area) = t3;
 
-    macroIterationPLosses(macroItr, Area) = PLoss;
-    macroIterationQLosses(macroItr, Area) = macroIterationQLoss;
+    macroIterationPLosses(macroItr+1, Area) = PLoss;
+    macroIterationQLosses(macroItr+1, Area) = macroIterationQLoss;
     % macroIterationQLosses(macroItr, Area) = QLoss;
-    macroIterationPSaves(macroItr, Area) = percentageSavings;
+    macroIterationPSaves(macroItr+1, Area) = percentageSavings;
 
     if fileOpenedFlag
         fclose(fid);
