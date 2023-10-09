@@ -24,6 +24,7 @@ function [x, sysInfo, simInfo, ...
     profiling = false;
 
     saveToFile = false;
+    Area = areaInfo.Area;
     strArea = convert2doubleDigits(Area);
     fileExtension = ".txt";
     systemName = "ieee123";
@@ -94,6 +95,8 @@ function [x, sysInfo, simInfo, ...
         end
     end
     
+    numAreas = sysInfo.numAreas;
+
     saveLocationFilename = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
     saveLocationFilename_Aeq_beq = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/Aeq_beq_area", strArea, fileExtension);
     
@@ -123,6 +126,12 @@ function [x, sysInfo, simInfo, ...
     
     logging_Aeq_beq = false;
     
+    isRoot_Area = sysInfo.isRoot(Area);
+    numAreas = sysInfo.numAreas;
+    systemName = sysInfo.systemName;
+    CB_FullTable = sysInfo.CBTable;
+    numChildAreas_Area = sysInfo.numChildAreas(Area);
+
     areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, numAreas, ...
     CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', true);
     
@@ -139,7 +148,7 @@ function [x, sysInfo, simInfo, ...
     CVR_P = CVR(1);
     CVR_Q = CVR(2);
     
-    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, T, lambdaVals, pvCoeffVals, v_parent_Area);
+    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area);
 
     % plotSparsity(Aeq, beq);
     
@@ -151,20 +160,27 @@ function [x, sysInfo, simInfo, ...
         disp(['Current function value: ' num2str(optimValues.fval)]);
     end
     
-    % itermax = 50;
-    itermax = 20;
-    tolfun = 1e-4;
-    stepTol = 1e-5;
-    constraintTol = 1e-4;
-    optimalityTol = 1e-5;
-    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
-    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    microItrMax = simInfo.alg.microItrMax;
+    tolfun = simInfo.alg.tolfun;
+    stepTol = simInfo.alg.stepTol;
+    constraintTol = simInfo.alg.constraintTol;
+    optimalityTol = simInfo.alg.optimalityTol;
+    % microItrMax = 50;
+    % microItrMax = 20;
+    % tolfun = 1e-4;
+    % stepTol = 1e-5;
+    % constraintTol = 1e-4;
+    % optimalityTol = 1e-5;
+    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
         'FunctionTolerance', tolfun, ...
         'StepTolerance', stepTol, ...             % Equivalent to 10 watts
     'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
     'OptimalityTolerance', optimalityTol);
-    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
+    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 200, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
+    
+    T = simInfo.T;
 
     if T >= 7
         profiling = true;
@@ -214,7 +230,7 @@ function [x, sysInfo, simInfo, ...
     
     myfprintf(true, fid, "Machine this simulation was solved on: %s\n", getenv('COMPUTERNAME'));
     myfprintf(true, fid, "Optimization for Area %d for %d time periods took %d [s] and %d iterations.\n", Area, T,  t3, iterations_taken);
-    myfprintf(true, fid, "where a micro-iteration limit of %d and a minimum improvement of %d [kW] was imposed.\n", itermax, tolfun*1e3);
+    myfprintf(true, fid, "where a micro-iteration limit of %d and a minimum improvement of %d [kW] was imposed.\n", microItrMax, tolfun*1e3);
     myfprintf(true, fid, "Average time per iteration: %d [s]\n", t3/iterations_taken);
     myfprintf(true, fid, "Number of Linear Equations: %d\n", nLinEqnsT);
     myfprintf(true, fid, "Number of Nonlinear Equalities: %d\n", nNonLinEqnsT);

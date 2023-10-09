@@ -160,23 +160,28 @@ function [x, sysInfo, simInfo, ...
         disp(['Current function value: ' num2str(optimValues.fval)]);
     end
     
-    % itermax = 50;
-    itermax = 20;
-    tolfun = 1e-4;
-    stepTol = 1e-5;
-    constraintTol = 1e-4;
-    optimalityTol = 1e-5;
-    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
-    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    microItrMax = simInfo.alg.microItrMax;
+    tolfun = simInfo.alg.tolfun;
+    stepTol = simInfo.alg.stepTol;
+    constraintTol = simInfo.alg.constraintTol;
+    optimalityTol = simInfo.alg.optimalityTol;
+    % microItrMax = 50;
+    % microItrMax = 20;
+    % tolfun = 1e-4;
+    % stepTol = 1e-5;
+    % constraintTol = 1e-4;
+    % optimalityTol = 1e-5;
+    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+    options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
         'FunctionTolerance', tolfun, ...
         'StepTolerance', stepTol, ...             % Equivalent to 10 watts
     'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
     'OptimalityTolerance', optimalityTol);
-    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', itermax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
+    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 200, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     
     T = simInfo.T;
-    
+
     if T >= 7
         profiling = true;
         profile on
@@ -225,7 +230,7 @@ function [x, sysInfo, simInfo, ...
     
     myfprintf(true, fid, "Machine this simulation was solved on: %s\n", getenv('COMPUTERNAME'));
     myfprintf(true, fid, "Optimization for Area %d for %d time periods took %d [s] and %d iterations.\n", Area, T,  t3, iterations_taken);
-    myfprintf(true, fid, "where a micro-iteration limit of %d and a minimum improvement of %d [kW] was imposed.\n", itermax, tolfun*1e3);
+    myfprintf(true, fid, "where a micro-iteration limit of %d and a minimum improvement of %d [kW] was imposed.\n", microItrMax, tolfun*1e3);
     myfprintf(true, fid, "Average time per iteration: %d [s]\n", t3/iterations_taken);
     myfprintf(true, fid, "Number of Linear Equations: %d\n", nLinEqnsT);
     myfprintf(true, fid, "Number of Nonlinear Equalities: %d\n", nNonLinEqnsT);

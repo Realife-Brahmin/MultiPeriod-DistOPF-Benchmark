@@ -79,6 +79,8 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
         logging = false;
     end
 
+    Area = areaInfo.Area;
+    
     filenameBusData_Area = strcat(systemDataFolder, "area", num2str(Area), filesep, 'powerdata.csv');
     busData_Area = readmatrix(filenameBusData_Area);
     busDataTable_Area = array2table(busData_Area, 'VariableNames', {'bus', 'P_L', 'Q_L', 'Q_C', 'P_der', 'busType'});
