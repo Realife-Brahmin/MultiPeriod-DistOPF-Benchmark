@@ -23,6 +23,7 @@ function [x, sysInfo, simInfo, ...
     gamma = 1e0;
     profiling = false;
     saveSCDPlots = false;
+    displayTables = false;
 
     saveToFile = false;
     Area = areaInfo.Area;
@@ -43,7 +44,7 @@ function [x, sysInfo, simInfo, ...
         "CVR", "V_max", "V_min", "saveToFile", "saveLocation", "Qref_DER", ...
         "Vref_DER", "fileExtension", "delta_t", "etta_C", "etta_D", ...
         "chargeToPowerRatio", "soc_min", "soc_max", "profiling", ...
-        "saveSCDPlots"];
+        "saveSCDPlots", "displayTables"];
     
     for kwarg_num = 1:2:numArgs
         argName = varargin{kwarg_num};
@@ -96,6 +97,8 @@ function [x, sysInfo, simInfo, ...
                 profiling = argValue;
             case "saveSCDPlots"
                 saveSCDPlots = argValue;
+            case "displayTables"
+                displayTables = argValue;
         end
     end
     
@@ -137,9 +140,8 @@ function [x, sysInfo, simInfo, ...
     numChildAreas_Area = sysInfo.numChildAreas(Area);
 
     areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, numAreas, ...
-    CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', true);
+    CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', displayTables);
     
-    % areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
     areaInfo = exchangeCompVars(areaInfo, S_connection_Area_1toT);
     
      myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
@@ -154,12 +156,6 @@ function [x, sysInfo, simInfo, ...
     % plotSparsity(Aeq, beq);
     
     t3Start = tic;
-
-    % function stop = outfun(x, optimValues, state)
-    %     stop = false;
-    %     disp(['Current X: ' num2str(x)]);
-    %     disp(['Current function value: ' num2str(optimValues.fval)]);
-    % end
     
     microItrMax = simInfo.alg.microItrMax;
     tolfun = simInfo.alg.tolfun;
