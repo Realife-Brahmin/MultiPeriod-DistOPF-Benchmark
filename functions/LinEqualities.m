@@ -1,4 +1,4 @@
-function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
+function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area_1toT, varargin)
 
     % Default values
     % logging_Aeq_beq = false;
@@ -122,29 +122,23 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
         % myfprintf(logging_Aeq_beq, fid_Aeq_beq, "The parent of bus %d is bus %d at index %d.\n", j, i, i_Idx);
         
         k_indices = find(fb_Area == j);
-        % disp(k_indices);
-        % ks = tb_Area(k_indices);
+
         
         js_indices = find(fb_Area==i);
-        % js = tb_Area(js_indices);
 
         jes_Idx = js_indices(1);
-        % jes = js(1);
 
         indices_Pflow_ij_T = getIndicesT(indices_Pflow, i_Idx);
         indices_Qflow_ij_T = getIndicesT(indices_Qflow, i_Idx);
         indices_KVL_ij_T = getIndicesT(indices_KVL, i_Idx);
-        % indices_SOC_j_T = getIndicesT(indices_SOC, i_Idx)
         
         indices_Pij_T = getIndicesT(indices_Pij, i_Idx);
         indices_Qij_T = getIndicesT(indices_Qij, i_Idx);
         indices_lij_T = getIndicesT(indices_lij, i_Idx);
-        % indices_vAllj_T = getIndicesT(indices_vAllj, i_Idx);
         indices_vj_T = getIndicesT(indices_vj, i_Idx);
         
         % PFlow equations in Aeq, beq | BFM variables only
         row = indices_Pflow_ij_T;
-        % indices_Pij_T
         Aeq(sub2ind(sz, row, indices_Pij_T)) = 1;
         for k_num = 1:length(k_indices)
             k_Idx = k_indices(k_num);
@@ -195,11 +189,10 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     indices_vAll1_T = getIndicesT(indices_vAllj, 1);
     row = indices_KVL_12_T;
     Aeq(sub2ind(sz, row, indices_vAll1_T)) = 1;
-    beq(row) = v_parent_Area;
+    beq(row) = v_parent_Area_1toT;
     
     for der_num = 1:nDER_Area
         j = busesWithDERs_Area(der_num);
-        % i_Idx = find(tb_Area == j);
         indices_qDj_T = getIndicesT(indices_qDj, der_num);
         
         row = indices_Pflow_ij_T;
@@ -246,20 +239,13 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
 
     end
 
-    % if fileOpenedFlag_Aeq_beq
-    %     fclose(fid_Aeq_beq);
-    % end
+
     numVarsBFM4 = [1, listNumVars1(1) - 1, listNumVars1(2:4) ]; % qD limits are specific to each machine, will be appended later.
     lbVals4 = [0, -5, -15, 0, V_min^2];
     ubVals4 = [5, 5, 5, 15, V_max^2];
     [lb_Area4, ub_Area4] = constructBoundVectors(numVarsBFM4, lbVals4, ubVals4);
-    % lbLast = B0Vals_pu_Area;
-    % ubLast = B0Vals_pu_Area;
     lb_Area9 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area], T, 1);
-    % lb_Area5 = [lb_Area4; lb_qD_onlyDERbuses_Area]
-    % lb_Area9(length(lb_Area5)+1:length(lb_Area5)+nBatt_Area) = lbLast
     ub_Area9 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area], T, 1);
-    % ub_Area9(length(lb_Area5)+1:length(lb_Area5)+nBatt_Area) = ubLast
 
     x0 = repmat([zeros(3*m_Area, 1); 1.00*ones(N_Area, 1); zeros(nDER_Area, 1); B0Vals_pu_Area; zeros(3*nBatt_Area, 1)], T, 1);
 

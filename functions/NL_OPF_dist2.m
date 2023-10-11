@@ -1,7 +1,7 @@
 function [x, sysInfo, simInfo, ...
      time_dist] = ...
     ...
-    NL_OPF_dist2(sysInfo, simInfo, areaInfo, v_parent_Area, S_connection_Area,  ...
+    NL_OPF_dist2(sysInfo, simInfo, areaInfo, v_parent_Area_1toT, S_connection_Area_1toT,  ...
     lambdaVals, pvCoeffVals, time_dist, varargin)
     
  % Default values for optional arguments
@@ -22,6 +22,7 @@ function [x, sysInfo, simInfo, ...
     alpha = 1e-3;
     gamma = 1e0;
     profiling = false;
+    saveSCDPlots = false;
 
     saveToFile = false;
     Area = areaInfo.Area;
@@ -41,7 +42,8 @@ function [x, sysInfo, simInfo, ...
     validArgs = ["verbose", "logging", "logging_Aeq_beq", "systemName", ...
         "CVR", "V_max", "V_min", "saveToFile", "saveLocation", "Qref_DER", ...
         "Vref_DER", "fileExtension", "delta_t", "etta_C", "etta_D", ...
-        "chargeToPowerRatio", "soc_min", "soc_max"];
+        "chargeToPowerRatio", "soc_min", "soc_max", "profiling", ...
+        "saveSCDPlots"];
     
     for kwarg_num = 1:2:numArgs
         argName = varargin{kwarg_num};
@@ -92,6 +94,8 @@ function [x, sysInfo, simInfo, ...
                 gamma = argValue;
             case "profiling"
                 profiling = argValue;
+            case "saveSCDPlots"
+                saveSCDPlots = argValue;
         end
     end
     
@@ -136,10 +140,7 @@ function [x, sysInfo, simInfo, ...
     CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', true);
     
     % areaInfo = getAreaParameters(Area, busDataTable_Area, branchDataTable_Area, R_Area, X_Area);
-    areaInfo = exchangeCompVars(areaInfo, S_connection_Area);
-    
-    sysInfo.Area{Area} = areaInfo;
-
+    areaInfo = exchangeCompVars(areaInfo, S_connection_Area_1toT);
     
      myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
         "Constructing Aeq and beq for Area %d.\n" + ...
@@ -148,29 +149,18 @@ function [x, sysInfo, simInfo, ...
     CVR_P = CVR(1);
     CVR_Q = CVR(2);
     
-    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area);
+    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area_1toT);
 
     % plotSparsity(Aeq, beq);
     
     t3Start = tic;
-
-    function stop = outfun(x, optimValues, state)
-        stop = false;
-        disp(['Current X: ' num2str(x)]);
-        disp(['Current function value: ' num2str(optimValues.fval)]);
-    end
     
     microItrMax = simInfo.alg.microItrMax;
     tolfun = simInfo.alg.tolfun;
     stepTol = simInfo.alg.stepTol;
     constraintTol = simInfo.alg.constraintTol;
     optimalityTol = simInfo.alg.optimalityTol;
-    % microItrMax = 50;
-    % microItrMax = 20;
-    % tolfun = 1e-4;
-    % stepTol = 1e-5;
-    % constraintTol = 1e-4;
-    % optimalityTol = 1e-5;
+
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
     options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
         'FunctionTolerance', tolfun, ...
@@ -226,8 +216,10 @@ function [x, sysInfo, simInfo, ...
         error('Failed to open the file for writing.');
     end
 
-    [nLinEqnsT, nNonLinEqnsT, nVarsT] = getProblemSize(areaInfo, T);
+    [nLinEqnsT, nNonLinEqnsT, nVarsT, areaInfo] = getProblemSize(areaInfo, T);
     
+    sysInfo.Area{Area} = areaInfo;
+
     myfprintf(true, fid, "Machine this simulation was solved on: %s\n", getenv('COMPUTERNAME'));
     myfprintf(true, fid, "Optimization for Area %d for %d time periods took %d [s] and %d iterations.\n", Area, T,  t3, iterations_taken);
     myfprintf(true, fid, "where a micro-iteration limit of %d and a minimum improvement of %d [kW] was imposed.\n", microItrMax, tolfun*1e3);
@@ -241,31 +233,12 @@ function [x, sysInfo, simInfo, ...
     myfprintf(true, fid, "Average SOC Level constraint violation for Area %d for %d time periods = %d [kWh]\n", Area, T, sqrt( changeInSOC*(1000^2)/(gamma * areaInfo.nBatt_Area)));
     myfprintf(true, fid, "where alpha = %d and gamma = %d\n", alpha, gamma);
    
-
-    % if macroItr == 0
-    %     saveSCDPlots = true;
-    % else
-    %     saveSCDPlots = false;
-    % end
-    
-    saveSCDPlots = false;
+    saveSCDPlots = ~macroItr && saveSCDPlots;
 
     checkForSCD(sysInfo, simInfo, areaInfo, T, x, 'savePlots', saveSCDPlots);
-    error("Okay we're good for one area.")
-
-    % keyboard;
-
-    % macroIterationPLoss = fval;
-    macroIterationQLoss = objfun(x, areaInfo, T, 'objectiveFuns', {"func_QLoss"});
-
-    
     
     time_dist(macroItr+1, Area) = t3;
 
-    macroIterationPLosses(macroItr+1, Area) = PLoss;
-    macroIterationQLosses(macroItr+1, Area) = macroIterationQLoss;
-    % macroIterationQLosses(macroItr, Area) = QLoss;
-    macroIterationPSaves(macroItr+1, Area) = percentageSavings;
 
     if fileOpenedFlag
         fclose(fid);

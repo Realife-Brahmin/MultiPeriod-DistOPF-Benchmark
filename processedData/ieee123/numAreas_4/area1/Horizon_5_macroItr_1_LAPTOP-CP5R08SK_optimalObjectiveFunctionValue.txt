@@ -1,7 +1,7 @@
 Machine this simulation was solved on: LAPTOP-CP5R08SK
-Optimization for Area 1 for 5 time periods took 3.341705e+01 [s] and 17 iterations.
+Optimization for Area 1 for 5 time periods took 3.564975e+01 [s] and 17 iterations.
 where a micro-iteration limit of 20 and a minimum improvement of 1.000000e-01 [kW] was imposed.
-Average time per iteration: 1.965709e+00 [s]
+Average time per iteration: 2.097044e+00 [s]
 Number of Linear Equations: 720
 Number of Nonlinear Equalities: 200
 Number of Optimization Variables: 1380

@@ -1,4 +1,4 @@
-function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area, varargin)
+function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area_1toT, varargin)
 
     % Default values
     % logging_Aeq_beq = false;
@@ -195,7 +195,7 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     indices_vAll1_T = getIndicesT(indices_vAllj, 1);
     row = indices_KVL_12_T;
     Aeq(sub2ind(sz, row, indices_vAll1_T)) = 1;
-    beq(row) = v_parent_Area;
+    beq(row) = v_parent_Area_1toT;
     
     for der_num = 1:nDER_Area
         j = busesWithDERs_Area(der_num);
