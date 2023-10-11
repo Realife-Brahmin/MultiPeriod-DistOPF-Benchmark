@@ -3,41 +3,13 @@ using Glob
 using Plots
 using PrettyTables
 
-"""
-    extract_values_from_files(folder_name::String)
 
-Extract various simulation results from text files contained within a specified folder.
-
-# Arguments
-- `folder_name::String`: The path to the folder containing the target `.txt` files.
-
-# Returns
-- `NamedTuple`: A named tuple containing the following fields:
-  * `totalTimes`: An array of total times for the optimization in each file.
-  * `microItrs`: An array of the number of iterations taken in each file.
-  * `avgTimes`: An array of the average times per iteration for each file.
-  * `nLinEqns`: An array of the number of linear equations in each file.
-  * `nNonLinEqns`: An array of the number of nonlinear equalities in each file.
-  * `nVars`: An array of the number of optimization variables in each file.
-  * `objFunVals`: An array of the objective function values for each file.
-  * `PLossVals`: An array of the real power line loss values for each file.
-  * `PBattLossVals`: An array of the battery power loss values for each file.
-  * `terminalSOCPenaltyVals`: An array of the average SOC level constraint violation values for each file.
-  * `horizonTimes`: An array indicating the time horizon for each file.
-
-# Notes
-The function searches for files matching the pattern `Horizon\_*_macroItr\_*_*\_optimalObjectiveFunctionValue.txt`
-in the specified folder and extracts the above values from them.
-
-# Example
-```julia
-results = extract_values_from_files("path/to/folder")
-"""
-function extract_values_from_files(folder_name::String)
+function extract_values_from_files(folder_name::String, T::Int64)
     # Arrays to store extracted values
     totalTimes = Float64[]
     microItrs = Int[]
     horizonTimes = Int[]
+    macroItrs = Int[]
     avgTimes = Float64[]
     nLinEqns = Int[]
     nNonLinEqns = Int[]
@@ -48,12 +20,21 @@ function extract_values_from_files(folder_name::String)
     terminalSOCPenaltyVals = Float64[]
 
     # Locate all target files
-    files = glob("Horizon_*_macroItr_*_*_optimalObjectiveFunctionValue.txt", folder_name)
+
+    if T ≥ 1
+        files = glob("Horizon_$(T)_macroItr_*_*_optimalObjectiveFunctionValue.txt", folder_name)
+        # println(files)
+    else
+        files = glob("Horizon_\\*_macroItr_\\*_\\*_optimalObjectiveFunctionValue.txt", folder_name)
+    end
 
     for file in files
         # Read file contents
         horizon = parse(Int, match(r"(?<=Horizon_)\d+", file).match)
+        macroItr = parse(Int, match(r"(?<=macroItr_)\d+", file).match)
+
         push!(horizonTimes, horizon)
+        push!(macroItrs, macroItr)
 
         lines = readlines(file)
 
@@ -73,7 +54,8 @@ function extract_values_from_files(folder_name::String)
 
     res = (
         totalTimes = totalTimes, 
-        microItrs = microItrs, 
+        microItrs = microItrs,
+        macroItrs = macroItrs, 
         avgTimes = avgTimes, 
         nLinEqns = nLinEqns, 
         nNonLinEqns = nNonLinEqns, 
