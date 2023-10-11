@@ -63,17 +63,12 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
 
         % Save plot if requested
         if savePlots
-            % saveDir = strcat("ProcessedData/BatteryVariables/Area_", num2str(areaInfo.Area), "/");
             folderName = strcat("processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, "area", num2str(areaInfo.Area), filesep, "BatteryVariables");
 
             if ~exist(folderName, 'dir')
                 mkdir(folderName);
             end
             filename = strcat(folderName, filesep, "Horizon_", num2str(T), "_macroItr_", num2str(simInfo.macroItrsCompleted+1), "_Battery_", num2str(batt_num), ".png");
-
-            % saveName = sprintf('BatteryVariables_Area_%d__Horizon_%d_Battery_%d.png', areaInfo.Area, T, batt_num);
-            % savePath = fullfile(saveDir, saveName);
-
             saveas(f, filename);
         end
     end
