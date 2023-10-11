@@ -3,7 +3,7 @@ include("../helperFunctions.jl")
 systemName = "ieee123";
 T = 1;
 
-numAreas = 1;
+numAreas = 4;
 
 for Area = 1:numAreas
     # Area = 1;
