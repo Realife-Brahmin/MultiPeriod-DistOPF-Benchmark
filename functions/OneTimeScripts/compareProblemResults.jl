@@ -1,16 +1,26 @@
 include("../helperFunctions.jl")
 
 systemName = "ieee123";
+T = 1;
+
 numAreas = 1;
-Area = 1;
-folderName = "processedData/"*systemName*"/numAreas_"*string(numAreas)* "/area"*string(Area)*"/"
 
-res = extract_values_from_files(folderName)
+for Area = 1:numAreas
+    # Area = 1;
+    if Area > numAreas
+        @warn "Area number $(Area) ≥ numArea $(numAreas)"
+    end
+    local folderName = "processedData/"*systemName*"/numAreas_"*string(numAreas)* "/area"*string(Area)*"/"
+    println(folderName)
+    local res = extract_values_from_files(folderName, T)
 
-df = DataFrame(res)
+    local df = DataFrame(res)
 
-selected_df = df[:, [:horizonTimes, :totalTimes, :nLinEqns, :nNonLinEqns, :nVars, :PLossVals]]
+    local selected_df = df[:, [:horizonTimes, :macroItrs, :totalTimes, :nLinEqns, :nNonLinEqns, :nVars, :PLossVals]]
 
-rename!(selected_df, :totalTimes => "totalTimes [s]", :PLossVals => "PLoss [kW]")
+    rename!(selected_df, :totalTimes => "totalTimes [s]", :PLossVals => "PLoss [kW]")
 
-pretty_table(selected_df, header=names(selected_df), crop=:none)
+    sort!(selected_df, order(:macroItrs))
+
+    pretty_table(selected_df, header=names(selected_df), crop=:none)
+end
