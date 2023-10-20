@@ -179,8 +179,8 @@ function [x, sysInfo, simInfo, ...
         profiling = true;
         profile on
     end
-    objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"};
-    % objectiveFuns = {"func_PLoss", "func_SCD"};
+    % objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"};
+    objectiveFuns = {"func_PLoss", "func_SCD"};
     % objectiveFuns = {"func_PLoss", "func_netChangeInSOC"};
     [x, fval, ~, output] = fmincon(@(x)objfun(x, areaInfo, T, 'objectiveFuns', objectiveFuns, 'alpha', alpha, 'gamma', gamma), ...
     x0, [], [], Aeq, beq, lb, ub, ...
