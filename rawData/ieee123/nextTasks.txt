@@ -1,4 +1,0 @@
-1. Find a way to have the inputs in real node numbers (Say area 1, area 2 and area 3 each containing a set of powerdata.csv and linedata.csv with real bus numbers) be converted into individual areas with nodes numbered 1:N_Area.
-Desired outcome:
-	Read only ActualBusNums Data for both powerdata and linedata and still have the program work.
-	Then create a numArea_3 rawData and test the OPF on it.
