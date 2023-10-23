@@ -154,7 +154,19 @@ function [x, sysInfo, simInfo, ...
     [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area_1toT);
 
     plotSparsity(Aeq, beq);
-    
+    ext = ".csv";
+    saveLocationFolderName = strcat("processedData", filesep , systemName, filesep, "numAreas_", num2str(numAreas), filesep, "Area", num2str(Area));
+    if ~exist("saveLocationFolderName", 'dir')
+        mkdir(saveLocationFolderName)
+    end
+    filenameAeq = strcat(saveLocationFolderName, filesep, "Aeq_B_T_", num2str(simInfo.T), "_macroItr_", num2str(1+macroItr), ext);
+    % Saving Aeq to a CSV file
+    writematrix(Aeq, filenameAeq);
+    filenamebeq = strcat(saveLocationFolderName, filesep, "beq_B_T_", num2str(simInfo.T), "_macroItr_", num2str(1+macroItr), ext);
+
+    % Saving beq to a CSV file
+    writematrix(beq, filenamebeq);
+
     t3Start = tic;
     
     microItrMax = simInfo.alg.microItrMax;
