@@ -14,10 +14,11 @@ macroItr = 1
 baseDirB = joinpath("processedData", "$(systemName)", "numAreas_$(numAreas)", "area$(Area)")
 baseDirA = joinpath("..","MultiPeriod-DistOPF-AlgoTesting", "processedData", "$(systemName)", "numAreas_$(numAreas)", "area$(Area)")
 
-filePathAeqB = joinpath(baseDirB, "Aeq_B_T_$(T)_macroItr_$(macroItr).csv")
-filePathBeqB = joinpath(baseDirB, "beq_B_T_$(T)_macroItr_$(macroItr).csv")
-filePathAeqA = joinpath(baseDirA, "Aeq_A_T_$(T)_macroItr_$(macroItr).csv")
-filePathBeqA = joinpath(baseDirA, "beq_A_T_$(T)_macroItr_$(macroItr).csv")
+ext = ".csv"
+filePathAeqB = joinpath(baseDirB, "Aeq_B_T_$(T)_macroItr_$(macroItr)"*ext)
+filePathBeqB = joinpath(baseDirB, "beq_B_T_$(T)_macroItr_$(macroItr)"*ext)
+filePathAeqA = joinpath(baseDirA, "Aeq_A_T_$(T)_macroItr_$(macroItr)"*ext)
+filePathBeqA = joinpath(baseDirA, "beq_A_T_$(T)_macroItr_$(macroItr)"*ext)
 
 # println(filePathAeqB)
 # println(filePathAeqA)
@@ -32,5 +33,11 @@ beqA = vec(beqA);
 
 # plotSparsity(AeqB, beqB)
 
-plot_sparsity_pattern(AeqB, beqB)
+ext = ".png"
+filePathAeqB = joinpath(baseDirB, "Aeq_B_T_$(T)_macroItr_$(macroItr)"*ext)
+
+plot_sparsity_pattern(AeqB, beqB, savePlots=true, filename=filePathAeqB)
+
+filePathAeqA = joinpath(baseDirA, "Aeq_A_T_$(T)_macroItr_$(macroItr)"*ext)
+plot_sparsity_pattern(AeqA, beqA, savePlots=true, filename=filePathAeqA)
 
