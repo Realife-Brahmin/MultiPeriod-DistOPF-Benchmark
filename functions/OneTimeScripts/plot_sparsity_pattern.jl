@@ -20,15 +20,14 @@ function plot_sparsity_pattern(Aeq, beq)
     nzBeq = findall(!iszero, beq)
     nzBeq = size(beq, 1) .- nzBeq .+ 1  # Invert the y-values for beq as well
 
-    # Plotting
-    p1 = scatter(jAeq[vAeq .< 0], iAeq[vAeq .< 0], markersize = 5, markerstrokewidth = 0, color = :red, label = "< 0", legend = :outertopright, xlims = (1, size(Aeq, 2)), title = "Sparsity pattern of Aeq", grid = true, xaxis = "Columns", yaxis = "Rows")
-    scatter!(p1, jAeq[vAeq .== 0], iAeq[vAeq .== 0], markersize = 3, markerstrokewidth = 0, color = :white, label = "= 0")
-    scatter!(p1, jAeq[vAeq .> 0], iAeq[vAeq .> 0], markersize = 5, markerstrokewidth = 0, color = :green, label = "> 0")
+    # Plotting for Aeq
+    p = scatter(jAeq[vAeq .< 0], iAeq[vAeq .< 0], markersize = 5, markerstrokewidth = 0, color = :red, label = "Aeq < 0", legend = :outertopright, xlims = (0, size(Aeq, 2) + 3), ylims = (1, size(Aeq, 1)), title = "Sparsity pattern of Aeq and beq", grid = true, xaxis = "Columns and beq", yaxis = "Rows", aspect_ratio = :auto)
+    scatter!(p, jAeq[vAeq .> 0], iAeq[vAeq .> 0], markersize = 5, markerstrokewidth = 0, color = :green, label = "Aeq > 0")
 
-    p2 = scatter(repeat([1.5], length(nzBeq)), nzBeq, markersize = 5, markerstrokewidth = 0, color = :green, label = "beq", xlims = (1, 2), title = "Sparsity pattern of beq", grid = true, xaxis = " ", yaxis = "Rows", legend = :outertopright)
+    # Plotting for beq in the same plot
+    scatter!(p, repeat([size(Aeq, 2) + 2], length(nzBeq)), nzBeq, markersize = 5, markerstrokewidth = 0, color = :blue, label = "beq")
 
-    # Combine plots side by side
-    plot(p1, p2, layout = (1, 2))
+    return p
 end
 
 A = [1 0 0; 0 1 0; 0 0 1]
