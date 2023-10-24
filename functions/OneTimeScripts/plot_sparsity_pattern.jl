@@ -5,7 +5,7 @@ function plot_sparsity_pattern(
     Aeq, beq; 
     savePlots::Bool=false,
     saveLocation::String="processedData/",
-    filename::String="filenameundefined.png")
+    filenames=["filenameundefined.png"])
 
     theme(:dark)
     
@@ -39,10 +39,12 @@ function plot_sparsity_pattern(
 
     if savePlots
         gr()
-        if filename == "filenameundefined.png"
-            Plots.savefig(saveLocation*"Aeq_and_beq.png")
-        else
-            Plots.savefig(filename)
+        for filename ∈ filenames
+            if filename == "filenameundefined.png"
+                Plots.savefig(saveLocation*"Aeq_and_beq.png")
+            else
+                Plots.savefig(filename)
+            end
         end
     end
 
