@@ -36,8 +36,11 @@ beqA = vec(beqA);
 ext = ".png"
 filePathAeqB = joinpath(baseDirB, "Aeq_B_T_$(T)_macroItr_$(macroItr)"*ext)
 
-plot_sparsity_pattern(AeqB, beqB, savePlots=true, filename=filePathAeqB)
+plot_sparsity_pattern(AeqB, beqB, savePlots=true, filenames=[filePathAeqB])
 
-filePathAeqA = joinpath(baseDirA, "Aeq_A_T_$(T)_macroItr_$(macroItr)"*ext)
-plot_sparsity_pattern(AeqA, beqA, savePlots=true, filename=filePathAeqA)
+filePathAeqA_in_A = joinpath(baseDirA, "Aeq_A_T_$(T)_macroItr_$(macroItr)"*ext)
+
+filePathAeqA_in_B = joinpath(baseDirB, "Aeq_A_T_$(T)_macroItr_$(macroItr)"*ext)
+
+plot_sparsity_pattern(AeqA, beqA, savePlots=true, filenames=[filePathAeqA_in_A, filePathAeqA_in_B])
 
