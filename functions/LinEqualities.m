@@ -174,10 +174,13 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
         % KVL equations in Aeq, beq | Full equation (contains only BFM
         % variables)
         row = indices_KVL_ij_T;
-        Aeq(sub2ind(sz, row, indices_vj_T)) = 1;
+        % Aeq(sub2ind(sz, row, indices_vj_T)) = 1;
+        Aeq(sub2ind(sz, row, indices_vj_T)) = -1;
 
         indices_vi_T = getIndicesT(indices_vAllj, jes_Idx);
-        Aeq(sub2ind(sz, row, indices_vi_T)) = -1;
+        % Aeq(sub2ind(sz, row, indices_vi_T)) = -1;
+        Aeq(sub2ind(sz, row, indices_vi_T)) = 1;
+
         Aeq(sub2ind(sz, row, indices_lij_T)) = R_Area_Matrix(i, j)^2 + X_Area_Matrix(i, j)^2;
         Aeq(sub2ind(sz, row, indices_Pij_T)) = -2*R_Area_Matrix(i, j);
         Aeq(sub2ind(sz, row, indices_Qij_T)) = -2*X_Area_Matrix(i, j);
