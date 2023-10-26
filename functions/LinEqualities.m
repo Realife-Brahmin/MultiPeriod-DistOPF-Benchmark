@@ -37,7 +37,7 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     % Emax_batt_Area = areaInfo.Emax_batt_Area;
     busesWithDERs_Area = areaInfo.busesWithDERs_Area;
     nDER_Area = areaInfo.nDER_Area;
-    % busesWithBatts_Area = areaInfo.busesWithBatts_Area;
+    busesWithBatts_Area = areaInfo.busesWithBatts_Area;
     nBatt_Area = areaInfo.nBatt_Area;
     % S_onlyDERbuses_Area = areaInfo.S_onlyDERbuses_Area;
     % P_onlyDERbuses_Area = areaInfo.P_onlyDERbuses_Area;
@@ -86,8 +86,10 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     indices_vj = excludeFirstElement(indices_vAllj);
     indices_qDj = varIndicesT{5};
     indices_Bj = varIndicesT{6};
-    indices_Pdj = varIndicesT{7};
-    indices_Pcj = varIndicesT{8};
+    % indices_Pdj = varIndicesT{7};
+    % indices_Pcj = varIndicesT{8};
+    indices_Pcj = varIndicesT{7};
+    indices_Pdj = varIndicesT{8};
     indices_qBj = varIndicesT{9};
     
     % Assuming you have already created the 'areaInfo' structure
@@ -105,8 +107,8 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     areaInfo.indices_vj = excludeFirstElement(indices_vAllj);  % Assuming excludeFirstElement is a defined function
     areaInfo.indices_qDj = indices_qDj;
     areaInfo.indices_Bj = indices_Bj;
-    areaInfo.indices_Pdj = indices_Pdj;
     areaInfo.indices_Pcj = indices_Pcj;
+    areaInfo.indices_Pdj = indices_Pdj;
     areaInfo.indices_qBj = indices_qBj;
 
     % [areaInfo.fb_Area areaInfo.tb_Area]
@@ -196,18 +198,24 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     
     for der_num = 1:nDER_Area
         j = busesWithDERs_Area(der_num);
+        i_Idx = find(tb_Area == j);
+
         indices_qDj_T = getIndicesT(indices_qDj, der_num);
         
+        indices_Pflow_ij_T = getIndicesT(indices_Pflow, i_Idx);
         row = indices_Pflow_ij_T;
         beq(row) = beq(row) - transpose(P_der_Area(j).*pvCoeffVals);
 
+        % row = indices_Qflow_ij_T;
+        indices_Qflow_ij_T = getIndicesT(indices_Qflow, i_Idx);
         row = indices_Qflow_ij_T;
         Aeq(sub2ind(sz, row, indices_qDj_T)) = 1;
         
     end
     
     for batt_num = 1:nBatt_Area
-        
+        j = busesWithBatts_Area(batt_num);
+        i_Idx = find(tb_Area == j);
         indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
         indices_SOC_j_T_2toT = indices_SOC_j_T(2:T);
         indices_SOC_j_T_1 = indices_SOC_j_T(1);
@@ -217,23 +225,28 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
         indices_Pcj_T = getIndicesT(indices_Pcj, batt_num);
         indices_qBj_T = getIndicesT(indices_qBj, batt_num);
         
+        
         % Pflow equations | Battery Variables
+        % row = indices_Pflow_ij_T;
+        indices_Pflow_ij_T = getIndicesT(indices_Pflow, i_Idx);
         row = indices_Pflow_ij_T;
         Aeq(sub2ind(sz, row, indices_Pdj_T)) = 1;
         Aeq(sub2ind(sz, row, indices_Pcj_T)) = -1;
         
         % Qflow equations | Battery Variables
+        % row = indices_Qflow_ij_T;
+        indices_Qflow_ij_T = getIndicesT(indices_Qflow, i_Idx);
         row = indices_Qflow_ij_T;
         Aeq(sub2ind(sz, row, indices_qBj_T)) = 1;
         
         % SOC equations | Battery Variables | First Time Interval
         row = indices_SOC_j_T_1;
         Aeq(row, indices_Bj_T(1)) = -1;
-        Aeq(row, indices_Pdj_T(1)) = delta_t*etta_C;
-        Aeq(row, indices_Pcj_T(1)) = -delta_t/etta_D;
+        Aeq(row, indices_Pcj_T(1)) = delta_t*etta_C;
+        Aeq(row, indices_Pdj_T(1)) = -delta_t/etta_D;
         beq(row) = -B0Vals_pu_Area(batt_num);
 
-        % SOC equations | Battery Variables | First Time Interval
+        % SOC equations | Battery Variables | Second to Last Time Intervals
         row = indices_SOC_j_T_2toT;
         Aeq(sub2ind(sz, row, indices_Bj_T(2:T))) = -1;
         Aeq(sub2ind(sz, row, indices_Bj_T(1:T-1))) = 1;
