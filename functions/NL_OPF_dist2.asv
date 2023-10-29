@@ -271,7 +271,8 @@ function [x, sysInfo, simInfo, ...
     areaInfo.Pd_Area_1toT = Pd_Area_1toT;
     areaInfo.qB_Area_1toT = qB_Area_1toT;
 
-    areaInfo.PLoss_allT = PLoss_allT;
+    areaInfo.PLoss_1toT = PLoss_1toT;
+    areaInfo.
 
     sysInfo.Area{Area} = areaInfo;
 
