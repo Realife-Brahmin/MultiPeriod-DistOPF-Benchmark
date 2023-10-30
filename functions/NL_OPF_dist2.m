@@ -253,11 +253,26 @@ function [x, sysInfo, simInfo, ...
     
     time_dist(macroItr+1, Area) = t3;
     
+    N_Area = areaInfo.N_Area;
+    m_Area = areaInfo.m_Area;
+    nDER_Area = areaInfo.nDER_Area;
+    nBatt_Area = areaInfo.nBatt_Area;
+    
+    xVals_Area = x;
     P_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pij), m_Area, T); %m_Areax1
     Q_Area_1toT = reshape(xVals_Area(areaInfo.indices_Qij), m_Area, T); %m_Areax1
     S_Area_1toT = complex(P_Area_1toT, Q_Area_1toT); %m_Areax1
+
+    l_Area_1toT = reshape(xVals_Area(areaInfo.indices_lij), m_Area, T);
     vAll_Area_1toT = reshape(xVals_Area(areaInfo.indices_vAllj), N_Area, T); %N_Areax1
     
+    qD_Area_1toT = reshape(xVals_Area(areaInfo.indices_qDj), nDER_Area, T);
+
+    B_Area_1toT = reshape(xVals_Area(areaInfo.indices_Bj), nBatt_Area, T);
+    Pc_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pcj), nBatt_Area, T);
+    Pd_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pdj), nBatt_Area, T);
+    qB_Area_1toT = reshape(xVals_Area(areaInfo.indices_qBj), nBatt_Area, T);
+
     areaInfo.P_Area_1toT = P_Area_1toT;
     areaInfo.Q_Area_1toT = Q_Area_1toT;
     areaInfo.S_Area_1toT = S_Area_1toT;
@@ -270,7 +285,8 @@ function [x, sysInfo, simInfo, ...
     areaInfo.Pc_Area_1toT = Pc_Area_1toT;
     areaInfo.Pd_Area_1toT = Pd_Area_1toT;
     areaInfo.qB_Area_1toT = qB_Area_1toT;
-
+    
+    PLoss_allT = lineLosses;
     areaInfo.PLoss_allT = PLoss_allT;
 
     sysInfo.Area{Area} = areaInfo;
