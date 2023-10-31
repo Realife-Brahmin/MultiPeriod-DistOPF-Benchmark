@@ -174,10 +174,10 @@ function [x, sysInfo, simInfo, ...
     stepTol = simInfo.alg.stepTol;
     constraintTol = simInfo.alg.constraintTol;
     optimalityTol = simInfo.alg.optimalityTol;
-    printIterations = 'iter-detailed';
-    % printIterations = 'off';
+    % displayIterations = 'iter-detailed';
+    displayIterations = 'off';
     % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
-    options = optimoptions('fmincon', 'Display', printIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
         'FunctionTolerance', tolfun, ...
         'StepTolerance', stepTol, ...             % Equivalent to 10 watts
     'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
