@@ -1,13 +1,24 @@
 using OpenDSSDirect
+using CSV 
+using DataFrames
 
-# filename = joinpath(dirname(dirname(OpenDSSDirect))), "examples", "8500-Node", "Master.dss") 
+# Store the current directory
+original_directory = pwd()
 
 csvfilename = "Normalized-1s-2900-pts.csv"
 
-# filename = joinpath("functions", "OneTimeScripts", "OpenDSSDirect", "5wwHs", "examples", "8500-Node")*"Master.dss"
-filename = joinpath("functions", "OneTimeScripts", "OpenDSSDirect", "5wwHs", "examples", "8500-Node")*"Master.dss"
+foldername = joinpath(".", "functions", "OneTimeScripts", "OpenDSSDirect", "5wwHs", "examples", "8500-Node")
 
-println(filename)
+foldername = joinpath(".", "functions", "OneTimeScripts", "OpenDSSDirect", "5wwHs", "examples", "8500-Node with some spaces in the name") # notice in the last folder that I've created a duplicate of the 8500-Node folder but inserted spaces in its name
+
+filename = joinpath(foldername, "Master.dss")
+
+filename_csv = joinpath(foldername, csvfilename)
+
+# println(filename_csv)
+
+df = CSV.File(filename_csv, header=0) |> DataFrame; # This works for both filenames, just to check that the folder with spaces in its name exists
+# display(df)
 
 dss("""
     clear
@@ -16,7 +27,6 @@ dss("""
 """)
 
 function main()
-
     loadnumber = Loads.First()
     kWsum = 0.0
     kvarsum = 0.0
@@ -30,4 +40,9 @@ function main()
     kWsum, kvarsum
 end
 
-main()
+result = main()
+
+# Reset the working directory to its original state
+cd(original_directory)
+
+println(result)
