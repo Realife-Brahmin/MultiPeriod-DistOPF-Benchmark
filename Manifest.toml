@@ -536,7 +536,7 @@ version = "0.3.21+4"
 
 [[deps.OpenDSSDirect]]
 deps = ["CEnum", "DocStringExtensions", "Libdl", "LinearAlgebra", "REPL", "SparseArrays", "Test"]
-path = "C:\\Users\\Aryan Ritwajeet Jha\\.julia\\dev\\OpenDSSDirect"
+git-tree-sha1 = "6eb8d975ada27151a0d8c6e608cdb7b2cc573fce"
 uuid = "a8b11937-1041-50f2-9818-136bb7a8fb06"
 version = "0.9.5"
 
