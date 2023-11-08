@@ -1,5 +1,6 @@
-function f = objfun(x, areaInfo, T, varargin)
+function f = objfun(x, simInfo, areaInfo, T, varargin)
     
+    noBatteries = simInfo.noBatteries;
  % Default values for optional arguments
     verbose = false;
     etta_C = 0.95;
@@ -19,7 +20,11 @@ function f = objfun(x, areaInfo, T, varargin)
     % Process optional arguments
 
     % Default objective functions
-    objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"}; 
+    if ~noBatteries
+        objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"}; 
+    else
+        objectiveFuns = {"func_PLoss"};
+    end
 
     numArgs = numel(varargin);
 
@@ -70,7 +75,13 @@ function f = objfun(x, areaInfo, T, varargin)
     % busesWithDERs_Area = areaInfo.busesWithDERs_Area;
     nDER_Area = areaInfo.nDER_Area;
     % busesWithBatts_Area = areaInfo.busesWithBatts_Area;
-    nBatt_Area = areaInfo.nBatt_Area;
+    if ~noBatteries
+        nBatt_Area = areaInfo.nBatt_Area;
+        B0Vals_pu_Area = areaInfo.B0Vals_pu_Area;
+    else
+        nBatt_Area = 0;
+        B0Vals_pu_Area = [];
+    end
     % S_onlyDERbuses_Area = areaInfo.S_onlyDERbuses_Area;
     % P_onlyDERbuses_Area = areaInfo.P_onlyDERbuses_Area;
     % S_onlyBattBusesMax_Area = areaInfo.S_onlyBattBusesMax_Area;
@@ -86,7 +97,6 @@ function f = objfun(x, areaInfo, T, varargin)
     % ub_qD_onlyDERbuses_Area = areaInfo.ub_qD_onlyDERbuses_Area;
     % lb_qB_onlyBattBuses_Area = areaInfo.lb_qB_onlyBattBuses_Area;
     % ub_qB_onlyBattBuses_Area = areaInfo.ub_qB_onlyBattBuses_Area;
-    B0Vals_pu_Area = areaInfo.B0Vals_pu_Area;
     R_Area_Matrix = areaInfo.R_Area_Matrix;
     X_Area_Matrix = areaInfo.X_Area_Matrix;
 
@@ -116,9 +126,11 @@ function f = objfun(x, areaInfo, T, varargin)
     % indices_vAllj = varIndicesT{4};
     % indices_vj = excludeFirstElement(indices_vAllj);
     % indices_qDj = varIndicesT{5};
-    indices_Bj = varIndicesT{6};
-    indices_Pdj = varIndicesT{7};
-    indices_Pcj = varIndicesT{8};
+    if ~noBatteries
+        indices_Bj = varIndicesT{6};
+        indices_Pdj = varIndicesT{7};
+        indices_Pcj = varIndicesT{8};
+    end
     % indices_qBj = varIndicesT{9};
 
     f = 0;
