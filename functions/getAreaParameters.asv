@@ -33,13 +33,20 @@ function areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTabl
     areaInfo.fb_Area = branchDataTable.fb;
     areaInfo.tb_Area = branchDataTable.tb;
 
-    areaInfo.P_L_Area = busDataTable_pu_Area.P_L;
-    areaInfo.Q_L_Area = busDataTable_pu_Area.Q_L;
+    % areaInfo.P_L_Area = busDataTable_pu_Area.P_L;
+    areaInfo.P_L_Area_1toT = busDataTable_pu_Area.P_L_1toT;
+
+    % areaInfo.Q_L_Area = busDataTable_pu_Area.Q_L;
+    areaInfo.Q_L_Area_1toT = busDataTable_pu_Area.Q_L_1toT;
+
     areaInfo.Q_C_Area = busDataTable_pu_Area.Q_C;
-    areaInfo.P_der_Area = busDataTable_pu_Area.P_der;
+    % areaInfo.P_der_Area = busDataTable_pu_Area.P_der;
+    areaInfo.P_der_Area_1toT = busDataTable_pu_Area.P_der_1toT;
+
     areaInfo.S_der_Area = busDataTable_pu_Area.S_der;
     areaInfo.S_battMax_Area = busDataTable_pu_Area.S_der;
-    areaInfo.P_battMax_Area = busDataTable_pu_Area.P_der;
+    P_der_1toT = busDataTable_pu_Area.P_der_1toT;
+    areaInfo.P_battMax_Area = P_der_1toT(:, 1);
     areaInfo.Emax_batt_Area = chargeToPowerRatio .* areaInfo.P_battMax_Area;
 
     % DER Configuration:
@@ -49,7 +56,12 @@ function areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTabl
     areaInfo.nBatt_Area = length(areaInfo.busesWithBatts_Area);
 
     areaInfo.S_onlyDERbuses_Area = areaInfo.S_der_Area(areaInfo.busesWithDERs_Area);
-    areaInfo.P_onlyDERbuses_Area = areaInfo.P_der_Area(areaInfo.busesWithDERs_Area);
+    % areaInfo.P_onlyDERbuses_Area = areaInfo.P_der_Area(areaInfo.busesWithDERs_Area);
+    P_onlyDERbuses_Area_1toT = areaInfo.P_der_Area_1toT(areaInfo.busesWithDERs_Area);
+    areaInfo.P_onlyDERbuses_Area_1toT = P_onlyDERbuses_Area_1toT;
+    P_onlyDERbuses_Area = P_onlyDERbuses_Area_1toT(:, 1);
+    
+
     areaInfo.S_onlyBattBusesMax_Area = areaInfo.S_battMax_Area(areaInfo.busesWithBatts_Area);
     areaInfo.P_onlyBattBusesMax_Area = areaInfo.P_battMax_Area(areaInfo.busesWithBatts_Area);
     areaInfo.E_onlyBattBusesMax_Area = areaInfo.Emax_batt_Area(areaInfo.busesWithBatts_Area);
@@ -62,8 +74,12 @@ function areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTabl
     areaInfo.lb_B_onlyBattBuses_Area = soc_min.*areaInfo.E_onlyBattBusesMax_Area;  % soc_min not defined here
     areaInfo.ub_B_onlyBattBuses_Area = soc_max.*areaInfo.E_onlyBattBusesMax_Area;  % soc_max not defined here
 
-    areaInfo.lb_qD_onlyDERbuses_Area = -sqrt(areaInfo.S_onlyDERbuses_Area.^2 - areaInfo.P_onlyDERbuses_Area.^2);
-    areaInfo.ub_qD_onlyDERbuses_Area = sqrt(areaInfo.S_onlyDERbuses_Area.^2 - areaInfo.P_onlyDERbuses_Area.^2);
+    % areaInfo.lb_qD_onlyDERbuses_Area = -sqrt(areaInfo.S_onlyDERbuses_Area.^2 - areaInfo.P_onlyDERbuses_Area.^2);
+    areaInfo.lb_qD_onlyDERbuses_Area = -sqrt(areaInfo.S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2);
+
+    % areaInfo.ub_qD_onlyDERbuses_Area = sqrt(areaInfo.S_onlyDERbuses_Area.^2 - areaInfo.P_onlyDERbuses_Area.^2);
+    areaInfo.ub_qD_onlyDERbuses_Area = sqrt(areaInfo.S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2);
+
     areaInfo.lb_qB_onlyBattBuses_Area = -sqrt(areaInfo.S_onlyBattBusesMax_Area.^2 - areaInfo.P_onlyBattBusesMax_Area.^2);
     areaInfo.ub_qB_onlyBattBuses_Area = sqrt(areaInfo.S_onlyBattBusesMax_Area.^2 - areaInfo.P_onlyBattBusesMax_Area.^2);
 
