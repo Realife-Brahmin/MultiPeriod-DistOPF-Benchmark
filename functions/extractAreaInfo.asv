@@ -62,8 +62,11 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     end
     
     saveLocationFilename = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
-
+    
+    T = simInfo.T;
     macroItr = simInfo.macroItr; % completed macro-iterations, starts at 0
+    lambdaVals = simInfo.lambdaVals;
+    pvCoeffVals = simInfo.pvCoeffVals;
 
     fileOpenedFlag = false;
 
@@ -123,12 +126,19 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     
     P_der_Area = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power
     S_der_Area = 1.2*busDataTable_Area.P_der/kVA_B; 
-    
+
+    P_L_Area_1toT = repmat(P_L_Area, 1, T).*lambdaVals;
+    Q_L_Area_1toT = repmat(Q_L_Area, 1, T).*lambdaVals;
+    P_der_Area_1toT = repmat(P_der_Area, 1, T).*pvCoeffVals;
+
     busDataTable_pu_Area = busDataTable_Area;
-    busDataTable_pu_Area.P_L = P_L_Area;
-    busDataTable_pu_Area.Q_L = Q_L_Area;
+    % busDataTable_pu_Area.P_L = P_L_Area;
+    busDataTable_pu_Area.P_L_1toT = P_L_Area_1toT;
+    % busDataTable_pu_Area.Q_L = Q_L_Area;
+    busDataTable_pu_Area.Q_L_1toT = Q_L_Area_1toT;
     busDataTable_pu_Area.Q_C = Q_C_Area;
-    busDataTable_pu_Area.P_der = P_der_Area;
+    % busDataTable_pu_Area.P_der = P_der_Area;
+    busDataTable_pu_Area.P_der_1toT = P_der_Area_1toT;
     busDataTable_pu_Area.S_der = S_der_Area;
 
     areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTable_Area, R_Area, X_Area);
