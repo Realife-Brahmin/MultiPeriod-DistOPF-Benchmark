@@ -1,7 +1,7 @@
 Machine this simulation was solved on: ETRL204-ARYAN
-Optimization for Area 4 for 2 time periods took 3.244167e+01 [s] and 57 iterations.
+Optimization for Area 4 for 2 time periods took 3.053570e+01 [s] and 57 iterations.
 where a micro-iteration limit of 100 and a minimum improvement of 1.000000e-03 [kW] was imposed.
-Average time per iteration: 5.691521e-01 [s]
+Average time per iteration: 5.357140e-01 [s]
 Number of Linear Equations: 392
 Number of Nonlinear Equalities: 106
 Number of Optimization Variables: 786
