@@ -21,7 +21,7 @@ function plot_sparsity_pattern(
     nzBeq .= size(beq, 1) .- nzBeq .+ 1  # Invert the y-values for beq as well
 
     # Create the scatter plots for Aeq
-    p = scatter(jAeq[vAeq .< 0], iAeq[vAeq .< 0], markershape = :square, markersize = 5, color = :red, label = "Aeq < 0", legend = :outertopright, title = "Sparsity pattern of Aeq and beq", xaxis = "Columns and beq", yaxis = "Rows", aspect_ratio = :auto, grid = false)  # Set grid to false initially
+    p = Plots.scatter(jAeq[vAeq .< 0], iAeq[vAeq .< 0], markershape = :square, markersize = 5, color = :red, label = "Aeq < 0", legend = :outertopright, title = "Sparsity pattern of Aeq and beq", xaxis = "Columns and beq", yaxis = "Rows", aspect_ratio = :auto, grid = false)  # Set grid to false initially
     scatter!(jAeq[vAeq .> 0], iAeq[vAeq .> 0], markershape = :square, markersize = 5, color = :green, label = "Aeq > 0")
 
     # Plotting for beq
