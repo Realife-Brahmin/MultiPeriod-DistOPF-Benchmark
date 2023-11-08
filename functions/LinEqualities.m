@@ -1,8 +1,9 @@
-function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area_1toT, varargin)
+function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parent_Area_1toT, varargin)
 
     % Default values
     % logging_Aeq_beq = false;
     T = simInfo.T;
+    noBatteries = simInfo.noBatteries;
     % Input parser
     p = inputParser;
     addParameter(p, 'delta_t', 0.25, @isnumeric);
@@ -37,8 +38,13 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     % Emax_batt_Area = areaInfo.Emax_batt_Area;
     busesWithDERs_Area = areaInfo.busesWithDERs_Area;
     nDER_Area = areaInfo.nDER_Area;
-    busesWithBatts_Area = areaInfo.busesWithBatts_Area;
-    nBatt_Area = areaInfo.nBatt_Area;
+    if ~noBatteries
+        busesWithBatts_Area = areaInfo.busesWithBatts_Area;
+        nBatt_Area = areaInfo.nBatt_Area;
+    else
+        busesWithBatts_Area = [];
+        nBatt_Area = 0;
+    end
     % S_onlyDERbuses_Area = areaInfo.S_onlyDERbuses_Area;
     % P_onlyDERbuses_Area = areaInfo.P_onlyDERbuses_Area;
     % S_onlyBattBusesMax_Area = areaInfo.S_onlyBattBusesMax_Area;
@@ -54,7 +60,11 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     ub_qD_onlyDERbuses_Area = areaInfo.ub_qD_onlyDERbuses_Area;
     lb_qB_onlyBattBuses_Area = areaInfo.lb_qB_onlyBattBuses_Area;
     ub_qB_onlyBattBuses_Area = areaInfo.ub_qB_onlyBattBuses_Area;
-    B0Vals_pu_Area = areaInfo.B0Vals_pu_Area;
+    if ~noBatteries
+        B0Vals_pu_Area = areaInfo.B0Vals_pu_Area;
+    else
+        B0Vals_pu_Area = [];
+    end
     R_Area_Matrix = areaInfo.R_Area_Matrix;
     X_Area_Matrix = areaInfo.X_Area_Matrix;
 
@@ -162,16 +172,6 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
         end
         Aeq(sub2ind(sz, row, indices_lij_T)) = -X_Area_Matrix(i, j);
         beq(row) = lambdaVals*Q_L_Area(j) - Q_C_Area(j);
-
-        % Aeq_Full( QIdx, indices_v(i_Idx) ) = -0.5 * CVR_Q * Q_L_Area( j );
-
-        % if CVR_P
-        %     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = -0.5 * CVR_P * P_L(%d).\n", PIdx, i_Idx, j);
-        % end
-        
-        % if CVR_Q
-        %     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "Aeq(%d, v(%d)) = -0.5 * CVR_Q * Q_L(%d).\n", QIdx, i_Idx, j);
-        % end
         
         % KVL equations in Aeq, beq | Full equation (contains only BFM
         % variables)
@@ -260,8 +260,17 @@ function [Aeq, beq, lb_Area9, ub_Area9, x0, areaInfo] = LinEqualities(areaInfo, 
     lbVals4 = [0, -5, -15, 0, V_min^2];
     ubVals4 = [5, 5, 5, 15, V_max^2];
     [lb_Area4, ub_Area4] = constructBoundVectors(numVarsBFM4, lbVals4, ubVals4);
-    lb_Area9 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area], T, 1);
-    ub_Area9 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area], T, 1);
+    if ~noBatteries
+        lb_Area9 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area], T, 1);
+        ub_Area9 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area], T, 1);
+        lb_AreaAll = lb_Area9;
+        ub_AreaAll = ub_Area9;
+    else
+        lb_Area5 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area], T, 1);
+        ub_Area5 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area], T, 1);
+        lb_AreaAll = lb_Area5;
+        ub_AreaAll = ub_Area5;
+    end
 
     x0 = repmat([zeros(3*m_Area, 1); 1.00*ones(N_Area, 1); zeros(nDER_Area, 1); B0Vals_pu_Area; zeros(3*nBatt_Area, 1)], T, 1);
 
