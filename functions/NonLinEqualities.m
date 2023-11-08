@@ -1,6 +1,7 @@
 % function [c, ceq] = NonLinEqualities(x, Area, m_Area, fb_Area, tb_Area, indices_Pij, indices_Qij, indices_lij, indices_vAllj, itr, systemName, numAreas, varargin)
-function [c, ceq] = NonLinEqualities(x, areaInfo, T, varargin)
+function [c, ceq] = NonLinEqualities(x, simInfo, areaInfo, T, varargin)
     
+    noBatteries = simInfo.noBatteries;
     verbose = false;
     saveToFile = false;
     saveLocation = "logfiles/";
@@ -43,7 +44,12 @@ function [c, ceq] = NonLinEqualities(x, areaInfo, T, varargin)
     N_Area = areaInfo.N_Area;
     m_Area = areaInfo.m_Area;
     nDER_Area = areaInfo.nDER_Area;
-    nBatt_Area = areaInfo.nBatt_Area;
+    if ~noBatteries
+        nBatt_Area = areaInfo.nBatt_Area;
+    else
+        nBatt_Area = 0;
+    end
+    
     fb_Area = areaInfo.fb_Area;
     tb_Area = areaInfo.tb_Area;
     Area = areaInfo.Area;
