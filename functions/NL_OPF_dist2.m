@@ -213,7 +213,9 @@ function [x, sysInfo, simInfo, ...
     else
         objectiveFuns = {"func_PLoss"};
     end
-
+    
+    lb
+    ub
     [x, fval, ~, output] = fmincon(@(x)objfun(x, simInfo, areaInfo, T, 'objectiveFuns', objectiveFuns, 'alpha', alpha, 'gamma', gamma), ...
     x0, [], [], Aeq, beq, lb, ub, ...
     @(x)NonLinEqualities(x, simInfo, areaInfo, T, "verbose", false, "saveToFile", false), ...
@@ -275,10 +277,14 @@ function [x, sysInfo, simInfo, ...
         myfprintf(true, fid, "where alpha = %d and gamma = %d\n", alpha, gamma);
     end
     
-    saveSCDPlots = ~macroItr && saveSCDPlots;
-
+    saveSCDPlots = ~macroItr && saveSCDPlots
+    
+    % keyboard;
     if ~noBatteries && saveSCDPlots
-        checkForSCD(false, sysInfo, simInfo, areaInfo, T, x, 'savePlots', saveSCDPlots);
+        % sysInfo
+        % simInfo
+        % areaInfo
+        checkForSCD(sysInfo, simInfo, areaInfo, T, x, 'savePlots', true);
     end
     
     time_dist(macroItr+1, Area) = t3;
@@ -311,6 +317,15 @@ function [x, sysInfo, simInfo, ...
 
         areaInfo.scd = scd;
         areaInfo.changeInSOC = changeInSOC;
+    else
+
+        areaInfo.B_Area_1toT = "NA";
+        areaInfo.Pc_Area_1toT = "NA";
+        areaInfo.Pd_Area_1toT = "NA";
+        areaInfo.qB_Area_1toT = "NA";
+
+        areaInfo.scd = "NA";
+        areaInfo.changeInSOC = "NA";
     end
 
     areaInfo.P_Area_1toT = P_Area_1toT;
@@ -321,7 +336,7 @@ function [x, sysInfo, simInfo, ...
     areaInfo.vAll_Area_1toT = vAll_Area_1toT;
 
     areaInfo.qD_Area_1toT = qD_Area_1toT;
-
+    
     
     PLoss_allT = lineLosses;
     areaInfo.PLoss_allT = PLoss_allT;
