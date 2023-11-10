@@ -125,7 +125,8 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     Q_C_Area = busDataTable_Area.Q_C/kVA_B;                           % Rated Q of Capacitor
     
     P_der_Area = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power
-    S_der_Area = 1.2*busDataTable_Area.P_der/kVA_B; 
+    % S_der_Area = 1.2*busDataTable_Area.P_der/kVA_B; 
+    S_der_Area = 3.0*busDataTable_Area.P_der/kVA_B; 
 
     P_L_Area_1toT = repmat(P_L_Area, 1, T).*lambdaVals;
     Q_L_Area_1toT = repmat(Q_L_Area, 1, T).*lambdaVals;
