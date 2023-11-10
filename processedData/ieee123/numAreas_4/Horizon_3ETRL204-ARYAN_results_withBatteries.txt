@@ -1,0 +1,8 @@
+------------------------------------------------------------
+Machine ID: ETRL204-ARYAN
+Horizon Duration: 3
+Line Loss: 0.88 kW
+Substation Power: 8.53 kW
+Number of Macro-Iterations: 1
+Time to Solve: 443.52s
+------------------------------------------------------------
