@@ -20,8 +20,11 @@ function [x, sysInfo, simInfo, ...
     chargeToPowerRatio = 4;
     soc_min = 0.30;
     soc_max = 0.95;
-    alpha = 1e-3;
-    gamma = 1e0;
+    % alpha = 1e-3;
+    alpha = simInfo.alpha;
+    % gamma = 1e0;
+    % gamma = 1e-1;
+    gamma = simInfo.gamma;
     profiling = false;
     saveSCDPlots = false;
     displayTables = false;
@@ -152,8 +155,8 @@ function [x, sysInfo, simInfo, ...
         "Constructing Aeq and beq for Area %d.\n" + ...
         "***********\n", Area); 
 
-    CVR_P = CVR(1);
-    CVR_Q = CVR(2);
+    % CVR_P = CVR(1);
+    % CVR_Q = CVR(2);
     
     [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parAr_1toT);
     
@@ -207,15 +210,15 @@ function [x, sysInfo, simInfo, ...
     end
 
     if ~noBatteries
-        % objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"};
-        objectiveFuns = {"func_PLoss", "func_SCD"};
+        objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"};
+        % objectiveFuns = {"func_PLoss", "func_SCD"};
         % objectiveFuns = {"func_PLoss", "func_netChangeInSOC"};
     else
         objectiveFuns = {"func_PLoss"};
     end
     
-    lb
-    ub
+    % lb
+    % ub
     [x, fval, ~, output] = fmincon(@(x)objfun(x, simInfo, areaInfo, T, 'objectiveFuns', objectiveFuns, 'alpha', alpha, 'gamma', gamma), ...
     x0, [], [], Aeq, beq, lb, ub, ...
     @(x)NonLinEqualities(x, simInfo, areaInfo, T, "verbose", false, "saveToFile", false), ...
@@ -277,7 +280,7 @@ function [x, sysInfo, simInfo, ...
         myfprintf(true, fid, "where alpha = %d and gamma = %d\n", alpha, gamma);
     end
     
-    saveSCDPlots = ~macroItr && saveSCDPlots
+    saveSCDPlots = ~macroItr && saveSCDPlots;
     
     % keyboard;
     if ~noBatteries && saveSCDPlots
