@@ -27,7 +27,10 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
     else
         visible = 'off';
     end
-
+    
+    alpha = simInfo.alpha;
+    gamma = simInfo.gamma;
+    
     for batt_num = 1:nBatt_Area
         f = figure('visible', visible);        
         SOC_Max = areaInfo.E_onlyBattBusesMax_Area(batt_num);
@@ -67,12 +70,22 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
 
         % Save plot if requested
         if savePlots
-            folderName = strcat("processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, "area", num2str(areaInfo.Area), filesep, "BatteryVariables");
+            % folderName = strcat("processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, "area", num2str(areaInfo.Area), filesep, "BatteryVariables");
+            folderName = strcat("processedData", filesep, sysInfo.systemName, ...
+                filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, ...
+                "area", num2str(areaInfo.Area), filesep, "BatteryVariables", filesep, ...
+                "Horizon_", num2str(T));
 
             if ~exist(folderName, 'dir')
                 mkdir(folderName);
             end
-            filename = strcat(folderName, filesep, "Horizon_", num2str(T), "_macroItr_", num2str(simInfo.macroItrsCompleted+1), "_Battery_", num2str(batt_num), ".png");
+
+            % filename = strcat(folderName, filesep, "Horizon_", num2str(T), ...
+            %     "_macroItr_", num2str(simInfo.macroItrsCompleted+1), "_Battery_", num2str(batt_num), ...
+            %     "_alpha_", num2str(alpha), "_gamma_", num2str(gamma),  ".png");
+            filename = strcat(folderName, filesep, ...
+                "_macroItr_", num2str(simInfo.macroItrsCompleted+1), "_Battery_", num2str(batt_num), ...
+                "_alpha_", num2str(alpha), "_gamma_", num2str(gamma),  ".png");
             saveas(f, filename);
         end
     end
