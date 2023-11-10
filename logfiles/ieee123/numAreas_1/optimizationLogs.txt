@@ -1,2 +1,2 @@
-This area has only the substation as its 'parent area'.
-This area has no child areas.
+A total of 2 time-periods (of 15 minutes each, so 0.50 hours in total) will be run.
+********Running Full OPF for the system.********

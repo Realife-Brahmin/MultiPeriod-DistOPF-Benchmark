@@ -2,6 +2,7 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
     
     P12_1toT_vs_macroItr = results.P12_1toT_vs_macroItr;
     v1_1toT_vs_macroItr = results.v1_1toT_vs_macroItr;
+    PLoss_allT_vs_macroItr = results.PLoss_allT_vs_macroItr;
 
     systemName = "ieee123";
     fileExtensionImage = '.png';
@@ -31,7 +32,7 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
     colors{9} = [0.929, 0.612, 0.329];   % Salmon
     % Define some colors for the lines
     % colors = lines(totalMacroItr); % MATLAB's built-in colormap for lines
-    alphaValues = linspace(0.1, 1.0, totalMacroItr); % From opaque to more transparent
+    alphaValues = linspace(1.0, 1.0, totalMacroItr); % From opaque to more transparent
     noBatteries = simInfo.noBatteries;
     if ~noBatteries
         battstring = "with Batteries";
@@ -43,81 +44,87 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
     kVA_B = sysInfo.kVA_B;
     kV_B = sysInfo.kV_B;
     % Iterate over each relationship
-    for run = 1:2
-        for r = 1:numRelationships
-            figure; % Create a new figure for each relationship
-            hold on; % Hold on to plot multiple lines
-            grid minor;
+    for run = 1:3
+        if run <= 2
+            for r = 1:numRelationships
+                figure; % Create a new figure for each relationship
+                hold on; % Hold on to plot multiple lines
+                grid minor;
+        
+                % Iterate over each macro iteration
+                for m = 1:totalMacroItr
+                    % Extract the data for the current relationship and macro iteration
+                    if run == 2
+                        data0 = P12_1toT_vs_macroItr(r, :, m);
+                    elseif run == 1
+                        data0 = v1_1toT_vs_macroItr(r, :, m);
+                    else
+                        error("Uknown thing to plot.");
+                    end
     
-            % Iterate over each macro iteration
-            for m = 1:totalMacroItr
-                % Extract the data for the current relationship and macro iteration
-                if run == 2
-                    data0 = P12_1toT_vs_macroItr(r, :, m);
-                elseif run == 1
-                    data0 = v1_1toT_vs_macroItr(r, :, m);
-                else
-                    error("Uknown thing to plot.");
+                    data = squeeze(data0);
+                    
+                    if run == 2
+                        dependentVariable = data*kVA_B;
+                    elseif run ==1
+                        % dependentVariable = data*kV_B;
+                        dependentVariable = data;
+                    else
+                        error("Uknown thing to plot.");
+                    end
+                    % Plot the data over time
+                    plot(1:T, abs(dependentVariable), ...
+                    'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
+                    'Color', [colors{mod(m, numColours)+1},  alphaValues(m)], 'LineWidth', 2.5, ...
+                    'DisplayName', ['Macro Iter ' num2str(m)]);
+    
                 end
-
-                data = squeeze(data0);
                 
+                parentArea = CBTable.parentArea(r);
+                childArea = CBTable.childArea(r);
+                % Customize the plot
                 if run == 2
-                    dependentVariable = data*kVA_B;
-                elseif run ==1
-                    % dependentVariable = data*kV_B;
-                    dependentVariable = data;
+                    titlePre = "$P_{12}$";
+                    yLabelString = "$P_{12} \, [kW]$";
+                    filenamePre = "BoundaryRealPower";
+                elseif run == 1
+                    titlePre = "$v_{1}$";
+                    yLabelString = "$v_{1} \, [pu]$";
+                    filenamePre = "BoundaryVoltage";
                 else
-                    error("Uknown thing to plot.");
+                    error("floc")
                 end
-                % Plot the data over time
-                plot(1:T, abs(dependentVariable), ...
-                'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
-                'Color', [colors{mod(m, numColours)+1},  alphaValues(m)], 'LineWidth', 2.5, ...
-                'DisplayName', ['Macro Iter ' num2str(m)]);
-
-            end
-            
-            parentArea = CBTable.parentArea(r);
-            childArea = CBTable.childArea(r);
-            % Customize the plot
-            if run == 2
-                titlePre = "$P_{12}$";
-                yLabelString = "$P_{12} \, [kW]$";
-                filenamePre = "BoundaryRealPower";
-            elseif run == 1
-                titlePre = "$v_{1}$";
-                yLabelString = "$v_{1} \, [pu]$";
-                filenamePre = "BoundaryVoltage";
+    
+                titleString = strcat(titlePre, " accross the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$ ", battstring);
+                title(titleString)
+                xlabel(xLabelString);
+        
+                % xlabel('t [units]');
+                ylabel(yLabelString);
+                legend show; % Show the legend
+                % grid on; % Enable the grid
+                % hold off; % Release the figure for new plots
+        
+                saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
+                if ~exist(saveLocation, 'dir')
+                    mkdir(saveLocation)
+                end
+                
+                
+                filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_vs_macroItr_", num2str(T), "Areas_", num2str(parentArea), "_", num2str(childArea), "_", battstring,  fileExtensionImage);
+                myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
+                filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
+                writematrix(dependentVariable, filenameCSV)
+        
+                % saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
+                % filenamePNG = strcat(saveLocation, figureNameFull, "_vs_", varyingIndependentParam, '_', num2str(T), "_for_", suffixObj, fileExtensionImage);
+                % myexportgraphics(saveSimulationResultPlots, figureHandleFull, filenamePNG, 'Resolution', 300);
             else
-                error("floc")
+                
             end
-
-            titleString = strcat(titlePre, " accross the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$ ", battstring);
-            title(titleString)
-            xlabel(xLabelString);
-    
-            % xlabel('t [units]');
-            ylabel(yLabelString);
-            legend show; % Show the legend
-            % grid on; % Enable the grid
-            % hold off; % Release the figure for new plots
-    
-            saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-            if ~exist(saveLocation, 'dir')
-                mkdir(saveLocation)
-            end
-            
-            
-            filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_vs_macroItr_", num2str(T), "Areas_", num2str(parentArea), "_", num2str(childArea), "_", battstring,  fileExtensionImage);
-            myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
-            filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
-            writematrix(dependentVariable, filenameCSV)
-    
-            % saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-            % filenamePNG = strcat(saveLocation, figureNameFull, "_vs_", varyingIndependentParam, '_', num2str(T), "_for_", suffixObj, fileExtensionImage);
-            % myexportgraphics(saveSimulationResultPlots, figureHandleFull, filenamePNG, 'Resolution', 300);
         end
     end
+
+
     
 end
