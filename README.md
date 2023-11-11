@@ -51,3 +51,6 @@ Naive Brute Force Multi-Period OPF. A spatially decomposed, temporally brute-for
 ### Notes
 1. <span id="f1"> Current modelling. Future modelling will incorporate reactive power as a non-linear function wrt maximum apparent power and real power. [↩](#a1)</span>
 2. <span id="f2"> Except when used as a superscript in denoting Battery SOC $B^{t}_j$, $t$ refers to the average value of the variable _within_ the time-period $t$. For Battery SOC, $B^{t}_j$ refers to the value of SOC _at the end_ of time-period $t$. [↩](#a2)</span>
+
+Related: You may also check out the Greedy Single Time Period Sequential OPF Model repo [here](https://github.com/Realife-Brahmin/MultiPeriod-DistOPF-AlgoTesting). Temporal decomposition will be applied there later, after algorithm development.
+
