@@ -49,5 +49,5 @@ Objectves currently covered:
 | $t$               | Denotes a time-period<sup id="a2">[2](#f2)</sup>. $t \in \mathbb{T}$                                        |             |
 
 ### Notes
-1. <span id="f1"> : Current modelling. Future modelling will incorporate reactive power as a non-linear function wrt maximum apparent power and real power. [↩](#a1)</span>
-2. <span id="f2"> : Except when used as a superscript in denoting Battery SOC $B^{t}_j$, $t$ refers to the average value of the variable _within_ the time-period $t$. For Battery SOC, $B^{t}_j$ refers to the value of SOC _at the end_ of time-period $t$. [↩](#a2)</span>
+1. <span id="f1"> Current modelling. Future modelling will incorporate reactive power as a non-linear function wrt maximum apparent power and real power. [↩](#a1)</span>
+2. <span id="f2"> Except when used as a superscript in denoting Battery SOC $B^{t}_j$, $t$ refers to the average value of the variable _within_ the time-period $t$. For Battery SOC, $B^{t}_j$ refers to the value of SOC _at the end_ of time-period $t$. [↩](#a2)</span>
