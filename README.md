@@ -2,7 +2,7 @@
 ## Optimization for Balanced Three-Phase Power Distribution Networks with Renewables and Storage in MATLAB. 
 Naive Brute Force Multi-Period OPF. A spatially decomposed, temporally brute-forced MPOPF has been implemented.
 
-Objectves currently covered: 
+## Objectives currently covered: 
 - Loss Minimization
 
 ## Description of the Modelling of the Radial Power Distribution System
