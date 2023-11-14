@@ -3,8 +3,10 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
     P12_1toT_vs_macroItr = results.P12_1toT_vs_macroItr;
     v1_1toT_vs_macroItr = results.v1_1toT_vs_macroItr;
     PLoss_allT_vs_macroItr = results.PLoss_allT_vs_macroItr;
+    PLoss_1toT_vs_macroItr = results.PLoss_1toT_vs_macroItr;
 
     systemName = "ieee123";
+    simNatureString = simInfo.simNatureString;
     fileExtensionImage = '.png';
     fileExtensionData = ".csv";
     saveSimulationResultPlots = true;
@@ -16,7 +18,6 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
 
     % latex_interpreter
     % indParamString = "t";
-    xLabelString = "Macro-iteration Number";
 
     numColours = 9;
     colors = cell(numColours, 1);
@@ -46,6 +47,8 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
     % Iterate over each relationship
     for run = 1:3
         if run <= 2
+            xLabelString = "Macro-iteration Number";
+
             for r = 1:numRelationships
                 figure; % Create a new figure for each relationship
                 hold on; % Hold on to plot multiple lines
@@ -66,7 +69,7 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
                     
                     if run == 2
                         dependentVariable = data*kVA_B;
-                    elseif run ==1
+                    elseif run == 1
                         % dependentVariable = data*kV_B;
                         dependentVariable = data;
                     else
@@ -91,6 +94,10 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
                     titlePre = "$v_{1}$";
                     yLabelString = "$v_{1} \, [pu]$";
                     filenamePre = "BoundaryVoltage";
+                elseif run == 3
+                    titlePre = "$P_{Loss}$";
+                    yLabelString = "$P_{Loss} \, [kW]$";
+                    filenamePre = "SystemRealPowerLosses";
                 else
                     error("floc")
                 end
@@ -115,14 +122,69 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
                 myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
                 filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
                 writematrix(dependentVariable, filenameCSV)
-        
-                % saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-                % filenamePNG = strcat(saveLocation, figureNameFull, "_vs_", varyingIndependentParam, '_', num2str(T), "_for_", suffixObj, fileExtensionImage);
-                % myexportgraphics(saveSimulationResultPlots, figureHandleFull, filenamePNG, 'Resolution', 300);                
+                     
             end
+        
+        elseif run == 3
+                xLabelString = "Time Period $t$";
+    
+                figure; % Create a new figure for each relationship
+                hold on; % Hold on to plot multiple lines
+                grid minor;
+    
+                if run == 3
+                    data0 = PLoss_1toT_vs_macroItr(1:T, totalMacroItr);
+    
+                else
+                    error("Unknown thing to plot.");
+                end
+    
+                data = squeeze(data0);
+    
+                if run == 3
+                    dependentVariable = data*kVA_B;
+                else
+                    error("Unknown thing to plot.");
+                end
+                % Plot the data over time
+                plot(1:T, abs(dependentVariable), ...
+                    'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
+                    'Color', [colors{mod(t, numColours)+1},  alphaValues(t)], 'LineWidth', 2.5, ...
+                    'DisplayName', ['macroItr = ' num2str(totalMacroItr)]);
+    
+            end
+    
+            % Customize the plot
+    
+            if run == 3
+                titlePre = "$P_{Loss}$";
+                yLabelString = "$P_{Loss} \, [kW]$";
+                filenamePre = "SystemRealPowerLosses";
+            else
+                error("floc")
+            end
+    
+            titleString = strcat(titlePre, " across the horizon for the system using ", num2str(simNatureString), " ", battstring);
+            title(titleString)
+            xlabel(xLabelString);
+    
+            % xlabel('t [units]');
+            ylabel(yLabelString);
+            legend show; % Show the legend
+            ax = gca; % Get the current axes object
+            ax.XTick = 1:T; % Set x-ticks to integers from 1 to totalMacroItr
+    
+            saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
+            if ~exist(saveLocation, 'dir')
+                mkdir(saveLocation)
+            end
+    
+    
+            filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_vs_macroItr_", num2str(T), "Areas_", num2str(parentArea), "_", num2str(childArea), "_", battstring,  fileExtensionImage);
+            myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
+            filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
+            writematrix(dependentVariable, filenameCSV)
+    
         end
-    end
-
-
     
 end
