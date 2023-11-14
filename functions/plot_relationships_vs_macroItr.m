@@ -95,7 +95,7 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
                     error("floc")
                 end
     
-                titleString = strcat(titlePre, " accross the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$ ", battstring);
+                titleString = strcat(titlePre, " across the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$ ", battstring);
                 title(titleString)
                 xlabel(xLabelString);
         
