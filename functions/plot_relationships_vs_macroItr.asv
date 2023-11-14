@@ -16,7 +16,7 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
 
     % latex_interpreter
     % indParamString = "t";
-    xLabelString = "Time-step $t$";
+    xLabelString = "Macro-iteration number.";
 
     numColours = 9;
     colors = cell(numColours, 1);

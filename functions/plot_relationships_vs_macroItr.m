@@ -16,7 +16,7 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
 
     % latex_interpreter
     % indParamString = "t";
-    xLabelString = "Macro-iteration number.";
+    xLabelString = "Macro-iteration Number";
 
     numColours = 9;
     colors = cell(numColours, 1);
@@ -102,8 +102,8 @@ function plot_relationships_over_time(results, simInfo, sysInfo)
                 % xlabel('t [units]');
                 ylabel(yLabelString);
                 legend show; % Show the legend
-                % grid on; % Enable the grid
-                % hold off; % Release the figure for new plots
+                ax = gca; % Get the current axes object
+                ax.XTick = 1:totalMacroItr; % Set x-ticks to integers from 1 to totalMacroItr
         
                 saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
                 if ~exist(saveLocation, 'dir')
