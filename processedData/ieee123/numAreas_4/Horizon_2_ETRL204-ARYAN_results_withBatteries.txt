@@ -5,6 +5,6 @@ Nature of Simulation: Spatially-Distributed-OPF with 4 Areas.
 Line Loss: 1.15 kW
 Substation Power: 76.53 kW
 Number of Macro-Iterations: 2
-Simulation Time: 344850.44s
-Time to Solve if OPF computation parallelized: 173.37s
+Simulation Time: 351.46s
+Time to Solve if OPF computation parallelized: 178.04s
 ------------------------------------------------------------
