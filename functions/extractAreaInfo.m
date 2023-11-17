@@ -9,8 +9,12 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     saveLocationName = "logfiles/";
     fileExtension = ".txt";
     savePlots = true;
-    kV_B = 4.16/sqrt(3);
-    kVA_B = 1000;
+    kV_B = simInfo.kV_B;
+    % kV_B = 4.16/sqrt(3);
+    kVA_B = simInfo.kVA_B;
+    DER_percent = simInfo.DER_percent;
+    Batt_percent = simInfo.Batt_percent;
+    % kVA_B = 1000;
     load_mult = 1;
     gen_mult = 1;
     systemDataFolder = strcat("rawData", filesep, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
@@ -22,8 +26,7 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     end
     
     validArgs = ["verbose", "logging", "displayTables", "displayNetworkGraphs", ...
-        "displayActualNumbersInGraphs", "savePlots", "kV_B", ...
-        "kVA_B", "load_mult", "gen_mult"];
+        "displayActualNumbersInGraphs", "savePlots", "load_mult", "gen_mult"];
     
     for i = 1:2:numArgs
         argName = varargin{i};
@@ -46,10 +49,6 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
                 displayActualBusNumbersInGraphs = argValue;
             case "savePlots"
                 savePlots = argValue;
-            case "kV_B"
-                kV_B = argValue;
-            case "kVA_B"
-                kVA_B = argValue;
             case "load_mult"
                 load_mult = argValue;
             case "gen_mult"
