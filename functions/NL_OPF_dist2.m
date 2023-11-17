@@ -2,7 +2,7 @@ function [x, sysInfo, simInfo, ...
      time_dist] = ...
     ...
     NL_OPF_dist2(sysInfo, simInfo, areaInfo, v_parAr_1toT, S_chArs_1toT,  ...
-    lambdaVals, pvCoeffVals, time_dist, varargin)
+    time_dist, varargin)
     
     noBatteries = simInfo.noBatteries;
  % Default values for optional arguments
@@ -10,24 +10,24 @@ function [x, sysInfo, simInfo, ...
     logging_Aeq_beq = false;
     logging = false;
     CVR = [0; 0];
-    % V_max = 1.05;
-    V_max = simInfo.V_max;
-    % V_min = 0.95;
-    V_min = simInfo.V_min;
+    % % V_max = 1.05;
+    % V_max = simInfo.V_max;
+    % % V_min = 0.95;
+    % V_min = simInfo.V_min;
     Qref_DER = 0.00;
     Vref_DER = 1.00;
-    % delta_t = 0.25;
-    delta_t = simInfo.delta_t;
-    % etta_C = 0.95;
-    etta_C = simInfo.etta_C;
-    % etta_D = 0.95;
-    etta_D = simInfo.etta_D;
-    % chargeToPowerRatio = 4;
-    chargeToPowerRatio = simInfo.chargeToPowerRatio;
-    % soc_min = 0.30;
-    soc_min = simInfo.soc_min;
-    % soc_max = 0.95;
-    soc_max = simInfo.soc_max;
+    % % delta_t = 0.25;
+    % delta_t = simInfo.delta_t;
+    % % etta_C = 0.95;
+    % etta_C = simInfo.etta_C;
+    % % etta_D = 0.95;
+    % etta_D = simInfo.etta_D;
+    % % chargeToPowerRatio = 4;
+    % chargeToPowerRatio = simInfo.chargeToPowerRatio;
+    % % soc_min = 0.30;
+    % soc_min = simInfo.soc_min;
+    % % soc_max = 0.95;
+    % soc_max = simInfo.soc_max;
     % alpha = 1e-3;
     alpha = simInfo.alpha;
     % gamma = 1e0;
@@ -139,14 +139,14 @@ function [x, sysInfo, simInfo, ...
     
     areaInfo = exchangeCompVars(areaInfo, S_chArs_1toT);
     
-     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
+    myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
         "Constructing Aeq and beq for Area %d.\n" + ...
         "***********\n", Area); 
 
     % CVR_P = CVR(1);
     % CVR_Q = CVR(2);
     
-    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, lambdaVals, pvCoeffVals, v_parAr_1toT);
+    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
     
     % plotLinDS = true;
 
@@ -179,16 +179,13 @@ function [x, sysInfo, simInfo, ...
     stepTol = simInfo.alg.stepTol;
     constraintTol = simInfo.alg.constraintTol;
     optimalityTol = simInfo.alg.optimalityTol;
-    % displayIterations = 'iter-detailed';
     displayIterations = 'off';
-    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+    
     options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
         'FunctionTolerance', tolfun, ...
         'StepTolerance', stepTol, ...             % Equivalent to 10 watts
     'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
     'OptimalityTolerance', optimalityTol);
-    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
-    % options = optimoptions('fmincon', 'Display', 'iter-detailed', 'MaxIterations', 200, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', 'PlotFcn', @optimplotfval);
     
     T = simInfo.T;
 
@@ -216,7 +213,7 @@ function [x, sysInfo, simInfo, ...
     
     % lb
     % ub
-    [x, fval, ~, output] = fmincon(@(x)objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', objectiveFuns, 'alpha', alpha, 'gamma', gamma), ...
+    [x, fval, ~, output] = fmincon(@(x)objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', objectiveFuns), ...
     x0, [], [], Aeq, beq, lb, ub, ...
     @(x)NonLinEqualities(x, simInfo, areaInfo, T, "verbose", false, "saveToFile", false), ...
     options);
