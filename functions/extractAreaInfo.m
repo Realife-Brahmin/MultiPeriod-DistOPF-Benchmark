@@ -125,14 +125,18 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     Q_C_Area = busDataTable_Area.Q_C/kVA_B;                           % Rated Q of Capacitor
     
     % P_der_Area = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power
-    P_der_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power
-    P_der_Area = P_der_Area0;          % Rated  DER active power
+    P_der_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power, all DERs from original CSV file
+    P_der_Area = select_percentage_of_elements(P_der_Area0, DER_percent);          % Rated  DER active power, only DER_percent elements selected
 
     % S_der_Area = 1.2*busDataTable_Area.P_der/kVA_B; 
-    S_der_Area = 3.0*busDataTable_Area.P_der/kVA_B; 
+    % S_der_Area = 3.0*busDataTable_Area.P_der/kVA_B; 
+    S_der_Area0 = 3.0*busDataTable_Area.P_der/kVA_B; 
+    S_der_Area = select_percentage_of_elements(S_der_Area0, DER_percent);
 
     P_L_Area_1toT = repmat(P_L_Area, 1, T).*lambdaVals;
     Q_L_Area_1toT = repmat(Q_L_Area, 1, T).*lambdaVals;
+
+    P_der_Area0_1toT = repmat(P_der_Area0, 1, T).*pvCoeffVals;
     P_der_Area_1toT = repmat(P_der_Area, 1, T).*pvCoeffVals;
 
     busDataTable_pu_Area = busDataTable_Area;
@@ -142,7 +146,9 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     busDataTable_pu_Area.Q_L_1toT = Q_L_Area_1toT;
     busDataTable_pu_Area.Q_C = Q_C_Area;
     % busDataTable_pu_Area.P_der = P_der_Area;
+    busDataTable_pu_Area.P_der0_1toT = P_der_Area0_1toT;
     busDataTable_pu_Area.P_der_1toT = P_der_Area_1toT;
+    busDataTable_pu_Area.S_der0 = S_der_Area0;
     busDataTable_pu_Area.S_der = S_der_Area;
 
     areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTable_Area, R_Area, X_Area);
