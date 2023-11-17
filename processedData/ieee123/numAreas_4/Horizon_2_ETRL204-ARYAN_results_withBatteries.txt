@@ -2,9 +2,9 @@
 Machine ID: ETRL204-ARYAN
 Horizon Duration: 2
 Nature of Simulation: Spatially-Distributed-OPF with 4 Areas.
-Line Loss: 1.15 kW
-Substation Power: 76.53 kW
-Number of Macro-Iterations: 2
-Simulation Time: 351.46s
-Time to Solve if OPF computation parallelized: 178.04s
+Line Loss: 0.82 kW
+Substation Power: 1.09 kW
+Number of Macro-Iterations: 3
+Simulation Time: 362.08 s
+Time to solve with sequential (non-parallel) computation:39.7952 sTime to Solve if OPF computation parallelized: 18.54 s
 ------------------------------------------------------------

@@ -14,7 +14,8 @@ function [x, sysInfo, simInfo, ...
     V_min = 0.95;
     Qref_DER = 0.00;
     Vref_DER = 1.00;
-    delta_t = 0.25;
+    % delta_t = 0.25;
+    delta_t = simInfo.delta_t;
     etta_D = 0.95;
     etta_C = 0.95;
     chargeToPowerRatio = 4;
@@ -208,18 +209,27 @@ function [x, sysInfo, simInfo, ...
         profiling = true;
         profile on
     end
+    
+    objFunction = simInfo.objFunction;
+    if strcmp(objFunction, "loss_min")
+        mainObjFunc = "func_PLoss";
+    elseif strcmp(objFunction, "gen_cost")
+        mainObjFunc = "func_PSubsCost";
+    else
+        error("Unknown objective function");
+    end
 
     if ~noBatteries
-        objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"};
-        % objectiveFuns = {"func_PLoss", "func_SCD"};
-        % objectiveFuns = {"func_PLoss", "func_netChangeInSOC"};
+        objectiveFuns = {mainObjFunc, "func_SCD", "func_netChangeInSOC"};
+        % objectiveFuns = {mainObjFunc, "func_SCD"};
+        % objectiveFuns = {mainObjFunc, "func_netChangeInSOC"};
     else
-        objectiveFuns = {"func_PLoss"};
+        objectiveFuns = {mainObjFunc};
     end
     
     % lb
     % ub
-    [x, fval, ~, output] = fmincon(@(x)objfun(x, simInfo, areaInfo, T, 'objectiveFuns', objectiveFuns, 'alpha', alpha, 'gamma', gamma), ...
+    [x, fval, ~, output] = fmincon(@(x)objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', objectiveFuns, 'alpha', alpha, 'gamma', gamma), ...
     x0, [], [], Aeq, beq, lb, ub, ...
     @(x)NonLinEqualities(x, simInfo, areaInfo, T, "verbose", false, "saveToFile", false), ...
     options);
@@ -245,11 +255,11 @@ function [x, sysInfo, simInfo, ...
         profile viewer;
     end
 
-    [lineLosses, ~] = objfun(x, simInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss"});
-    [~, lineLosses_1toT] = objfun(x, simInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss_1toT"});
+    [lineLosses, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss"});
+    [~, lineLosses_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss_1toT"});
     if ~noBatteries
-        [scd, ~] = objfun(x, simInfo, areaInfo, T, 'objectiveFuns', {"func_SCD"});
-        [changeInSOC, ~] = objfun(x, simInfo, areaInfo, T, 'objectiveFuns', {"func_netChangeInSOC"});
+        [scd, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_SCD"});
+        [changeInSOC, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_netChangeInSOC"});
     end
 
     t3 = toc(t3Start);
@@ -283,6 +293,7 @@ function [x, sysInfo, simInfo, ...
     
     % saveSCDPlots = ~macroItr && saveSCDPlots;
     saveSCDPlots = false;
+    saveSCDPlots = true;
     % keyboard;
     if ~noBatteries && saveSCDPlots
         checkForSCD(sysInfo, simInfo, areaInfo, T, x, 'savePlots', true);
@@ -318,6 +329,7 @@ function [x, sysInfo, simInfo, ...
 
         areaInfo.scd = scd;
         areaInfo.changeInSOC = changeInSOC;
+        areaInfo.genCost = genCost;
     else
 
         areaInfo.B_Area_1toT = "NA";
