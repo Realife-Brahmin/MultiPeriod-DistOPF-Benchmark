@@ -298,9 +298,9 @@ function [x, sysInfo, simInfo, ...
         myfprintf(true, fid, "where alpha = %d and gamma = %d\n", alpha, gamma);
     end
     
-    % saveSCDPlots = ~macroItr && saveSCDPlots;
+    saveSCDPlots = ~macroItr && saveSCDPlots;
     % saveSCDPlots = false;
-    saveSCDPlots = true;
+    % saveSCDPlots = true;
     % keyboard;
     if ~noBatteries && saveSCDPlots
         checkForSCD(sysInfo, simInfo, areaInfo, T, x, 'savePlots', true);
