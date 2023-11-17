@@ -126,12 +126,12 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     
     % P_der_Area = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power
     P_der_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power, all DERs from original CSV file
-    P_der_Area = select_percentage_of_elements(P_der_Area0, DER_percent);          % Rated  DER active power, only DER_percent elements selected
+    P_der_Area = select_percentage_of_nz_elements(P_der_Area0, DER_percent);          % Rated  DER active power, only DER_percent elements selected
 
     % S_der_Area = 1.2*busDataTable_Area.P_der/kVA_B; 
     % S_der_Area = 3.0*busDataTable_Area.P_der/kVA_B; 
     S_der_Area0 = 3.0*busDataTable_Area.P_der/kVA_B; 
-    S_der_Area = select_percentage_of_elements(S_der_Area0, DER_percent);
+    S_der_Area = select_percentage_of_nz_elements(S_der_Area0, DER_percent);
 
     P_L_Area_1toT = repmat(P_L_Area, 1, T).*lambdaVals;
     Q_L_Area_1toT = repmat(Q_L_Area, 1, T).*lambdaVals;
