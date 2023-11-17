@@ -1,4 +1,4 @@
-function areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTable, R_Area, X_Area, varargin)
+function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branchDataTable, R_Area, X_Area, varargin)
     %GETAREAPARAMETERS Extracts area-specific power system parameters.
     % 
     % Synopsis:
@@ -17,15 +17,18 @@ function areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTabl
     %   - areaInfo: Structure containing various power system parameters of the area.
     %
     
+    chargeToPowerRatio = simInfo.chargeToPowerRatio;
+    soc_min = simInfo.soc_min;
+    soc_max = simInfo.soc_max;
     p = inputParser;
-    addParameter(p, 'chargeToPowerRatio', 4, @isnumeric);
-    addParameter(p, 'soc_min', 0.30, @isnumeric);
-    addParameter(p, 'soc_max', 0.95, @isnumeric);
-    parse(p, varargin{:});
+    % addParameter(p, 'chargeToPowerRatio', 4, @isnumeric);
+    % addParameter(p, 'soc_min', 0.30, @isnumeric);
+    % addParameter(p, 'soc_max', 0.95, @isnumeric);
+    % parse(p, varargin{:});
     
-    chargeToPowerRatio = p.Results.chargeToPowerRatio;
-    soc_min = p.Results.soc_min;
-    soc_max = p.Results.soc_max;
+    % chargeToPowerRatio = p.Results.chargeToPowerRatio;
+    % soc_min = p.Results.soc_min;
+    % soc_max = p.Results.soc_max;
     
     areaInfo.Area = Area;
     areaInfo.N_Area = length(busDataTable_pu_Area.bus);

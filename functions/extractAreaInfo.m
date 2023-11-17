@@ -151,7 +151,7 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     busDataTable_pu_Area.S_der0 = S_der_Area0;
     busDataTable_pu_Area.S_der = S_der_Area;
 
-    areaInfo = getAreaParameters(Area, busDataTable_pu_Area, branchDataTable_Area, R_Area, X_Area);
+    areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branchDataTable_Area, R_Area, X_Area);
 
     % Optional: Plot Graphs which highlight the relationships between different Areas.
     
