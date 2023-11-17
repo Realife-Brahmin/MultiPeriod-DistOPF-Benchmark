@@ -139,7 +139,7 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     P_der_Area0_1toT = repmat(P_der_Area0, 1, T).*pvCoeffVals;
     P_der_Area_1toT = repmat(P_der_Area, 1, T).*pvCoeffVals;
 
-    busDataTable_pu_Area = busDataTable_Area;
+    busDataTable_pu_Area = tableToStructColumnwise(busDataTable_Area);
     % busDataTable_pu_Area.P_L = P_L_Area;
     busDataTable_pu_Area.P_L_1toT = P_L_Area_1toT;
     % busDataTable_pu_Area.Q_L = Q_L_Area;
@@ -147,7 +147,9 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     busDataTable_pu_Area.Q_C = Q_C_Area;
     % busDataTable_pu_Area.P_der = P_der_Area;
     busDataTable_pu_Area.P_der0_1toT = P_der_Area0_1toT;
+    % keyboard;
     busDataTable_pu_Area.P_der_1toT = P_der_Area_1toT;
+
     busDataTable_pu_Area.S_der0 = S_der_Area0;
     busDataTable_pu_Area.S_der = S_der_Area;
 
