@@ -1,4 +1,4 @@
-function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, varargin)
+function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, systemName, numAreas, CB_FullTable, numChildAreas_Area, varargin)
 
  % Default values for optional arguments
     verbose = false;
@@ -9,11 +9,11 @@ function areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, 
     saveLocationName = "logfiles/";
     fileExtension = ".txt";
     savePlots = true;
-    kV_B = simInfo.kV_B;
+    kV_B = sysInfo.kV_B;
     % kV_B = 4.16/sqrt(3);
-    kVA_B = simInfo.kVA_B;
+    kVA_B = sysInfo.kVA_B;
     DER_percent = simInfo.DER_percent;
-    Batt_percent = simInfo.Batt_percent;
+    % Batt_percent = simInfo.Batt_percent;
     % kVA_B = 1000;
     load_mult = 1;
     gen_mult = 1;
