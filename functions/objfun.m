@@ -1,4 +1,4 @@
-function [f, f_1toT] = objfun(x, simInfo, areaInfo, T, varargin)
+function [f, f_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, varargin)
     
     noBatteries = simInfo.noBatteries;
     % Default values for optional arguments
@@ -8,22 +8,28 @@ function [f, f_1toT] = objfun(x, simInfo, areaInfo, T, varargin)
     % alpha = 3e-5;
     % alpha = 3e-4;
     % alpha = 3e-3;
-    alpha = 1e-3;
+    % alpha = 1e-3;
+    alpha = simInfo.alpha;
     % alpha = 10;
     % alpha = 1;
     % alpha = 9e-4;
     % gamma = 1e3;
     % gamma = 10;
-    gamma = 1e0;
+    % gamma = 1e0;
+    gamma = simInfo.gamma;
+    costArray = simInfo.costArray;
     % mainObjFun = "func_PLoss";
     % secondObjFun = "func_SCD";
     % Process optional arguments
-
+    kVA_B = sysInfo.kVA_B;
+    kV_B = sysInfo.kV_B;
     % Default objective functions
     if ~noBatteries
-        objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"}; 
+        % objectiveFuns = {"func_PLoss", "func_SCD", "func_netChangeInSOC"}; 
+        objectiveFuns = {"func_PSubsCost", "func_SCD", "func_netChangeInSOC"};
     else
-        objectiveFuns = {"func_PLoss"};
+        % objectiveFuns = {"func_PLoss"};
+        objectiveFuns = {"func_PSubsCost"};
     end
 
     numArgs = numel(varargin);
@@ -119,8 +125,9 @@ function [f, f_1toT] = objfun(x, simInfo, areaInfo, T, varargin)
     % indices_Qflow = eqnIndicesT{2};
     % indices_KVL = eqnIndicesT{3};
     % indices_SOC = eqnIndicesT{4};
+    
+    indices_Pij = varIndicesT{1};
 
-    % indices_Pij = varIndicesT{1};
     % indices_Qij = varIndicesT{2};
     indices_lij = varIndicesT{3};
     % indices_vAllj = varIndicesT{4};
@@ -139,6 +146,11 @@ function [f, f_1toT] = objfun(x, simInfo, areaInfo, T, varargin)
     for objfun_num = 1:length(objectiveFuns)
         objFun = objectiveFuns{objfun_num};
         switch objFun
+            case "func_PSubsCost"
+                indices_PSubs_1toT = getIndicesT(indices_Pij, 1);
+                row = indices_PSubs_1toT;
+                f = f + sum(x(row) .* costArray)*kVA_B; % will give a value of cents
+
             case "func_PLoss"
                 % ... your code for func_PLoss
                 for j = 2 : N_Area
