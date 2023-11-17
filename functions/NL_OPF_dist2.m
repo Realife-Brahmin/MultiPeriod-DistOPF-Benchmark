@@ -257,6 +257,12 @@ function [x, sysInfo, simInfo, ...
 
     [lineLosses, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss"});
     [~, lineLosses_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss_1toT"});
+    [genPower, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubs"});
+    [~, genPower_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubs_1toT"});
+
+    [genCost, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubsCost"});
+    [~, genCost_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubsCost_1toT"});
+
     if ~noBatteries
         [scd, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_SCD"});
         [changeInSOC, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_netChangeInSOC"});
@@ -274,7 +280,8 @@ function [x, sysInfo, simInfo, ...
     end
 
     [nLinEqnsT, nNonLinEqnsT, nVarsT, areaInfo] = getProblemSize(areaInfo, T);
-    
+    kVA_B = sysInfo.kVA_B;
+    kV_B = sysInfo.kV_B;
 
     myfprintf(true, fid, "Machine this simulation was solved on: %s\n", getenv('COMPUTERNAME'));
     myfprintf(true, fid, "Optimization for Area %d for %d time periods took %d [s] and %d iterations.\n", Area, T,  t3, iterations_taken);
@@ -283,16 +290,16 @@ function [x, sysInfo, simInfo, ...
     myfprintf(true, fid, "Number of Linear Equations: %d\n", nLinEqnsT);
     myfprintf(true, fid, "Number of Nonlinear Equalities: %d\n", nNonLinEqnsT);
     myfprintf(true, fid, "Number of Optimization Variables: %d\n", nVarsT);
-    myfprintf(true, fid, "Total Objective Function Value for Area %d for %d time periods = %d [kW]\n", Area, T, fval*1000);
-    myfprintf(true, fid, "Total Real Power Line Losses for Area %d for %d time periods = %d [kW]\n", Area, T, lineLosses*1000);
+    myfprintf(true, fid, "Total Objective Function Value for Area %d for %d time periods = %d \n", Area, T, fval);
+    myfprintf(true, fid, "Total Real Power Line Losses for Area %d for %d time periods = %d [kW]\n", Area, T, lineLosses*kVA_B);
     if ~noBatteries
-        myfprintf(true, fid, "Total Battery Power losses for Area %d for %d time periods = %d [kW]\n", Area, T, scd*1000/alpha);
-        myfprintf(true, fid, "Average SOC Level constraint violation for Area %d for %d time periods = %d [kWh]\n", Area, T, sqrt( changeInSOC*(1000^2)/(gamma * areaInfo.nBatt_Area)));
+        myfprintf(true, fid, "Total Battery Power losses for Area %d for %d time periods = %d [kW]\n", Area, T, scd*kVA_B/alpha);
+        myfprintf(true, fid, "Average SOC Level constraint violation for Area %d for %d time periods = %d [kWh]\n", Area, T, sqrt( changeInSOC*(kVA_B^2)/(gamma * areaInfo.nBatt_Area)));
         myfprintf(true, fid, "where alpha = %d and gamma = %d\n", alpha, gamma);
     end
     
     % saveSCDPlots = ~macroItr && saveSCDPlots;
-    saveSCDPlots = false;
+    % saveSCDPlots = false;
     saveSCDPlots = true;
     % keyboard;
     if ~noBatteries && saveSCDPlots
@@ -355,8 +362,16 @@ function [x, sysInfo, simInfo, ...
     PLoss_1toT = lineLosses_1toT;
     areaInfo.PLoss_allT = PLoss_allT;
     areaInfo.PLoss_1toT = PLoss_1toT;
+    PSubs_allT = genPower;
+    PSubs_1toT = genPower_1toT;
+    areaInfo.PSubs_allT = PSubs_allT;
+    areaInfo.PSubs_1toT = PSubs_1toT;
+    PSubsCost_allT = genCost;
+    PSubsCost_1toT = genCost_1toT;
+    areaInfo.PSubsCost_allT = PSubsCost_allT;
+    areaInfo.PSubsCost_1toT = PSubsCost_1toT;
     areaInfo.fval = fval;
-
+    
     sysInfo.Area{Area} = areaInfo;
 
     if fileOpenedFlag
