@@ -33,6 +33,7 @@ function [x, sysInfo, simInfo, ...
     % gamma = 1e0;
     % gamma = 1e-1;
     gamma = simInfo.gamma;
+    DER_percent = simInfo.DER_percent;
     profiling = false;
     saveSCDPlots = false;
     displayTables = false;
@@ -156,9 +157,9 @@ function [x, sysInfo, simInfo, ...
     
     ext = ".csv";
     if ~noBatteries
-        battstring = "withBatteries";
+        battstring = strcat('withBatteries_', num2str(DER_percent));
     else
-        battstring = "withoutBatteries";
+        battstring = 'withoutBatteries_0';
     end
     saveLocationFolderName = strcat("processedData", filesep , systemName, filesep, "numAreas_", num2str(numAreas), filesep, "Area", num2str(Area));
     if ~exist("saveLocationFolderName", 'dir')
@@ -179,13 +180,23 @@ function [x, sysInfo, simInfo, ...
     stepTol = simInfo.alg.stepTol;
     constraintTol = simInfo.alg.constraintTol;
     optimalityTol = simInfo.alg.optimalityTol;
-    displayIterations = 'off';
-    
-    options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
-        'FunctionTolerance', tolfun, ...
-        'StepTolerance', stepTol, ...             % Equivalent to 10 watts
-    'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
-    'OptimalityTolerance', optimalityTol);
+    % displayIterations = 'off';
+    displayIterations = 'iter-detailed';
+    doPlot = true; % Set this to false if you don't want to plot
+
+    % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    %     'FunctionTolerance', tolfun, ...
+    %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    % 'OptimalityTolerance', optimalityTol);
+        options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+
+    %     options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    %     'FunctionTolerance', tolfun, ...
+    %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    % 'OptimalityTolerance', optimalityTol, ...
+    % 'OutputFcn', @outfun);
     
     T = simInfo.T;
 
