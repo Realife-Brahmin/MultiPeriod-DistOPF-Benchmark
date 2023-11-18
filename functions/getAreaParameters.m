@@ -37,6 +37,7 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
     areaInfo.tb_Area = branchDataTable.tb;
 
     % areaInfo.P_L_Area = busDataTable_pu_Area.P_L;
+    % keyboard;
     areaInfo.P_L_Area_1toT = busDataTable_pu_Area.P_L_1toT;
 
     % areaInfo.Q_L_Area = busDataTable_pu_Area.Q_L;
@@ -54,7 +55,9 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
     areaInfo.S_battMax_Area = busDataTable_pu_Area.S_der;
 
     P_der0_1toT = busDataTable_pu_Area.P_der0_1toT;
+    % areaInfo.P_der0_1toT = P_der0_1toT;
     P_der_1toT = busDataTable_pu_Area.P_der_1toT;
+    % areaInfo.P_der_1toT = P_der_1toT;
 
     areaInfo.P_battMax_Area0 = P_der0_1toT(:, 1);
     areaInfo.P_battMax_Area = P_der_1toT(:, 1);
