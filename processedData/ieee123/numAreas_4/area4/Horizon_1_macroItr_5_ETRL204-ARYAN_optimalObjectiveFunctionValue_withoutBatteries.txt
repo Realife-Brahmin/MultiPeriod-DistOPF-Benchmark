@@ -1,9 +1,9 @@
 Machine this simulation was solved on: ETRL204-ARYAN
-Optimization for Area 4 for 1 time periods took 4.233995e+00 [s] and 48 iterations.
+Optimization for Area 4 for 1 time periods took 4.215802e+00 [s] and 47 iterations.
 where a micro-iteration limit of 100 and a minimum improvement of 1.000000e-03 [kW] was imposed.
-Average time per iteration: 8.820824e-02 [s]
+Average time per iteration: 8.969790e-02 [s]
 Number of Linear Equations: 196
 Number of Nonlinear Equalities: 53
 Number of Optimization Variables: 393
-Total Objective Function Value for Area 4 for 1 time periods = 1.033356e-03 
-Total Real Power Line Losses for Area 4 for 1 time periods = 1.033356e+00 [kW]
+Total Objective Function Value for Area 4 for 1 time periods = 1.037007e-03 
+Total Real Power Line Losses for Area 4 for 1 time periods = 1.037007e+00 [kW]
