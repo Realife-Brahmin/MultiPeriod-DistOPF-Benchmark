@@ -43,8 +43,8 @@ function plot_simulation_results(results, simInfo, sysInfo)
         battstringTitle = strcat("with $", num2str(DER_percent), "\%$ GEDs");
         battstring = strcat("withBatteries_", num2str(DER_percent));
     else
-        battstringTitle = "without Batteries";
-        battstring = strcat("withoutBatteries_", 0);
+        battstringTitle = strcat("without Batteries with $", num2str(DER_percent), "\%$ GEDs");
+        battstring = strcat("withoutBatteries_", num2str(DER_percent));
     end
 
     numAreas = sysInfo.numAreas;
