@@ -1,9 +1,9 @@
 Machine this simulation was solved on: ETRL204-ARYAN
-Optimization for Area 3 for 1 time periods took 8.915150e-02 [s] and 3 iterations.
+Optimization for Area 3 for 1 time periods took 1.926019e+00 [s] and 60 iterations.
 where a micro-iteration limit of 100 and a minimum improvement of 1.000000e-03 [kW] was imposed.
-Average time per iteration: 2.971717e-02 [s]
+Average time per iteration: 3.210032e-02 [s]
 Number of Linear Equations: 72
 Number of Nonlinear Equalities: 19
 Number of Optimization Variables: 147
-Total Objective Function Value for Area 3 for 1 time periods = 3.673568e-01 [kW]
-Total Real Power Line Losses for Area 3 for 1 time periods = 3.673568e-01 [kW]
+Total Objective Function Value for Area 3 for 1 time periods = 2.880336e-04 
+Total Real Power Line Losses for Area 3 for 1 time periods = 2.880336e-01 [kW]

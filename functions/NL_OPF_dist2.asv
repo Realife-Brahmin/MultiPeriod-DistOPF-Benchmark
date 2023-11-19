@@ -9,13 +9,14 @@ function [x, sysInfo, simInfo, ...
     verbose = false;
     logging_Aeq_beq = false;
     logging = false;
-    CVR = [0; 0];
+    DER_percent = simInfo.DER_percent;
+    % CVR = [0; 0];
     % % V_max = 1.05;
     % V_max = simInfo.V_max;
     % % V_min = 0.95;
     % V_min = simInfo.V_min;
-    Qref_DER = 0.00;
-    Vref_DER = 1.00;
+    % Qref_DER = 0.00;
+    % Vref_DER = 1.00;
     % % delta_t = 0.25;
     % delta_t = simInfo.delta_t;
     % % etta_C = 0.95;
@@ -44,7 +45,7 @@ function [x, sysInfo, simInfo, ...
     fileExtension = ".txt";
     systemName = "ieee123";
     saveLocationName = "logfiles/";
-    fileOpenedFlag_Aeq_beq = false;
+    % fileOpenedFlag_Aeq_beq = false;
 
     % Process optional arguments
     numArgs = numel(varargin);
@@ -134,7 +135,7 @@ function [x, sysInfo, simInfo, ...
     CB_FullTable = sysInfo.CBTable;
     numChildAreas_Area = sysInfo.numChildAreas(Area);
 
-    areaInfo = extractAreaInfo(areaInfo, simInfo, isRoot_Area, systemName, numAreas, ...
+    areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, systemName, numAreas, ...
     CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', displayTables);
     
     areaInfo = exchangeCompVars(areaInfo, S_chArs_1toT);
@@ -179,14 +180,16 @@ function [x, sysInfo, simInfo, ...
     stepTol = simInfo.alg.stepTol;
     constraintTol = simInfo.alg.constraintTol;
     optimalityTol = simInfo.alg.optimalityTol;
-    displayIterations = 'off';
+    % displayIterations = 'off';
+    displayIterations = 'iter-detailed';
     
-    options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
-        'FunctionTolerance', tolfun, ...
-        'StepTolerance', stepTol, ...             % Equivalent to 10 watts
-    'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
-    'OptimalityTolerance', optimalityTol);
-    
+    % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    %     'FunctionTolerance', tolfun, ...
+    %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    % 'OptimalityTolerance', optimalityTol);
+    options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+
     T = simInfo.T;
 
     if T >= 7
