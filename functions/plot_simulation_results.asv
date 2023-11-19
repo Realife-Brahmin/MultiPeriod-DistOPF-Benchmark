@@ -40,10 +40,13 @@ function plot_simulation_results(results, simInfo, sysInfo)
     alphaValues = linspace(1.0, 1.0, totalMacroItr); % From opaque to more transparent
     noBatteries = simInfo.noBatteries;
     if ~noBatteries
+        battstringTitle = strcat("with $", num2str(DER_percent), "\%$ GEDs");
         battstring = strcat("withBatteries_", num2str(DER_percent));
     else
-        battstring = "withoutBatteries_0";
+        battstringTitle = "without Batteries";
+        battstring = strcat("withoutBatteries_", 0);
     end
+
     numAreas = sysInfo.numAreas;
     kVA_B = sysInfo.kVA_B;
     kV_B = sysInfo.kV_B;
@@ -102,7 +105,7 @@ function plot_simulation_results(results, simInfo, sysInfo)
                         error("floc")
                     end
         
-                    titleString = strcat(titlePre, " across the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$ ", battstring);
+                    titleString = strcat(titlePre, " across the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$ ", battstringTitle);
                     title(titleString)
                     xlabel(xLabelString);
             
@@ -163,7 +166,7 @@ function plot_simulation_results(results, simInfo, sysInfo)
                 error("floc")
             end
     
-            titleString = strcat(titlePre, " across the horizon for the system using ", simNatureString, " ", battstring)
+            titleString = strcat(titlePre, " across the horizon for the system using ", simNatureString, " ", battstringTitle);
             title(titleString)
             xlabel(xLabelString);
     
