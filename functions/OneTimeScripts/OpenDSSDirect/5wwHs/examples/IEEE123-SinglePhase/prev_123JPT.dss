@@ -1,0 +1,273 @@
+Clear 
+Set DefaultBaseFrequency=60
+
+new circuit.IEEE123Nodeckt 
+~ basekv=2.401777 pu=1.05 phases=1 bus1=1 
+
+
+!Load definitions
+New Load.1	Bus1=1	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.2	Bus1=2	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.3	Bus1=3	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.4	Bus1=4	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.5	Bus1=5	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.6	Bus1=6	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.7	Bus1=7	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.8	Bus1=8	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.9	Bus1=9	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.10	Bus1=10	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.11	Bus1=11	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.12	Bus1=12	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.13	Bus1=13	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.14	Bus1=14	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.15	Bus1=15	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.16	Bus1=16	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.17	Bus1=17	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.18	Bus1=18	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.19	Bus1=19	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.20	Bus1=20	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.21	Bus1=21	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.22	Bus1=22	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.23	Bus1=23	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.24	Bus1=24	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.25	Bus1=25	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.26	Bus1=26	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.27	Bus1=27	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.28	Bus1=28	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.29	Bus1=29	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.30	Bus1=30	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.31	Bus1=31	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.32	Bus1=32	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.33	Bus1=33	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.34	Bus1=34	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.35	Bus1=35	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.36	Bus1=36	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.119	Bus1=119	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.126	Bus1=126	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.127	Bus1=127	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.117	Bus1=117	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.54	Bus1=54	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.55	Bus1=55	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.56	Bus1=56	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.57	Bus1=57	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.58	Bus1=58	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.59	Bus1=59	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.60	Bus1=60	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.61	Bus1=61	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333
+New Load.62	Bus1=62	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.63	Bus1=63	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.64	Bus1=64	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.65	Bus1=65	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.66	Bus1=66	 Phases=1	kv=2.401777	kw=	25	kvar=	11.67	
+New Load.67	Bus1=67	 Phases=1	kv=2.401777	kw=	46.67	kvar=	33.33
+New Load.68	Bus1=68	 Phases=1	kv=2.401777	kw=	25	kvar=	11.67	
+New Load.122	Bus1=122	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.118	Bus1=118	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.37	Bus1=37	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.38	Bus1=38	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.39	Bus1=39	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.40	Bus1=40	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.41	Bus1=41	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.42	Bus1=42	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.43	Bus1=43	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333
+New Load.44	Bus1=44	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.45	Bus1=45	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.46	Bus1=46	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.47	Bus1=47	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.48	Bus1=48	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.49	Bus1=49	 Phases=1	kv=2.401777	kw=	35	kvar=	25	
+New Load.50	Bus1=50	 Phases=1	kv=2.401777	kw=	70	kvar=	50	
+New Load.51	Bus1=51	 Phases=1	kv=2.401777	kw=	46.67	kvar=	31.67	
+New Load.52	Bus1=52	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.53	Bus1=53	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.120	Bus1=120	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.125	Bus1=125	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.128	Bus1=128	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.69	Bus1=69	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.70	Bus1=70	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.71	Bus1=71	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.72	Bus1=72	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.73	Bus1=73	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.74	Bus1=74	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.75	Bus1=75	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.76	Bus1=76	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.77	Bus1=77	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.78	Bus1=78	 Phases=1	kv=2.401777	kw=	81.67	kvar=	60	
+New Load.79	Bus1=79	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.80	Bus1=80	 Phases=1	kv=2.401777	kw=	0	kvar=	0
+New Load.81	Bus1=81	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.82	Bus1=82	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.83	Bus1=83	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.84	Bus1=84	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.85	Bus1=85	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.86	Bus1=86	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.87	Bus1=87	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.88	Bus1=88	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.89	Bus1=89	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.90	Bus1=90	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.91	Bus1=91	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.92	Bus1=92	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.93	Bus1=93	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.94	Bus1=94	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.95	Bus1=95	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.96	Bus1=96	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.97	Bus1=97	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.98	Bus1=98	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.99	Bus1=99	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.100	Bus1=100	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.101	Bus1=101	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.102	Bus1=102	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.103	Bus1=103	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.104	Bus1=104	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.105	Bus1=105	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.106	Bus1=106	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.107	Bus1=107	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.108	Bus1=108	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.109	Bus1=109	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.110	Bus1=110	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.111	Bus1=111	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.112	Bus1=112	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.113	Bus1=113	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.114	Bus1=114	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.115	Bus1=115	 Phases=1	kv=2.401777	kw=	13.33	kvar=	6.667	
+New Load.116	Bus1=116	 Phases=1	kv=2.401777	kw=	6.667	kvar=	3.333	
+New Load.121	Bus1=117	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.123	Bus1=118	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+New Load.124	Bus1=119	 Phases=1	kv=2.401777	kw=	0	kvar=	0	
+
+!LINE DEFINITIONS 
+New Line.1_2	 Phases=1	Bus1=	1	Bus2=	2	R1=	0.000001	X1=	0.000001
+New Line.2_3	 Phases=1	Bus1=	2	Bus2=	3	R1=	0.0232	X1=	0.0475
+New Line.3_4	 Phases=1	Bus1=	3	Bus2=	4	R1=	0.0441	X1=	0.0447
+New Line.3_5	 Phases=1	Bus1=	3	Bus2=	5	R1=	0.0629	X1=	0.0638
+New Line.3_9	 Phases=1	Bus1=	3	Bus2=	9	R1=	0.0174	X1=	0.0356
+New Line.5_6	 Phases=1	Bus1=	5	Bus2=	6	R1=	0.0503	X1=	0.051
+New Line.5_7	 Phases=1	Bus1=	5	Bus2=	7	R1=	0.0818	X1=	0.0829
+New Line.7_8	 Phases=1	Bus1=	7	Bus2=	8	R1=	0.0629	X1=	0.0638
+New Line.9_10	 Phases=1	Bus1=	9	Bus2=	10	R1=	0.0116	X1=	0.0238
+New Line.10_11	 Phases=1	Bus1=	10	Bus2=	11	R1=	0.0566	X1=	0.0574
+New Line.10_14	 Phases=1	Bus1=	10	Bus2=	14	R1=	0.0566	X1=	0.0574
+New Line.10_15	 Phases=1	Bus1=	10	Bus2=	15	R1=	0.0174	X1=	0.0356
+New Line.11_126	 Phases=1	Bus1=	11	Bus2=	126	R1=	0.000001	X1=	0.000001
+New Line.15_20	 Phases=1	Bus1=	15	Bus2=	20	R1=	0.0478	X1=	0.098
+New Line.15_36	 Phases=1	Bus1=	15	Bus2=	36	R1=	0.0378	X1=	0.0383
+New Line.15_117	 Phases=1	Bus1=	15	Bus2=	117	R1=	0.0001	X1=	0.0001
+New Line.16_12	 Phases=1	Bus1=	16	Bus2=	12	R1=	0.0629	X1=	0.0638
+New Line.16_13	 Phases=1	Bus1=	16	Bus2=	13	R1=	0.0629	X1=	0.0638
+New Line.17_18	 Phases=1	Bus1=	17	Bus2=	18	R1=	0.0944	X1=	0.0957
+New Line.17_19	 Phases=1	Bus1=	17	Bus2=	19	R1=	0.0881	X1=	0.0893
+New Line.20_21	 Phases=1	Bus1=	20	Bus2=	21	R1=	0.0629	X1=	0.0638
+New Line.20_23	 Phases=1	Bus1=	20	Bus2=	23	R1=	0.0174	X1=	0.0356
+New Line.20_118	 Phases=1	Bus1=	20	Bus2=	118	R1=	0.0001	X1=	0.0001
+New Line.21_22	 Phases=1	Bus1=	21	Bus2=	22	R1=	0.0818	X1=	0.0829
+New Line.23_24	 Phases=1	Bus1=	23	Bus2=	24	R1=	0.1322	X1=	0.134
+New Line.23_25	 Phases=1	Bus1=	23	Bus2=	25	R1=	0.0145	X1=	0.0297
+New Line.25_26	 Phases=1	Bus1=	25	Bus2=	26	R1=	0.1385	X1=	0.1404
+New Line.25_27	 Phases=1	Bus1=	25	Bus2=	27	R1=	0.0159	X1=	0.0327
+New Line.27_30	 Phases=1	Bus1=	27	Bus2=	30	R1=	0.0116	X1=	0.0238
+New Line.27_127	 Phases=1	Bus1=	27	Bus2=	127	R1=	0.000001	X1=	0.000001
+New Line.28_29	 Phases=1	Bus1=	28	Bus2=	29	R1=	0.0159	X1=	0.0358
+New Line.28_35	 Phases=1	Bus1=	28	Bus2=	35	R1=	0.0566	X1=	0.0574
+New Line.29_33	 Phases=1	Bus1=	29	Bus2=	33	R1=	0.1259	X1=	0.1276
+New Line.30_31	 Phases=1	Bus1=	30	Bus2=	31	R1=	0.0174	X1=	0.0356
+New Line.31_32	 Phases=1	Bus1=	31	Bus2=	32	R1=	0.0203	X1=	0.0416
+New Line.32_19	 Phases=1	Bus1=	32	Bus2=	119	R1=	0.0116	X1=	0.0238
+New Line.35_34	 Phases=1	Bus1=	35	Bus2=	34	R1=	0.0755	X1=	0.0766
+New Line.36_17	 Phases=1	Bus1=	36	Bus2=	17	R1=	0.0252	X1=	0.0255
+New Line.37_38	 Phases=1	Bus1=	37	Bus2=	38	R1=	0.0377	X1=	0.0845
+New Line.37_42	 Phases=1	Bus1=	37	Bus2=	42	R1=	0.0145	X1=	0.0297
+New Line.38_39	 Phases=1	Bus1=	38	Bus2=	39	R1=	0.0755	X1=	0.0766
+New Line.38_40	 Phases=1	Bus1=	38	Bus2=	40	R1=	0.0629	X1=	0.0638
+New Line.40_41	 Phases=1	Bus1=	40	Bus2=	41	R1=	0.0818	X1=	0.0829
+New Line.42_43	 Phases=1	Bus1=	42	Bus2=	43	R1=	0.0818	X1=	0.0829
+New Line.42_44	 Phases=1	Bus1=	42	Bus2=	44	R1=	0.0145	X1=	0.0297
+New Line.44_45	 Phases=1	Bus1=	44	Bus2=	45	R1=	0.1259	X1=	0.1276
+New Line.44_46	 Phases=1	Bus1=	44	Bus2=	46	R1=	0.0116	X1=	0.0238
+New Line.46_47	 Phases=1	Bus1=	46	Bus2=	47	R1=	0.0503	X1=	0.051
+New Line.46_49	 Phases=1	Bus1=	46	Bus2=	49	R1=	0.0145	X1=	0.0297
+New Line.47_48	 Phases=1	Bus1=	47	Bus2=	48	R1=	0.0755	X1=	0.0766
+New Line.49_50	 Phases=1	Bus1=	49	Bus2=	50	R1=	0.0087	X1=	0.0178
+New Line.49_51	 Phases=1	Bus1=	49	Bus2=	51	R1=	0.0145	X1=	0.0297
+New Line.51_52	 Phases=1	Bus1=	51	Bus2=	52	R1=	0.0145	X1=	0.0297
+New Line.52_53	 Phases=1	Bus1=	52	Bus2=	53	R1=	0.0145	X1=	0.0297
+New Line.53_120	 Phases=1	Bus1=	53	Bus2=	120	R1=	0.029	X1=	0.0594
+New Line.54_55	 Phases=1	Bus1=	54	Bus2=	55	R1=	0.0116	X1=	0.0238
+New Line.55_56	 Phases=1	Bus1=	55	Bus2=	56	R1=	0.0072	X1=	0.0148
+New Line.56_57	 Phases=1	Bus1=	56	Bus2=	57	R1=	0.0159	X1=	0.0327
+New Line.56_59	 Phases=1	Bus1=	56	Bus2=	59	R1=	0.0203	X1=	0.0416
+New Line.57_58	 Phases=1	Bus1=	57	Bus2=	58	R1=	0.0159	X1=	0.0327
+New Line.59_60	 Phases=1	Bus1=	59	Bus2=	60	R1=	0.0629	X1=	0.0638
+New Line.59_62	 Phases=1	Bus1=	59	Bus2=	62	R1=	0.0435	X1=	0.0891
+New Line.60_61	 Phases=1	Bus1=	60	Bus2=	61	R1=	0.0629	X1=	0.0638
+New Line.62_63	 Phases=1	Bus1=	62	Bus2=	63	R1=	0.0319	X1=	0.0653
+New Line.62_64	 Phases=1	Bus1=	62	Bus2=	64	R1=	0.048	X1=	0.0229
+New Line.62_125	 Phases=1	Bus1=	62	Bus2=	125	R1=	0.0001	X1=	0.0001
+New Line.63_122	 Phases=1	Bus1=	63	Bus2=	122	R1=	0.0001	X1=	0.0001
+New Line.64_65	 Phases=1	Bus1=	64	Bus2=	65	R1=	0.0336	X1=	0.016
+New Line.65_66	 Phases=1	Bus1=	65	Bus2=	66	R1=	0.0672	X1=	0.032
+New Line.66_67	 Phases=1	Bus1=	66	Bus2=	67	R1=	0.0816	X1=	0.0389
+New Line.67_68	 Phases=1	Bus1=	67	Bus2=	68	R1=	0.0624	X1=	0.0297
+New Line.69_70	 Phases=1	Bus1=	69	Bus2=	70	R1=	0.0503	X1=	0.051
+New Line.69_74	 Phases=1	Bus1=	69	Bus2=	74	R1=	0.0159	X1=	0.0327
+New Line.69_99	 Phases=1	Bus1=	69	Bus2=	99	R1=	0.0145	X1=	0.0297
+New Line.70_71	 Phases=1	Bus1=	70	Bus2=	71	R1=	0.0692	X1=	0.0702
+New Line.71_72	 Phases=1	Bus1=	71	Bus2=	72	R1=	0.0818	X1=	0.0829
+New Line.72_73	 Phases=1	Bus1=	72	Bus2=	73	R1=	0.0692	X1=	0.0702
+New Line.74_75	 Phases=1	Bus1=	74	Bus2=	75	R1=	0.0692	X1=	0.0702
+New Line.74_78	 Phases=1	Bus1=	74	Bus2=	78	R1=	0.0116	X1=	0.0238
+New Line.75_76	 Phases=1	Bus1=	75	Bus2=	76	R1=	0.0881	X1=	0.0893
+New Line.76_77	 Phases=1	Bus1=	76	Bus2=	77	R1=	0.1007	X1=	0.1021
+New Line.78_79	 Phases=1	Bus1=	78	Bus2=	79	R1=	0.0232	X1=	0.0475
+New Line.78_88	 Phases=1	Bus1=	78	Bus2=	88	R1=	0.0406	X1=	0.0831
+New Line.79_80	 Phases=1	Bus1=	79	Bus2=	80	R1=	0.0058	X1=	0.0119
+New Line.80_81	 Phases=1	Bus1=	80	Bus2=	81	R1=	0.013	X1=	0.0267
+New Line.80_82	 Phases=1	Bus1=	80	Bus2=	82	R1=	0.0275	X1=	0.0564
+New Line.82_83	 Phases=1	Bus1=	82	Bus2=	83	R1=	0.0101	X1=	0.0208
+New Line.83_84	 Phases=1	Bus1=	83	Bus2=	84	R1=	0.0145	X1=	0.0297
+New Line.83_86	 Phases=1	Bus1=	83	Bus2=	86	R1=	0.1699	X1=	0.1723
+New Line.84_85	 Phases=1	Bus1=	84	Bus2=	85	R1=	0.0145	X1=	0.0297
+New Line.86_87	 Phases=1	Bus1=	86	Bus2=	87	R1=	0.1196	X1=	0.1212
+New Line.88_89	 Phases=1	Bus1=	88	Bus2=	89	R1=	0.0261	X1=	0.0534
+New Line.89_90	 Phases=1	Bus1=	89	Bus2=	90	R1=	0.0441	X1=	0.0447
+New Line.89_91	 Phases=1	Bus1=	89	Bus2=	91	R1=	0.0159	X1=	0.0327
+New Line.91_92	 Phases=1	Bus1=	91	Bus2=	92	R1=	0.0566	X1=	0.0574
+New Line.91_93	 Phases=1	Bus1=	91	Bus2=	93	R1=	0.013	X1=	0.0267
+New Line.93_94	 Phases=1	Bus1=	93	Bus2=	94	R1=	0.0755	X1=	0.0766
+New Line.93_95	 Phases=1	Bus1=	93	Bus2=	95	R1=	0.013	X1=	0.0267
+New Line.95_96	 Phases=1	Bus1=	95	Bus2=	96	R1=	0.0692	X1=	0.0702
+New Line.95_97	 Phases=1	Bus1=	95	Bus2=	97	R1=	0.0174	X1=	0.0356
+New Line.97_98	 Phases=1	Bus1=	97	Bus2=	98	R1=	0.0503	X1=	0.051
+New Line.99_100	 Phases=1	Bus1=	99	Bus2=	100	R1=	0.0159	X1=	0.0327
+New Line.99_124	 Phases=1	Bus1=	99	Bus2=	124	R1=	0.000001	X1=	0.000001
+New Line.100_101	 Phases=1	Bus1=	100	Bus2=	101	R1=	0.0319	X1=	0.0653
+New Line.101_102	 Phases=1	Bus1=	101	Bus2=	102	R1=	0.0174	X1=	0.0356
+New Line.102_123	 Phases=1	Bus1=	102	Bus2=	123	R1=	0.0464	X1=	0.095
+New Line.103_104	 Phases=1	Bus1=	103	Bus2=	104	R1=	0.0566	X1=	0.0574
+New Line.103_107	 Phases=1	Bus1=	103	Bus2=	107	R1=	0.0159	X1=	0.0327
+New Line.104_105	 Phases=1	Bus1=	104	Bus2=	105	R1=	0.0818	X1=	0.0829
+New Line.105_106	 Phases=1	Bus1=	105	Bus2=	106	R1=	0.1762	X1=	0.1786
+New Line.107_108	 Phases=1	Bus1=	107	Bus2=	108	R1=	0.0566	X1=	0.0574
+New Line.107_110	 Phases=1	Bus1=	107	Bus2=	110	R1=	0.0188	X1=	0.0386
+New Line.108_109	 Phases=1	Bus1=	108	Bus2=	109	R1=	0.1448	X1=	0.1467
+New Line.110_111	 Phases=1	Bus1=	110	Bus2=	111	R1=	0.1133	X1=	0.1148
+New Line.110_121	 Phases=1	Bus1=	110	Bus2=	121	R1=	0.05797	X1=	0.11876
+New Line.111_112	 Phases=1	Bus1=	111	Bus2=	112	R1=	0.0755	X1=	0.0766
+New Line.112_113	 Phases=1	Bus1=	112	Bus2=	113	R1=	0.1448	X1=	0.1467
+New Line.112_114	 Phases=1	Bus1=	112	Bus2=	114	R1=	0.0315	X1=	0.0319
+New Line.114_115	 Phases=1	Bus1=	114	Bus2=	115	R1=	0.1322	X1=	0.134
+New Line.115_116	 Phases=1	Bus1=	115	Bus2=	116	R1=	0.0818	X1=	0.0829
+New Line.117_54	 Phases=1	Bus1=	117	Bus2=	54	R1=	0.0232	X1=	0.0475
+New Line.118_37	 Phases=1	Bus1=	118	Bus2=	37	R1=	0.0217	X1=	0.0445
+New Line.124_103	 Phases=1	Bus1=	124	Bus2=	103	R1=	0.0145	X1=	0.0297
+New Line.125_128	 Phases=1	Bus1=	125	Bus2=	128	R1=	0.000001	X1=	0.000001
+New Line.126_16	 Phases=1	Bus1=	126	Bus2=	16	R1=	0.000001	X1=	0.000001
+New Line.127_28	 Phases=1	Bus1=	127	Bus2=	28	R1=	0.0203	X1=	0.0455
+New Line.128_69	 Phases=1	Bus1=	128	Bus2=	69	R1=	0.0203	X1=	0.0416
+New energymeter.meter element=Line.1_2 terminal=1 
+solve
+Set Voltagebases=[4.16]
+calcv
+//Solve
+Show Voltages LN Nodes
+
+
