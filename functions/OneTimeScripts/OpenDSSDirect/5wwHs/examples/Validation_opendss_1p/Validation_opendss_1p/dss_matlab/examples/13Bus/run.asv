@@ -70,12 +70,12 @@ Text.Command = 'redirect "IEEE13Nodeckt.dss"';
 disp('Power flow converged?')
 disp(Solution.Converged)
 
-% And plot the voltages for each node
-figure;
-plot(1:Circuit.NumNodes, Circuit.AllBusVmagPu, 'o-')
-
-xlabel('Node number');
-ylabel('Voltage (pu)');
+% % And plot the voltages for each node
+% figure;
+% plot(1:Circuit.NumNodes, Circuit.AllBusVmagPu, 'o-')
+% 
+% xlabel('Node number');
+% ylabel('Voltage (pu)');
 
 
 %% Inspecting a single bus
@@ -100,22 +100,22 @@ end
 % Let's get the bus coordinates and some date to plot.
 % Please note that not every system or bus has coordinates defined.
 
-x = zeros(Circuit.NumBuses, 1);
-y = zeros(Circuit.NumBuses, 1);
-data = zeros(Circuit.NumBuses, 1);
-for bus_number=1:Circuit.NumBuses
-    Circuit.SetActiveBusi(bus_number);
-    x(bus_number) = Bus.x;
-    y(bus_number) = Bus.y;
-    data(bus_number) = mean(Bus.puVmagAngle(1:2:end));
-end
-
-figure;
-scatter(x, y, 50, data, 's', 'filled');
-handle = colorbar();
-xlabel('Bus X coordinate');
-ylabel('Bus Y coordinate');
-ylabel(handle, 'Voltage (pu)');
+% x = zeros(Circuit.NumBuses, 1);
+% y = zeros(Circuit.NumBuses, 1);
+% data = zeros(Circuit.NumBuses, 1);
+% for bus_number=1:Circuit.NumBuses
+%     Circuit.SetActiveBusi(bus_number);
+%     x(bus_number) = Bus.x;
+%     y(bus_number) = Bus.y;
+%     data(bus_number) = mean(Bus.puVmagAngle(1:2:end));
+% end
+% 
+% figure;
+% scatter(x, y, 50, data, 's', 'filled');
+% handle = colorbar();
+% xlabel('Bus X coordinate');
+% ylabel('Bus Y coordinate');
+% ylabel(handle, 'Voltage (pu)');
 
 %% Loading circuits from ZIP files (API extension, not available in the official OpenDSS)
 
@@ -143,5 +143,5 @@ Circuit.AllBusVolts
 
 % Other data will also be complex, and in matrix form:
 Circuit.Lines.First;
-Circuit.Lines.Name
-Circuit.Lines.Yprim
+Circuit.Lines.Name;
+Circuit.Lines.Yprim;

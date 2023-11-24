@@ -1,18 +1,36 @@
 % clear all
 % clc
 %%% import Ddec_Var only.
+localUsername = getenv('USERNAME');
+listOfUsernames = {'aryan', 'Aryan Ritwajeet Jha'};
+if ismember(localUsername,  listOfUsernames)
+    % For user 'aryan', change the current directory to the specified path
+    cd(strcat("C:", filesep, "Users", filesep, localUsername, filesep, "Documents", filesep, ...
+        "documents_general", filesep, "MultiPeriod-DistOPF-Benchmark", filesep, "functions", filesep, ...
+        "OneTimeScripts", filesep, "OpenDSSDirect", filesep, "5wwHs", filesep, "examples", filesep, ...
+        "Validation_opendss_1p", filesep, "Validation_opendss_1p") )
+    addpath(genpath('dss_matlab\'))
+    latex_interpreter
+else
+    fprintf("Are you not me? Might want to add the folder to the path or add folder to the workspace.\n");
+end
 
-addpath dss_matlab\+DSS_MATLAB\
+% cd("C:/Users/Aryan Ritwajeet Jha/Documents/documents_general/MultiPeriod-DistOPF-Benchmark/functions/OneTimeScripts/OpenDSSDirect/5wwHs/examples/Validation_opendss_1p/Validation_opendss_1p/")
+
+% addpath("C:/Users/Aryan Ritwajeet Jha/Documents/documents_general/MultiPeriod-DistOPF-Benchmark/functions/OneTimeScripts/OpenDSSDirect/5wwHs/examples/Validation_opendss_1p/Validation_opendss_1p/dss_matlab/")
+
+% addpath dss_matlab\+DSS_MATLAB\
 % CVR = [0.6 3.0];
 % CVR = [1.6 6];
 CVR = [0 0];
 
+DSSObj = DSS_MATLAB.IDSS;
 
-DSSObj=actxserver('OpenDSSEngine.DSS');
-if ~DSSObj.Start(0)
-    disp('Unable to start openDSS Engine');
-    return
-end
+% DSSObj=actxserver('OpenDSSEngine.DSS');
+% if ~DSSObj.Start(0)
+%     disp('Unable to start openDSS Engine');
+%     return
+% end
 
 DSSText=DSSObj.Text;
 DSSCircuit=DSSObj.ActiveCircuit;
@@ -26,12 +44,10 @@ Power_data = dlmread(text_powerdata_r);
 %% Load dss generation
 for i = 1:size(Power_data,1)   
     if (Power_data(i,2)&&Power_data(i,3)~=0)
-        % Constant Power load; k = 1-CVR/2:
         sta1 = strcat('New load.S', num2str(Power_data(i,1)),'P    Bus=',num2str(Power_data(i,1)),...
             '.1   Phases=1   Model=1   kv=2.4018   kw=',num2str(Power_data(i,2)*(1-(CVR(1)/2))),...
             '  kvar=',num2str(Power_data(i,3)*(1-(CVR(2)/2))),'   Vminpu=0.9  Vmaxpu=1.1'  );
         
-        % Constant Z load; k = CVR/2:
         sta2 = strcat('New load.S', num2str(Power_data(i,1)),'Z    Bus=',num2str(Power_data(i,1)),...
             '.1   Phases=1  Model=2   kv=2.4018   kw=',num2str(Power_data(i,2)*((CVR(1))/2)),...
             '  kvar=',num2str(Power_data(i,3)*((CVR(2))/2)),'    Vminpu=0.9  Vmaxpu=1.1'  );
@@ -44,7 +60,7 @@ end
 nBus= size(Power_data,1);
 
 Qgen= zeros(nBus,1);   % All the Q values in all the buses
-Qgen= Dec_Var*1000;   % DOPF
+% Qgen= Dec_Var*1000;   % DOPF
 % Qgen= Dec_var_NLP;   % COPF
 % conn=wye
 
