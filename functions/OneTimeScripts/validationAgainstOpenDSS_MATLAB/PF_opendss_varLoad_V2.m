@@ -7,39 +7,25 @@ if ismember(localUsername,  listOfUsernames)
     % For user 'aryan', change the current directory to the specified path
     cd(strcat("C:", filesep, "Users", filesep, localUsername, filesep, "Documents", filesep, ...
         "documents_general", filesep, "MultiPeriod-DistOPF-Benchmark", filesep, "functions", filesep, ...
-        "OneTimeScripts", filesep, "OpenDSSDirect", filesep, "5wwHs", filesep, "examples", filesep, ...
-        "Validation_opendss_1p", filesep, "Validation_opendss_1p") )
+        "OneTimeScripts", filesep, "validationAgainstOpenDSS_MATLAB") )
     addpath(genpath('dss_matlab\'))
+    addpath(genpath('../../'))
     latex_interpreter
 else
     fprintf("Are you not me? Might want to add the folder to the path or add folder to the workspace.\n");
 end
 
-% cd("C:/Users/Aryan Ritwajeet Jha/Documents/documents_general/MultiPeriod-DistOPF-Benchmark/functions/OneTimeScripts/OpenDSSDirect/5wwHs/examples/Validation_opendss_1p/Validation_opendss_1p/")
-
-% addpath("C:/Users/Aryan Ritwajeet Jha/Documents/documents_general/MultiPeriod-DistOPF-Benchmark/functions/OneTimeScripts/OpenDSSDirect/5wwHs/examples/Validation_opendss_1p/Validation_opendss_1p/dss_matlab/")
-
-% addpath dss_matlab\+DSS_MATLAB\
-% CVR = [0.6 3.0];
-% CVR = [1.6 6];
 CVR = [0 0];
 
 DSSObj = DSS_MATLAB.IDSS;
-
-% DSSObj=actxserver('OpenDSSEngine.DSS');
-% if ~DSSObj.Start(0)
-%     disp('Unable to start openDSS Engine');
-%     return
-% end
 
 DSSText=DSSObj.Text;
 DSSCircuit=DSSObj.ActiveCircuit;
 DSSBus = DSSCircuit.ActiveBus;
 
-
 DSSText.Command='Compile (.\ieee123master_r.dss)';  % Create a master file for this
 text_powerdata_r = 'powerdata10.txt';
-Power_data = dlmread(text_powerdata_r);
+Power_data = readmatrix(text_powerdata_r);
 
 %% Load dss generation
 for i = 1:size(Power_data,1)   
