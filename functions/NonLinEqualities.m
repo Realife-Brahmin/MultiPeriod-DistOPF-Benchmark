@@ -1,4 +1,3 @@
-% function [c, ceq] = NonLinEqualities(x, Area, m_Area, fb_Area, tb_Area, indices_Pij, indices_Qij, indices_lij, indices_vAllj, itr, systemName, numAreas, varargin)
 function [c, ceq] = NonLinEqualities(x, simInfo, areaInfo, T, varargin)
     
     noBatteries = simInfo.noBatteries;
