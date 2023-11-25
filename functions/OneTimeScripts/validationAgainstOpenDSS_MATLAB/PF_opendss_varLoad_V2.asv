@@ -1,5 +1,3 @@
-% clear all
-% clc
 %%% import Ddec_Var only.
 localUsername = getenv('USERNAME');
 listOfUsernames = {'aryan', 'Aryan Ritwajeet Jha'};
@@ -32,11 +30,11 @@ for i = 1:size(Power_data,1)
     if (Power_data(i,2)&&Power_data(i,3)~=0)
         sta1 = strcat('New load.S', num2str(Power_data(i,1)),'P    Bus=',num2str(Power_data(i,1)),...
             '.1   Phases=1   Model=1   kv=2.4018   kw=',num2str(Power_data(i,2)*(1-(CVR(1)/2))),...
-            '  kvar=',num2str(Power_data(i,3)*(1-(CVR(2)/2))),'   Vminpu=0.9  Vmaxpu=1.1'  );
+            '  kvar=',num2str(Power_data(i,3)*(1-(CVR(2)/2))),'   Vminpu=0.95  Vmaxpu=1.05'  );
         
         sta2 = strcat('New load.S', num2str(Power_data(i,1)),'Z    Bus=',num2str(Power_data(i,1)),...
             '.1   Phases=1  Model=2   kv=2.4018   kw=',num2str(Power_data(i,2)*((CVR(1))/2)),...
-            '  kvar=',num2str(Power_data(i,3)*((CVR(2))/2)),'    Vminpu=0.9  Vmaxpu=1.1'  );
+            '  kvar=',num2str(Power_data(i,3)*((CVR(2))/2)),'    Vminpu=0.95  Vmaxpu=1.05'  );
         
        DSSText.Command =sta1;
        DSSText.Command =sta2;
@@ -46,7 +44,7 @@ end
 nBus= size(Power_data,1);
 
 Qgen= zeros(nBus,1);   % All the Q values in all the buses
-% Qgen= Dec_Var*1000;   % DOPF
+Qgen= Dec_Var*1000;   % DOPF
 % Qgen= Dec_var_NLP;   % COPF
 % conn=wye
 
