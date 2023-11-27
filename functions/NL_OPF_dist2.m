@@ -148,7 +148,7 @@ function [x, sysInfo, simInfo, ...
     % CVR_Q = CVR(2);
     
     [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
-    
+    writematrix(Aeq, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\Aeq_B.csv")
     % plotLinDS = true;
 
     if plotLinDS && macroItr == 0
