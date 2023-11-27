@@ -149,6 +149,10 @@ function [x, sysInfo, simInfo, ...
     
     [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
     writematrix(Aeq, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\Aeq_B.csv")
+    writematrix(beq, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\beq_B.csv")
+    writematrix(lb, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\lb_B.csv")
+    writematrix(ub, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\ub_B.csv")
+
     % plotLinDS = true;
 
     if plotLinDS && macroItr == 0
