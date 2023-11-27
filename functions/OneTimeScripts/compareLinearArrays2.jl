@@ -44,7 +44,15 @@ ubB = CSV.read(filePathubB_CSV, DataFrame, header=false)[:, 1] |> Vector;
 
 
 misAeq = Aeq0 .!= AeqB
-@show sum(misAeq)
+
+@show nMMAeq = sum(misAeq) # number of MisMatches
+mismatch_indices = findall(misAeq)
+# mismatch_indices_ij = [(i[1], i[2]) for i in mismatch_indices]
+mismatch_indices_ij = [(i[2], i[1]) for i in mismatch_indices]
+
+
+
+
 misbeq = beq0 .!= beqB
 @show sum(misbeq)
 mislb  = lb0 .!= lbB
