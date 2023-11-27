@@ -4,20 +4,50 @@ using Plots
 using Test
 
 numAreas = 1
-# @show Area = rand(1:4)
 systemName = "ieee123"
-# T = 2
-# @show macroItr = rand(1:6)
-# @show macroItr = 1 
+
 
 baseDirB = joinpath("processedData", "$(systemName)", "numAreas_$(numAreas)")
-baseDirA = baseDirB
+baseDir0 = baseDirB
 
 ext = ".csv"
-filePathAeq0_CSV = joinpath(baseDirB, "Aeq_0"*ext)
-filePathAeqB_CSV = joinpath(baseDirB, "Aeq_B"*ext)
+filePathAeq0_CSV = joinpath(baseDir0, "Aeq_0"*ext)
+filePathbeq0_CSV = joinpath(baseDir0, "beq_0"*ext)
+filePathlb0_CSV = joinpath(baseDir0, "lb_0"*ext)
+filePathub0_CSV = joinpath(baseDir0, "ub_0"*ext)
 
-Aeq0 = CSV.read(filePathAeq0_CSV, DataFrame, header=false) |> Matrix; 
+filePathAeqB_CSV = joinpath(baseDirB, "Aeq_B"*ext)
+filePathbeqB_CSV = joinpath(baseDirB, "beq_B"*ext)
+filePathlbB_CSV = joinpath(baseDirB, "lb_B"*ext)
+filePathubB_CSV = joinpath(baseDirB, "ub_B"*ext)
+
+Aeq0 = CSV.read(filePathAeq0_CSV, DataFrame, header=false) |> Matrix;
 AeqB = CSV.read(filePathAeqB_CSV, DataFrame, header=false) |> Matrix;
 
-mismatchLocations = Aeq0 .!= AeqB
+# Reading the beq_0 and beq_B vectors
+beq0 = CSV.read(filePathbeq0_CSV, DataFrame, header=false)[:, 1] |> Vector
+beqB = CSV.read(filePathbeqB_CSV, DataFrame, header=false)[:, 1] |> Vector
+
+# Defining the file paths for lb_0, ub_0, lb_B, and ub_B
+filePathlb0_CSV = joinpath(baseDirB, "lb_0"*ext)
+filePathub0_CSV = joinpath(baseDirB, "ub_0"*ext)
+filePathlbB_CSV = joinpath(baseDirB, "lb_B"*ext)
+filePathubB_CSV = joinpath(baseDirB, "ub_B"*ext)
+
+# Reading the lb_0 and ub_0 vectors
+lb0 = CSV.read(filePathlb0_CSV, DataFrame, header=false)[:, 1] |> Vector;
+ub0 = CSV.read(filePathub0_CSV, DataFrame, header=false)[:, 1] |> Vector;
+
+# Reading the lb_B and ub_B vectors
+lbB = CSV.read(filePathlbB_CSV, DataFrame, header=false)[:, 1] |> Vector;
+ubB = CSV.read(filePathubB_CSV, DataFrame, header=false)[:, 1] |> Vector;
+
+
+misAeq = Aeq0 .!= AeqB
+@show sum(misAeq)
+misbeq = beq0 .!= beqB
+@show sum(misbeq)
+mislb  = lb0 .!= lbB
+@show sum(mislb)
+misub = ub0 .!= ubB
+@show sum(misub)
