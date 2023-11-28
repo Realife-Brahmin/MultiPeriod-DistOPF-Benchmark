@@ -25,7 +25,7 @@ Aeq0 = CSV.read(filePathAeq0_CSV, DataFrame, header=false) |> Matrix;
 AeqB = CSV.read(filePathAeqB_CSV, DataFrame, header=false) |> Matrix;
 
 # Reading the beq_0 and beq_B vectors
-beq0 = CSV.read(filePathbeq0_CSV, DataFrame, header=false)[:, 1] |> Vector
+beq0 = CSV.read(filePathbeq0_CSV, DataFrame, header=false)[1, :] |> Vector
 beqB = CSV.read(filePathbeqB_CSV, DataFrame, header=false)[:, 1] |> Vector
 
 # Defining the file paths for lb_0, ub_0, lb_B, and ub_B
@@ -50,8 +50,15 @@ mismatch_indices = findall(misAeq)
 # mismatch_indices_ij = [(i[1], i[2]) for i in mismatch_indices]
 mismatch_indices_ij = [(i[2], i[1]) for i in mismatch_indices]
 
+# Flip the matrix vertically
+misAeq_flipped = reverse(misAeq, dims=1)
 
+# Plot the flipped matrix as a heatmap
+hmm = heatmap(misAeq_flipped, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
 
+h0 = heatmap(misAeq_flipped, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
+
+plot(hmm)
 
 misbeq = beq0 .!= beqB
 @show sum(misbeq)
