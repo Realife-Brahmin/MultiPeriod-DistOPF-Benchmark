@@ -19,8 +19,14 @@ powerdata_string = "powerdata"
 filename_busData = joinpath(rawDataDirB, powerdata_string*exttxt)
 busData = CSV.read(filename_busData, DataFrame, header=[:bus,:P_L,:Q_L,:Q_C,:P_der,:busType])
 filename_branchData = joinpath(rawDataDirB, "linedata"*ext)
-branchData = CSV.read(filename_branchData, DataFrame, header=true)
 
+branchData = CSV.read(filename_branchData, DataFrame, header=true)
+fbus = branchData.fbus
+tbus = branchData.tbus
+P_L = busData.P_L
+P_der = busData.P_der
+Q_L = busData.Q_L
+Q_C = busData.Q_C
 
 filePathAeq0_CSV = joinpath(baseDir0, "Aeq_0"*ext)
 filePathbeq0_CSV = joinpath(baseDir0, "beq_0"*ext)
@@ -57,12 +63,23 @@ ubB = CSV.read(filePathubB_CSV, DataFrame, header=false)[:, 1] |> Vector;
 hB = heatmap(AeqB, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
 
 # plot(hmm)
+kVA_B = 1000
 m_Area = 127
 N_Area = 128
 nD_Area = 85
 areaInfo = Dict(:m_Area => m_Area, :N_Area => N_Area, :nD_Area => nD_Area)
-@show row = rand(1:m_Area)
+@show row = rand(1:2*m_Area)
+@show branchIdx = getBranchIdxFromRow(row, areaInfo)
+i, j = fbus[branchIdx], tbus[branchIdx]
 AeqBIndices = findall(AeqB[row, :] .!= 0)
 println(index_to_variable(AeqBIndices, areaInfo))
 @show AeqValues = AeqB[row, AeqBIndices]
-@show beqBIdx = beqB[row]
+@show beqBValue = beqB[row]
+
+if row <= m_Area
+    @test beqBValue ≈ (P_L[j] - P_der[j])/kVA_B
+elseif row <= 2*m_Area
+    @test beqBValue ≈ (Q_L[j] - Q_C[j])/kVA_B
+else
+    @error "floc"
+end
