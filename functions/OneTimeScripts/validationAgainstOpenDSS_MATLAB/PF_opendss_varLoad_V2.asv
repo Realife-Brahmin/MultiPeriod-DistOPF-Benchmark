@@ -47,6 +47,7 @@ nBus= size(Power_data,1);
 % Qgen= zeros(nBus,1);   % All the Q values in all the buses
 % Qgen= Dec_Var*1000;   % DOPF
 kVA_B = 1000;
+simName = vald.simInfo.simName;
 V_copf = vald.V_copf;
 qD_AreaFull_1toT = vald.qD_AreaFull_1toT;
 Qgen = qD_AreaFull_1toT*kVA_B;
@@ -136,6 +137,14 @@ disp(['Substation Power: ', num2str(P_Sub),' kW; ', num2str(Q_Sub),' kVar'])
 
 %%
 figure
+% hold on;
+linewidth = 2.0;
+plot(V_opds, 'LineWidth', linewidth, 'Color', 'r');
 hold on;
-plot(V_opds)
-plot(V_copf)
+plot(V_copf, 'LineWidth', linewidth, 'Color', 'k')
+legend({"OpenDSS Voltages", strcat(simName, " Voltages")});
+title(strcat("Validation of ", simName, " vs OpenDSS"));
+ylabel("Bus Voltages [pu]")
+xlabel("Bus Numbers");
+grid minor;
+hold off;
