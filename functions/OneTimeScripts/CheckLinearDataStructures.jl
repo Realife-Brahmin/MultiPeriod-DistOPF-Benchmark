@@ -68,9 +68,21 @@ m_Area = 127
 N_Area = 128
 nD_Area = 85
 areaInfo = Dict(:m_Area => m_Area, :N_Area => N_Area, :nD_Area => nD_Area)
-@show row = rand(1:2*m_Area)
-@show branchIdx = getBranchIdxFromRow(row, areaInfo)
-i, j = fbus[branchIdx], tbus[branchIdx]
+
+checkingRange = 1:2*m_Area+N_Area # equations which can be tested
+@show row = rand(checkingRange)
+
+# @show row = 382
+
+@show iDx = getIdxFromRow(row, areaInfo)
+if row <= 3*m_Area
+    i, j = fbus[iDx], tbus[iDx]
+elseif row == 2*m_Area + N_Area
+    j = 1
+else
+    @error "floc"
+end
+
 AeqBIndices = findall(AeqB[row, :] .!= 0)
 println(index_to_variable(AeqBIndices, areaInfo))
 @show AeqValues = AeqB[row, AeqBIndices]
@@ -80,6 +92,10 @@ if row <= m_Area
     @test beqBValue ≈ (P_L[j] - P_der[j])/kVA_B
 elseif row <= 2*m_Area
     @test beqBValue ≈ (Q_L[j] - Q_C[j])/kVA_B
+elseif row < 2*m_Area + N_Area
+    @test beqBValue == 0
+elseif row == 2*m_Area + N_Area
+    @test beqBValue == 1.03^2 
 else
     @error "floc"
 end
