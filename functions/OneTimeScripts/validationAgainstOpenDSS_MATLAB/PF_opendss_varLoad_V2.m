@@ -13,6 +13,7 @@ else
     fprintf("Are you not me? Might want to add the folder to the path or add folder to the workspace.\n");
 end
 
+
 CVR = [0 0];
 
 DSSObj = DSS_MATLAB.IDSS;
@@ -43,8 +44,13 @@ end
 %% Generation Data
 nBus= size(Power_data,1);
 
-Qgen= zeros(nBus,1);   % All the Q values in all the buses
-Qgen= Dec_Var*1000;   % DOPF
+% Qgen= zeros(nBus,1);   % All the Q values in all the buses
+% Qgen= Dec_Var*1000;   % DOPF
+kVA_B = 1000;
+V_copf = vald.V_copf;
+qD_AreaFull_1toT = vald.qD_AreaFull_1toT;
+Qgen = qD_AreaFull_1toT*kVA_B;
+% V_mpcopf = sqrt(vAll_Area_1toT');
 % Qgen= Dec_var_NLP;   % COPF
 % conn=wye
 
@@ -129,4 +135,8 @@ disp(['Line Loss: ', num2str(Line_loss(1)),' kW'])
 disp(['Substation Power: ', num2str(P_Sub),' kW; ', num2str(Q_Sub),' kVar'])
 
 %%
-
+figure
+hold on;
+plot(V_opds)
+plot(V_copf)
+legend({"OpenDSS Voltages", "CentralizedOPF Results"});
