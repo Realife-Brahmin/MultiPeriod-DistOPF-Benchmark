@@ -8,6 +8,7 @@ systemName = "ieee123"
 
 
 baseDirB = joinpath("processedData", "$(systemName)", "numAreas_$(numAreas)")
+println(baseDirB)
 baseDir0 = baseDirB
 
 ext = ".csv"
@@ -43,26 +44,38 @@ lbB = CSV.read(filePathlbB_CSV, DataFrame, header=false)[:, 1] |> Vector;
 ubB = CSV.read(filePathubB_CSV, DataFrame, header=false)[:, 1] |> Vector;
 
 
-misAeq = Aeq0 .!= AeqB
+# misAeq = Aeq0 .!= AeqB
 
-@show nMMAeq = sum(misAeq) # number of MisMatches
-mismatch_indices = findall(misAeq)
+# @show nMMAeq = sum(misAeq) # number of MisMatches
+# mismatch_indices = findall(misAeq)
 # mismatch_indices_ij = [(i[1], i[2]) for i in mismatch_indices]
-mismatch_indices_ij = [(i[2], i[1]) for i in mismatch_indices]
+# mismatch_indices_ij = [(i[2], i[1]) for i in mismatch_indices]
 
 # Flip the matrix vertically
-misAeq_flipped = reverse(misAeq, dims=1)
+# misAeq_flipped = reverse(misAeq, dims=1)
+# misAeq_flipped = misAeq
 
 # Plot the flipped matrix as a heatmap
-hmm = heatmap(misAeq_flipped, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
+hB = heatmap(AeqB, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
 
-h0 = heatmap(misAeq_flipped, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
+# h0 = heatmap(misAeq_flipped, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
 
-plot(hmm)
-
-misbeq = beq0 .!= beqB
-@show sum(misbeq)
-mislb  = lb0 .!= lbB
-@show sum(mislb)
-misub = ub0 .!= ubB
-@show sum(misub)
+# plot(hmm)
+m_Area = 127
+N_Area = 128
+nD_Area = 85
+areaInfo = Dict(:m_Area => m_Area, :N_Area => N_Area, :nD_Area => nD_Area)
+@show row = rand(1:m_Area)
+@show AeqBIndices = findall(AeqB[row, :] .!= 0)
+println(index_to_variable(AeqBIndices, areaInfo))
+@show AeqValues = AeqB[row, AeqBIndices]
+@show beqBIdx = beqB[row]
+# @show Aeq0Indices = findall(Aeq0[row, :] .!= 0)
+# @show Aeq0Values = Aeq0[row, Aeq0Indices]
+# @show beq0Idx = beq0[row]
+# misbeq = beq0 .!= beqB
+# @show sum(misbeq)
+# mislb  = lb0 .!= lbB
+# @show sum(mislb)
+# misub = ub0 .!= ubB
+# @show sum(misub)
