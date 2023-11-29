@@ -4,14 +4,24 @@ using Plots
 using Test
 
 numAreas = 1
+Area = rand(1:numAreas)
 systemName = "ieee123"
 
-
+rawDataDirB = joinpath("rawData", "$(systemName)", "numAreas_$(numAreas)", "area$(Area)")
 baseDirB = joinpath("processedData", "$(systemName)", "numAreas_$(numAreas)")
 println(baseDirB)
 baseDir0 = baseDirB
 
 ext = ".csv"
+exttxt = ".txt"
+# powerdata_string = "powerdata_no_header_csv"
+powerdata_string = "powerdata"
+filename_busData = joinpath(rawDataDirB, powerdata_string*exttxt)
+busData = CSV.read(filename_busData, DataFrame, header=[:bus,:P_L,:Q_L,:Q_C,:P_der,:busType])
+filename_branchData = joinpath(rawDataDirB, "linedata"*ext)
+branchData = CSV.read(filename_branchData, DataFrame, header=true)
+
+
 filePathAeq0_CSV = joinpath(baseDir0, "Aeq_0"*ext)
 filePathbeq0_CSV = joinpath(baseDir0, "beq_0"*ext)
 filePathlb0_CSV = joinpath(baseDir0, "lb_0"*ext)
@@ -43,22 +53,8 @@ ub0 = CSV.read(filePathub0_CSV, DataFrame, header=false)[:, 1] |> Vector;
 lbB = CSV.read(filePathlbB_CSV, DataFrame, header=false)[:, 1] |> Vector;
 ubB = CSV.read(filePathubB_CSV, DataFrame, header=false)[:, 1] |> Vector;
 
-
-# misAeq = Aeq0 .!= AeqB
-
-# @show nMMAeq = sum(misAeq) # number of MisMatches
-# mismatch_indices = findall(misAeq)
-# mismatch_indices_ij = [(i[1], i[2]) for i in mismatch_indices]
-# mismatch_indices_ij = [(i[2], i[1]) for i in mismatch_indices]
-
-# Flip the matrix vertically
-# misAeq_flipped = reverse(misAeq, dims=1)
-# misAeq_flipped = misAeq
-
 # Plot the flipped matrix as a heatmap
 hB = heatmap(AeqB, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
-
-# h0 = heatmap(misAeq_flipped, color=:blues, yflip=true, aspect_ratio=:equal, xlabel="Columns", ylabel="Rows")
 
 # plot(hmm)
 m_Area = 127
@@ -66,16 +62,7 @@ N_Area = 128
 nD_Area = 85
 areaInfo = Dict(:m_Area => m_Area, :N_Area => N_Area, :nD_Area => nD_Area)
 @show row = rand(1:m_Area)
-@show AeqBIndices = findall(AeqB[row, :] .!= 0)
+AeqBIndices = findall(AeqB[row, :] .!= 0)
 println(index_to_variable(AeqBIndices, areaInfo))
 @show AeqValues = AeqB[row, AeqBIndices]
 @show beqBIdx = beqB[row]
-# @show Aeq0Indices = findall(Aeq0[row, :] .!= 0)
-# @show Aeq0Values = Aeq0[row, Aeq0Indices]
-# @show beq0Idx = beq0[row]
-# misbeq = beq0 .!= beqB
-# @show sum(misbeq)
-# mislb  = lb0 .!= lbB
-# @show sum(mislb)
-# misub = ub0 .!= ubB
-# @show sum(misub)
