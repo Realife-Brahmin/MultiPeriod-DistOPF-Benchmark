@@ -1,4 +1,4 @@
-function getBranchIdxFromRow(row, areaInfo)
+function getIdxFromRow(row, areaInfo)
     m_Area = areaInfo[:m_Area]
     N_Area = areaInfo[:N_Area]
     nD_Area = areaInfo[:nD_Area]
@@ -6,8 +6,10 @@ function getBranchIdxFromRow(row, areaInfo)
         return row
     elseif row <= 2 * m_Area
         return row - m_Area
-    else
+    elseif row <= 2 * m_Area + N_Area
         return row - 2 * m_Area
+    else 
+        return 1
     end
 end
 
