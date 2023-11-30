@@ -196,7 +196,7 @@ function [x, sysInfo, simInfo, ...
     optimalityTol = simInfo.alg.optimalityTol;
     % displayIterations = 'off';
     displayIterations = 'iter-detailed';
-<<<<<<< HEAD
+% <<<<<<< HEAD
     doPlot = true; % Set this to false if you don't want to plot
 
     % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
@@ -212,8 +212,8 @@ function [x, sysInfo, simInfo, ...
     % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
     % 'OptimalityTolerance', optimalityTol, ...
     % 'OutputFcn', @outfun);
-=======
->>>>>>> main
+% =======
+% >>>>>>> main
     
     % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
     %     'FunctionTolerance', tolfun, ...
