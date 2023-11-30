@@ -70,13 +70,13 @@ nD_Area = 85
 areaInfo = Dict(:m_Area => m_Area, :N_Area => N_Area, :nD_Area => nD_Area)
 
 checkingRange = 1:2*m_Area+N_Area # equations which can be tested
-@show row = rand(checkingRange)
-
+# @show row = rand(checkingRange)
+@show row = rand(2*m_Area+1:2*m_Area+N_Area)
 # @show row = 382
 
 @show iDx = getIdxFromRow(row, areaInfo)
 if row <= 3*m_Area
-    i, j = fbus[iDx], tbus[iDx]
+    @show i, j = fbus[iDx], tbus[iDx]
 elseif row == 2*m_Area + N_Area
     j = 1
 else
@@ -94,7 +94,7 @@ elseif row <= 2*m_Area
     @test beqBValue ≈ (Q_L[j] - Q_C[j])/kVA_B
 elseif row < 2*m_Area + N_Area
     @test beqBValue == 0
-elseif row == 2*m_Area + N_Area
+elseif row == 2*m_Area + N_Area 
     @test beqBValue == 1.03^2 
 else
     @error "floc"
