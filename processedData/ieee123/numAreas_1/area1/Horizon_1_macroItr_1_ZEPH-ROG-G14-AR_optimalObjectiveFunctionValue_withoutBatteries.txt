@@ -1,0 +1,9 @@
+Machine this simulation was solved on: ZEPH-ROG-G14-AR
+Optimization for Area 1 for 1 time periods took 6.882035e+00 [s] and 16 iterations.
+where a micro-iteration limit of 100 and a minimum improvement of 1.000000e-03 [kW] was imposed.
+Average time per iteration: 4.301272e-01 [s]
+Number of Linear Equations: 467
+Number of Nonlinear Equalities: 127
+Number of Optimization Variables: 934
+Total Objective Function Value for Area 1 for 1 time periods = 1.209858e-02 
+Total Real Power Line Losses for Area 1 for 1 time periods = 1.209858e+01 [kW]
