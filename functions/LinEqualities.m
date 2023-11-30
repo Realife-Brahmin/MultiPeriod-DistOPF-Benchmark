@@ -105,6 +105,8 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     indices_lij = varIndicesT{3};
     indices_vAllj = varIndicesT{4};
     indices_vj = excludeFirstElement(indices_vAllj);
+    % j_vs_indices_vj = [[1:N_Area]' indices_vAllj']
+    % keyboard;
     indices_qDj = varIndicesT{5};
     indices_Bj = varIndicesT{6};
     % indices_Pdj = varIndicesT{7};
@@ -158,7 +160,9 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         indices_Pij_T = getIndicesT(indices_Pij, i_Idx);
         indices_Qij_T = getIndicesT(indices_Qij, i_Idx);
         indices_lij_T = getIndicesT(indices_lij, i_Idx);
-        indices_vj_T = getIndicesT(indices_vj, i_Idx);
+        % indices_vj_T = getIndicesT(indices_vj, i_Idx);
+        indices_vj_T = getIndicesT(indices_vAllj, j);
+        indices_vi_T = getIndicesT(indices_vAllj, i);
         
         % PFlow equations in Aeq, beq | BFM variables only
         row = indices_Pflow_ij_T;
@@ -190,7 +194,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         % Aeq(sub2ind(sz, row, indices_vj_T)) = 1;
         Aeq(sub2ind(sz, row, indices_vj_T)) = -1;
 
-        indices_vi_T = getIndicesT(indices_vAllj, jes_Idx);
+        % indices_vi_T = getIndicesT(indices_vAllj, jes_Idx);
         % Aeq(sub2ind(sz, row, indices_vi_T)) = -1;
         Aeq(sub2ind(sz, row, indices_vi_T)) = 1;
 
