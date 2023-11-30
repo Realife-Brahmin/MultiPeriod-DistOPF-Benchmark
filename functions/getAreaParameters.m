@@ -16,10 +16,10 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
     % Output:
     %   - areaInfo: Structure containing various power system parameters of the area.
     %
-<<<<<<< HEAD
-    
-=======
->>>>>>> main
+% <<<<<<< HEAD
+% 
+% =======
+% >>>>>>> main
     chargeToPowerRatio = simInfo.chargeToPowerRatio;
     soc_min = simInfo.soc_min;
     soc_max = simInfo.soc_max;
