@@ -5,24 +5,11 @@ using Test
 
 # Store the current directory
 file_directory = @__DIR__ # directory of this .jl file
-wd = dirname(dirname(file_directory)) # goes to the root directory of my workspace
-println(wd)
-csvfilename = "Normalized-1s-2900-pts.csv"
 
-# foldername = joinpath(".", "functions", "OneTimeScripts", "OpenDSSDirect", "5wwHs", "examples", "8500-Node")
+foldername = joinpath(".", "functions", "OneTimeScripts", "OpenDSSDirect", "5wwHs", "examples", "IEEE123-SinglePhase")
 
-foldername = joinpath(".", "functions", "OneTimeScripts", "OpenDSSDirect", "5wwHs", "examples", "8500-Node with some spaces in the name") # notice in the last folder that I've created a duplicate of the 8500-Node folder but inserted spaces in its name
+filename = joinpath(foldername, "prev_123JPT.dss")
 
-filename = joinpath(foldername, "Master.dss")
-
-# filename = joinpath(dirname(dirname(pathof(OpenDSSDirect))), "examples", "8500-Node", "Master.dss")
-
-filename_csv = joinpath(foldername, csvfilename)
-
-# println(filename_csv)
-
-# df = CSV.File(filename_csv, header=0) |> DataFrame; # This works for both filenames, just to check that the folder with spaces in its name exists
-# display(df)
 
 dss("""
     clear
@@ -30,24 +17,30 @@ dss("""
     solve
 """)
 
-function main()
-    loadnumber = Loads.First()
-    kWsum = 0.0
-    kvarsum = 0.0
-    
-    while loadnumber > 0
-        kWsum += Loads.kW()
-        kvarsum += Loads.kvar()
-        loadnumber = Loads.Next()
-    end
+factor_W_to_kW = 1e-3
 
-    kWsum, kvarsum
+solution = Solution.Solve();
+losses_kVAr = Circuit.Losses()*factor_W_to_kW
+S_Substation_kVAr = Circuit.TotalPower()*factor_W_to_kW
+PSubs = real(S_Substation_kVAr)
+QSubs = imag(S_Substation_kVAr)
+PLoss = real(losses_kVAr)
+QLoss = imag(losses_kVAr)
+
+loadnumber = Loads.First()
+kWsum = 0.0
+kvarsum = 0.0
+
+while loadnumber > 0 # Loads.Next() returns 0 to signify that all loads have been taken into account
+    global kWsum, kvarsum, loadnumber
+    kWsum += Loads.kW()
+    kvarsum += Loads.kvar()
+    loadnumber = Loads.Next()
 end
 
-result = main()
-
-@test lowercase(pwd()) == lowercase(wd)
-# Reset the working directory to its original state
-# cd(original_directory)
-
-# println(result)
+println("P_L = $(kWsum) kW")
+println("Q_L = $(kvarsum) kVAr")
+println("PLoss = $(PLoss) kW")
+println("QLoss = $(QLoss) kVAr")
+println("PSubs = $(PSubs) kW")
+println("QSubs = $(QSubs) kVAr")

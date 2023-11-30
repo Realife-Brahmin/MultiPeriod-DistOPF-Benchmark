@@ -62,7 +62,9 @@ function [c, ceq] = eqcons(x, Area, N_Area, fbus_Area, tbus_Area, indices_P_Area
             myfprintf(verbose, fid, "%d ", siblingBusesIndices);
             myfprintf(verbose, fid, "\nceq(%d) = l(%d) * v(%d) -  ( P(%d)^2 +  Q(%d)^2 )\n", parentBusIdx, parentBusIdx, siblingBusesIndices(1), parentBusIdx, parentBusIdx)
             myfprintf(verbose, fid, "ceq(%d) = x(%d) * x(%d) -  ( x(%d)^2 +  x(%d)^2 )\n", parentBusIdx, indices_l_Area(parentBusIdx), indices_v_Full_Area(eldestSiblingIdx), indices_P_Area(parentBusIdx), indices_Q_Area(parentBusIdx))
-            ceq(parentBusIdx) = x( indices_l_Area(parentBusIdx) ) * x( indices_v_Full_Area(eldestSiblingIdx) ) -  ( x( indices_P_Area(parentBusIdx) )^2 +  x( indices_Q_Area(parentBusIdx) )^2 );
+            % ceq(parentBusIdx) = x( indices_l_Area(parentBusIdx) ) * x( indices_v_Full_Area(eldestSiblingIdx) ) -  ( x( indices_P_Area(parentBusIdx) )^2 +  x( indices_Q_Area(parentBusIdx) )^2 );
+            ceq(parentBusIdx) = x( indices_l_Area(parentBusIdx) ) * x( indices_v_Full_Area(parentBusNum) ) -  ( x( indices_P_Area(parentBusIdx) )^2 +  x( indices_Q_Area(parentBusIdx) )^2 );
+
         else
             myfprintf(verbose, fid, "It has NO parent bus.\n");
         end

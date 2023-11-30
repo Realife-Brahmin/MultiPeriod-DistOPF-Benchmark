@@ -105,6 +105,8 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     indices_lij = varIndicesT{3};
     indices_vAllj = varIndicesT{4};
     indices_vj = excludeFirstElement(indices_vAllj);
+    % j_vs_indices_vj = [[1:N_Area]' indices_vAllj']
+    % keyboard;
     indices_qDj = varIndicesT{5};
     indices_Bj = varIndicesT{6};
     % indices_Pdj = varIndicesT{7};
@@ -158,7 +160,9 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         indices_Pij_T = getIndicesT(indices_Pij, i_Idx);
         indices_Qij_T = getIndicesT(indices_Qij, i_Idx);
         indices_lij_T = getIndicesT(indices_lij, i_Idx);
-        indices_vj_T = getIndicesT(indices_vj, i_Idx);
+        % indices_vj_T = getIndicesT(indices_vj, i_Idx);
+        indices_vj_T = getIndicesT(indices_vAllj, j);
+        indices_vi_T = getIndicesT(indices_vAllj, i);
         
         % PFlow equations in Aeq, beq | BFM variables only
         row = indices_Pflow_ij_T;
@@ -190,7 +194,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         % Aeq(sub2ind(sz, row, indices_vj_T)) = 1;
         Aeq(sub2ind(sz, row, indices_vj_T)) = -1;
 
-        indices_vi_T = getIndicesT(indices_vAllj, jes_Idx);
+        % indices_vi_T = getIndicesT(indices_vAllj, jes_Idx);
         % Aeq(sub2ind(sz, row, indices_vi_T)) = -1;
         Aeq(sub2ind(sz, row, indices_vi_T)) = 1;
 
@@ -229,48 +233,51 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         
     end
     
-    for batt_num = 1:nBatt_Area
-        j = busesWithBatts_Area(batt_num);
-        i_Idx = find(tb_Area == j);
-        indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
-        indices_SOC_j_T_2toT = indices_SOC_j_T(2:T);
-        indices_SOC_j_T_1 = indices_SOC_j_T(1);
-        
-        indices_Bj_T = getIndicesT(indices_Bj, batt_num);
-        indices_Pdj_T = getIndicesT(indices_Pdj, batt_num);
-        indices_Pcj_T = getIndicesT(indices_Pcj, batt_num);
-        indices_qBj_T = getIndicesT(indices_qBj, batt_num);
-        
-        
-        % Pflow equations | Battery Variables
-        % row = indices_Pflow_ij_T;
-        indices_Pflow_ij_T = getIndicesT(indices_Pflow, i_Idx);
-        row = indices_Pflow_ij_T;
-        Aeq(sub2ind(sz, row, indices_Pdj_T)) = 1;
-        Aeq(sub2ind(sz, row, indices_Pcj_T)) = -1;
-        
-        % Qflow equations | Battery Variables
-        % row = indices_Qflow_ij_T;
-        indices_Qflow_ij_T = getIndicesT(indices_Qflow, i_Idx);
-        row = indices_Qflow_ij_T;
-        Aeq(sub2ind(sz, row, indices_qBj_T)) = 1;
-        
-        % SOC equations | Battery Variables | First Time Interval
-        row = indices_SOC_j_T_1;
-        Aeq(row, indices_Bj_T(1)) = -1;
-        Aeq(row, indices_Pcj_T(1)) = delta_t*etta_C;
-        Aeq(row, indices_Pdj_T(1)) = -delta_t/etta_D;
-        beq(row) = -B0Vals_pu_Area(batt_num);
+    % [[1:m_Area]' beq(1:m_Area)]
 
-        % SOC equations | Battery Variables | Second to Last Time Intervals
-        row = indices_SOC_j_T_2toT;
-        Aeq(sub2ind(sz, row, indices_Bj_T(2:T))) = -1;
-        Aeq(sub2ind(sz, row, indices_Bj_T(1:T-1))) = 1;
-        Aeq(sub2ind(sz, row, indices_Pcj_T(2:T))) = delta_t*etta_C;
-        Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
-
+    if ~noBatteries
+        for batt_num = 1:nBatt_Area
+            j = busesWithBatts_Area(batt_num);
+            i_Idx = find(tb_Area == j);
+            indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
+            indices_SOC_j_T_2toT = indices_SOC_j_T(2:T);
+            indices_SOC_j_T_1 = indices_SOC_j_T(1);
+            
+            indices_Bj_T = getIndicesT(indices_Bj, batt_num);
+            indices_Pdj_T = getIndicesT(indices_Pdj, batt_num);
+            indices_Pcj_T = getIndicesT(indices_Pcj, batt_num);
+            indices_qBj_T = getIndicesT(indices_qBj, batt_num);
+            
+            
+            % Pflow equations | Battery Variables
+            % row = indices_Pflow_ij_T;
+            indices_Pflow_ij_T = getIndicesT(indices_Pflow, i_Idx);
+            row = indices_Pflow_ij_T;
+            Aeq(sub2ind(sz, row, indices_Pdj_T)) = 1;
+            Aeq(sub2ind(sz, row, indices_Pcj_T)) = -1;
+            
+            % Qflow equations | Battery Variables
+            % row = indices_Qflow_ij_T;
+            indices_Qflow_ij_T = getIndicesT(indices_Qflow, i_Idx);
+            row = indices_Qflow_ij_T;
+            Aeq(sub2ind(sz, row, indices_qBj_T)) = 1;
+            
+            % SOC equations | Battery Variables | First Time Interval
+            row = indices_SOC_j_T_1;
+            Aeq(row, indices_Bj_T(1)) = -1;
+            Aeq(row, indices_Pcj_T(1)) = delta_t*etta_C;
+            Aeq(row, indices_Pdj_T(1)) = -delta_t/etta_D;
+            beq(row) = -B0Vals_pu_Area(batt_num);
+    
+            % SOC equations | Battery Variables | Second to Last Time Intervals
+            row = indices_SOC_j_T_2toT;
+            Aeq(sub2ind(sz, row, indices_Bj_T(2:T))) = -1;
+            Aeq(sub2ind(sz, row, indices_Bj_T(1:T-1))) = 1;
+            Aeq(sub2ind(sz, row, indices_Pcj_T(2:T))) = delta_t*etta_C;
+            Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
+    
+        end
     end
-
 
     numVarsBFM4 = [1, listNumVars1(1) - 1, listNumVars1(2:4) ]; % qD limits are specific to each machine, will be appended later.
     lbVals4 = [0, -5, -15, 0, V_min^2];

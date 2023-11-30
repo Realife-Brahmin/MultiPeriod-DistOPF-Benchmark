@@ -5,7 +5,11 @@ function plot_simulation_results(results, simInfo, sysInfo)
     v1_1toT_vs_macroItr = results.v1_1toT_vs_macroItr;
     PLoss_allT_vs_macroItr = results.PLoss_allT_vs_macroItr;
     PLoss_1toT_vs_macroItr = results.PLoss_1toT_vs_macroItr;
+<<<<<<< HEAD
+    PSubs_1toT_vs_macroItr = results.PSubs_1toT_vs_macroItr;
+=======
     % PSubs_1toT_vs_macroItr = results.PSubs_1toT_vs_macroItr;
+>>>>>>> main
     PSubsCost_1toT_vs_macroItr = results.PSubsCost_1toT_vs_macroItr;
 
     systemName = "ieee123";

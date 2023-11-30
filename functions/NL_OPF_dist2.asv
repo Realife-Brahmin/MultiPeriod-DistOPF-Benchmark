@@ -34,6 +34,7 @@ function [x, sysInfo, simInfo, ...
     % gamma = 1e0;
     % gamma = 1e-1;
     gamma = simInfo.gamma;
+    DER_percent = simInfo.DER_percent;
     profiling = false;
     saveSCDPlots = false;
     displayTables = false;
@@ -146,9 +147,22 @@ function [x, sysInfo, simInfo, ...
 
     % CVR_P = CVR(1);
     % CVR_Q = CVR(2);
-    
+    scriptPath = mfilename('fullpath');
+    [dirPath, ~, ~] = fileparts(scriptPath);
+
+    folderNameComparison = strcat(dirPath, filesep, "..", filesep, "processedData", filesep, systemName, filesep, "numAreas_", num2str(Area), filesep);
+    ext = ".csv";
     [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
-    
+    writematrix(Aeq, strcat(folderNameComparison, "Aeq_B", ext));
+    writematrix(beq, strcat(folderNameComparison, "beq_B", ext));
+    writematrix(lb, strcat(folderNameComparison, "lb_B", ext));
+    writematrix(ub, strcat(folderNameComparison, "ub_B", ext));
+
+    % writematrix(Aeq, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\Aeq_B.csv")
+    % writematrix(beq, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\beq_B.csv")
+    % writematrix(lb, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\lb_B.csv")
+    % writematrix(ub, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\ub_B.csv")
+
     % plotLinDS = true;
 
     if plotLinDS && macroItr == 0
@@ -157,9 +171,9 @@ function [x, sysInfo, simInfo, ...
     
     ext = ".csv";
     if ~noBatteries
-        battstring = "withBatteries";
+        battstring = strcat('withBatteries_', num2str(DER_percent));
     else
-        battstring = "withoutBatteries";
+        battstring = 'withoutBatteries_0';
     end
     saveLocationFolderName = strcat("processedData", filesep , systemName, filesep, "numAreas_", num2str(numAreas), filesep, "Area", num2str(Area));
     if ~exist("saveLocationFolderName", 'dir')
@@ -182,6 +196,24 @@ function [x, sysInfo, simInfo, ...
     optimalityTol = simInfo.alg.optimalityTol;
     % displayIterations = 'off';
     displayIterations = 'iter-detailed';
+<<<<<<< HEAD
+    doPlot = true; % Set this to false if you don't want to plot
+
+    % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    %     'FunctionTolerance', tolfun, ...
+    %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    % 'OptimalityTolerance', optimalityTol);
+        options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+
+    %     options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    %     'FunctionTolerance', tolfun, ...
+    %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    % 'OptimalityTolerance', optimalityTol, ...
+    % 'OutputFcn', @outfun);
+=======
+>>>>>>> main
     
     % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
     %     'FunctionTolerance', tolfun, ...

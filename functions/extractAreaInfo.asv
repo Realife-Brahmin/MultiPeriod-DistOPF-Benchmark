@@ -10,9 +10,18 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     fileExtension = ".txt";
     savePlots = true;
     kV_B = sysInfo.kV_B;
+<<<<<<< HEAD
+    % kV_B = 4.16/sqrt(3);
+    kVA_B = sysInfo.kVA_B;
+    DER_percent = simInfo.DER_percent;
+    S_to_P_ratio_PV = simInfo.S_to_P_ratio_PV;
+    % Batt_percent = simInfo.Batt_percent;
+    % kVA_B = 1000;
+=======
     kVA_B = sysInfo.kVA_B;
     DER_percent = simInfo.DER_percent;
     Batt_percent = simInfo.Batt_percent;
+>>>>>>> main
     load_mult = 1;
     gen_mult = 1;
     systemDataFolder = strcat("rawData", filesep, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
@@ -84,7 +93,11 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     filenameBusData_Area = strcat(systemDataFolder, "area", num2str(Area), filesep, 'powerdata.csv');
     busData_Area = readmatrix(filenameBusData_Area);
     busDataTable_Area = array2table(busData_Area, 'VariableNames', {'bus', 'P_L', 'Q_L', 'Q_C', 'P_der', 'busType'});
+<<<<<<< HEAD
+    % % display(busDataTable_Area)
+=======
     
+>>>>>>> main
     Area = areaInfo.Area;
     N_Area = size(busData_Area, 1);     % total number of nodes
     
@@ -104,7 +117,11 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
         display(busDataActualBusNumsTable_Area)
     end
     
+<<<<<<< HEAD
+    writetable(sortrows(busDataTable_Area, "bus"), "sortedBusData.csv")
+=======
     writetable(sortrows(busDataTable_Area, "bus"))
+>>>>>>> main
     % Graph Formation
     fb_Area = branchDataTable_Area.fb;
     tb_Area = branchDataTable_Area.tb;
@@ -114,7 +131,11 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     % Line Data
     MVA_B = kVA_B * 1e-3;
     % Z_B = kV_B^2*1000/kVA_B;                           % base Z
+<<<<<<< HEAD
+    Z_B = kV_B^2/MVA_B;
+=======
     Z_B = kV_B^2/MVA_B;    
+>>>>>>> main
     R_Area = branchDataTable_Area.R/Z_B;                     % R of edge
     X_Area = branchDataTable_Area.X/Z_B;                     % X of edge
     
@@ -122,6 +143,24 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     Q_L_Area = busDataTable_Area.Q_L.*load_mult/kVA_B;           % Rated Qload of node
     Q_C_Area = busDataTable_Area.Q_C/kVA_B;                           % Rated Q of Capacitor
     
+<<<<<<< HEAD
+    % P_der_Area = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power
+    P_der_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power, all DERs from original CSV file
+    P_der_Area = select_percentage_of_nz_elements(P_der_Area0, DER_percent);          % Rated  DER active power, only DER_percent elements selected
+
+    % S_der_Area = 1.2*busDataTable_Area.P_der/kVA_B; 
+    % S_der_Area = 3.0*busDataTable_Area.P_der/kVA_B; 
+    S_der_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B; 
+    S_der_Area = select_percentage_of_nz_elements(S_der_Area0, DER_percent);
+
+    P_L_Area_1toT = repmat(P_L_Area, 1, T).*lambdaVals;
+    Q_L_Area_1toT = repmat(Q_L_Area, 1, T).*lambdaVals;
+
+    P_der_Area0_1toT = repmat(P_der_Area0, 1, T).*pvCoeffVals;
+    P_der_Area_1toT = repmat(P_der_Area, 1, T).*pvCoeffVals;
+
+    busDataTable_pu_Area = tableToStructColumnwise(busDataTable_Area);
+=======
     P_der_Area = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power
     % S_der_Area = 1.2*busDataTable_Area.P_der/kVA_B; 
     S_der_Area = 3.0*busDataTable_Area.P_der/kVA_B; 
@@ -131,15 +170,27 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     P_der_Area_1toT = repmat(P_der_Area, 1, T).*pvCoeffVals;
 
     busDataTable_pu_Area = busDataTable_Area;
+>>>>>>> main
     % busDataTable_pu_Area.P_L = P_L_Area;
     busDataTable_pu_Area.P_L_1toT = P_L_Area_1toT;
     % busDataTable_pu_Area.Q_L = Q_L_Area;
     busDataTable_pu_Area.Q_L_1toT = Q_L_Area_1toT;
     busDataTable_pu_Area.Q_C = Q_C_Area;
     % busDataTable_pu_Area.P_der = P_der_Area;
+<<<<<<< HEAD
+    busDataTable_pu_Area.P_der0_1toT = P_der_Area0_1toT;
+    % keyboard;
+    busDataTable_pu_Area.P_der_1toT = P_der_Area_1toT;
+
+    busDataTable_pu_Area.S_der0 = S_der_Area0;
+    busDataTable_pu_Area.S_der = S_der_Area;
+    % keyboard;
+    % xxx = [[1:127]' P_L_Area_1toT(2:end) - P_der_Area_1toT(2:end)]
+=======
     busDataTable_pu_Area.P_der_1toT = P_der_Area_1toT;
     busDataTable_pu_Area.S_der = S_der_Area;
 
+>>>>>>> main
     areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branchDataTable_Area, R_Area, X_Area);
 
     % Optional: Plot Graphs which highlight the relationships between different Areas.

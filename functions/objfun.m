@@ -56,16 +56,8 @@ function [f, f_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, varargin)
         switch argName
             case "verbose"
                 verbose = argValue;
-            % case "etta_C"
-            %     etta_C = argValue;
-            % case "etta_D"
-            %     etta_D = argValue;
             case "objectiveFuns"
                 objectiveFuns = argValue;
-            % case "alpha"
-            %     alpha = argValue;
-            % case "gamma"
-            %     gamma = argValue;
         end
     end
     
