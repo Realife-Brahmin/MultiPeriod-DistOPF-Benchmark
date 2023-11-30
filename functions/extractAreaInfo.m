@@ -10,18 +10,18 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     fileExtension = ".txt";
     savePlots = true;
     kV_B = sysInfo.kV_B;
-<<<<<<< HEAD
+% <<<<<<< HEAD
     % kV_B = 4.16/sqrt(3);
     kVA_B = sysInfo.kVA_B;
     DER_percent = simInfo.DER_percent;
     S_to_P_ratio_PV = simInfo.S_to_P_ratio_PV;
     % Batt_percent = simInfo.Batt_percent;
     % kVA_B = 1000;
-=======
-    kVA_B = sysInfo.kVA_B;
-    DER_percent = simInfo.DER_percent;
-    Batt_percent = simInfo.Batt_percent;
->>>>>>> main
+% =======
+%     kVA_B = sysInfo.kVA_B;
+%     DER_percent = simInfo.DER_percent;
+%     Batt_percent = simInfo.Batt_percent;
+% >>>>>>> main
     load_mult = 1;
     gen_mult = 1;
     systemDataFolder = strcat("rawData", filesep, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
@@ -123,11 +123,11 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     % Line Data
     MVA_B = kVA_B * 1e-3;
     % Z_B = kV_B^2*1000/kVA_B;                           % base Z
-<<<<<<< HEAD
+% <<<<<<< HEAD
     Z_B = kV_B^2/MVA_B;
-=======
-    Z_B = kV_B^2/MVA_B;    
->>>>>>> main
+% =======
+%     Z_B = kV_B^2/MVA_B;    
+% >>>>>>> main
     R_Area = branchDataTable_Area.R/Z_B;                     % R of edge
     X_Area = branchDataTable_Area.X/Z_B;                     % X of edge
     
@@ -161,13 +161,13 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     % keyboard;
     busDataTable_pu_Area.P_der_1toT = P_der_Area_1toT;
 
-<<<<<<< HEAD
+% <<<<<<< HEAD
     busDataTable_pu_Area.S_der0 = S_der_Area0;
     busDataTable_pu_Area.S_der = S_der_Area;
     % keyboard;
     % xxx = [[1:127]' P_L_Area_1toT(2:end) - P_der_Area_1toT(2:end)]
-=======
->>>>>>> main
+% =======
+% >>>>>>> main
     areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branchDataTable_Area, R_Area, X_Area);
 
     % Optional: Plot Graphs which highlight the relationships between different Areas.
