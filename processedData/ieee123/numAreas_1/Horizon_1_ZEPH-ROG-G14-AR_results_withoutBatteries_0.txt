@@ -6,7 +6,7 @@ Line Loss: 12.10 kW
 Substation Power: 768.18 kW
 Substation Power Cost: 26.886 $
 Number of Macro-Iterations: 1
-Simulation Time: 18.10 s
-Time to solve with sequential (non-parallel) computation:8.3538 s
-Time to Solve if OPF computation parallelized: 8.35 s
+Simulation Time: 16.66 s
+Time to solve with sequential (non-parallel) computation:7.6212 s
+Time to Solve if OPF computation parallelized: 7.62 s
 ------------------------------------------------------------
