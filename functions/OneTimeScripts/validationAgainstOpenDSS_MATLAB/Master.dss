@@ -14,3 +14,8 @@ Redirect Generator.dss
 MakeBusList
 Redirect BusVoltageBases.dss  ! set voltage bases
 BusCoords BusCoords.dss
+
+Calcv
+Solve
+
+Show Voltages
