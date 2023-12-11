@@ -32,6 +32,21 @@ All Grid Edge Devices (GEDs) such as photovoltaics (PVs) and Batteries are model
 - TCC_Curve.dss (Automatically created by OpenDSS)
 - VSource.dss (Substation node data)
 
+## Procedure of Creating these .DSS files
+A MATLAB optimization program is used to solve for Optimal Power Flow (OPF) on the system 
+with some user-specified inputs, such as degree of GED penetration, load profile, 
+PV profile, etc.
+After the OPF run, all decision variables, along with system details, are
+input into a separate script which interfaces with the OpenDSS MATLAB engine,
+to solve for powerflow, to validate MATLAB's results.
+The model once compiled, is then 'saved' as a Master.dss file and other .dss
+files required by it to run the powerflow.
+
+It may be noted that GEDs such as PVs and Batteries are modelled simply as
+generators with a fixed real/reactive power value equal to the corresponding 
+decision variable output by the OPF solver.
+
 ## How to Run Powerflow for the Model using OpenDSS GUI:
 
-Just open Master-OpenDSS.dss (or Master.dss if you wanna specify your own solver instructions) and Ctrl+A Ctrl+D.
+Just open Master-OpenDSS.dss (or Master.dss if you wanna specify your own solver
+instructions) and Ctrl+A Ctrl+D.
