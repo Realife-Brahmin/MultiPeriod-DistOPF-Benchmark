@@ -1,0 +1,16 @@
+Clear
+Set DefaultBaseFreq=60
+New Circuit.ieee123
+
+
+Redirect Vsource.dss
+Redirect LoadShape.dss
+Redirect GrowthShape.dss
+Redirect TCC_Curve.dss
+Redirect Spectrum.dss
+Redirect Line.dss
+Redirect Load.dss
+Redirect Generator.dss
+MakeBusList
+Redirect BusVoltageBases.dss  ! set voltage bases
+BusCoords BusCoords.dss
