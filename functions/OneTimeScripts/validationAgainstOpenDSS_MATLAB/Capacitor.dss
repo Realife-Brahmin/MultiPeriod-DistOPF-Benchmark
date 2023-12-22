@@ -1,0 +1,4 @@
+New "Generator.85c" phases=1 bus1=85 kv=2.4018 model=1 kW=1E-6 kvar=200
+New "Generator.90c" phases=1 bus1=90 kv=2.4018 model=1 kW=1E-6 kvar=50
+New "Generator.92c" phases=1 bus1=92 kv=2.4018 model=1 kW=1E-6 kvar=50
+New "Generator.94c" phases=1 bus1=94 kv=2.4018 model=1 kW=1E-6 kvar=50
