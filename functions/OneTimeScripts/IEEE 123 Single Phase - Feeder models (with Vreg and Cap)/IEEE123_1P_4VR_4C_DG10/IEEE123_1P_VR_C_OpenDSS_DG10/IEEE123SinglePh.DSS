@@ -1,4 +1,5 @@
 Clear
+Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\IEEE 123 Single Phase - Feeder models (with Vreg and Cap)\IEEE123_1P_4VR_4C_DG10\IEEE123_1P_VR_C_OpenDSS_DG10"
 New Circuit.ieee123
 
 ~ basekv=2.4 pu=1.0 phases=1 bus1=150  
@@ -236,8 +237,8 @@ New "Load.s114" bus1=114 model=1 phases=1 conn=wye kV=2.4 kW=6.6667 kvar=3.3333	
 set loadmult = 1
 
 Set Voltagebases=[ 4.16, .48]
-calcv
-!Solve
+Calcv
+Solve
 
 !Show Voltages LN Nodes
 !Show Powers kVA Elem

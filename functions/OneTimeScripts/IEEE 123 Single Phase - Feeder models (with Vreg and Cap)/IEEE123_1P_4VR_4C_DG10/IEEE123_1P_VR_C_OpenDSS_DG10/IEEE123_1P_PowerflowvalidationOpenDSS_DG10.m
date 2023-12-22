@@ -10,8 +10,8 @@ if DSSStartOK
 
 DSSObj.AllowForms = false;    
 
-DSSText.Command = 'Set DataPath = C:\Users\rjha\Dropbox\2019\IEEE123SinglephaseValidation\IEEE123_1P_VR_C_DG10\withall4VR4C\IEEE123_1P_VR_C_OpenDSS_DG10';
-
+% DSSText.Command = 'Set DataPath = C:\Users\rjha\Dropbox\2019\IEEE123SinglephaseValidation\IEEE123_1P_VR_C_DG10\withall4VR4C\IEEE123_1P_VR_C_OpenDSS_DG10';
+DSSText.Command = 'Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\IEEE 123 Single Phase - Feeder models (with Vreg and Cap)\IEEE123_1P_4VR_4C_DG10\IEEE123_1P_VR_C_OpenDSS_DG10\"';
 DSSText.Command = 'compile IEEE123SinglePh.dss';    
     
 %% modelling of capacitor for constant Q 
@@ -22,15 +22,15 @@ DSSText.Command = 'New generator.c92 bus1 = 92 phases=1 kv=2.4018 kw =0.0001 kva
 
 %% Voltage regulators with fix taps
 
-ta1 = 1;   %% tap position of VR 1
-ta2 = -5;     %% tap position of VR 5
-ta3 = 4;     %% tap position of VR 4
-ta4 = -4;    %% tap position of VR -4
+% ta1 = 1;   %% tap position of VR 1
+% ta2 = -5;     %% tap position of VR 5
+% ta3 = 4;     %% tap position of VR 4
+% ta4 = -4;    %% tap position of VR -4
 
-% ta1 = 0;   %% tap position of VR 0
-% ta2 = 0;     %% tap position of VR 0
-% ta3 = 0;     %% tap position of VR 0
-% ta4 = 0;    %% tap position of VR 0
+ta1 = 0;   %% tap position of VR 0
+ta2 = 0;     %% tap position of VR 0
+ta3 = 0;     %% tap position of VR 0
+ta4 = 0;    %% tap position of VR 0
 
 DSSText.Command = 'New "Transformer.reg1a" windings=2 Xhl=0.001 %loadloss=1E-005 ppm_antifloat=0 phases=1 conns=[wye, wye, ] buses=[150, 150r, ] kVs=[2.4018, 2.4018, ] kVAs=[1666.7, 1666.7, ] normhkVA=1833.3 emerghkVA=2500';
 DSSText.Command = 'New "RegControl.creg1a" transformer=reg1a winding=2 tapwinding=2 vreg=120 band=2 ptratio=20 CTprim=700 R=3 X=7.5';

@@ -1,1 +1,1 @@
-Transformer.reg1a.wdg=2 Tap=(0.00625 1 * 1 +)
+Transformer.reg1a.wdg=2 Tap=(0.00625 0 * 1 +)
