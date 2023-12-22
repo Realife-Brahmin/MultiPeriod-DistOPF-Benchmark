@@ -1,0 +1,21 @@
+Clear
+! Set your DataPath to the folder containing the master .DSS file
+Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\"
+Set DefaultBaseFreq=60
+New Circuit.ieee123
+
+!Redirect Vsource.dss
+!Redirect LoadShape.dss
+!Redirect GrowthShape.dss
+!Redirect TCC_Curve.dss
+!Redirect Spectrum.dss
+Redirect IEEE123SinglePh.dss
+!Redirect LineCode.dss
+Redirect Capacitor.dss
+Redirect PV.dss
+MakeBusList
+Redirect BusVoltageBases.dss  ! set voltage bases
+BusCoords BusCoords.dss
+
+Calcv
+Solve
