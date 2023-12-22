@@ -1,0 +1,1 @@
+Transformer.reg3a.wdg=2 Tap=(0.00625 0 * 1 +)
