@@ -240,6 +240,6 @@ Set Voltagebases=[ 4.16, .48]
 Calcv
 Solve
 
-!Show Voltages LN Nodes
+Show Voltages LN Nodes
 !Show Powers kVA Elem
 

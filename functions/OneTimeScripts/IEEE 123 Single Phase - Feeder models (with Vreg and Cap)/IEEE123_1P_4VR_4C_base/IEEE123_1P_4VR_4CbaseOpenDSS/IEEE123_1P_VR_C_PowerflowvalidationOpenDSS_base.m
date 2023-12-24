@@ -7,7 +7,9 @@ if DSSStartOK
     
 DSSObj.AllowForms = false;    
 
-DSSText.Command = 'Set DataPath = C:\Users\rjha\Dropbox\2019\IEEE123SinglephaseValidation\IEEE123_1P_VR_C_base\IEEE123_1P_4VR_4C\IEEE123_1P_4VR_4CbaseOpenDSS';
+% DSSText.Command = 'Set DataPath = C:\Users\rjha\Dropbox\2019\IEEE123SinglephaseValidation\IEEE123_1P_VR_C_base\IEEE123_1P_4VR_4C\IEEE123_1P_4VR_4CbaseOpenDSS';
+DSSText.Command = ['Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\IEEE 123 Single Phase - ' ...
+    'Feeder models (with Vreg and Cap)\IEEE123_1P_4VR_4C_base\IEEE123_1P_4VR_4CbaseOpenDSS\"'];
 
 DSSText.Command = 'compile IEEE123SinglePh.dss';          
 
