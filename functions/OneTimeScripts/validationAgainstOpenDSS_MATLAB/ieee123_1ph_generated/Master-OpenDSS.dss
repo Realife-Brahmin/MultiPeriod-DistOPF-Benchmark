@@ -1,20 +1,22 @@
 Clear
+! Set your DataPath to the folder containing the master .DSS file
+Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\ieee123_1ph_generated\"
 Set DefaultBaseFreq=60
 New Circuit.ieee123
 
-
-Redirect Vsource.dss
-Redirect LoadShape.dss
-Redirect GrowthShape.dss
-Redirect TCC_Curve.dss
-Redirect Spectrum.dss
-Redirect Line.dss
-Redirect Load.dss
-Redirect Generator.dss
-Redirect Capacitor.dss
+Redirect components\Vsource.dss
+Redirect components\LoadShape.dss
+Redirect components\GrowthShape.dss
+Redirect components\TCC_Curve.dss
+Redirect components\Spectrum.dss
+Redirect components\Line.dss
+Redirect components\Load.dss
+!Redirect components\Generator.dss
+Redirect components\Capacitor.dss
+Redirect components\PV.dss
 MakeBusList
-Redirect BusVoltageBases.dss  ! set voltage bases
-BusCoords BusCoords.dss
+Redirect components\BusVoltageBases.dss  ! set voltage bases
+BusCoords components\BusCoords.dss
 
 Calcv
 Solve
