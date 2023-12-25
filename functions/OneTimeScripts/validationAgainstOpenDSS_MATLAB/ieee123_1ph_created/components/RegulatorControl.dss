@@ -1,0 +1,5 @@
+!Regulator Control
+RegControl.creg1a.maxtapchange=0
+RegControl.creg2a.maxtapchange=0
+RegControl.creg3a.maxtapchange=0
+RegControl.creg4a.maxtapchange=0
