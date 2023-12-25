@@ -1,6 +1,6 @@
-Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\IEEE 123 Single Phase - Feeder models (with Vreg and Cap)\IEEE123_1P_4VR_4C_base\IEEE123_1P_4VR_4CbaseOpenDSS\"
+Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\ieee123_1ph_created\"
 
-compile IEEE123SinglePh.dss
+redirect "components/IEEE123SinglePh.dss"
 
 New generator.c83 bus1 = 83 phases=1 kv=2.4018 kw =0.0001 kvar =200
 New generator.c88 bus1 = 88 phases=1 kv=2.4018 kw =0.0001 kvar =16.667
