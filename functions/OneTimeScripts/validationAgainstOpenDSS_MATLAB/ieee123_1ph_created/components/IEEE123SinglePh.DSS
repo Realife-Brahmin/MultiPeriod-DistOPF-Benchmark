@@ -236,9 +236,4 @@ New "Load.s114" bus1=114 model=1 phases=1 conn=wye kV=2.4 kW=6.6667 kvar=3.3333	
 set loadmult = 1
 
 Set Voltagebases=[ 4.16, .48]
-calcv
-!Solve
-
-!Show Voltages LN Nodes
-!Show Powers kVA Elem
 
