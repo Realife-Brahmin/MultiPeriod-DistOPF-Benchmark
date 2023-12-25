@@ -1,0 +1,5 @@
+! Static Capacitors
+New generator.c83 bus1 = 83 phases=1 kv=2.4018 kw =0.0001 kvar =200
+New generator.c88 bus1 = 88 phases=1 kv=2.4018 kw =0.0001 kvar =16.667
+New generator.c90 bus1 = 90 phases=1 kv=2.4018 kw =0.0001 kvar =16.667
+New generator.c92 bus1 = 92 phases=1 kv=2.4018 kw =0.0001 kvar =16.667
