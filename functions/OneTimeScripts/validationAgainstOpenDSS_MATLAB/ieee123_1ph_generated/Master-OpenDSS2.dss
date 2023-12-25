@@ -1,6 +1,6 @@
 Clear
 ! Set your DataPath to the folder containing the master .DSS file
-Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\"
+Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\ieee123_1ph_generated\"
 Set DefaultBaseFreq=60
 New Circuit.ieee123
 
