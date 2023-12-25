@@ -18,7 +18,8 @@ redirect "components/RegulatorControl.dss"
 ! redirect "components/PVconfigs/PV10.dss"
 ! redirect "components/PVconfigs/PV30.dss"
 ! redirect "components/PVconfigs/PV50.dss"
-redirect "components/PVconfigs/PV100.dss"
+! redirect "components/PVconfigs/PV100.dss"
+redirect "components/PVconfigs/PV100_reactive.dss"
 
 ! Disable all automatic control actions by OpenDSS
 Set controlmode=OFF
