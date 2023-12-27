@@ -13,6 +13,9 @@ redirect "components/Regulator.dss"
 ! Defines Regulator Controls
 redirect "components/RegulatorControl.dss"
 
+New LoadShape.loads_loadshape interval=0 npts=24 csvfile="data\LoadShape1.csv"
+BatchEdit Load..* daily=loads_loadshape
+
 ! Choose a PV % Penetration Configuration.
 ! Use PV10/PV30/PV50/PV100 or nothing
 ! redirect "components/PVconfigs/PV10.dss"
@@ -25,6 +28,10 @@ redirect "components/PVconfigs/PV100_reactive.dss"
 Set controlmode=OFF
 
 MakeBusList
+
+Set mode=Daily 
+Set stepsize=1h 
+Set number=24
 
 Calcv
 Solve
