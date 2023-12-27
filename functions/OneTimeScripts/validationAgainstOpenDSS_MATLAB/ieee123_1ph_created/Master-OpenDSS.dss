@@ -24,6 +24,24 @@ BatchEdit Load..* daily=loads_loadshape
 ! redirect "components/PVconfigs/PV100.dss"
 redirect "components/PVconfigs/PV100_reactive.dss"
 
+!Storage fleet 
+New Storage.9 phases=1 bus1=9 kv=2.4018 %idlingkW=0 
+~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05 
+New Storage.28 phases=1 bus1=28 kv=2.4018 %idlingkW=0 
+~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
+New Storage.48 phases=1 bus1=48 kv=2.4018 %idlingkW=0 
+~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
+New Storage.58 phases=1 bus1=58 kv=2.4018 %idlingkW=0 
+~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
+New Storage.65 phases=1 bus1=65 kv=2.4018 %idlingkW=0 
+~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
+New Storage.76 phases=1 bus1=76 kv=2.4018 %idlingkW=0 
+~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
+New Storage.87 phases=1 bus1=87 kv=2.4018 %idlingkW=0 
+~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
+New Storage.100 phases=1 bus1=100 kv=2.4018 %idlingkW=0 
+~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
+
 ! Disable all automatic control actions by OpenDSS
 Set controlmode=OFF
 
