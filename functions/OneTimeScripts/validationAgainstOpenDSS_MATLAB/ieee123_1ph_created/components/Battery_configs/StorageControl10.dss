@@ -1,0 +1,36 @@
+! Storage Controllers for each battery with specific element and element list
+
+! Define a common load shape pattern for all storage controllers
+New LoadShape.SC_common_loadshape interval=1 npts=24 mult=[0, 0, -0.3, -0.45, -0.5, -0.45, -0.3, 0, 0, 0, 0, 0, 0, 0, 0, 0.3, 0.5, 0.8, 0.9, 0.8, 0.5, 0.3, 0, 0]
+
+New StorageController.SC9 Element=Line.l1 ElementList=[Battery9] mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC28 Element=Line.l1 ElementList=[Battery28] mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC48 Element=Line.l1 ElementList=[Battery48] mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC58 Element=Line.l1 ElementList=[Battery58] mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC65 Element=Line.l1 ElementList=[Battery65] mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC76 Element=Line.l1 ElementList=[Battery76] mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC87 Element=Line.l1 ElementList=[Battery87] mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC100 Element=Line.l1 ElementList=[Battery100] mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
