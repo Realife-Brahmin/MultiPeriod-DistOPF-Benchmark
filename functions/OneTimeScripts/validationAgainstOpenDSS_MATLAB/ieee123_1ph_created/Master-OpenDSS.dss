@@ -18,29 +18,60 @@ BatchEdit Load..* daily=loads_loadshape
 
 ! Choose a PV % Penetration Configuration.
 ! Use PV10/PV30/PV50/PV100 or nothing
-! redirect "components/PVconfigs/PV10.dss"
+ redirect "components/PVconfigs/PV10.dss"
 ! redirect "components/PVconfigs/PV30.dss"
 ! redirect "components/PVconfigs/PV50.dss"
 ! redirect "components/PVconfigs/PV100.dss"
-redirect "components/PVconfigs/PV100_reactive.dss"
+! redirect "components/PVconfigs/PV100_reactive.dss"
 
-!Storage fleet 
-New Storage.9 phases=1 bus1=9 kv=2.4018 %idlingkW=0 
-~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05 
-New Storage.28 phases=1 bus1=28 kv=2.4018 %idlingkW=0 
-~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
-New Storage.48 phases=1 bus1=48 kv=2.4018 %idlingkW=0 
-~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
-New Storage.58 phases=1 bus1=58 kv=2.4018 %idlingkW=0 
-~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
-New Storage.65 phases=1 bus1=65 kv=2.4018 %idlingkW=0 
-~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
-New Storage.76 phases=1 bus1=76 kv=2.4018 %idlingkW=0 
-~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
-New Storage.87 phases=1 bus1=87 kv=2.4018 %idlingkW=0 
-~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
-New Storage.100 phases=1 bus1=100 kv=2.4018 %idlingkW=0 
-~ kWhrated=16.0 %stored=62.5 kWrated=4.0 EffCurve=Eff vminpu=0.95 vmaxpu=1.05
+! 10% of the Load Buses have Batteries with specifications based on corresponding PV systems
+
+New Storage.Battery9 phases=1 bus1=9 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery28 phases=1 bus1=28 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery48 phases=1 bus1=48 kv=2.4018 kWrated=84 kWhrated=336 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery58 phases=1 bus1=58 kv=2.4018 kWrated=8 kWhrated=32 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery65 phases=1 bus1=65 kv=2.4018 kWrated=56 kWhrated=224 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery76 phases=1 bus1=76 kv=2.4018 kWrated=98 kWhrated=392 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery87 phases=1 bus1=87 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery100 phases=1 bus1=100 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+
+! Define a common load shape pattern for all storage controllers
+New LoadShape.SC_common_loadshape interval=1 npts=24 mult=[0, 0, -0.3, -0.45, -0.5, -0.45, -0.3, 0, 0, 0, 0, 0, 0, 0, 0, 0.3, 0.5, 0.8, 0.9, 0.8, 0.5, 0.3, 0, 0]
+
+! Storage Controllers for each battery
+
+New StorageController.SC9 element=Storage.Battery9 mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC28 element=Storage.Battery28 mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC48 element=Storage.Battery48 mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC58 element=Storage.Battery58 mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC65 element=Storage.Battery65 mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC76 element=Storage.Battery76 mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC87 element=Storage.Battery87 mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
+New StorageController.SC100 element=Storage.Battery100 mode=loadshape 
+~ daily=SC_common_loadshape 
+~ eventlog=yes
+
 
 ! Disable all automatic control actions by OpenDSS
 Set controlmode=OFF
