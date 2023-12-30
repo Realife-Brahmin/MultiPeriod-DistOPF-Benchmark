@@ -38,39 +38,42 @@ New Storage.Battery100 phases=1 bus1=100 kv=2.4018 kWrated=16 kWhrated=64 %store
 ! Define a common load shape pattern for all storage controllers
 New LoadShape.SC_common_loadshape interval=1 npts=24 mult=[0, 0, -0.3, -0.45, -0.5, -0.45, -0.3, 0, 0, 0, 0, 0, 0, 0, 0, 0.3, 0.5, 0.8, 0.9, 0.8, 0.5, 0.3, 0, 0]
 
-! Storage Controllers for each battery
+! Storage Controllers for each battery with specific element and element list
 
-New StorageController.SC9 element=Storage.Battery9 mode=loadshape 
+New StorageController.SC9 Element=Line.l1 ElementList=[Battery9] mode=loadshape 
 ~ daily=SC_common_loadshape 
 ~ eventlog=yes
 
-New StorageController.SC28 element=Storage.Battery28 mode=loadshape 
+New StorageController.SC28 Element=Line.l1 ElementList=[Battery28] mode=loadshape 
 ~ daily=SC_common_loadshape 
 ~ eventlog=yes
 
-New StorageController.SC48 element=Storage.Battery48 mode=loadshape 
+New StorageController.SC48 Element=Line.l1 ElementList=[Battery48] mode=loadshape 
 ~ daily=SC_common_loadshape 
 ~ eventlog=yes
 
-New StorageController.SC58 element=Storage.Battery58 mode=loadshape 
+New StorageController.SC58 Element=Line.l1 ElementList=[Battery58] mode=loadshape 
 ~ daily=SC_common_loadshape 
 ~ eventlog=yes
 
-New StorageController.SC65 element=Storage.Battery65 mode=loadshape 
+New StorageController.SC65 Element=Line.l1 ElementList=[Battery65] mode=loadshape 
 ~ daily=SC_common_loadshape 
 ~ eventlog=yes
 
-New StorageController.SC76 element=Storage.Battery76 mode=loadshape 
+New StorageController.SC76 Element=Line.l1 ElementList=[Battery76] mode=loadshape 
 ~ daily=SC_common_loadshape 
 ~ eventlog=yes
 
-New StorageController.SC87 element=Storage.Battery87 mode=loadshape 
+New StorageController.SC87 Element=Line.l1 ElementList=[Battery87] mode=loadshape 
 ~ daily=SC_common_loadshape 
 ~ eventlog=yes
 
-New StorageController.SC100 element=Storage.Battery100 mode=loadshape 
+New StorageController.SC100 Element=Line.l1 ElementList=[Battery100] mode=loadshape 
 ~ daily=SC_common_loadshape 
 ~ eventlog=yes
+
+
+
 
 
 ! Disable all automatic control actions by OpenDSS
