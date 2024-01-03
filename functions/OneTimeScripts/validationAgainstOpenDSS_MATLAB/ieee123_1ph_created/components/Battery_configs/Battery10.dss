@@ -1,17 +1,17 @@
 ! 10% of the Load Buses have Batteries with specifications based on corresponding PV systems
 
-New Storage.Battery9 phases=1 bus1=9 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
-New Storage.Battery28 phases=1 bus1=28 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
-New Storage.Battery48 phases=1 bus1=48 kv=2.4018 kWrated=84 kWhrated=336 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
-New Storage.Battery58 phases=1 bus1=58 kv=2.4018 kWrated=8 kWhrated=32 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
-New Storage.Battery65 phases=1 bus1=65 kv=2.4018 kWrated=56 kWhrated=224 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
-New Storage.Battery76 phases=1 bus1=76 kv=2.4018 kWrated=98 kWhrated=392 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
-New Storage.Battery87 phases=1 bus1=87 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
-New Storage.Battery100 phases=1 bus1=100 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery9 phases=1 bus1=9 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 %EffCharge = 95 %EffDischarge = 95 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery28 phases=1 bus1=28 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 %EffCharge = 95 %EffDischarge = 95 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery48 phases=1 bus1=48 kv=2.4018 kWrated=84 kWhrated=336 %stored=62.5 %reserve=30 %EffCharge = 95 %EffDischarge = 95 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery58 phases=1 bus1=58 kv=2.4018 kWrated=8 kWhrated=32 %stored=62.5 %reserve=30 %EffCharge = 95 %EffDischarge = 95 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery65 phases=1 bus1=65 kv=2.4018 kWrated=56 kWhrated=224 %stored=62.5 %reserve=30 %EffCharge = 95 %EffDischarge = 95 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery76 phases=1 bus1=76 kv=2.4018 kWrated=98 kWhrated=392 %stored=62.5 %reserve=30 %EffCharge = 95 %EffDischarge = 95 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery87 phases=1 bus1=87 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 %EffCharge = 95 %EffDischarge = 95 vminpu=0.95 vmaxpu=1.05
+New Storage.Battery100 phases=1 bus1=100 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 %EffCharge = 95 %EffDischarge = 95 vminpu=0.95 vmaxpu=1.05
 
 New Monitor.Battery9_states element=Storage.Battery9 mode=3 
 New Monitor.Battery28_states element=Storage.Battery28 mode=3 
-New Monitor.Battery48_states element=Storage.Battery48  mode=3 
+New Monitor.Battery48_states element=Storage.Battery48 mode=3 
 New Monitor.Battery58_states element=Storage.Battery58 mode=3 
 New Monitor.Battery65_states element=Storage.Battery65 mode=3 
 New Monitor.Battery76_states element=Storage.Battery76 mode=3 
