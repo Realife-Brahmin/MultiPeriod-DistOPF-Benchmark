@@ -29,7 +29,7 @@ BatchEdit Load..* daily=loads_loadshape
 redirect "components/Battery_configs/Battery10.dss"
 
 ! Disable all automatic control actions by OpenDSS
-Set controlmode=OFF
+! Set controlmode=OFF
 
 MakeBusList
 
@@ -39,8 +39,11 @@ Set number=24
 
 Calcv
 Solve
-
+Export Generators
+Export Loads
 Export Eventlog
+Export Powers
+
 Export Monitors Battery9_states
 Export Monitors Battery28_states
 Export Monitors Battery48_states
