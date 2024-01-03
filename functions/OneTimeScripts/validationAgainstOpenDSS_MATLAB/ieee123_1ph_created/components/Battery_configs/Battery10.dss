@@ -9,4 +9,13 @@ New Storage.Battery76 phases=1 bus1=76 kv=2.4018 kWrated=98 kWhrated=392 %stored
 New Storage.Battery87 phases=1 bus1=87 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
 New Storage.Battery100 phases=1 bus1=100 kv=2.4018 kWrated=16 kWhrated=64 %stored=62.5 %reserve=30 vminpu=0.95 vmaxpu=1.05
 
+New Monitor.Battery9_states element=Storage.Battery9 mode=3 
+New Monitor.Battery28_states element=Storage.Battery28 mode=3 
+New Monitor.Battery48_states element=Storage.Battery48  mode=3 
+New Monitor.Battery58_states element=Storage.Battery58 mode=3 
+New Monitor.Battery65_states element=Storage.Battery65 mode=3 
+New Monitor.Battery76_states element=Storage.Battery76 mode=3 
+New Monitor.Battery87_states element=Storage.Battery87 mode=3 
+New Monitor.Battery100_states element=Storage.Battery100 mode=3 
+
 redirect ".\StorageControl10.dss"

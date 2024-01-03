@@ -26,7 +26,7 @@ BatchEdit Load..* daily=loads_loadshape
 
 ! Choose a Batttery % Penetration Configuration.
 ! Use BatteryXX.dss+StorageControlXX.dss
-! redirect "components/Battery_configs/Battery10.dss"
+redirect "components/Battery_configs/Battery10.dss"
 
 ! Disable all automatic control actions by OpenDSS
 Set controlmode=OFF
@@ -39,3 +39,14 @@ Set number=24
 
 Calcv
 Solve
+
+Export Eventlog
+Export Monitors Battery9_states
+Export Monitors Battery28_states
+Export Monitors Battery48_states
+Export Monitors Battery58_states
+Export Monitors Battery65_states
+Export Monitors Battery76_states
+Export Monitors Battery87_states
+Export Monitors Battery100_states
+
