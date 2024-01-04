@@ -36,17 +36,7 @@ MakeBusList
 Set mode=Daily 
 Set stepsize=1h 
 
-var @hour = 1
-Set number= @hour
-
-Calcv
-Solve
-
-Export Counts "results/Counts.csv"
-Export Loads "results/Loads1.csv"
-Export Powers kVA "results/Powers1.csv"
-Export Summary "results/Summary.csv"
-Export Voltages "results/Voltages1.csv"
+redirect "./scripts/solveAndExportFor24h.dss"
 
 !Export Monitors Battery9_states
 !Export Monitors Battery28_states
