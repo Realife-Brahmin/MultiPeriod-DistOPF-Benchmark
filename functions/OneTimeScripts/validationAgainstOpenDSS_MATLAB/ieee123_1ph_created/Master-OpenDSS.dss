@@ -13,6 +13,8 @@ redirect "components/Regulator.dss"
 ! Defines Regulator Controls
 redirect "components/RegulatorControl.dss"
 
+! Defines load profile for the day and multiplies all load values with 
+! the lambda corresponding to the hour
 New LoadShape.loads_loadshape interval=0 npts=24 csvfile="data\LoadShape1.csv"
 BatchEdit Load..* daily=loads_loadshape
 
@@ -26,18 +28,23 @@ BatchEdit Load..* daily=loads_loadshape
 
 ! Choose a Batttery % Penetration Configuration.
 ! Use BatteryXX.dss+StorageControlXX.dss
+! Currently 10% is supported
 redirect "components/Battery_configs/Battery10.dss"
-
-! Disable all automatic control actions by OpenDSS
-! Set controlmode=OFF
 
 MakeBusList
 
+! Run for the day, in 24 hourly time-steps
 Set mode=Daily 
 Set stepsize=1h 
 
+! This script picks hours from 1 to 24, solves for the circuit
+! and exports some key state variables as suitably named files
 redirect "./scripts/solveAndExportFor24h.dss"
 
+! These locs export csv files for each battery
+! Each csv file contains the operation of the battery
+! such as charging/discharging/kWh value, etc.
+! for all 24 hours
 !Export Monitors Battery9_states
 !Export Monitors Battery28_states
 !Export Monitors Battery48_states
