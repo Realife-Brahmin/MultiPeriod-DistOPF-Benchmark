@@ -1,0 +1,60 @@
+! Set DataPath address to the folder containing the Master.dss (Master-OpenDSS.dss) file.
+Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\ieee123_1ph_created\"
+
+! Clears ckt, Defines ckt, Defines Lines, Loads, Voltage Base, Load Mult
+redirect "components/IEEE123SinglePh.dss"
+
+! Defines Static Capacitors
+redirect "components/Capacitor.dss"
+
+! Defines Regulators
+redirect "components/Regulator.dss"
+
+! Defines Regulator Controls
+redirect "components/RegulatorControl.dss"
+
+New LoadShape.loads_loadshape interval=0 npts=24 csvfile="data\LoadShape1.csv"
+BatchEdit Load..* daily=loads_loadshape
+
+! Choose a PV % Penetration Configuration.
+! Use PV10/PV30/PV50/PV100 or nothing
+ redirect "components/PVconfigs/PV10.dss"
+! redirect "components/PVconfigs/PV30.dss"
+! redirect "components/PVconfigs/PV50.dss"
+! redirect "components/PVconfigs/PV100.dss"
+! redirect "components/PVconfigs/PV100_reactive.dss"
+
+! Choose a Batttery % Penetration Configuration.
+! Use BatteryXX.dss+StorageControlXX.dss
+redirect "components/Battery_configs/Battery10.dss"
+
+! Disable all automatic control actions by OpenDSS
+! Set controlmode=OFF
+
+MakeBusList
+
+Set mode=Daily 
+Set stepsize=1h 
+
+var @hour = 2
+Set number= @hour
+
+Calcv
+Solve
+
+Export Counts "results/Counts.csv"
+Export Loads "results/Loads2.csv"
+Export Powers kVA "results/Powers2.csv"
+Export Summary "results/Summary.csv"
+Export Voltages "results/Voltages2.csv"
+
+
+!Export Monitors Battery9_states
+!Export Monitors Battery28_states
+!Export Monitors Battery48_states
+!Export Monitors Battery58_states
+!Export Monitors Battery65_states
+!Export Monitors Battery76_states
+!Export Monitors Battery87_states
+!Export Monitors Battery100_states
+
