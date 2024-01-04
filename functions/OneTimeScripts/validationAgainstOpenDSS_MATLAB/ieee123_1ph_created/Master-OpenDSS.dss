@@ -28,7 +28,7 @@ BatchEdit Load..* daily=loads_loadshape
 
 ! Choose a Batttery % Penetration Configuration.
 ! Use BatteryXX.dss+StorageControlXX.dss
-! Currently 10% is supported
+! Currently 10% or nothing is supported
 redirect "components/Battery_configs/Battery10.dss"
 
 MakeBusList
