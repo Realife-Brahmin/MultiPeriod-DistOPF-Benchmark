@@ -94,7 +94,7 @@ Element, Terminal, P(kW), Q(kvar),  P_Normal, Q_Normal, P_Emergency, Q_Emergency
 "Line.L46"              ,   1,         4.4,         2.2,         0.0,         0.0,         0.0,         0.0
 "Line.L46"              ,   2,        -4.4,        -2.2
 "Line.L47"              ,   1,       -24.0,        32.9,         0.0,         0.0,         0.0,         0.0
-"Line.L47"              ,   2,        24.0,       -32.9
+"Line.L47"              ,   2,        24.0,       -32.8
 "Line.L48"              ,   1,        43.8,        27.4,         0.0,         0.0,         0.0,         0.0
 "Line.L48"              ,   2,       -43.8,       -27.4
 "Line.L49"              ,   1,        13.1,         6.6,         0.0,         0.0,         0.0,         0.0
@@ -106,7 +106,7 @@ Element, Terminal, P(kW), Q(kvar),  P_Normal, Q_Normal, P_Emergency, Q_Emergency
 "Line.L52"              ,   1,       264.2,       -16.1,         0.0,         0.0,         0.0,         0.0
 "Line.L52"              ,   2,      -264.1,        16.4
 "Line.L53"              ,   1,       255.3,       -20.8,         0.0,         0.0,         0.0,         0.0
-"Line.L53"              ,   2,      -255.3,        21.0
+"Line.L53"              ,   2,      -255.2,        21.0
 "Line.L54"              ,   1,         8.8,         4.4,         0.0,         0.0,         0.0,         0.0
 "Line.L54"              ,   2,        -8.8,        -4.4
 "Line.L55"              ,   1,       246.5,       -25.3,         0.0,         0.0,         0.0,         0.0
@@ -153,10 +153,10 @@ Element, Terminal, P(kW), Q(kvar),  P_Normal, Q_Normal, P_Emergency, Q_Emergency
 "Line.L75"              ,   2,        -8.8,        -4.4
 "Line.L76"              ,   1,        53.2,      -172.5,         0.0,         0.0,         0.0,         0.0
 "Line.L76"              ,   2,       -53.0,       172.7
-"Line.L77"              ,   1,        43.7,       -21.5,         0.0,         0.0,         0.0,         0.0
+"Line.L77"              ,   1,        43.6,       -21.5,         0.0,         0.0,         0.0,         0.0
 "Line.L77"              ,   2,       -43.6,        21.5
 "Line.L78"              ,   1,        44.3,      -177.1,         0.0,         0.0,         0.0,         0.0
-"Line.L78"              ,   2,       -44.3,       177.2
+"Line.L78"              ,   2,       -44.2,       177.2
 "Line.L79"              ,   1,         8.8,         4.4,         0.0,         0.0,         0.0,         0.0
 "Line.L79"              ,   2,        -8.8,        -4.4
 "Line.L80"              ,   1,        35.5,      -181.6,         0.0,         0.0,         0.0,         0.0
@@ -218,7 +218,7 @@ Element, Terminal, P(kW), Q(kvar),  P_Normal, Q_Normal, P_Emergency, Q_Emergency
 "Line.L107"             ,   1,        30.7,        15.4,         0.0,         0.0,         0.0,         0.0
 "Line.L107"             ,   2,       -30.7,       -15.3
 "Line.L108"             ,   1,         0.0,        -0.0,         0.0,         0.0,         0.0,         0.0
-"Line.L108"             ,   2,         0.0,         0.0
+"Line.L108"             ,   2,        -0.0,        -0.0
 "Line.L109"             ,   1,        21.9,        11.0,         0.0,         0.0,         0.0,         0.0
 "Line.L109"             ,   2,       -21.9,       -11.0
 "Line.L110"             ,   1,         4.4,         2.2,         0.0,         0.0,         0.0,         0.0
@@ -245,8 +245,8 @@ Element, Terminal, P(kW), Q(kvar),  P_Normal, Q_Normal, P_Emergency, Q_Emergency
 "Line.SW4"              ,   2,      -204.9,        79.2
 "Line.SW5"              ,   1,        70.2,        35.1,         0.0,         0.0,         0.0,         0.0
 "Line.SW5"              ,   2,       -70.2,       -35.1
-"Line.XFM1"             ,   1,         0.0,         0.0,         0.0,         0.0,         0.0,         0.0
-"Line.XFM1"             ,   2,         0.0,         0.0
+"Line.XFM1"             ,   1,        -0.0,         0.0,         0.0,         0.0,         0.0,         0.0
+"Line.XFM1"             ,   2,         0.0,        -0.0
 "Transformer.REG1A"     ,   1,       512.2,       182.6,         0.0,         0.0,         0.0,         0.0
 "Transformer.REG1A"     ,   2,      -512.2,      -182.6
 "Transformer.REG2A"     ,   1,        13.1,         6.6,         0.0,         0.0,         0.0,         0.0
@@ -288,7 +288,7 @@ Element, Terminal, P(kW), Q(kvar),  P_Normal, Q_Normal, P_Emergency, Q_Emergency
 "Load.S45"              ,   1,         4.4,         2.2
 "Load.S46"              ,   1,         4.4,         2.2
 "Load.S47"              ,   1,        23.0,        16.4
-"Load.S48"              ,   1,        46.0,        32.9
+"Load.S48"              ,   1,        46.0,        32.8
 "Load.S49"              ,   1,        30.7,        20.8
 "Load.S50"              ,   1,         8.8,         4.4
 "Load.S51"              ,   1,         4.4,         2.2
@@ -340,18 +340,18 @@ Element, Terminal, P(kW), Q(kvar),  P_Normal, Q_Normal, P_Emergency, Q_Emergency
 "Load.S112"             ,   1,         4.4,         2.2
 "Load.S113"             ,   1,         8.8,         4.4
 "Load.S114"             ,   1,         4.4,         2.2
-"Generator.C83"         ,   1,         0.0,      -200.0
-"Generator.C88"         ,   1,         0.0,       -16.7
-"Generator.C90"         ,   1,         0.0,       -16.7
-"Generator.C92"         ,   1,         0.0,       -16.7
-"PVSystem.9"            ,   1,       -13.3,        -0.0
-"PVSystem.28"           ,   1,       -13.3,        -0.0
-"PVSystem.48"           ,   1,       -70.0,        -0.0
-"PVSystem.58"           ,   1,        -6.7,        -0.0
-"PVSystem.65"           ,   1,       -46.7,        -0.0
-"PVSystem.76"           ,   1,       -81.7,        -0.0
-"PVSystem.87"           ,   1,       -13.3,        -0.0
-"PVSystem.100"          ,   1,       -13.3,        -0.0
+"Generator.C83"         ,   1,        -0.0,      -200.0
+"Generator.C88"         ,   1,        -0.0,       -16.7
+"Generator.C90"         ,   1,        -0.0,       -16.7
+"Generator.C92"         ,   1,        -0.0,       -16.7
+"PVSystem.9"            ,   1,       -13.3,         0.0
+"PVSystem.28"           ,   1,       -13.3,         0.0
+"PVSystem.48"           ,   1,       -70.0,         0.0
+"PVSystem.58"           ,   1,        -6.7,         0.0
+"PVSystem.65"           ,   1,       -46.7,         0.0
+"PVSystem.76"           ,   1,       -81.7,         0.0
+"PVSystem.87"           ,   1,       -13.3,         0.0
+"PVSystem.100"          ,   1,       -13.3,         0.0
 "Storage.BATTERY9"      ,   1,         0.0,         0.0
 "Storage.BATTERY28"     ,   1,         0.0,         0.0
 "Storage.BATTERY48"     ,   1,         0.0,         0.0

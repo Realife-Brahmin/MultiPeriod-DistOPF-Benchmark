@@ -232,8 +232,5 @@ New "Load.s112" bus1=112 model=1 phases=1 conn=wye kV=2.4 kW=6.6667 kvar=3.3333	
 New "Load.s113" bus1=113 model=1 phases=1 conn=wye kV=2.4 kW=13.333 kvar=6.6667	Vminpu=0.1  Vmaxpu=1.50 
 New "Load.s114" bus1=114 model=1 phases=1 conn=wye kV=2.4 kW=6.6667 kvar=3.3333	Vminpu=0.1  Vmaxpu=1.50 
 
-
-!set loadmult = 1
-
 Set Voltagebases=[ 4.16, .48]
 
