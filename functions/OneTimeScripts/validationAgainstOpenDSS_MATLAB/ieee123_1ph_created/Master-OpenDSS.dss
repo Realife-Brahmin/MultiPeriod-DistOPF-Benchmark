@@ -35,21 +35,25 @@ MakeBusList
 
 Set mode=Daily 
 Set stepsize=1h 
-Set number=24
+
+var @hour = 1
+Set number= @hour
 
 Calcv
 Solve
-Export Generators
-Export Loads
-Export Eventlog
-Export Powers
 
-Export Monitors Battery9_states
-Export Monitors Battery28_states
-Export Monitors Battery48_states
-Export Monitors Battery58_states
-Export Monitors Battery65_states
-Export Monitors Battery76_states
-Export Monitors Battery87_states
-Export Monitors Battery100_states
+Export Counts "results/Counts.csv"
+Export Loads "results/Loads1.csv"
+Export Powers kVA "results/Powers1.csv"
+Export Summary "results/Summary.csv"
+Export Voltages "results/Voltages1.csv"
+
+!Export Monitors Battery9_states
+!Export Monitors Battery28_states
+!Export Monitors Battery48_states
+!Export Monitors Battery58_states
+!Export Monitors Battery65_states
+!Export Monitors Battery76_states
+!Export Monitors Battery87_states
+!Export Monitors Battery100_states
 
