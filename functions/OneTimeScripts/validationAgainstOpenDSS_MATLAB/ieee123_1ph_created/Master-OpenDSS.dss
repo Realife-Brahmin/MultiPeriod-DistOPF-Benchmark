@@ -37,9 +37,23 @@ MakeBusList
 Set mode=Daily 
 Set stepsize=1h 
 
-! This script picks hours from 1 to 24, solves for the circuit
+! This script sequentially picks all hours from 1 to 24, 
+! solves for the circuit
 ! and exports some key state variables as suitably named files
+! in the results folder
 redirect "./scripts/solveAndExportFor24h.dss"
+
+! Alternatively, you can solve for powerflow till a specified hour from 1 to 24 and output values for that hour
+! Hour 1
+! var @hour = 1
+! Set number= @hour
+! Calcv
+! Solve
+! Export Counts "./results/Counts1.csv"
+! Export Loads "./results/Loads1.csv"
+! Export Powers kVA "./results/Powers1.csv"
+! Export Summary "./results/Summary1.csv"
+! Export Voltages "./results/Voltages1.csv"
 
 ! These locs export csv files for each battery
 ! Each csv file contains the operation of the battery
