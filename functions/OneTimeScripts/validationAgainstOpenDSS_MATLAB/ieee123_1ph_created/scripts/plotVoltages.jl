@@ -9,7 +9,7 @@ include("number_to_padded_string.jl")
 pv = 0
 # batt = 10 # percentage of load buses
 batt = 0
-duration = 24 # hours
+duration = 24 # ts
 N = 129 # I know this, but you can see this from the Summary or Voltage files
 wd = @__DIR__
 
@@ -30,9 +30,9 @@ PSubs_MW_1toT, QSubs_MVAr_1toT, PLosses_MW_1toT, PLosses_pct_1toT, QLosses_MVAr_
 
 V_1toT = zeros(N, duration)
 
-# for hour = 1:24
-for hour = 1:1
-    local filenameSummary = "summary"*string(hour)*ext
+# for t = 1:24
+for t = 1:duration
+    local filenameSummary = "summary"*string(t)*ext
     local filenameSummaryFull = joinpath(configFolder, filenameSummary)
     local dfSummary0 = CSV.read(filenameSummaryFull, DataFrame)
     local colNamesSummary = [strip(string(name)) for name in names(dfSummary0)]
@@ -41,13 +41,13 @@ for hour = 1:1
     # vscodedisplay(DataFrame(dfSummary))
 
 
-    PSubs_MW, PSubs_MW_1toT[hour] = [dfSummary[:TotalMW] for _ ∈ 1:2]
-    QSubs_MVAr, QSubs_MVAr_1toT[hour] = [dfSummary[:TotalMvar] for _ ∈ 1:2]
-    PLosses_MW, PLosses_MW_1toT[hour] = [dfSummary[:MWLosses] for _ ∈ 1:2]
-    PLosses_pct, PLosses_pct_1toT[hour] = [dfSummary[:pctLosses] for _ ∈ 1:2]
-    QLosses_MVAr, QLosses_MVAr_1toT[hour] = [dfSummary[:MvarLosses] for _ ∈ 1:2]
+    PSubs_MW, PSubs_MW_1toT[t] = [dfSummary[:TotalMW] for _ ∈ 1:2]
+    QSubs_MVAr, QSubs_MVAr_1toT[t] = [dfSummary[:TotalMvar] for _ ∈ 1:2]
+    PLosses_MW, PLosses_MW_1toT[t] = [dfSummary[:MWLosses] for _ ∈ 1:2]
+    PLosses_pct, PLosses_pct_1toT[t] = [dfSummary[:pctLosses] for _ ∈ 1:2]
+    QLosses_MVAr, QLosses_MVAr_1toT[t] = [dfSummary[:MvarLosses] for _ ∈ 1:2]
 
-    local filenameVoltage = "voltages"*string(hour)*ext
+    local filenameVoltage = "voltages"*string(t)*ext
     local filenameVoltageFull = joinpath(configFolder, filenameVoltage)
     local dfVoltage = CSV.read(filenameVoltageFull, DataFrame)
     local colNamesVoltage = [strip(string(name)) for name in names(dfVoltage)]
@@ -57,20 +57,20 @@ for hour = 1:1
     local VGrid_unsorted = V_unsorted[2:N]
     local VGrid_sorted = VGrid_unsorted[busNums_OpenDSS]
     V_sorted = vcat(VSubs, VGrid_sorted)
-    @show [V_unsorted V_sorted]
-    V_1toT[:, hour] = V_sorted
+    # @show [V_unsorted V_sorted]
+    V_1toT[:, t] = V_sorted
 end
 
 MW_to_kW = 1000
 figureFolder = joinpath(configFolder, "figures")
-# plot voltage profile for the t-th hour
+# plot voltage profile for the t-th t
 for t = 1:duration
     local λ = LoadShape[t]
-    local PSubs_kW = PSubs_MW_1toT[t]*MW_to_kW
-    local PLosses_kW = PLosses_MW_1toT[t]*MW_to_kW
+    local PSubs_kW = round(PSubs_MW_1toT[t]*MW_to_kW, digits=3)
+    local PLosses_kW = round(PLosses_MW_1toT[t]*MW_to_kW, digits=3)
     theme(:dao)
     local nodes = 1:N
-    local p1 = plot(nodes, V_1toT[nodes, hour],
+    local p1 = plot(nodes, V_1toT[nodes, t],
         xlabel="Bus Number",
         ylabel="V [pu]",
         titlefontsize=12,
