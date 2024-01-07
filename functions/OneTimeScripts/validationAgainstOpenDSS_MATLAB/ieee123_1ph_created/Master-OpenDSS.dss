@@ -20,7 +20,7 @@ BatchEdit Load..* daily=loads_loadshape
 
 ! Choose a PV % Penetration Configuration.
 ! Use PV10/PV30/PV50/PV100 or nothing
- redirect "components/PVconfigs/PV10.dss"
+! redirect "components/PVconfigs/PV10.dss"
 ! redirect "components/PVconfigs/PV30.dss"
 ! redirect "components/PVconfigs/PV50.dss"
 ! redirect "components/PVconfigs/PV100.dss"
