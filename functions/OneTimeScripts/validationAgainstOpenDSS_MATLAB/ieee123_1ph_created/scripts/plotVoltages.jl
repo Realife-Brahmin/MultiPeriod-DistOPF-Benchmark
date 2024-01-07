@@ -5,8 +5,10 @@ using Plots
 using Plots.Measures
 include("number_to_padded_string.jl")
 
-pv = 10 # percentage of load buses
-batt = 10 # percentage of load buses
+# pv = 10 # percentage of load buses
+pv = 0
+# batt = 10 # percentage of load buses
+batt = 0
 duration = 24 # hours
 N = 129 # I know this, but you can see this from the Summary or Voltage files
 wd = @__DIR__
@@ -23,14 +25,13 @@ configFolder = joinpath(resultsFolder, configFolderName)
 
 filenameBusNames = joinpath(wd, "busname.txt")
 busNames = CSV.read(filenameBusNames, DataFrame, header=false)
-
+busNums_OpenDSS = busNames[:, 1]
 PSubs_MW_1toT, QSubs_MVAr_1toT, PLosses_MW_1toT, PLosses_pct_1toT, QLosses_MVAr_1toT = [zeros(duration) for _ ∈ 1:5]
 
 V_1toT = zeros(N, duration)
-# V_1toT = [zeros(N, duration) for _ ∈ 1:1]
 
-for hour = 1:24
-
+# for hour = 1:24
+for hour = 1:1
     local filenameSummary = "summary"*string(hour)*ext
     local filenameSummaryFull = joinpath(configFolder, filenameSummary)
     local dfSummary0 = CSV.read(filenameSummaryFull, DataFrame)
@@ -51,7 +52,13 @@ for hour = 1:24
     local dfVoltage = CSV.read(filenameVoltageFull, DataFrame)
     local colNamesVoltage = [strip(string(name)) for name in names(dfVoltage)]
     rename!(dfVoltage, colNamesVoltage)
-    V_unsorted, V_1toT[:, hour] = [dfVoltage.pu1 for _ ∈ 1:2]
+    local V_unsorted = dfVoltage.pu1
+    local VSubs = V_unsorted[1]
+    local VGrid_unsorted = V_unsorted[2:N]
+    local VGrid_sorted = VGrid_unsorted[busNums_OpenDSS]
+    V_sorted = vcat(VSubs, VGrid_sorted)
+    @show [V_unsorted V_sorted]
+    V_1toT[:, hour] = V_sorted
 end
 
 MW_to_kW = 1000
