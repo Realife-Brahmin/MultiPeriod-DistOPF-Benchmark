@@ -1,6 +1,8 @@
 using CSV
 using DataFrames
+using LaTeXStrings
 using Plots
+using Plots.Measures
 include("number_to_padded_string.jl")
 
 pv = 10 # percentage of load buses
@@ -50,4 +52,34 @@ for hour = 1:24
     local colNamesVoltage = [strip(string(name)) for name in names(dfVoltage)]
     rename!(dfVoltage, colNamesVoltage)
     V_unsorted, V_1toT[:, hour] = [dfVoltage.pu1 for _ ∈ 1:2]
+end
+
+MW_to_kW = 1000
+figureFolder = joinpath(configFolder, "figures")
+# plot voltage profile for the t-th hour
+for t = 1:duration
+    local λ = LoadShape[t]
+    local PSubs_kW = PSubs_MW_1toT[t]*MW_to_kW
+    local PLosses_kW = PLosses_MW_1toT[t]*MW_to_kW
+    theme(:dao)
+    local nodes = 1:N
+    local p1 = plot(nodes, V_1toT[nodes, hour],
+        xlabel="Bus Number",
+        ylabel="V [pu]",
+        titlefontsize=12,
+        top_margin=5mm,
+        title="Bus Voltages for t = $(t), λ = $(λ)\n"*L"$P_{Subs}=$"* "$(PSubs_kW) kW " * L"$P_{Loss}=$" * "$(PLosses_kW) kW\n"* "with $(pv) % PVs and $(batt) % Batteries",
+        label="V [pu]",
+        xlims=(1, N),
+        xticks=1:10:N,
+        linewidth=2.5,
+        minorgrid=true,
+        minorgridlinestyle=:dot,
+        minorgridlinewidth=2,
+        minorgridcolor=:gray)
+
+    local ext = ".png"
+    local figname = "voltages$(t)"*ext
+    local fignameFull = joinpath(figureFolder, figname)
+    savefig(p1, fignameFull)
 end
