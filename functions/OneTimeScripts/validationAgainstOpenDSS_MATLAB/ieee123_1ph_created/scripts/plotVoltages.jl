@@ -1,6 +1,6 @@
-# currently under implementation
 using CSV
 using DataFrames
+using Plots
 include("number_to_padded_string.jl")
 
 pv = 10 # percentage of load buses
@@ -9,10 +9,15 @@ duration = 24 # hours
 N = 129 # I know this, but you can see this from the Summary or Voltage files
 wd = @__DIR__
 
+ext = ".csv"
+
+loadShapeFolder = joinpath(dirname(wd), "data")
+filenameLoadShape = joinpath(loadShapeFolder, "LoadShape1"*ext)
+df_LoadShape = CSV.read(filenameLoadShape, DataFrame, header=false)
+LoadShape = df_LoadShape[:, 2]
 resultsFolder = joinpath(dirname(wd), "results")
 configFolderName = "pv"*number_to_padded_string(pv)*"_batt"*number_to_padded_string(batt)
 configFolder = joinpath(resultsFolder, configFolderName)
-ext = ".csv"
 
 filenameBusNames = joinpath(wd, "busname.txt")
 busNames = CSV.read(filenameBusNames, DataFrame, header=false)
