@@ -17,7 +17,7 @@ Export Voltages "../results/Voltages1.csv"
 ! Hour 2
 var @hour = 2
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts2.csv"
 Export Loads "../results/Loads2.csv"
@@ -28,7 +28,7 @@ Export Voltages "../results/Voltages2.csv"
 ! Hour 3
 var @hour = 3
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts3.csv"
 Export Loads "../results/Loads3.csv"
@@ -39,7 +39,7 @@ Export Voltages "../results/Voltages3.csv"
 ! Hour 4
 var @hour = 4
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts4.csv"
 Export Loads "../results/Loads4.csv"
@@ -50,7 +50,7 @@ Export Voltages "../results/Voltages4.csv"
 ! Hour 5
 var @hour = 5
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts5.csv"
 Export Loads "../results/Loads5.csv"
@@ -61,7 +61,7 @@ Export Voltages "../results/Voltages5.csv"
 ! Hour 6
 var @hour = 6
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts6.csv"
 Export Loads "../results/Loads6.csv"
@@ -72,7 +72,7 @@ Export Voltages "../results/Voltages6.csv"
 ! Hour 7
 var @hour = 7
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts7.csv"
 Export Loads "../results/Loads7.csv"
@@ -83,7 +83,7 @@ Export Voltages "../results/Voltages7.csv"
 ! Hour 8
 var @hour = 8
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts8.csv"
 Export Loads "../results/Loads8.csv"
@@ -94,7 +94,7 @@ Export Voltages "../results/Voltages8.csv"
 ! Hour 9
 var @hour = 9
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts9.csv"
 Export Loads "../results/Loads9.csv"
@@ -105,7 +105,7 @@ Export Voltages "../results/Voltages9.csv"
 ! Hour 10
 var @hour = 10
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts10.csv"
 Export Loads "../results/Loads10.csv"
@@ -116,7 +116,7 @@ Export Voltages "../results/Voltages10.csv"
 ! Hour 11
 var @hour = 11
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts11.csv"
 Export Loads "../results/Loads11.csv"
@@ -127,7 +127,7 @@ Export Voltages "../results/Voltages11.csv"
 ! Hour 12
 var @hour = 12
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts12.csv"
 Export Loads "../results/Loads12.csv"
@@ -138,7 +138,7 @@ Export Voltages "../results/Voltages12.csv"
 ! Hour 13
 var @hour = 13
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts13.csv"
 Export Loads "../results/Loads13.csv"
@@ -149,7 +149,7 @@ Export Voltages "../results/Voltages13.csv"
 ! Hour 14
 var @hour = 14
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts14.csv"
 Export Loads "../results/Loads14.csv"
@@ -160,7 +160,7 @@ Export Voltages "../results/Voltages14.csv"
 ! Hour 15
 var @hour = 15
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts15.csv"
 Export Loads "../results/Loads15.csv"
@@ -171,7 +171,7 @@ Export Voltages "../results/Voltages15.csv"
 ! Hour 16
 var @hour = 16
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts16.csv"
 Export Loads "../results/Loads16.csv"
@@ -182,7 +182,7 @@ Export Voltages "../results/Voltages16.csv"
 ! Hour 17
 var @hour = 17
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts17.csv"
 Export Loads "../results/Loads17.csv"
@@ -193,7 +193,7 @@ Export Voltages "../results/Voltages17.csv"
 ! Hour 18
 var @hour = 18
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts18.csv"
 Export Loads "../results/Loads18.csv"
@@ -204,7 +204,7 @@ Export Voltages "../results/Voltages18.csv"
 ! Hour 19
 var @hour = 19
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts19.csv"
 Export Loads "../results/Loads19.csv"
@@ -215,7 +215,7 @@ Export Voltages "../results/Voltages19.csv"
 ! Hour 20
 var @hour = 20
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts20.csv"
 Export Loads "../results/Loads20.csv"
@@ -226,7 +226,7 @@ Export Voltages "../results/Voltages20.csv"
 ! Hour 21
 var @hour = 21
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts21.csv"
 Export Loads "../results/Loads21.csv"
@@ -237,7 +237,7 @@ Export Voltages "../results/Voltages21.csv"
 ! Hour 22
 var @hour = 22
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts22.csv"
 Export Loads "../results/Loads22.csv"
@@ -248,7 +248,7 @@ Export Voltages "../results/Voltages22.csv"
 ! Hour 23
 var @hour = 23
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts23.csv"
 Export Loads "../results/Loads23.csv"
@@ -259,7 +259,7 @@ Export Voltages "../results/Voltages23.csv"
 ! Hour 24
 var @hour = 24
 Set number= @hour
-Calcv
+
 Solve
 Export Counts "../results/Counts24.csv"
 Export Loads "../results/Loads24.csv"
