@@ -1,0 +1,70 @@
+! Set DataPath address to the folder containing the Master.dss (Master-OpenDSS.dss) file.
+Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\ieee123_1ph_created\"
+
+! Clears ckt, Defines ckt, Defines Lines, Loads, Voltage Base, Load Mult
+redirect "components/IEEE123SinglePh.dss"
+
+! Defines Static Capacitors
+redirect "components/Capacitor.dss"
+
+! Defines Regulators
+redirect "components/Regulator.dss"
+
+! Defines Regulator Controls
+redirect "components/RegulatorControl.dss"
+
+! Defines load profile for the day and multiplies all load values with 
+! the lambda corresponding to the hour
+New LoadShape.loads_loadshape interval=0 npts=24 csvfile="data\LoadShape1.csv"
+BatchEdit Load..* daily=loads_loadshape
+
+! Choose a PV % Penetration Configuration.
+! Use PV10/PV30/PV50/PV100 or nothing
+! redirect "components/PVconfigs/PV10.dss"
+! redirect "components/PVconfigs/PV30.dss"
+! redirect "components/PVconfigs/PV50.dss"
+! redirect "components/PVconfigs/PV100.dss"
+! redirect "components/PVconfigs/PV100_reactive.dss"
+
+! Choose a Batttery % Penetration Configuration.
+! Use BatteryXX.dss+StorageControlXX.dss
+! Currently 10% or nothing is supported
+! redirect "components/Battery_configs/Battery10.dss"
+
+MakeBusList
+
+! Run for the day, in 24 hourly time-steps
+Set mode=Daily 
+Set stepsize=1h 
+
+! This script sequentially picks all hours from 1 to 24, 
+! solves for the circuit
+! and exports some key state variables as suitably named files
+! in the results folder
+redirect "./scripts/solveAndExportFor24h.dss"
+
+! Alternatively, you can solve for powerflow till a specified hour from 1 to 24 and output values for that hour
+! Hour 1
+! var @hour = 1
+! Set number= @hour
+! Calcv
+! Solve
+! Export Counts "./results/Counts.csv"
+! Export Loads "./results/Loads.csv"
+! Export Powers kVA "./results/Powers.csv"
+! Export Summary "./results/Summary.csv"
+! Export Voltages "./results/Voltages.csv"
+
+! These locs export csv files for each battery
+! Each csv file contains the operation of the battery
+! such as charging/discharging/kWh value, etc.
+! for all 24 hours
+!Export Monitors Battery9_states
+!Export Monitors Battery28_states
+!Export Monitors Battery48_states
+!Export Monitors Battery58_states
+!Export Monitors Battery65_states
+!Export Monitors Battery76_states
+!Export Monitors Battery87_states
+!Export Monitors Battery100_states
+
