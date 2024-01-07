@@ -49,11 +49,11 @@ redirect "./scripts/solveAndExportFor24h.dss"
 ! Set number= @hour
 ! Calcv
 ! Solve
-! Export Counts "./results/Counts1.csv"
-! Export Loads "./results/Loads1.csv"
-! Export Powers kVA "./results/Powers1.csv"
-! Export Summary "./results/Summary1.csv"
-! Export Voltages "./results/Voltages1.csv"
+! Export Counts "./results/Counts.csv"
+! Export Loads "./results/Loads.csv"
+! Export Powers kVA "./results/Powers.csv"
+! Export Summary "./results/Summary.csv"
+! Export Voltages "./results/Voltages.csv"
 
 ! These locs export csv files for each battery
 ! Each csv file contains the operation of the battery
