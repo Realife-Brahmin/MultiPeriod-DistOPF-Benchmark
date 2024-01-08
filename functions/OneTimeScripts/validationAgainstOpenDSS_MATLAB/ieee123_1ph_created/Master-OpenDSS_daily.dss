@@ -46,7 +46,9 @@ redirect "./scripts/solveAndExportFor24h.dss"
 ! Alternatively, you can solve for powerflow till a specified hour from 1 to 24 and output values for that hour
 ! Hour 1
 ! var @hour = 1
-! Set number= @hour
+! Set number= @hour hour = 0
+// Yes, for some reason, either using Set number = @hour and hour = 0 works, or 
+// Set number = 1 and hour = @hour - 1 works
 ! Calcv
 ! Solve
 ! Export Counts "./results/Counts.csv"
