@@ -5,10 +5,11 @@ using Plots
 using Plots.Measures
 include("number_to_padded_string.jl")
 
-# pv = 10 # percentage of load buses
-pv = 0
-# batt = 10 # percentage of load buses
+# pv = 0
+pv = 10 # percentage of load buses
 batt = 0
+# batt = 10 # percentage of load buses
+
 duration = 24 # ts
 N = 129 # I know this, but you can see this from the Summary or Voltage files
 wd = @__DIR__
