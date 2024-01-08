@@ -4,7 +4,7 @@ using LaTeXStrings
 using Plots
 using Plots.Measures
 include("number_to_padded_string.jl")
-
+include("plotLoadShape.jl")
 # pv = 0
 pv = 10 # percentage of load buses
 # batt = 0
@@ -20,6 +20,8 @@ loadShapeFolder = joinpath(dirname(wd), "data")
 filenameLoadShape = joinpath(loadShapeFolder, "LoadShape1" * ext)
 df_LoadShape = CSV.read(filenameLoadShape, DataFrame, header=false)
 LoadShape = df_LoadShape[:, 2]
+plotLoadShape()
+
 resultsFolder = joinpath(dirname(wd), "results")
 configFolderName = "pv" * number_to_padded_string(pv) * "_batt" * number_to_padded_string(batt)
 configFolder = joinpath(resultsFolder, configFolderName)
