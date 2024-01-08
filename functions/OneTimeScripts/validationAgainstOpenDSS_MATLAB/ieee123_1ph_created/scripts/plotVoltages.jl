@@ -5,6 +5,8 @@ using Plots
 using Plots.Measures
 include("number_to_padded_string.jl")
 include("plotLoadShape.jl")
+include("plotLoadShapeStorage.jl")
+
 # pv = 0
 pv = 10 # percentage of load buses
 # batt = 0
@@ -21,7 +23,9 @@ filenameLoadShape = joinpath(loadShapeFolder, "LoadShape1" * ext)
 df_LoadShape = CSV.read(filenameLoadShape, DataFrame, header=false)
 LoadShape = df_LoadShape[:, 2]
 plotLoadShape()
-
+if batt > 0
+    plotLoadShapeStorage()
+end
 resultsFolder = joinpath(dirname(wd), "results")
 configFolderName = "pv" * number_to_padded_string(pv) * "_batt" * number_to_padded_string(batt)
 configFolder = joinpath(resultsFolder, configFolderName)
