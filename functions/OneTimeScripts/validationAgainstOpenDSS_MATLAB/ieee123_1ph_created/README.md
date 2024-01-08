@@ -33,23 +33,26 @@ ieee123_1ph/
 │   └── [Other Component Files] # Additional component configuration files
 │
 ├── data/                     # Input data for the simulation
-│   └── LoadShape1.CSV    # CSV file containing load shape data
-│   └── [Other Data Files]    # Additional data files
+│   └── LoadShape1.CSV        # CSV file containing load shape data
+│   └── LoadShape_Storage.CSV # Additional data files
 │
 ├── extra/                    # Extra resources and miscellaneous files
 │
 ├── resources/                # Documentation and reference materials
 │
 ├── results/                  # Output data from simulations, including monitor data and plots
-├── pv010_batt010/            # Example configuration folder for a specific PV and Battery setup
-│   ├── counts*.csv           # CSV files containing counts data
-│   ├── loads*.csv            # CSV files containing loads data
-│   ├── powers*.csv           # CSV files containing power data
-│   ├── summary*.csv          # CSV files containing summary data
-│   └── voltages*.csv         # CSV files containing voltages data
+│  └── pv000_batt000/          # Example configuration folder for a specific PV and Battery setup
+│  └── pv010_batt000/          # Example configuration folder for a specific PV and Battery setup
+│  └── pv010_batt010/          # Example configuration folder for a specific PV and Battery setup
+│    ├── counts*.csv           # CSV files containing counts data
+│    ├── loads*.csv            # CSV files containing loads data
+│    ├── powers*.csv           # CSV files containing power data
+│    ├── summary*.csv          # CSV files containing summary data
+│    └── voltages*.csv         # CSV files containing voltages data
 │
 ├── scripts/                  # Custom scripts that are called by the Master-OpenDSS.dss file
 │   └── solveAndExportFor24h.dss # Script for solving and exporting results over 24 hours
+│   └── [Other Scripts]          # Additional scripts
 │
-│
-└── Master-OpenDSS.dss        # Main OpenDSS model file for the ieee123_1ph project
+└── Master-OpenDSS_daily.dss        # Main OpenDSS model file for the ieee123_1ph project for running and exporting 24h worth of powerflow simulation
+└── Master-OpenDSS_oneHour.dss        # Main OpenDSS model file for the ieee123_1ph project for running and exporting 1h worth of powerflow simulation

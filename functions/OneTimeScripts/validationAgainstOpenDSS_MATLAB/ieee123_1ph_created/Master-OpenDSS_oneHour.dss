@@ -56,25 +56,25 @@ Solve
 Export Summary "./results/Summary.csv"
 ! Export Voltages "./results/Voltages.csv"
 
-var @hour = 5
-Set number= @hour
-Set hour = 0
-Solve
-! Export Counts "./results/Counts.csv"
-! Export Loads "./results/Loads.csv"
-! Export Powers kVA "./results/Powers.csv"
-Export Summary "./results/Summary.csv"
-! Export Voltages "./results/Voltages.csv"
+// var @hour = 5
+// Set number= @hour
+// Set hour = 0
+// Solve
+// ! Export Counts "./results/Counts.csv"
+// ! Export Loads "./results/Loads.csv"
+// ! Export Powers kVA "./results/Powers.csv"
+// Export Summary "./results/Summary.csv"
+// ! Export Voltages "./results/Voltages.csv"
 
-var @hour = 20
-Set number= @hour
-Set hour = 0
-Solve
-! Export Counts "./results/Counts.csv"
-! Export Loads "./results/Loads.csv"
-! Export Powers kVA "./results/Powers.csv"
-Export Summary "./results/Summary.csv"
-! Export Voltages "./results/Voltages.csv"
+// var @hour = 20
+// Set number= @hour
+// Set hour = 0
+// Solve
+// ! Export Counts "./results/Counts.csv"
+// ! Export Loads "./results/Loads.csv"
+// ! Export Powers kVA "./results/Powers.csv"
+// Export Summary "./results/Summary.csv"
+// ! Export Voltages "./results/Voltages.csv"
 
 ! These locs export csv files for each battery
 ! Each csv file contains the operation of the battery
