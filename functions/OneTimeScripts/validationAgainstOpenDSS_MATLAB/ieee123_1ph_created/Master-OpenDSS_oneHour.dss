@@ -47,12 +47,33 @@ Set stepsize=1h
 ! Hour 1
 var @hour = 1
 Set number= @hour
+Set hour = 0
 Calcv
 Solve
 ! Export Counts "./results/Counts.csv"
 ! Export Loads "./results/Loads.csv"
 ! Export Powers kVA "./results/Powers.csv"
-! Export Summary "./results/Summary.csv"
+Export Summary "./results/Summary.csv"
+! Export Voltages "./results/Voltages.csv"
+
+var @hour = 5
+Set number= @hour
+Set hour = 0
+Solve
+! Export Counts "./results/Counts.csv"
+! Export Loads "./results/Loads.csv"
+! Export Powers kVA "./results/Powers.csv"
+Export Summary "./results/Summary.csv"
+! Export Voltages "./results/Voltages.csv"
+
+var @hour = 20
+Set number= @hour
+Set hour = 0
+Solve
+! Export Counts "./results/Counts.csv"
+! Export Loads "./results/Loads.csv"
+! Export Powers kVA "./results/Powers.csv"
+Export Summary "./results/Summary.csv"
 ! Export Voltages "./results/Voltages.csv"
 
 ! These locs export csv files for each battery
