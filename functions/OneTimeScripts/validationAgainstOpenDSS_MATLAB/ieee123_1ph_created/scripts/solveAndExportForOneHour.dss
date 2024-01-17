@@ -1,0 +1,12 @@
+// Hour 1
+var @hour = 1
+Set number= @hour hour = 0
+Yes, for some reason, either using Set number = @hour and hour = 0 works, or 
+Set number = 1 and hour = @hour - 1 works
+Calcv
+Solve
+Export Counts "./results/Counts.csv"
+Export Loads "./results/Loads.csv"
+Export Powers kVA "./results/Powers.csv"
+Export Summary "./results/Summary.csv"
+Export Voltages "./results/Voltages.csv"
