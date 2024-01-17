@@ -1,3 +1,5 @@
+using Pkg
+Pkg.activate("./openDSSFilesCreation")
 using CSV
 using DataFrames
 using LaTeXStrings
@@ -7,13 +9,14 @@ include("number_to_padded_string.jl")
 include("plotLoadShape.jl")
 include("plotLoadShapePV.jl")
 include("plotLoadShapeStorage.jl")
+include("plotPSubs.jl")
 
-# pv = 0
-pv = 10 # percentage of load buses
-# batt = 0
+pv = 0
+# pv = 10 # percentage of load buses
+batt = 0
 batt = 10 # percentage of load buses
 
-duration = 24 # ts
+duration = 24 # hours
 N = 129 # I know this, but you can see this from the Summary or Voltage files
 wd = @__DIR__
 
@@ -89,11 +92,13 @@ for t = 1:duration
     global V_1toT[:, t] = V_sorted
 end
 
+PSubs = zeros(duration)
 MW_to_kW = 1000
 # plot voltage profile for the t-th t
 for t = 1:duration
     local λ = LoadShape[t]
     local PSubs_kW = round(PSubs_MW_1toT[t] * MW_to_kW, digits=3)
+    global PSubs[t] = PSubs_kW
     local PLosses_kW = round(PLosses_MW_1toT[t] * MW_to_kW, digits=3)
     theme(:dao)
     local nodes = 1:N
@@ -114,6 +119,9 @@ for t = 1:duration
         xlims=(1, N),
         xticks=1:10:N,
         linewidth=2.5,
+        marker=:circle,  # Add this line for circular markers
+        markercolor=:black,  # Add this line to make the markers black
+        markersize=1.0,  # Adjust marker size as needed
         minorgrid=true,
         minorgridlinestyle=:dot,
         minorgridlinewidth=2,
@@ -124,3 +132,5 @@ for t = 1:duration
     local fignameFull = joinpath(figureFolder, figname)
     savefig(p1, fignameFull)
 end
+
+plotPSubs()
