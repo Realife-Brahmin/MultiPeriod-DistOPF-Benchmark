@@ -1,3 +1,2 @@
 DateTime, CaseName, Status, Mode, Number, LoadMult, NumDevices, NumBuses, NumNodes, Iterations, ControlMode, ControlIterations, MostIterationsDone, Year, Hour, MaxPuVoltage, MinPuVoltage, TotalMW, TotalMvar, MWLosses, pctLosses, MvarLosses, Frequency
-"11-01-2024 08:52:23", ieee123, SOLVED, Daily, 23,    1.000, 254, 129, 129, 5, STATIC, 2, 3, 0, 23, 1.013, 0.9584, 0.587249, 0.242611, 0.00798571, 1.36, 0.0156734, 60
-"16-Jan-24 05:04:22 PM", ieee123, SOLVED, Daily, 23,    1.000, 254, 129, 129, 5, STATIC, 2, 3, 0, 23, 1.0085, 0.95125, 0.853459, 0.262184, 0.0158685, 1.859, 0.0315437, 60
+"16-Jan-24 06:38:41 PM", ieee123, SOLVED, Daily, 23,    1.000, 254, 129, 129, 5, STATIC, 2, 3, 0, 23, 1.0085, 0.95125, 0.853459, 0.262184, 0.0158685, 1.859, 0.0315437, 60
