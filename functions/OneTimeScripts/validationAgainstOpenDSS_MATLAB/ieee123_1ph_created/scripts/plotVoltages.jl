@@ -12,7 +12,7 @@ include("plotLoadShapeStorage.jl")
 include("plotPSubs.jl")
 
 pv = 0
-pv = 10 # percentage of load buses
+# pv = 10 # percentage of load buses
 batt = 0
 batt = 10 # percentage of load buses
 
