@@ -21,11 +21,14 @@ BatchEdit Load..* daily=loads_loadshape
 
 //  Choose a PV % Penetration Configuration.
 //  Use PV10/PV30/PV50/PV100 or nothing
+redirect "components/PVconfigs/PVLoadShape-1h-24pts.dss"
+
 redirect "components/PVconfigs/PV10.dss"
 //  redirect "components/PVconfigs/PV30.dss"
 //  redirect "components/PVconfigs/PV50.dss"
 //  redirect "components/PVconfigs/PV100.dss"
 //  redirect "components/PVconfigs/PV100_reactive.dss"
+BatchEdit PVSystem..* daily=PVLoadShape
 
 //  Choose a Batttery % Penetration Configuration.
 //  Use BatteryXX.dss+StorageControlXX.dss
@@ -42,7 +45,7 @@ Set stepsize=1h
 //  solves for the circuit
 //  and exports some key state variables as suitably named files
 //  in the results folder
-// redirect "./scripts/solveAndExportFor24h.dss"
+redirect "./scripts/solveAndExportFor24h.dss"
 
 // Or solve for 24h, but don't export anything:
 // redirect "./scripts/solveFor24h.dss"
@@ -51,7 +54,7 @@ Set stepsize=1h
 // redirect "./scripts/solveAndExportForOneHour.dss"
 
 // or just solve for one hour without outputting anything
-redirect "./scripts/solveForOneHour.dss"
+// redirect "./scripts/solveForOneHour.dss"
 
 //  These locs export csv files for each battery
 //  Each csv file contains the operation of the battery
