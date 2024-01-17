@@ -8,6 +8,9 @@ function plotLoadShape()
         label="λ",
         xlims=(1, duration),
         xticks=1:duration,
+        marker=:circle,  # Add this line for circular markers
+        markercolor=:black,  # Add this line to make the markers black
+        markersize=4,  # Adjust marker size as needed
         linewidth=2.5,
         minorgrid=true,
         minorgridlinestyle=:dot,

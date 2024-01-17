@@ -17,6 +17,9 @@ function plotLoadShapePV()
         xlims=(1, duration),
         xticks=1:duration,
         linewidth=2.5,
+        marker=:circle,  # Add this line for circular markers
+        markercolor=:black,  # Add this line to make the markers black
+        markersize=4,  # Adjust marker size as needed
         minorgrid=true,
         minorgridlinestyle=:dot,
         minorgridlinewidth=2,
