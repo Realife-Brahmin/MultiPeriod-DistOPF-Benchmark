@@ -50,6 +50,9 @@ redirect "./scripts/solveFor24h.dss"
 //  Alternatively, you can solve for powerflow till a specified hour from 1 to 24 and output values for that hour
 // redirect "./scripts/solveAndExportForOneHour.dss"
 
+// or just solve for one hour without outputting anything
+// redirect "./scripts/solveForOneHour.dss"
+
 //  These locs export csv files for each battery
 //  Each csv file contains the operation of the battery
 //  such as charging/discharging/kWh value, etc.
