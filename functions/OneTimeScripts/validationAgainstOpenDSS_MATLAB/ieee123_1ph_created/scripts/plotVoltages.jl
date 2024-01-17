@@ -5,6 +5,7 @@ using Plots
 using Plots.Measures
 include("number_to_padded_string.jl")
 include("plotLoadShape.jl")
+include("plotLoadShapePV.jl")
 include("plotLoadShapeStorage.jl")
 
 # pv = 0
@@ -22,13 +23,24 @@ loadShapeFolder = joinpath(dirname(wd), "data")
 filenameLoadShape = joinpath(loadShapeFolder, "LoadShape1" * ext)
 df_LoadShape = CSV.read(filenameLoadShape, DataFrame, header=false)
 LoadShape = df_LoadShape[:, 2]
-plotLoadShape()
-if batt > 0
-    plotLoadShapeStorage()
-end
+
 resultsFolder = joinpath(dirname(wd), "results")
 configFolderName = "pv" * number_to_padded_string(pv) * "_batt" * number_to_padded_string(batt)
 configFolder = joinpath(resultsFolder, configFolderName)
+figureFolder = joinpath(configFolder, "figures")
+
+plotLoadShape()
+
+if batt > 0
+    plotLoadShapeStorage()
+end
+
+if pv > 0
+    filenameLoadShapePV = joinpath(loadShapeFolder, "LoadShape_PV" * ext)
+    df_LoadShapePV = CSV.read(filenameLoadShapePV, DataFrame, header=false)
+    LoadShapePV = df_LoadShapePV[:, 2]
+    plotLoadShapePV()
+end
 
 filenameBusNames = joinpath(wd, "busname.txt")
 busNames = CSV.read(filenameBusNames, DataFrame, header=false)
@@ -78,7 +90,6 @@ for t = 1:duration
 end
 
 MW_to_kW = 1000
-figureFolder = joinpath(configFolder, "figures")
 # plot voltage profile for the t-th t
 for t = 1:duration
     local λ = LoadShape[t]
@@ -86,12 +97,19 @@ for t = 1:duration
     local PLosses_kW = round(PLosses_MW_1toT[t] * MW_to_kW, digits=3)
     theme(:dao)
     local nodes = 1:N
+    if pv > 0
+        local Irradiance = LoadShapePV[t]
+        titleString="Bus Voltages for t = $(t), λ = $(λ)\n" * L"$P_{Subs}=$" * "$(PSubs_kW) kW " * L"$P_{Loss}=$" * "$(PLosses_kW) kW\n" * "with $(pv) % PVs at Irradiance $(Irradiance)" * " and $(batt) % Batteries"
+    else
+        titleString="Bus Voltages for t = $(t), λ = $(λ)\n" * L"$P_{Subs}=$" * "$(PSubs_kW) kW " * L"$P_{Loss}=$" * "$(PLosses_kW) kW\n" * "with $(pv) % PVs and $(batt) % Batteries"
+    end
+
     local p1 = plot(nodes, V_1toT[nodes, t],
         xlabel="Bus Number",
         ylabel="V [pu]",
         titlefontsize=12,
         top_margin=5mm,
-        title="Bus Voltages for t = $(t), λ = $(λ)\n" * L"$P_{Subs}=$" * "$(PSubs_kW) kW " * L"$P_{Loss}=$" * "$(PLosses_kW) kW\n" * "with $(pv) % PVs and $(batt) % Batteries",
+        title=titleString,
         label="V [pu]",
         xlims=(1, N),
         xticks=1:10:N,

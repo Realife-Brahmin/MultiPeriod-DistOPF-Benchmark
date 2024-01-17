@@ -1,0 +1,7 @@
+// Hour 7
+var @hour = 7
+Set number= @hour hour = 0
+// Yes, for some reason, either using Set number = @hour and hour = 0 works, or 
+// Set number = 7 and hour = @hour - 1 works
+Calcv
+Solve

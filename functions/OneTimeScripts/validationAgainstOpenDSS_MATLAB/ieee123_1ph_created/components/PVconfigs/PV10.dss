@@ -1,9 +1,9 @@
 ! 10% of the Load Buses have PVs
-New PVSystem.9 phases=1 bus1=9 kV=2.4 kVA=16 irradiance=1 Pmpp=13.33 kVAr =0 %cutin=0.1 %cutout=0.1
-New PVSystem.28 phases=1 bus1=28 kV=2.4 kVA=16 irradiance=1 Pmpp=13.33 kVAr =0 %cutin=0.1 %cutout=0.1
-New PVSystem.48 phases=1 bus1=48 kV=2.4 kVA=84 irradiance=1 Pmpp=70 kVAr =0 %cutin=0.1 %cutout=0.1
-New PVSystem.58 phases=1 bus1=58 kV=2.4 kVA=8 irradiance=1 Pmpp=6.667 kVAr =0 %cutin=0.1 %cutout=0.1
-New PVSystem.65 phases=1 bus1=65 kV=2.4 kVA=56 irradiance=1 Pmpp=46.667 kVAr =0 %cutin=0.1 %cutout=0.1
-New PVSystem.76 phases=1 bus1=76 kV=2.4 kVA=98 irradiance=1 Pmpp=81.666 kVAr =0 %cutin=0.1 %cutout=0.1
-New PVSystem.87 phases=1 bus1=87 kV=2.4 kVA=16 irradiance=1 Pmpp=13.333 kVAr =0 %cutin=0.1 %cutout=0.1
-New PVSystem.100 phases=1 bus1=100 kV=2.4 kVA=16 irradiance=1 Pmpp=13.333 kVAr =0 %cutin=0.1 %cutout=0.1
+New PVSystem.9 phases=1 bus1=9 kV=2.4 kVA=16  Pmpp=13.33 kVAr =0 %cutin=0.1 %cutout=0.1
+New PVSystem.28 phases=1 bus1=28 kV=2.4 kVA=16  Pmpp=13.33 kVAr =0 %cutin=0.1 %cutout=0.1
+New PVSystem.48 phases=1 bus1=48 kV=2.4 kVA=84  Pmpp=70 kVAr =0 %cutin=0.1 %cutout=0.1
+New PVSystem.58 phases=1 bus1=58 kV=2.4 kVA=8  Pmpp=6.667 kVAr =0 %cutin=0.1 %cutout=0.1
+New PVSystem.65 phases=1 bus1=65 kV=2.4 kVA=56  Pmpp=46.667 kVAr =0 %cutin=0.1 %cutout=0.1
+New PVSystem.76 phases=1 bus1=76 kV=2.4 kVA=98  Pmpp=81.666 kVAr =0 %cutin=0.1 %cutout=0.1
+New PVSystem.87 phases=1 bus1=87 kV=2.4 kVA=16  Pmpp=13.333 kVAr =0 %cutin=0.1 %cutout=0.1
+New PVSystem.100 phases=1 bus1=100 kV=2.4 kVA=16  Pmpp=13.333 kVAr =0 %cutin=0.1 %cutout=0.1

@@ -1,0 +1,3 @@
+// per unit irradiance curve (per unit if "irradiance" property)
+// Borrowed from Paul Radatz's example in Paulo_Example/DSSFiles/pvsystemexample where the same data is labelled as Loadshape.MyIrrad
+New Loadshape.PVLoadShape npts=24 interval=1 mult=[0 0 0 0 0 0 .1 .2 .3  .5  .8  .9  1.0  1.0  .99  .9  .7  .4  .1 0  0  0  0  0]
