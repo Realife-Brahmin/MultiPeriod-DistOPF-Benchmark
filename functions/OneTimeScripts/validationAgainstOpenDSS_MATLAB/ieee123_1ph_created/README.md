@@ -11,6 +11,7 @@
 Just open Master-OpenDSS.dss in OpenDSS and Ctrl+A Ctrl+D.
 
 ## High level overview of the repository
+```
 ieee123_1ph/
 │
 ├── archives/                 # Archive files, such as previous versions and backups
@@ -56,3 +57,4 @@ ieee123_1ph/
 │
 └── Master-OpenDSS_daily.dss        # Main OpenDSS model file for the ieee123_1ph project for running and exporting 24h worth of powerflow simulation
 └── Master-OpenDSS_oneHour.dss        # Main OpenDSS model file for the ieee123_1ph project for running and exporting 1h worth of powerflow simulation
+```
