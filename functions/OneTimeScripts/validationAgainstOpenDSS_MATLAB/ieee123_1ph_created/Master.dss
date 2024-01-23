@@ -23,7 +23,7 @@ BatchEdit Load..* daily=loads_loadshape
 //  Use PV10/PV30/PV50/PV100 or nothing
 redirect "components/PVconfigs/PVLoadShape-1h-24pts.dss"
 
-redirect "components/PVconfigs/PV10.dss"
+// redirect "components/PVconfigs/PV10.dss"
 //  redirect "components/PVconfigs/PV30.dss"
 //  redirect "components/PVconfigs/PV50.dss"
 //  redirect "components/PVconfigs/PV100.dss"
@@ -33,7 +33,7 @@ BatchEdit PVSystem..* daily=PVLoadShape
 //  Choose a Batttery % Penetration Configuration.
 //  Use BatteryXX.dss+StorageControlXX.dss
 //  Currently 10% or nothing is supported
-// redirect "components/Battery_configs/Battery10.dss"
+redirect "components/Battery_configs/Battery10.dss"
 
 MakeBusList
 
