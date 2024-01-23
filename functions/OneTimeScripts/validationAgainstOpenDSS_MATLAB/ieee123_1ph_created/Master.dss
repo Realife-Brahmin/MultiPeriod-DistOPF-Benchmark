@@ -56,17 +56,5 @@ redirect "./scripts/solveAndExportFor24h.dss"
 // or just solve for one hour without outputting anything
 // redirect "./scripts/solveForOneHour.dss"
 
-//  These locs export csv files for each battery
-//  Each csv file contains the operation of the battery
-//  such as charging/discharging/kWh value, etc.
-//  for all 24 hours
-
-// Export Monitors Battery9_states
-// Export Monitors Battery28_states
-// Export Monitors Battery48_states
-// Export Monitors Battery58_states
-// Export Monitors Battery65_states
-// Export Monitors Battery76_states
-// Export Monitors Battery87_states
-// Export Monitors Battery100_states
-
+// Export monitor readings for specific components
+redirect "./scripts/exportStorageStates10.dss"

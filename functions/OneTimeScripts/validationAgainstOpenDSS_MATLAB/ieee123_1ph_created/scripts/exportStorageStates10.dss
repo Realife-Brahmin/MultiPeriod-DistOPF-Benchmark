@@ -1,0 +1,21 @@
+//  These locs export csv files for each battery
+//  Each csv file contains the operation of the battery
+//  such as charging/discharging/kWh value, etc.
+//  for all 24 hours
+
+Export Monitors Battery9_states 
+~ "../results/Battery/Battery9.csv"
+Export Monitors Battery28_states 
+~ "../results/Battery/Battery28.csv"
+Export Monitors Battery48_states 
+~ "../results/Battery/Battery48.csv"
+Export Monitors Battery58_states
+~ "../results/Battery/Battery58.csv"
+Export Monitors Battery65_states
+~ "../results/Battery/Battery65.csv"
+Export Monitors Battery76_states
+~ "../results/Battery/Battery76.csv"
+Export Monitors Battery87_states
+~ "../results/Battery/Battery87.csv"
+Export Monitors Battery100_states
+~ "../results/Battery/Battery100.csv"
