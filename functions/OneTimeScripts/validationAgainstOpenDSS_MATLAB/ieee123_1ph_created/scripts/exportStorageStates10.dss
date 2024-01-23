@@ -2,10 +2,17 @@
 //  Each csv file contains the operation of the battery
 //  such as charging/discharging/kWh value, etc.
 //  for all 24 hours
-
-Export Monitors Battery9_states "../results/Storage/Battery9.csv"
+// Set DataPath = "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\ieee123_1ph_created\results\Storage\"
+Set DataPath = "..\storage\"
+// Set DataPath = "..\results\storage\"
+// Set DataPath = "..\results\Storage\"
+// Set DataPath = "..\results\Storage\"
+// Set DataPath = "..\results\Storage\"
+// Export Monitor Battery9_states "../results/Storage/Battery9.csv"
+// // ~ "../results/Storage/Battery9.csv"
+Export Monitors Battery9_states
 // ~ "../results/Storage/Battery9.csv"
-Export Monitors Battery28_states 
+Export Monitors Battery28_states
 // ~ "../results/Storage/Battery28.csv"
 Export Monitors Battery48_states 
 // ~ "../results/Storage/Battery48.csv"
