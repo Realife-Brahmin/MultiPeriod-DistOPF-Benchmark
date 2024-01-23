@@ -234,3 +234,13 @@ New "Load.s114" bus1=114 model=1 phases=1 conn=wye kV=2.4 kW=6.6667 kvar=3.3333	
 
 Set Voltagebases=[ 4.16, .48]
 
+// New Monitor.V9 element=Load.s9 mode=0 
+// New Monitor.V28 element=Load.s28 mode=0 
+// New Monitor.V48 element=Load.s48 mode=0 
+// New Monitor.V58 element=Load.s58 mode=0 
+// New Monitor.V65 element=Load.s65 mode=0 
+// New Monitor.V76 element=Load.s76 mode=0 
+// New Monitor.V87 element=Load.s87 mode=0 
+// New Monitor.V100 element=Load.s100 mode=0 
+
+redirect "./Monitors/VoltageMonitors10.dss"

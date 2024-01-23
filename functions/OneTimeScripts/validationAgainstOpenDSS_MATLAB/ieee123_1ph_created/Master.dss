@@ -58,3 +58,5 @@ redirect "./scripts/solveFor24h.dss"
 
 // Export monitor readings for specific components
 redirect "./scripts/exportStorageStates10.dss"
+
+redirect "./scripts/exportVoltages10.dss"
