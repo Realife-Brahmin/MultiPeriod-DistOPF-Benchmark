@@ -11,9 +11,12 @@ function plotVoltageTimeSeries(resultsFolder::String)
     configs = [(0, 0), (0, 10), (10, 0), (10, 10)]
     # config_colors = [:blue, :red, :green, :purple]  # Define a color for each configuration
     # config_colors = [:gray, :blue, :orange, :green]
-    config_colors = [:darkgray, :midnightblue, :orange, :forestgreen]
-    config_linestyles = [:solid, :dot, :dash, :dashdot]
-    config_linewidths = [5.0, 4.0, 4.0, 4.0]
+    config_colors = [:darkgray, :royalblue, :orangered, :forestgreen]
+    # config_linestyles = [:solid, :dot, :dash, :dashdot]
+    config_linestyles = [:solid, :solid, :solid, :solid]
+    config_markers = [(:hexagon, 6, 0.6), (:circle, 6, 0.6), (:star, 9, 0.6), (:square, 6, 0.6)]
+    config_markerColors = [:black, :black, :black, :black]
+    config_linewidths = [5.0, 4.0, 3.0, 4.0]
     kV_B = 2.4018
     kV_to_V = 1e3
 
@@ -67,12 +70,13 @@ function plotVoltageTimeSeries(resultsFolder::String)
                 linewidth=config_linewidths[idx],
                 linestyle=config_linestyles[idx],
                 color=config_colors[idx],
-                marker=:circle,  # Add this line for circular markers
-                markercolor=:black,  # Add this line to make the markers black
-                markersize=4,  # Adjust marker size as needed
+                marker=config_markers[idx],  # Add this line for circular markers
+                markevery=5,
+                markercolor=config_markerColors[idx],  # Add this line to make the markers black
+                # markersize=4,  # Adjust marker size as needed
                 minorgrid=true,
                 minorgridlinestyle=:dot,
-                minorgridlinewidth=2,
+                minorgridlinewidth=1,
                 minorgridcolor=:gray
                 )
             end
