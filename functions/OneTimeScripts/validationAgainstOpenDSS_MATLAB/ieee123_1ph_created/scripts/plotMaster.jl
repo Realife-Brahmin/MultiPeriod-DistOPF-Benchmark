@@ -2,6 +2,7 @@ using Pkg
 Pkg.activate("./openDSSFilesCreation")
 using CSV
 using DataFrames
+using Glob
 using LaTeXStrings
 using Plots
 using Plots.Measures
@@ -33,6 +34,9 @@ resultsFolder = joinpath(dirname(wd), "results")
 configFolderName = "pv" * number_to_padded_string(pv) * "_batt" * number_to_padded_string(batt)
 configFolder = joinpath(resultsFolder, configFolderName)
 figureFolder = joinpath(configFolder, "figures")
+
+voltagesFolder = joinpath(configFolder, "voltages");
+
 
 plotLoadShape()
 
