@@ -46,7 +46,29 @@ function plotVoltageTimeSeries(resultsFolder::String)
 
                 Plots.theme(:dao)
                 # Plot the current configuration's data on the combined plot
-                plot!(combined_plot, time, pu_values, label="pv=$pv%, batt=$batt%", color=config_colors[idx])
+                yl = "V_{$(bus)}"
+                plot!(combined_plot, 
+                time, 
+                pu_values, 
+                xlabel="Hour",
+                ylabel = L"V_{%$(bus)} \, [pu]",
+                titlefontsize=12,
+                top_margin=5mm,
+                title="Voltage time-series for Bus $(bus) for various GED configurations",
+                label= L"V \, [pu]" * " for pv=$pv%, batt=$batt%",
+                legend=:bottomleft,
+                xlims=(1, duration),
+                xticks=1:duration,
+                linewidth=2.5,
+                color=config_colors[idx],
+                marker=:circle,  # Add this line for circular markers
+                markercolor=:black,  # Add this line to make the markers black
+                markersize=4,  # Adjust marker size as needed
+                minorgrid=true,
+                minorgridlinestyle=:dot,
+                minorgridlinewidth=2,
+                minorgridcolor=:gray
+                )
             end
         end
 
