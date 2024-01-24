@@ -1,0 +1,9 @@
+Set DataPath = "..\voltages\"
+Export Monitors V9
+Export Monitors V28
+Export Monitors V48 
+Export Monitors V58
+Export Monitors V65
+Export Monitors V76
+Export Monitors V87
+Export Monitors V100

@@ -1,4 +1,4 @@
-//  Set DataPath address to the folder containing the Master.dss (Master-OpenDSS.dss) file.
+//  Set DataPath address to the folder containing the Master.dss file.
 // Set DataPath = "C:\Users\aryan\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\ieee123_1ph_created\" // Laptop
 Set DataPath = "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\ieee123_1ph_created\" // LabPC
 
@@ -45,10 +45,10 @@ Set stepsize=1h
 //  solves for the circuit
 //  and exports some key state variables as suitably named files
 //  in the results folder
-redirect "./scripts/solveAndExportFor24h.dss"
+// redirect "./scripts/solveAndExportFor24h.dss"
 
 // Or solve for 24h, but don't export anything:
-// redirect "./scripts/solveFor24h.dss"
+redirect "./scripts/solveFor24h.dss"
 
 //  Alternatively, you can solve for powerflow till a specified hour from 1 to 24 and output values for that hour
 // redirect "./scripts/solveAndExportForOneHour.dss"
@@ -56,17 +56,8 @@ redirect "./scripts/solveAndExportFor24h.dss"
 // or just solve for one hour without outputting anything
 // redirect "./scripts/solveForOneHour.dss"
 
-//  These locs export csv files for each battery
-//  Each csv file contains the operation of the battery
-//  such as charging/discharging/kWh value, etc.
-//  for all 24 hours
+// Export monitor readings for specific components
 
-// Export Monitors Battery9_states
-// Export Monitors Battery28_states
-// Export Monitors Battery48_states
-// Export Monitors Battery58_states
-// Export Monitors Battery65_states
-// Export Monitors Battery76_states
-// Export Monitors Battery87_states
-// Export Monitors Battery100_states
+// redirect "./scripts/exportStorageStates10.dss"
 
+redirect "./scripts/exportVoltages10.dss"
