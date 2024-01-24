@@ -1,3 +1,4 @@
+using Colors
 using CSV
 using DataFrames
 using Glob
@@ -8,7 +9,11 @@ function plotVoltageTimeSeries(resultsFolder::String)
     isdir(figureFolder) || mkdir(figureFolder)
 
     configs = [(0, 0), (0, 10), (10, 0), (10, 10)]
-    config_colors = [:blue, :red, :green, :purple]  # Define a color for each configuration
+    # config_colors = [:blue, :red, :green, :purple]  # Define a color for each configuration
+    # config_colors = [:gray, :blue, :orange, :green]
+    config_colors = [:darkgray, :midnightblue, :orange, :forestgreen]
+    config_linestyles = [:solid, :dot, :dash, :dashdot]
+    config_linewidths = [5.0, 4.0, 4.0, 4.0]
     kV_B = 2.4018
     kV_to_V = 1e3
 
@@ -53,13 +58,14 @@ function plotVoltageTimeSeries(resultsFolder::String)
                 xlabel="Hour",
                 ylabel = L"V_{%$(bus)} \, [pu]",
                 titlefontsize=12,
-                top_margin=5mm,
-                title="Voltage time-series for Bus $(bus) for various GED configurations",
-                label= L"V \, [pu]" * " for pv=$pv%, batt=$batt%",
+                top_margin=4mm,
+                title="Voltage Time-series for Bus $(bus)\n"*"for Various Grid Edge Device Configurations",
+                label= L"V \; [pu]" * " for pv=$pv%, batt=$batt%",
                 legend=:bottomleft,
                 xlims=(1, duration),
                 xticks=1:duration,
-                linewidth=2.5,
+                linewidth=config_linewidths[idx],
+                linestyle=config_linestyles[idx],
                 color=config_colors[idx],
                 marker=:circle,  # Add this line for circular markers
                 markercolor=:black,  # Add this line to make the markers black
