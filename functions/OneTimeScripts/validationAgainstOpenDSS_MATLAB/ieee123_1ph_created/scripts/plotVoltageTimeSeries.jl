@@ -89,5 +89,5 @@ function plotVoltageTimeSeries(resultsFolder::String)
 
 end
 
-# To call the function, provide the path to the results folder
-plotVoltageTimeSeries(resultsFolder)
+# # To call the function, provide the path to the results folder
+# plotVoltageTimeSeries(resultsFolder)
