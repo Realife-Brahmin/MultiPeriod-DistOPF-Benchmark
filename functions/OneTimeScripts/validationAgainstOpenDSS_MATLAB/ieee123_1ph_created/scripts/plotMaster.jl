@@ -105,4 +105,5 @@ plotSystemVoltageSnapshot()
 
 plotPSubs()
 
-plotVoltageTimeSeries()
+# figureFolderCombined = joinpath(resultsFolder, "figures")
+plotVoltageTimeSeries(resultsFolder)

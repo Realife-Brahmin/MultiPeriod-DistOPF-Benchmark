@@ -44,6 +44,7 @@ function plotVoltageTimeSeries(resultsFolder::String)
                 # Generate time vector (assuming evenly spaced measurements over 24 hours)
                 time = range(0, stop=24, length=size(df, 1))
 
+                Plots.theme(:dao)
                 # Plot the current configuration's data on the combined plot
                 plot!(combined_plot, time, pu_values, label="pv=$pv%, batt=$batt%", color=config_colors[idx])
             end
