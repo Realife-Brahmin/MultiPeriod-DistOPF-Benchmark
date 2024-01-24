@@ -1,77 +1,60 @@
 using CSV
 using DataFrames
 using Glob
+using Plots
 
-pv = 0
-pv = 10 # percentage of load buses
-batt = 0
-batt = 10 # percentage of load buses
-
-function plotVoltageTimeSeries()
-    # Dictionary to store DataFrames
-
-
+function plotVoltageTimeSeries(resultsFolder::String)
     figureFolder = joinpath(resultsFolder, "figures")
     isdir(figureFolder) || mkdir(figureFolder)
 
-    voltagesDict = Dict()
-
-    configFolderName = "pv" * number_to_padded_string(pv) * "_batt" * number_to_padded_string(batt)
-    configFolder = joinpath(resultsFolder, configFolderName)
-    voltagesFolder = joinpath(configFolder, "voltages");
-
-    # List all .csv files in the directory
-    csv_files = glob("*.csv", voltagesFolder)
-
-    # Iterate over the list of files
-    for file in csv_files
-        # Extract the unique bus (e.g., 9, 28, etc.) from the filename
-        match1 = match(r"_v(\d+)_", file)
-        if match1 !== nothing
-            bus = match1.captures[1]
-
-            # Read the CSV file into a DataFrame
-            df = CSV.read(file, DataFrame)
-            colNames = [strip(string(name)) for name in names(df)]
-            rename!(df, colNames)
-            # Store the DataFrame in the dictionary with a key like 'voltages9'
-            voltagesDict["voltages"*bus] = df
-        end
-    end
-
-    using Plots
-
-    # Define the base voltage in kV
+    configs = [(0, 0), (0, 10), (10, 0), (10, 10)]
+    config_colors = [:blue, :red, :green, :purple]  # Define a color for each configuration
     kV_B = 2.4018
     kV_to_V = 1e3
-    # Ensure the figure directory exists
-    isdir(figureFolder) || mkdir(figureFolder)
 
-    # Iterate over each DataFrame in the dictionary
-    for (key, df) in voltagesDict
-        # Extract the bus from the key (e.g., 'voltages9' -> '9')
-        bus = match(r"voltages(\d+)", key).captures[1]
+    # Collect all unique bus numbers from the first configuration to determine which plots to make
+    firstConfigFolderName = "pv$(number_to_padded_string(configs[1][1]))_batt$(number_to_padded_string(configs[1][2]))"
+    firstConfigFolder = joinpath(resultsFolder, firstConfigFolderName)
+    firstVoltagesFolder = joinpath(firstConfigFolder, "voltages")
+    bus_files = glob("*.csv", firstVoltagesFolder)
+    bus_numbers = unique(match(r"_v(\d+)_", file).captures[1] for file in bus_files if match(r"_v(\d+)_", file) !== nothing)
 
-        # Convert voltage to per unit (pu)
-        pu_values = df.V / (kV_B * kV_to_V)
+    # ... (previous code remains unchanged)
 
-        # Generate time vector (assuming evenly spaced measurements over 24 hours)
-        time = range(0, stop=24, length=size(df, 1))
+    # Now iterate over each bus number to generate the plots
+    for bus in bus_numbers
+        # Initialize a plot with a title and labels, but no data
+        combined_plot = plot(title="Voltage Time Series for Bus $bus", xlabel="Time (hours)", ylabel="Voltage (pu)", legend=:topright)
 
-        # Create a plot of pu values as a function of time
-        plot(time, pu_values, label="Voltage in pu", xlabel="Time (hours)", ylabel="Voltage (pu)",
-            title="Voltage Time Series for bus $bus")
+        for (idx, (pv, batt)) in enumerate(configs)
+            configFolderName = "pv$(number_to_padded_string(pv))_batt$(number_to_padded_string(batt))"
+            configFolder = joinpath(resultsFolder, configFolderName)
+            voltagesFolder = joinpath(configFolder, "voltages")
+            csv_files = glob("*_v$(bus)_*.csv", voltagesFolder)
 
-        # Save the plot to a file
-        plot_path = joinpath(figureFolder, "voltageTimeSeries_$bus.png")
-        savefig(plot_path)
+            # Check if there is a file for the current bus in this configuration
+            if !isempty(csv_files)
+                df = CSV.read(csv_files[1], DataFrame)
+                colNames = [strip(string(name)) for name in names(df)]
+                rename!(df, colNames)
+
+                # Convert voltage to per unit (pu)
+                pu_values = df.V / (kV_B * kV_to_V)
+
+                # Generate time vector (assuming evenly spaced measurements over 24 hours)
+                time = range(0, stop=24, length=size(df, 1))
+
+                # Plot the current configuration's data on the combined plot
+                plot!(combined_plot, time, pu_values, label="pv=$pv%, batt=$batt%", color=config_colors[idx])
+            end
+        end
+
+        # Save the combined plot to a file
+        plot_path = joinpath(figureFolder, "voltageTimeSeries_bus$bus.png")
+        savefig(combined_plot, plot_path)
     end
+
 end
 
-# plotVoltageTimeSeries()
-
-
-
-
-
-
+# To call the function, provide the path to the results folder
+plotVoltageTimeSeries(resultsFolder)
