@@ -45,14 +45,10 @@ function plot_simulation_results(results, simInfo, sysInfo)
     % noBatteries = simInfo.noBatteries;
     DER_percent = simInfo.DER_percent;
     Batt_percent = simInfo.Batt_percent;
-    % if ~noBatteries
+
     battstring = simInfo.battstring;
-        battstringTitle = strcat("with $", num2str(DER_percent), "\%$ PVs and $", num2str(Batt_percent), "\%$ Batteries");
-        % battstring = strcat("withBatteries_", num2str(DER_percent));
-    % else
-        % battstringTitle = strcat("without Batteries with $", num2str(DER_percent), "\%$ GEDs");
-        % battstring = strcat("withoutBatteries_", num2str(DER_percent));
-    % end
+    battstringTitle = strcat("with $", num2str(DER_percent), "\%$ PVs and $", num2str(Batt_percent), "\%$ Batteries");
+
 
     numAreas = sysInfo.numAreas;
     kVA_B = sysInfo.kVA_B;
