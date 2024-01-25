@@ -46,7 +46,6 @@ function plot_simulation_results(results, simInfo, sysInfo)
     DER_percent = simInfo.DER_percent;
     Batt_percent = simInfo.Batt_percent;
     % if ~noBatteries
-    battstring = simInfo.battstring;
         battstringTitle = strcat("with $", num2str(DER_percent), "\%$ PVs and $", num2str(Batt_percent), "\%$ Batteries");
         % battstring = strcat("withBatteries_", num2str(DER_percent));
     % else
