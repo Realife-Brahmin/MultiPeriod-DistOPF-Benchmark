@@ -2,11 +2,11 @@
 Machine ID: ETRL204-ARYAN
 Horizon Duration: 1
 Nature of Simulation: Centralized-OPF
-Line Loss: 23.84 kW
-Substation Power: 1098.96 kW
-Substation Power Cost: 38.464 $
+Line Loss: 12.10 kW
+Substation Power: 768.18 kW
+Substation Power Cost: 26.886 $
 Number of Macro-Iterations: 1
-Simulation Time: 9.97 s
-Time to solve with sequential (non-parallel) computation:8.0515 s
-Time to Solve if OPF computation parallelized: 8.05 s
+Simulation Time: 7.47 s
+Time to solve with sequential (non-parallel) computation:5.8527 s
+Time to Solve if OPF computation parallelized: 5.85 s
 ------------------------------------------------------------
