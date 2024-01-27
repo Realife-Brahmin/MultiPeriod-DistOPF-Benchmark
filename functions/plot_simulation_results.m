@@ -42,14 +42,13 @@ function plot_simulation_results(results, simInfo, sysInfo)
     % Define some colors for the lines
     % colors = lines(totalMacroItr); % MATLAB's built-in colormap for lines
     alphaValues = linspace(1.0, 1.0, totalMacroItr); % From opaque to more transparent
-    noBatteries = simInfo.noBatteries;
-    if ~noBatteries
-        battstringTitle = strcat("with $", num2str(DER_percent), "\%$ GEDs");
-        battstring = strcat("withBatteries_", num2str(DER_percent));
-    else
-        battstringTitle = strcat("without Batteries with $", num2str(DER_percent), "\%$ GEDs");
-        battstring = strcat("withoutBatteries_", num2str(DER_percent));
-    end
+    % noBatteries = simInfo.noBatteries;
+    DER_percent = simInfo.DER_percent;
+    Batt_percent = simInfo.Batt_percent;
+
+    battstring = simInfo.battstring;
+    battstringTitle = strcat("with $", num2str(DER_percent), "\%$ PVs and $", num2str(Batt_percent), "\%$ Batteries");
+
 
     numAreas = sysInfo.numAreas;
     kVA_B = sysInfo.kVA_B;
@@ -109,7 +108,7 @@ function plot_simulation_results(results, simInfo, sysInfo)
                         error("floc")
                     end
         
-                    titleString = strcat(titlePre, " across the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$ ", battstringTitle);
+                    titleString = [strcat(titlePre, " across the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$"), battstringTitle];
                     title(titleString)
                     xlabel(xLabelString);
             

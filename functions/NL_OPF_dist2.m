@@ -9,7 +9,7 @@ function [x, sysInfo, simInfo, ...
     verbose = false;
     logging_Aeq_beq = false;
     logging = false;
-    DER_percent = simInfo.DER_percent;
+    % DER_percent = simInfo.DER_percent;
     % CVR = [0; 0];
     % % V_max = 1.05;
     % V_max = simInfo.V_max;
@@ -35,6 +35,7 @@ function [x, sysInfo, simInfo, ...
     % gamma = 1e-1;
     gamma = simInfo.gamma;
     DER_percent = simInfo.DER_percent;
+    Batt_percent = simInfo.Batt_percent;
     profiling = false;
     saveSCDPlots = false;
     displayTables = false;
@@ -170,15 +171,14 @@ function [x, sysInfo, simInfo, ...
     end
     
     ext = ".csv";
-    if ~noBatteries
-        battstring = strcat('withBatteries_', num2str(DER_percent));
-    else
-        battstring = 'withoutBatteries_0';
-    end
+    battstring = simInfo.battstring;
+    % if ~noBatteries
+    %     battstring = strcat('withBatteries_', num2str(DER_percent));
+    % else
+    %     battstring = 'withoutBatteries_0';
+    % end
     saveLocationFolderName = strcat("processedData", filesep , systemName, filesep, "numAreas_", num2str(numAreas), filesep, "Area", num2str(Area));
-    if ~exist("saveLocationFolderName", 'dir')
-        mkdir(saveLocationFolderName)
-    end
+    isfolder(saveLocationFolderName) || mkdir(saveLocationFolderName); %#ok
     filenameAeq = strcat(saveLocationFolderName, filesep, "Aeq_B_T_", num2str(simInfo.T), "_", battstring, "_macroItr_", num2str(1+macroItr), ext);
     % Saving Aeq to a CSV file
     writematrix(Aeq, filenameAeq);
