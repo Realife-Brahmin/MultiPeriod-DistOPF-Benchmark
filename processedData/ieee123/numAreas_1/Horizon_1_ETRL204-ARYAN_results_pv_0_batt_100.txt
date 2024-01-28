@@ -2,15 +2,15 @@
 Machine ID: ETRL204-ARYAN
 Horizon Duration: 1
 Nature of Simulation: Centralized-OPF
-Line Loss: 29.18 kW
-Substation Power: 1192.37 kW
-Substation Power Cost: 41.733 $
+Line Loss: 13.00 kW
+Substation Power: 802.51 kW
+Substation Power Cost: 28.088 $
 Total Real Load: 1163.20 kW
 Total Reactive Load: 640.01 kVAr
 Total PV Real Power Generation: 0.00 kW
 Total PV Reactive Power Generation: 0.00 kVAr
 Number of Macro-Iterations: 1
-Simulation Time: 4.29 s
-Time to solve with sequential (non-parallel) computation:2.515 s
-Time to Solve if OPF computation parallelized: 2.52 s
+Simulation Time: 19.65 s
+Time to solve with sequential (non-parallel) computation:17.6655 s
+Time to Solve if OPF computation parallelized: 17.67 s
 ------------------------------------------------------------

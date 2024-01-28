@@ -131,7 +131,7 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
 
     S_der_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B; 
     S_der_Area = select_percentage_of_nz_elements(S_der_Area0, DER_percent);
-    S_batt_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/KVA_b;
+    S_batt_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B;
     S_batt_Area = select_percentage_of_nz_elements(S_batt_Area0, Batt_percent);
 
     P_L_Area_1toT = repmat(P_L_Area, 1, T).*lambdaVals;
@@ -145,8 +145,9 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     busDataTable_pu_Area.Q_L_1toT = Q_L_Area_1toT;
     busDataTable_pu_Area.Q_C = Q_C_Area;
     busDataTable_pu_Area.P_der0_1toT = P_der_Area0_1toT;
+    busDataTable_pu_Area.P_batt0 = P_batt_Area0;
     busDataTable_pu_Area.P_der_1toT = P_der_Area_1toT;
-
+    busDataTable_pu_Area.P_batt = P_batt_Area;
     busDataTable_pu_Area.S_der0 = S_der_Area0;
     busDataTable_pu_Area.S_batt0 = S_batt_Area0;
 
