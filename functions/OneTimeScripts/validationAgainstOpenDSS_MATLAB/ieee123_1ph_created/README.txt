@@ -11,48 +11,51 @@
 Just open Master-OpenDSS.dss in OpenDSS and Ctrl+A Ctrl+D.
 
 ## High level overview of the repository
-ieee123_1ph/
+ieee123_1ph_OpenDSS
 │
-├── archives/                 # Archive files, such as previous versions and backups
+├── components
+│   ├── Battery_configs
+│   │   ├── Battery10.dss
+│   │   ├── StorageControl10.dss
+│   │   └── ...
+│   │
+│   ├── Monitors
+│   │   └── voltageMonitors10.dss
+│   │
+│   ├── PVconfigs
+│   │   ├── PV10.dss
+│   │   ├── PV30.dss
+│   │   └── ...
+│   │
+│   ├── Capacitor.dss
+│   ├── IEEE123SinglePh.DSS
+│   ├── LineCode.DSS
+│   ├── Regulator.dss
+│   └── RegulatorControl.dss
 │
-├── components/               # Modules for different electrical components
-│   ├── PV_configs/           # Configuration files for Photovoltaic systems
-│   │   ├── PV10.dss          # Configuration for PV system 10
-│   │   ├── PV30.dss          # Configuration for PV system 30
-│   │   ├── PV50.dss          # Configuration for PV system 50
-│   │   ├── PV100.dss         # Configuration for PV system 100
-│   │   └── PV100_reactive.dss # Configuration for reactive components of PV system 100
-│   ├── Battery_configs/      # Configuration files for Battery systems
-│   │   ├── Battery10.dss     # Configuration for Battery 10
-│   │   └── StorageControl10.dss # Configuration for the storage controller of Battery 10
-│   ├── Capacitor.dss           # Capacitor modules
-│   └── LineCode.dss  # contains definitions of some line modules used for defining branchData in IEEE123SinglePh.dss
-│   ├── Regulator.dss           # Voltage regulator modules
-│   ├── RegulatorControl.dss    # Regulator Controller modules IEEE123SinglePh.DSS
-│   └── IEEE123SinglePh.dss     # busData and branchData
-│   └── [Other Component Files] # Additional component configuration files
+├── data
+│   ├── LoadShape_PV.xlsx
+│   ├── LoadShape_Storage.xlsx
+│   └── ...
 │
-├── data/                     # Input data for the simulation
-│   └── LoadShape1.CSV        # CSV file containing load shape data
-│   └── LoadShape_Storage.CSV # Additional data files
+├── openDSSFilesCreation
+│   └── ...
 │
-├── extra/                    # Extra resources and miscellaneous files
+├── results
+│   ├── figures
+│   │   └── ...
+│   │
+│   ├── pv000_batt000
+│   └── ...
 │
-├── resources/                # Documentation and reference materials
+├── scripts
+│   ├── plotLoadShape.jl
+│   ├── plotMaster.jl
+│   ├── solveAndExportForOneHour.dss
+│   └── ...
 │
-├── results/                  # Output data from simulations, including monitor data and plots
-│  └── pv000_batt000/          # Example configuration folder for a specific PV and Battery setup
-│  └── pv010_batt000/          # Example configuration folder for a specific PV and Battery setup
-│  └── pv010_batt010/          # Example configuration folder for a specific PV and Battery setup
-│    ├── counts*.csv           # CSV files containing counts data
-│    ├── loads*.csv            # CSV files containing loads data
-│    ├── powers*.csv           # CSV files containing power data
-│    ├── summary*.csv          # CSV files containing summary data
-│    └── voltages*.csv         # CSV files containing voltages data
-│
-├── scripts/                  # Custom scripts that are called by the Master-OpenDSS.dss file
-│   └── solveAndExportFor24h.dss # Script for solving and exporting results over 24 hours
-│   └── [Other Scripts]          # Additional scripts
-│
-└── Master-OpenDSS_daily.dss        # Main OpenDSS model file for the ieee123_1ph project for running and exporting 24h worth of powerflow simulation
-└── Master-OpenDSS_oneHour.dss        # Main OpenDSS model file for the ieee123_1ph project for running and exporting 1h worth of powerflow simulation
+├── Master.dss
+├── OpenDSS-files-for-MPOPF-verification.code-workspace
+├── README.md
+└── README.txt
+
