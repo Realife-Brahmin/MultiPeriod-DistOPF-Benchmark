@@ -17,9 +17,3 @@ Redirect Monitor.dss
 MakeBusList
 Redirect BusVoltageBases.dss  ! set voltage bases
 BusCoords BusCoords.dss
-
-Set number = 1 hour = 0
-Calcv
-Solve
-
-Export Summary
