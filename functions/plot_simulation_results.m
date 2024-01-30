@@ -108,7 +108,7 @@ function plot_simulation_results(results, simInfo, sysInfo)
                         error("floc")
                     end
         
-                    titleString = [strcat(titlePre, " across the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$"), battstringTitle];
+                    titleString = [ strcat(titlePre, " across the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$"); battstringTitle];
                     title(titleString)
                     xlabel(xLabelString);
             
