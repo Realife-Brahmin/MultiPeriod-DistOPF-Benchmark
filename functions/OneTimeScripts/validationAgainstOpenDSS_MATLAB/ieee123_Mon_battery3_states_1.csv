@@ -1,1 +1,0 @@
-hour, t(sec), kWh,State,kWOut,kWIn,kvarOut,DCkW,kWTotalLosses,kWInvLosses,kWIdlingLosses,kWChDchLosses,kWh Chng,InvEff,InverterON,Vref,Vavg (DRC),VV Oper,VW Oper,DRC Oper,VV_DRC Oper,WP Oper,WV Oper,kWDesired,kW VW Limit,Limit kWOut Function,kVA Exceeded,Grid voltage,di/dt,it,it History,Rated VDC,Avg duty cycle,Target (Amps),Series L,Max. Amps (phase),
