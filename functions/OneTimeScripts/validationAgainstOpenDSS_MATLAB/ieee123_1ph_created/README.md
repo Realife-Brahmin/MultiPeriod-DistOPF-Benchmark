@@ -8,7 +8,7 @@
 
 ## How to Run Powerflow for the Model using OpenDSS GUI:
 
-Just open Master-OpenDSS.dss in OpenDSS and Ctrl+A Ctrl+D.
+Just open Master.dss in OpenDSS and Ctrl+A Ctrl+D.
 
 ## High level overview of the repository
 ieee123_1ph_OpenDSS
