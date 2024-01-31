@@ -54,16 +54,26 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
     areaInfo.S_der_Area0 = busDataTable_pu_Area.S_der0;
     areaInfo.S_der_Area = busDataTable_pu_Area.S_der;
 
-    areaInfo.S_battMax_Area0 = busDataTable_pu_Area.S_der0;
-    areaInfo.S_battMax_Area = busDataTable_pu_Area.S_der;
+    % areaInfo.S_battMax_Area0 = busDataTable_pu_Area.S_der0;
+    areaInfo.S_battMax_Area0 = busDataTable_pu_Area.S_batt0;
 
-    P_der0_1toT = busDataTable_pu_Area.P_der0_1toT;
+    % areaInfo.S_battMax_Area = busDataTable_pu_Area.S_der;
+    areaInfo.S_battMax_Area = busDataTable_pu_Area.S_batt;
+
+
+    % P_der0_1toT = busDataTable_pu_Area.P_der0_1toT;
+    P_batt0 = busDataTable_pu_Area.P_batt0;
     % areaInfo.P_der0_1toT = P_der0_1toT;
-    P_der_1toT = busDataTable_pu_Area.P_der_1toT;
+    % P_der_1toT = busDataTable_pu_Area.P_der_1toT;
+    P_batt = busDataTable_pu_Area.P_batt;
     % areaInfo.P_der_1toT = P_der_1toT;
 
-    areaInfo.P_battMax_Area0 = P_der0_1toT(:, 1);
-    areaInfo.P_battMax_Area = P_der_1toT(:, 1);
+    % areaInfo.P_battMax_Area0 = P_der0_1toT(:, 1);
+    areaInfo.P_battMax_Area0 = P_batt0;
+
+    % areaInfo.P_battMax_Area = P_der_1toT(:, 1);
+    areaInfo.P_battMax_Area = P_batt;
+
 
     areaInfo.Emax_batt_Area0 = chargeToPowerRatio .* areaInfo.P_battMax_Area0;
     areaInfo.Emax_batt_Area = chargeToPowerRatio .* areaInfo.P_battMax_Area;

@@ -1,0 +1,16 @@
+------------------------------------------------------------
+Machine ID: SURFACE9WIN11
+Horizon Duration: 1
+Nature of Simulation: Centralized-OPF
+Line Loss: 13.00 kW
+Substation Power: 802.51 kW
+Substation Power Cost: 28.088 $
+Total Real Load: 1163.20 kW
+Total Reactive Load: 640.01 kVAr
+Total PV Real Power Generation: 0.00 kW
+Total PV Reactive Power Generation: 0.00 kVAr
+Number of Macro-Iterations: 1
+Simulation Time: 38.80 s
+Time to solve with sequential (non-parallel) computation:36.6742 s
+Time to Solve if OPF computation parallelized: 36.67 s
+------------------------------------------------------------
