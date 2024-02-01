@@ -34,8 +34,8 @@ function [x, sysInfo, simInfo, ...
     % gamma = 1e0;
     % gamma = 1e-1;
     gamma = simInfo.gamma;
-    DER_percent = simInfo.DER_percent;
-    Batt_percent = simInfo.Batt_percent;
+    % DER_percent = simInfo.DER_percent;
+    % Batt_percent = simInfo.Batt_percent;
     profiling = false;
     saveSCDPlots = false;
     displayTables = false;
@@ -191,20 +191,20 @@ function [x, sysInfo, simInfo, ...
     
     microItrMax = simInfo.alg.microItrMax;
     tolfun = simInfo.alg.tolfun;
-    stepTol = simInfo.alg.stepTol;
-    constraintTol = simInfo.alg.constraintTol;
-    optimalityTol = simInfo.alg.optimalityTol;
+    % stepTol = simInfo.alg.stepTol;
+    % constraintTol = simInfo.alg.constraintTol;
+    % optimalityTol = simInfo.alg.optimalityTol;
     % displayIterations = 'off';
     displayIterations = 'iter-detailed';
 % <<<<<<< HEAD
-    doPlot = true; % Set this to false if you don't want to plot
+    % doPlot = true; % Set this to false if you don't want to plot
 
     % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
     %     'FunctionTolerance', tolfun, ...
     %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
     % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
     % 'OptimalityTolerance', optimalityTol);
-        options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+        % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
 
     %     options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
     %     'FunctionTolerance', tolfun, ...
@@ -256,16 +256,17 @@ function [x, sysInfo, simInfo, ...
     iterations_taken = output.iterations;
     
     folderName = strcat("processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(numAreas), filesep, "area", num2str(Area));
-    if ~exist(folderName, 'dir')
-        mkdir(folderName)
-    end
+    % if ~exist(folderName, 'dir')
+    %     mkdir(folderName)
+    % end
+    createFolderIfNotExisting(folderName);
     prefixName = strcat(folderName, filesep, "Horizon_", num2str(T), "_macroItr_", num2str(macroItr+1));
     areaSolutionName_x = strcat(prefixName, "_optimalSolutions.csv");
-    if ~noBatteries
-        battstring = "withBatteries";
-    else
-        battstring = "withoutBatteries";
-    end
+    % if ~noBatteries
+    %     battstring = "withBatteries";
+    % else
+    %     battstring = "withoutBatteries";
+    % end
     areaSolutionName_fval = strcat(prefixName, "_", getenv('COMPUTERNAME'), "_optimalObjectiveFunctionValue_", battstring, ".txt");
     
     writematrix(x, areaSolutionName_x);
@@ -346,6 +347,7 @@ function [x, sysInfo, simInfo, ...
         B_Area_1toT = reshape(xVals_Area(areaInfo.indices_Bj), nBatt_Area, T);
         Pc_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pcj), nBatt_Area, T);
         Pd_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pdj), nBatt_Area, T);
+        keyboard;
         qB_Area_1toT = reshape(xVals_Area(areaInfo.indices_qBj), nBatt_Area, T);
 
         areaInfo.B_Area_1toT = B_Area_1toT;
