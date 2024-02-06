@@ -114,7 +114,6 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     indices_Pcj = varIndicesT{7};
     indices_Pdj = varIndicesT{8};
     indices_qBj = varIndicesT{9};
-    
     % Assuming you have already created the 'areaInfo' structure
 
     % Assign each variable as a field in areaInfo
@@ -163,10 +162,12 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         % indices_vj_T = getIndicesT(indices_vj, i_Idx);
         indices_vj_T = getIndicesT(indices_vAllj, j);
         indices_vi_T = getIndicesT(indices_vAllj, i);
-        
         % PFlow equations in Aeq, beq | BFM variables only
         row = indices_Pflow_ij_T;
+        % ind = sub2ind(sz, row, indices_Pij_T)
         Aeq(sub2ind(sz, row, indices_Pij_T)) = 1;
+        % keyboard;
+
         for k_num = 1:length(k_indices)
             k_Idx = k_indices(k_num);
             indices_Pjk_T = getIndicesT(indices_Pij, k_Idx);
@@ -175,7 +176,8 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         Aeq(sub2ind(sz, row, indices_lij_T)) = -R_Area_Matrix(i, j);
 
         beq(row) = P_L_Area_1toT(j, :)';
-
+        
+        % keyboard;
         % QFlow equations in Aeq, beq | BFM variables only
         row = indices_Qflow_ij_T;
 
