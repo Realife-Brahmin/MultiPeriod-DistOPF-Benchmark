@@ -1,4 +1,5 @@
-function result = getIndicesT(matrix2D, col)
+% function result = getIndicesT(matrix2D, col)
+function result = getIndicesT(matrix2D, row)
     %GETINDICEST Extracts the col-th element from each row of the input 2D array.
     %
     % Usage:
@@ -12,6 +13,7 @@ function result = getIndicesT(matrix2D, col)
     %   result: A Tx1 array containing the extracted elements.
     %
 
-    result = matrix2D(:, col);
+    % result = matrix2D(:, col);
+    result = matrix2D(row, :)';
 end
 
