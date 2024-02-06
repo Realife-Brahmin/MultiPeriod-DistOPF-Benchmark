@@ -177,7 +177,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
 
         beq(row) = P_L_Area_1toT(j, :)';
         
-        keyboard;
+        % keyboard;
         % QFlow equations in Aeq, beq | BFM variables only
         row = indices_Qflow_ij_T;
 
