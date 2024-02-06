@@ -398,6 +398,6 @@ function [x, sysInfo, simInfo, ...
         fclose(fid);
     end
 
-    keyboard;
+    % keyboard;
 
 end
