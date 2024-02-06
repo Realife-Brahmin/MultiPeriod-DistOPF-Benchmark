@@ -11,6 +11,7 @@
 Just open Master.dss in OpenDSS and Ctrl+A Ctrl+D.
 
 ## High level overview of the repository
+```
 ieee123_1ph_OpenDSS
 │
 ├── components
@@ -58,4 +59,4 @@ ieee123_1ph_OpenDSS
 ├── OpenDSS-files-for-MPOPF-verification.code-workspace
 ├── README.md
 └── README.txt
-
+```
