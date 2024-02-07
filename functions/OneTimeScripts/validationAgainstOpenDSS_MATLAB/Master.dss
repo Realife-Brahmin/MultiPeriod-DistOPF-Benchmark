@@ -13,6 +13,7 @@ Redirect Load.dss
 Redirect Generator.dss
 Redirect Storage.dss
 Redirect StorageController.dss
+Redirect PVSystem.dss
 Redirect Monitor.dss
 MakeBusList
 Redirect BusVoltageBases.dss  ! set voltage bases
