@@ -1,85 +1,85 @@
-New "Load.s3p" bus1=3.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s4p" bus1=4.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s6p" bus1=6.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s7p" bus1=7.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s8p" bus1=8.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s9p" bus1=9.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s11p" bus1=11.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s12p" bus1=12.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s13p" bus1=13.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s14p" bus1=14.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s18p" bus1=18.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s19p" bus1=19.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s21p" bus1=21.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s22p" bus1=22.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s24p" bus1=24.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s26p" bus1=26.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s30p" bus1=30.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s31p" bus1=31.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s32p" bus1=32.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s33p" bus1=33.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s34p" bus1=34.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s35p" bus1=35.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s36p" bus1=36.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s37p" bus1=37.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s39p" bus1=39.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s40p" bus1=40.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s41p" bus1=41.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s43p" bus1=43.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s44p" bus1=44.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s45p" bus1=45.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s47p" bus1=47.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s48p" bus1=48.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s49p" bus1=49.1 phases=1 model=1 kV=2.4018 kW=35 kvar=25 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s50p" bus1=50.1 phases=1 model=1 kV=2.4018 kW=70 kvar=50 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s51p" bus1=51.1 phases=1 model=1 kV=2.4018 kW=46.67 kvar=31.67 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s52p" bus1=52.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s53p" bus1=53.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s54p" bus1=54.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s55p" bus1=55.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s57p" bus1=57.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s58p" bus1=58.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s60p" bus1=60.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s61p" bus1=61.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s62p" bus1=62.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s64p" bus1=64.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s65p" bus1=65.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s66p" bus1=66.1 phases=1 model=1 kV=2.4018 kW=25 kvar=11.67 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s67p" bus1=67.1 phases=1 model=1 kV=2.4018 kW=46.67 kvar=33.33 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s68p" bus1=68.1 phases=1 model=1 kV=2.4018 kW=25 kvar=11.67 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s70p" bus1=70.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s71p" bus1=71.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s72p" bus1=72.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s73p" bus1=73.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s75p" bus1=75.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s76p" bus1=76.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s77p" bus1=77.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s78p" bus1=78.1 phases=1 model=1 kV=2.4018 kW=81.67 kvar=60 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s79p" bus1=79.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s81p" bus1=81.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s82p" bus1=82.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s84p" bus1=84.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s85p" bus1=85.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s86p" bus1=86.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s87p" bus1=87.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s88p" bus1=88.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s89p" bus1=89.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s90p" bus1=90.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s92p" bus1=92.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s94p" bus1=94.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s96p" bus1=96.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s97p" bus1=97.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s98p" bus1=98.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s100p" bus1=100.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s101p" bus1=101.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s102p" bus1=102.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s104p" bus1=104.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s105p" bus1=105.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s106p" bus1=106.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s108p" bus1=108.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s109p" bus1=109.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s111p" bus1=111.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s113p" bus1=113.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s114p" bus1=114.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s115p" bus1=115.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05
-New "Load.s116p" bus1=116.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05
+New "Load.s3p" bus1=3.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s4p" bus1=4.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s6p" bus1=6.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s7p" bus1=7.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s8p" bus1=8.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s9p" bus1=9.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s11p" bus1=11.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s12p" bus1=12.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s13p" bus1=13.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s14p" bus1=14.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s18p" bus1=18.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s19p" bus1=19.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s21p" bus1=21.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s22p" bus1=22.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s24p" bus1=24.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s26p" bus1=26.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s30p" bus1=30.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s31p" bus1=31.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s32p" bus1=32.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s33p" bus1=33.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s34p" bus1=34.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s35p" bus1=35.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s36p" bus1=36.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s37p" bus1=37.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s39p" bus1=39.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s40p" bus1=40.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s41p" bus1=41.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s43p" bus1=43.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s44p" bus1=44.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s45p" bus1=45.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s47p" bus1=47.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s48p" bus1=48.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s49p" bus1=49.1 phases=1 model=1 kV=2.4018 kW=35 kvar=25 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s50p" bus1=50.1 phases=1 model=1 kV=2.4018 kW=70 kvar=50 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s51p" bus1=51.1 phases=1 model=1 kV=2.4018 kW=46.67 kvar=31.67 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s52p" bus1=52.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s53p" bus1=53.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s54p" bus1=54.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s55p" bus1=55.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s57p" bus1=57.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s58p" bus1=58.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s60p" bus1=60.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s61p" bus1=61.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s62p" bus1=62.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s64p" bus1=64.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s65p" bus1=65.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s66p" bus1=66.1 phases=1 model=1 kV=2.4018 kW=25 kvar=11.67 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s67p" bus1=67.1 phases=1 model=1 kV=2.4018 kW=46.67 kvar=33.33 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s68p" bus1=68.1 phases=1 model=1 kV=2.4018 kW=25 kvar=11.67 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s70p" bus1=70.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s71p" bus1=71.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s72p" bus1=72.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s73p" bus1=73.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s75p" bus1=75.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s76p" bus1=76.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s77p" bus1=77.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s78p" bus1=78.1 phases=1 model=1 kV=2.4018 kW=81.67 kvar=60 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s79p" bus1=79.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s81p" bus1=81.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s82p" bus1=82.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s84p" bus1=84.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s85p" bus1=85.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s86p" bus1=86.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s87p" bus1=87.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s88p" bus1=88.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s89p" bus1=89.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s90p" bus1=90.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s92p" bus1=92.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s94p" bus1=94.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s96p" bus1=96.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s97p" bus1=97.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s98p" bus1=98.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s100p" bus1=100.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s101p" bus1=101.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s102p" bus1=102.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s104p" bus1=104.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s105p" bus1=105.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s106p" bus1=106.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s108p" bus1=108.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s109p" bus1=109.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s111p" bus1=111.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s113p" bus1=113.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s114p" bus1=114.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s115p" bus1=115.1 phases=1 model=1 kV=2.4018 kW=13.33 kvar=6.667 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
+New "Load.s116p" bus1=116.1 phases=1 model=1 kV=2.4018 kW=6.667 kvar=3.333 Vminpu=0.95 Vmaxpu=1.05 daily=loadshape
