@@ -1,0 +1,4 @@
+hour,t(sec),kWh,State,kWOut,kWIn,kvarOut,DCkW,kWTotalLosses,kWInvLosses,kWIdlingLosses,kWChDchLosses,"kWh Chng",InvEff,InverterON,Vref,"Vavg (DRC)","VV Oper","VW Oper","DRC Oper","VV_DRC Oper","WP Oper","WV Oper",kWDesired,"kW VW Limit","Limit kWOut Function","kVA Exceeded","Grid voltage",di/dt,it,"it History","Rated VDC","Avg duty cycle","Target (Amps)","Series L","Max. Amps (phase)"
+1, 0.00000, 11.6637, 1, 1.88602, 0, -3.0947, 1.88602, 0.0992643, 0, 0, 0.0992643, -6.99825, 1, 1, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 1.88608, 9999, 4.6655, 0, 0, 0, 0, 0, 8000, 0, 0, 0, 0
+2, 0.00000, 9.67846, 1, 1.91481, 0, -3.0947, 1.91481, 0.10078, 0, 0, 0.10078, -1.98529, 1, 1, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 1.91481, 9999, 4.6655, 0, 0, 0, 0, 0, 8000, 0, 0, 0, 0
+3, 0.00000, 7.66287, 1, 1.961, 0, -3.0947, 1.961, 0.103211, 0, 0, 0.103211, -2.01559, 1, 1, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 1.961, 9999, 4.6655, 0, 0, 0, 0, 0, 8000, 0, 0, 0, 0
