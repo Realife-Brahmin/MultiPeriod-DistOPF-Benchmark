@@ -1,9 +1,17 @@
 New "StorageController.sc3" Element=Line.l1 Terminal=1 ElementList=[Battery3] ModeDischarge=Loadshape Daily=scloadshape3 EventLog=Yes
+New "StorageController.sc9" Element=Line.l1 Terminal=1 ElementList=[Battery9] ModeDischarge=Loadshape Daily=scloadshape9 EventLog=Yes
 New "StorageController.sc18" Element=Line.l1 Terminal=1 ElementList=[Battery18] ModeDischarge=Loadshape Daily=scloadshape18 EventLog=Yes
+New "StorageController.sc26" Element=Line.l1 Terminal=1 ElementList=[Battery26] ModeDischarge=Loadshape Daily=scloadshape26 EventLog=Yes
 New "StorageController.sc35" Element=Line.l1 Terminal=1 ElementList=[Battery35] ModeDischarge=Loadshape Daily=scloadshape35 EventLog=Yes
+New "StorageController.sc41" Element=Line.l1 Terminal=1 ElementList=[Battery41] ModeDischarge=Loadshape Daily=scloadshape41 EventLog=Yes
 New "StorageController.sc48" Element=Line.l1 Terminal=1 ElementList=[Battery48] ModeDischarge=Loadshape Daily=scloadshape48 EventLog=Yes
+New "StorageController.sc53" Element=Line.l1 Terminal=1 ElementList=[Battery53] ModeDischarge=Loadshape Daily=scloadshape53 EventLog=Yes
 New "StorageController.sc61" Element=Line.l1 Terminal=1 ElementList=[Battery61] ModeDischarge=Loadshape Daily=scloadshape61 EventLog=Yes
+New "StorageController.sc67" Element=Line.l1 Terminal=1 ElementList=[Battery67] ModeDischarge=Loadshape Daily=scloadshape67 EventLog=Yes
 New "StorageController.sc73" Element=Line.l1 Terminal=1 ElementList=[Battery73] ModeDischarge=Loadshape Daily=scloadshape73 EventLog=Yes
+New "StorageController.sc79" Element=Line.l1 Terminal=1 ElementList=[Battery79] ModeDischarge=Loadshape Daily=scloadshape79 EventLog=Yes
 New "StorageController.sc87" Element=Line.l1 Terminal=1 ElementList=[Battery87] ModeDischarge=Loadshape Daily=scloadshape87 EventLog=Yes
+New "StorageController.sc94" Element=Line.l1 Terminal=1 ElementList=[Battery94] ModeDischarge=Loadshape Daily=scloadshape94 EventLog=Yes
 New "StorageController.sc101" Element=Line.l1 Terminal=1 ElementList=[Battery101] ModeDischarge=Loadshape Daily=scloadshape101 EventLog=Yes
+New "StorageController.sc108" Element=Line.l1 Terminal=1 ElementList=[Battery108] ModeDischarge=Loadshape Daily=scloadshape108 EventLog=Yes
 New "StorageController.sc116" Element=Line.l1 Terminal=1 ElementList=[Battery116] ModeDischarge=Loadshape Daily=scloadshape116 EventLog=Yes
