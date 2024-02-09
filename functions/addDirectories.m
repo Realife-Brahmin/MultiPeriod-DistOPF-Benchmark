@@ -19,6 +19,7 @@ function addDirectories
    
     
     % Add relevant directories to the MATLAB path
-    addpath('rawData\')
+    rawDataFolder = "rawData\";
+    addpath(rawDataFolder)
     latex_interpreter
 end
