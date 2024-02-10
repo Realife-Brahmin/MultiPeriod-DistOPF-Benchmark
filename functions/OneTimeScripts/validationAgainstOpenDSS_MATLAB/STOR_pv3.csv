@@ -1,0 +1,7 @@
+t, Iteration, LoadMultiplier, Mode, LoadModel, PVSystemModel,  Qnominalperphase, Pnominalperphase, CurrentType, |Iinj1|, |Iterm1|, |Vterm1|,Vthev, Theta
+0, 1, 1, Daily, PowerFlow, 1,     0.01,     0.01, Injection,      0.1,      2.3,   2462.0, 
+0, 2, 1, Daily, PowerFlow, 1,     0.01,     0.01, Injection,      0.1,      2.3,   2463.0, 
+0, 1, 1, Daily, PowerFlow, 1,     0.01,     0.01, Injection,      0.1,      2.3,   2463.0, 
+0, 2, 1, Daily, PowerFlow, 1,     0.01,     0.01, Injection,      0.1,      2.3,   2465.1, 
+0, 3, 1, Daily, PowerFlow, 1,     0.01,     0.01, Injection,      0.1,      2.3,   2463.8, 
+0, 4, 1, Daily, PowerFlow, 1,     0.01,     0.01, Injection,      0.1,      2.3,   2463.7, 

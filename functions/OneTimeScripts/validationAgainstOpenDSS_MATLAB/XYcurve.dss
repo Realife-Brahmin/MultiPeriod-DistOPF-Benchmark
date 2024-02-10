@@ -1,0 +1,2 @@
+New "XYcurve.effcurvepv" npts=4 Xarray=[ 0.1 0.2 0.4 1] Yarray=[ 1 1 1 1]
+New "XYcurve.pvstpv" npts=4 Xarray=[ 0 25 75 100] Yarray=[ 1.2 1 0.8 0.6]
