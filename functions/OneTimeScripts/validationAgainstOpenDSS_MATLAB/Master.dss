@@ -5,9 +5,7 @@ New Circuit.ieee123
 
 Redirect Vsource.dss
 Redirect LoadShape.dss
-Redirect TShape.dss
 Redirect GrowthShape.dss
-Redirect XYcurve.dss
 Redirect TCC_Curve.dss
 Redirect Spectrum.dss
 Redirect Line.dss
