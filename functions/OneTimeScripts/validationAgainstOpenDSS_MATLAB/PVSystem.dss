@@ -5,5 +5,5 @@ New "PVSystem.pv48" irradiance=1 phases=1 bus1=48.1 kv=2.4018 kVA=2.8001 Pmpp=2.
 New "PVSystem.pv61" irradiance=1 phases=1 bus1=61.1 kv=2.4018 kVA=2.8001 Pmpp=2.3335 daily=loadshapepv Tdaily=tshapepv EffCurve=effcurvepv P-TCurve=pvstpv %Cutin=0.1 %Cutout=0.1 kvar=2.0871
 New "PVSystem.pv73" irradiance=1 phases=1 bus1=73.1 kv=2.4018 kVA=5.5986 Pmpp=4.6655 daily=loadshapepv Tdaily=tshapepv EffCurve=effcurvepv P-TCurve=pvstpv %Cutin=0.1 %Cutout=0.1 kvar=4.173
 New "PVSystem.pv87" irradiance=1 phases=1 bus1=87.1 kv=2.4018 kVA=5.5986 Pmpp=4.6655 daily=loadshapepv Tdaily=tshapepv EffCurve=effcurvepv P-TCurve=pvstpv %Cutin=0.1 %Cutout=0.1 kvar=-4.173
-New "PVSystem.pv101" irradiance=1 phases=1 bus1=101.1 kv=2.4018 kVA=5.5986 Pmpp=4.6655 daily=loadshapepv Tdaily=tshapepv EffCurve=effcurvepv P-TCurve=pvstpv %Cutin=0.1 %Cutout=0.1 kvar=-1.0145
+New "PVSystem.pv101" irradiance=1 phases=1 bus1=101.1 kv=2.4018 kVA=5.5986 Pmpp=4.6655 daily=loadshapepv Tdaily=tshapepv EffCurve=effcurvepv P-TCurve=pvstpv %Cutin=0.1 %Cutout=0.1 kvar=4.173
 New "PVSystem.pv116" irradiance=1 phases=1 bus1=116.1 kv=2.4018 kVA=2.8001 Pmpp=2.3335 daily=loadshapepv Tdaily=tshapepv EffCurve=effcurvepv P-TCurve=pvstpv %Cutin=0.1 %Cutout=0.1 kvar=2.0871
