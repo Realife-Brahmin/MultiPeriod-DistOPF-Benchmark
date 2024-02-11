@@ -125,8 +125,10 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     Q_C_Area = busDataTable_Area.Q_C/kVA_B;                           % Rated Q of Capacitor
     
     P_der_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power, all DERs from original CSV file
+    Pmpp_Area0 = P_der_Area0;
     P_batt_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B; % Rated Battery Active Power
     P_der_Area = select_percentage_of_nz_elements(P_der_Area0, DER_percent);          % Rated  DER active power, only DER_percent elements selected
+    Pmpp_Area = P_der_Area;
     P_batt_Area = select_percentage_of_nz_elements(P_batt_Area0, Batt_percent); % Rated Battery Real Power, only Batt_percent elements selected
 
     S_der_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B; 
@@ -134,11 +136,18 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     S_batt_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B;
     S_batt_Area = select_percentage_of_nz_elements(S_batt_Area0, Batt_percent);
 
-    P_L_Area_1toT = repmat(P_L_Area, 1, T).*lambdaVals;
-    Q_L_Area_1toT = repmat(Q_L_Area, 1, T).*lambdaVals;
+    % keyboard;
+    % P_L_Area_1toT = repmat(P_L_Area, 1, T) .* lambdaVals;
+    % Q_L_Area_1toT = repmat(Q_L_Area, 1, T) .* lambdaVals;
+    P_L_Area_1toT = repmat(P_L_Area, 1, T) .* lambdaVals';
+    Q_L_Area_1toT = repmat(Q_L_Area, 1, T) .* lambdaVals';
+    % keyboard;
 
-    P_der_Area0_1toT = repmat(P_der_Area0, 1, T).*pvCoeffVals;
-    P_der_Area_1toT = repmat(P_der_Area, 1, T).*pvCoeffVals;
+    % P_der_Area0_1toT = repmat(P_der_Area0, 1, T).*pvCoeffVals;
+    % P_der_Area_1toT = repmat(P_der_Area, 1, T).*pvCoeffVals;
+    P_der_Area0_1toT = repmat(P_der_Area0, 1, T).*pvCoeffVals';
+    P_der_Area_1toT = repmat(P_der_Area, 1, T).*pvCoeffVals';
+    % keyboard;
 
     busDataTable_pu_Area = tableToStructColumnwise(busDataTable_Area);
     busDataTable_pu_Area.P_L_1toT = P_L_Area_1toT;
@@ -150,7 +159,8 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     busDataTable_pu_Area.P_batt = P_batt_Area;
     busDataTable_pu_Area.S_der0 = S_der_Area0;
     busDataTable_pu_Area.S_batt0 = S_batt_Area0;
-
+    busDataTable_pu_Area.Pmpp_Area0 = Pmpp_Area0;
+    busDataTable_pu_Area.Pmpp_Area = Pmpp_Area;
     busDataTable_pu_Area.S_der = S_der_Area;
     busDataTable_pu_Area.S_batt = S_batt_Area;
 

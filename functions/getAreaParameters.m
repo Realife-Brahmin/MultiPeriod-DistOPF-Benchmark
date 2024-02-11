@@ -48,6 +48,10 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
 
     areaInfo.Q_C_Area = busDataTable_pu_Area.Q_C;
     % areaInfo.P_der_Area = busDataTable_pu_Area.P_der;
+    
+    areaInfo.Pmpp_Area0 = busDataTable_pu_Area.Pmpp_Area0;
+    areaInfo.Pmpp_Area = busDataTable_pu_Area.Pmpp_Area;
+    
     areaInfo.P_der_Area0_1toT = busDataTable_pu_Area.P_der0_1toT;
     areaInfo.P_der_Area_1toT = busDataTable_pu_Area.P_der_1toT;
     
@@ -95,9 +99,13 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
     P_onlyDERbuses_Area_1toT = areaInfo.P_der_Area_1toT(areaInfo.busesWithDERs_Area);
     areaInfo.P_onlyDERbuses_Area0_1toT = P_onlyDERbuses_Area0_1toT;
     areaInfo.P_onlyDERbuses_Area_1toT = P_onlyDERbuses_Area_1toT;
-    P_onlyDERbuses_Area0 = P_onlyDERbuses_Area0_1toT(:, 1);
-    P_onlyDERbuses_Area = P_onlyDERbuses_Area_1toT(:, 1);
-    
+    % P_onlyDERbuses_Area0 = P_onlyDERbuses_Area0_1toT(:, 1);
+    busesWithDERs_Area0 = areaInfo.busesWithDERs_Area0;
+    busesWithDERs_Area = areaInfo.busesWithDERs_Area;
+    P_onlyDERbuses_Area0 = areaInfo.Pmpp_Area0(busesWithDERs_Area0);
+    % P_onlyDERbuses_Area = P_onlyDERbuses_Area_1toT(:, 1);
+    P_onlyDERbuses_Area = areaInfo.Pmpp_Area(busesWithDERs_Area);
+
 
     areaInfo.S_onlyBattBusesMax_Area0 = areaInfo.S_battMax_Area0(areaInfo.busesWithBatts_Area0);
     areaInfo.S_onlyBattBusesMax_Area = areaInfo.S_battMax_Area(areaInfo.busesWithBatts_Area);    
@@ -121,12 +129,20 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
     areaInfo.ub_B_onlyBattBuses_Area = soc_max.*areaInfo.E_onlyBattBusesMax_Area;  % soc_max not defined here
 
     % areaInfo.lb_qD_onlyDERbuses_Area = -sqrt(areaInfo.S_onlyDERbuses_Area.^2 - areaInfo.P_onlyDERbuses_Area.^2);
+    % keyboard;
     areaInfo.lb_qD_onlyDERbuses_Area0 = -sqrt(areaInfo.S_onlyDERbuses_Area0.^2 - P_onlyDERbuses_Area0.^2);
+    % areaInfo.lb_qD_onlyDERbuses_Area0 = -sqrt(areaInfo.S_onlyDERbuses_Area0.^2 - areaInfo.Pmpp_Area0.^2);
     areaInfo.lb_qD_onlyDERbuses_Area = -sqrt(areaInfo.S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2);
+    % areaInfo.lb_qD_onlyDERbuses_Area = -sqrt(areaInfo.S_onlyDERbuses_Area.^2 - areaInfo.Pmpp_Area.^2);
+
 
     % areaInfo.ub_qD_onlyDERbuses_Area = sqrt(areaInfo.S_onlyDERbuses_Area.^2 - areaInfo.P_onlyDERbuses_Area.^2);
     areaInfo.ub_qD_onlyDERbuses_Area0 = sqrt(areaInfo.S_onlyDERbuses_Area0.^2 - P_onlyDERbuses_Area0.^2);
+    % areaInfo.ub_qD_onlyDERbuses_Area0 = sqrt(areaInfo.S_onlyDERbuses_Area0.^2 - areaInfo.Pmpp_Area0.^2);
+
     areaInfo.ub_qD_onlyDERbuses_Area = sqrt(areaInfo.S_onlyDERbuses_Area.^2 - P_onlyDERbuses_Area.^2);
+    % areaInfo.ub_qD_onlyDERbuses_Area = sqrt(areaInfo.S_onlyDERbuses_Area.^2 - areaInfo.Pmpp_Area.^2);
+
 
     areaInfo.lb_qB_onlyBattBuses_Area0 = -sqrt(areaInfo.S_onlyBattBusesMax_Area0.^2 - areaInfo.P_onlyBattBusesMax_Area0.^2);
     areaInfo.lb_qB_onlyBattBuses_Area = -sqrt(areaInfo.S_onlyBattBusesMax_Area.^2 - areaInfo.P_onlyBattBusesMax_Area.^2);
