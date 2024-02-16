@@ -1,5 +1,7 @@
-function plot_simulation_results(results, simInfo, sysInfo)
+function plot_simulation_results(results)
     
+    simInfo = results.simInfo;
+    sysInfo = results.sysInfo;
     DER_percent = simInfo.DER_percent;
     P12_1toT_vs_macroItr = results.P12_1toT_vs_macroItr;
     v1_1toT_vs_macroItr = results.v1_1toT_vs_macroItr;
