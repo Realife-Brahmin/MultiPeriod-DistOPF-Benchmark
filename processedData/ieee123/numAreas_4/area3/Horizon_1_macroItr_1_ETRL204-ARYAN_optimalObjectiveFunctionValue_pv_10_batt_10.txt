@@ -1,7 +1,7 @@
 Machine this simulation was solved on: ETRL204-ARYAN
-Optimization for Area 3 for 1 time periods took 4.149012e-01 [s] and 10 iterations.
+Optimization for Area 3 for 1 time periods took 4.567345e-01 [s] and 10 iterations.
 where a micro-iteration limit of 100 and a minimum improvement of 1.000000e-03 [kW] was imposed.
-Average time per iteration: 4.149012e-02 [s]
+Average time per iteration: 4.567345e-02 [s]
 Number of Linear Equations: 60
 Number of Nonlinear Equalities: 19
 Number of Optimization Variables: 87
