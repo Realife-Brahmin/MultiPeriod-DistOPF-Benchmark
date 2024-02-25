@@ -29,12 +29,12 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % This is not useful for non-Full variables for sysInfo for me.
         % I somehow need to get the batt_num_sys values
         
-        sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT;
-        sysInfo.B0(numBattBus) = areaInfo.B0Vals_pu_Area; 
-        sysInfo.B_1toT(numBattBus, 1:T) = areaInfo.B_Area_1toT;
-        sysInfo.Pd_1toT(numBattBus, 1:T) = areaInfo.Pd_Area_1toT;
+        sysInfo.qD_1toT(nBatt_sys, 1:T) = areaInfo.qD_Area_1toT;
+        sysInfo.B0(1:nBatt_) = areaInfo.B0Vals_pu_Area; 
+        sysInfo.B_1toT(bus1_Batt, 1:T) = areaInfo.B_Area_1toT;
+        sysInfo.Pd_1toT(bus1_Batt, 1:T) = areaInfo.Pd_Area_1toT;
 
-        sysInfo.Pc_1toT(battBusNum, 1:T) = areaInfo.Pc_Area_1toT;
+        sysInfo.Pc_1toT(bus1_Batt, 1:T) = areaInfo.Pc_Area_1toT;
 
         sysInfo.qB_1toT(bus1_Batt, 1:T) = areaInfo.qB_Area_1toT;
     
