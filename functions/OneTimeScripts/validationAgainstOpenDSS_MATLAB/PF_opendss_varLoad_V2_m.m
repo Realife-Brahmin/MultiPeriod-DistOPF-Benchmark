@@ -101,14 +101,14 @@ end
 simName = vald.simInfo.simName;
 % V_copf_1toT = vald.V_copf;
 V_1toT = vald.V_1toT;
-busesWithDERs = vald.busesWithDERs_Area;
-nDER_Area = vald.nDER_Area;
-Pmpp_Area_kW = kVA_B*vald.Pmpp_Area;
-% Pmpp_AreaFull_kW = kVA_B*vald.Pmpp_AreaFull;
-% kVA_AreaFull_kVA = kVA_B*vald.Sder_AreaFull;
-pD_Area_1toT_kW = kVA_B*vald.pD_Area_1toT;
-qD_Area_1toT_kVAr = kVA_B*vald.qD_Area_1toT;
-SDer_Area_kVA = kVA_B*vald.Sder_Area;
+busesWithDERs = vald.busesWithDERs;
+nDER = vald.nDER;
+Pmpp_kW = kVA_B*vald.Pmpp;
+% PmppFull_kW = kVA_B*vald.PmppFull;
+% kVAFull_kVA = kVA_B*vald.SderFull;
+pD_1toT_kW = kVA_B*vald.pD_1toT;
+qD_1toT_kVAr = kVA_B*vald.qD_1toT;
+SDer_kVA = kVA_B*vald.Sder;
 % loadShapePV = vald.loadShapePV;
 
 % strLoadShapePV = strcat('New Loadshape.LoadShapePV npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapePV'), ']')
@@ -125,12 +125,12 @@ SDer_Area_kVA = kVA_B*vald.Sder_Area;
 % DSSText.Command = strPvsTPV;
 
 % for bus1 = busesWithDERs'
-for derBusNum = 1:nDER_Area
+for derBusNum = 1:nDER
     bus1 = busesWithDERs(derBusNum);
-    % Pmpp_j_kW = Pmpp_AreaFull_kW(bus1);
-    Pmpp_j_kW = Pmpp_Area_kW(derBusNum);
-    kVA_j_kVA = SDer_Area_kVA(derBusNum);
-    % kVA_j_kVA = kVA_AreaFull_kVA(bus1);
+    % Pmpp_j_kW = PmppFull_kW(bus1);
+    Pmpp_j_kW = Pmpp_kW(derBusNum);
+    kVA_j_kVA = SDer_kVA(derBusNum);
+    % kVA_j_kVA = kVAFull_kVA(bus1);
 
     % stGa = strcat('New PVSystem.PV', num2str(bus1), ' irrad = 1.0 Phases = 1   Bus1 = ', num2str(bus1), ...
     %     '.1  kV = ', num2str(kV_B), ' kVA = ', num2str(kVA_j_kVA),  ...
@@ -145,12 +145,12 @@ for derBusNum = 1:nDER_Area
 end
 %% Storage
 
-busesWithBatts_Area = vald.busesWithBatt_Area;
-B0_Area_kWh = kVA_B*vald.B0_Area;
-B_Area_1toT = kVA_B*vald.B_Area_1toT;
-S_battMax_Area_kVA = kVA_B*vald.S_battMax_Area;
-P_battMax_Area_kW = kVA_B*vald.P_battMax_Area;
-nBatt_Area = vald.nBatt_Area;
+busesWithBatts = vald.busesWithBatts;
+B0_kWh = kVA_B*vald.B0;
+B_1toT = kVA_B*vald.B_1toT;
+S_battRated_kVA = kVA_B*vald.S_battRated;
+P_battRated_kW = kVA_B*vald.P_battRated;
+nBatt = vald.nBatt;
 chargeToPowerRatio = simInfo.chargeToPowerRatio;
 V_min = simInfo.V_min;
 V_max = simInfo.V_max;
@@ -159,10 +159,10 @@ etta_D = simInfo.etta_D;
 soc_min = simInfo.soc_min;
 soc_max = simInfo.soc_max;
 
-for battBusNum = 1:nBatt_Area
-    bus1 = busesWithBatts_Area(battBusNum);
-    kVArated = S_battMax_Area_kVA(battBusNum);
-    kWrated = P_battMax_Area_kW(battBusNum);
+for battBusNum = 1:nBatt
+    bus1 = busesWithBatts(battBusNum);
+    kVArated = S_battRated_kVA(battBusNum);
+    kWrated = P_battRated_kW(battBusNum);
     kWhrated = chargeToPowerRatio*kWrated;
     percentStored = 100*(soc_min + soc_max)/2;
     percentReserve = soc_min*100;
@@ -187,13 +187,13 @@ end
 
 %% Storage Controller
 
-Pd_Area_1toT_kW = kVA_B*vald.Pd_Area_1toT;
-Pc_Area_1toT_kW = kVA_B*vald.Pc_Area_1toT;
-Pdc_Area_1toT_kW = Pd_Area_1toT_kW - Pc_Area_1toT_kW;
+Pd_1toT_kW = kVA_B*vald.Pd_1toT;
+Pc_1toT_kW = kVA_B*vald.Pc_1toT;
+Pdc_1toT_kW = Pd_1toT_kW - Pc_1toT_kW;
 
-for battBusNum = 1:nBatt_Area
-    bus1 = busesWithBatts_Area(battBusNum);
-    dispatch = Pdc_Area_1toT_kW(battBusNum, 1:T) / P_battMax_Area_kW(battBusNum);
+for battBusNum = 1:nBatt
+    bus1 = busesWithBatts(battBusNum);
+    dispatch = Pdc_1toT_kW(battBusNum, 1:T) / P_battRated_kW(battBusNum);
 
     strLoadShapeSC = strcat('New LoadShape.SCLoadShape', num2str(bus1), ' interval = 1 npts = ', num2str(T), ' mult = [', num2str(dispatch), ']');
 
@@ -226,7 +226,7 @@ DSSText.Command = 'Set mode = Daily ';
 DSSText.Command = 'Set stepsize = 1h'; 
 %% Set, Solve, Save, Repeat
 
-qB_Area_1toT_kVAr = kVA_B*vald.qB_Area_1toT;
+qB_1toT_kVAr = kVA_B*vald.qB_1toT;
 
 DSSText.Command = strcat('Set number = 1');
 
@@ -234,21 +234,21 @@ for t = 1:T
 
     DSSText.Command = strcat('Set hour = ', num2str(t-1));
 
-    qB_Area_t_kVAr = qB_Area_1toT_kVAr(:, t);
-    for battBusNum = 1:nBatt_Area
-        bus1 = busesWithBatts_Area(battBusNum);
-        qBj_t_kVAr = qB_Area_t_kVAr(battBusNum);
+    qB_t_kVAr = qB_1toT_kVAr(:, t);
+    for battBusNum = 1:nBatt
+        bus1 = busesWithBatts(battBusNum);
+        qBj_t_kVAr = qB_t_kVAr(battBusNum);
         strStorageQ = strcat( 'Edit Storage.Battery', num2str(bus1), ' kVAr = ', num2str(qBj_t_kVAr) );
     
         DSSText.Command = strStorageQ;
     end
 
-    qD_Area_t_kVAr = qD_Area_1toT_kVAr(:, t);
-    pD_Area_t_kW = pD_Area_1toT_kW(:, t);
-    for derBusNum = 1:nDER_Area
+    qD_t_kVAr = qD_1toT_kVAr(:, t);
+    pD_t_kW = pD_1toT_kW(:, t);
+    for derBusNum = 1:nDER
         bus1 = busesWithDERs(derBusNum);
-        qDj_t_kVAr = qD_Area_t_kVAr(derBusNum);
-        pDj_t_kW = pD_Area_t_kW(derBusNum);
+        qDj_t_kVAr = qD_t_kVAr(derBusNum);
+        pDj_t_kW = pD_t_kW(derBusNum);
         strPVQ = strcat( 'Edit PVSystem.PV', num2str(bus1), ' Pmpp = ', num2str(pDj_t_kW), ' kVAr = ', num2str( qDj_t_kVAr) );
 
         DSSText.Command = strPVQ;
@@ -309,7 +309,7 @@ for t = 1:T
     qB_Total_t_kVAr = 0.0;
     
     DSSActiveElement = DSSCircuit.ActiveCktElement;
-    for battBusNum = 1:nBatt_Area
+    for battBusNum = 1:nBatt
         storageName = StorageNamesFull{battBusNum};
         DSSCircuit.SetActiveElement(storageName);
         sBj_t_kVA = DSSActiveElement.Powers;
@@ -406,8 +406,8 @@ for t = 1:T
 end
 %% Export Monitors
 
-for battBusNum = 1:nBatt_Area
-    bus1 = busesWithBatts_Area(battBusNum);
+for battBusNum = 1:nBatt
+    bus1 = busesWithBatts(battBusNum);
     strExportMonitor =  strcat('Export Monitors Battery', num2str(bus1), '_states');
     DSSText.Command = strExportMonitor;
     strLoads = strcat('Export Loads');
@@ -426,7 +426,7 @@ createFolderIfNotExisting(batteryMonitorFolder);
 
 circuitName = DSSCircuit.Name;
 
-moveBatteryMonitorFiles(circuitName, busesWithBatts_Area, nBatt_Area, batteryMonitorFolder);
+moveBatteryMonitorFiles(circuitName, busesWithBatts, nBatt, batteryMonitorFolder);
 
 % Store Maximum Discrepancies
 
