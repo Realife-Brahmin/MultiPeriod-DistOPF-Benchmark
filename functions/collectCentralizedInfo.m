@@ -2,10 +2,13 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     T = simInfo.T;
     N = sysInfo.N;
     m = sysInfo.m;
+    kV_B = sysInfo.kV_B;
+    kVA_B = sysInfo.kVA_B;
     numAreas = sysInfo.numAreas;
+
     for areaNum = 1:numAreas
         areaInfo = sysInfo.Area{areaNum};
-
+        
         error("Have you inserted actual bus1, actual fb and actual tb values for the area?")
         
         bus1 = areaInfo.bus1_Actual;
@@ -16,8 +19,8 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % P_L_1toT = sysInfo.P_L_1toT;
         sysInfo.P_L_1toT(bus1, 1:T) = areaInfo.P_L_Area_1toT;
         sysInfo.Q_L_1toT(bus1, 1:T) = areaInfo.Q_L_Area_1toT;
-        
-        sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area
+        sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT;
+        sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area;
         % sysInfo.Pmpp_Full(bus1) = areaInfo.Pmpp_Area
 
         % sysInfo.pD_Full_1toT(bus1, 1:T) = areaInfo.P_der_Area_1toT;
@@ -49,6 +52,9 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
 
     end
     
-    % loadShapePV = simInfo.pvCoeffVals;
+    loadShapePV = simInfo.pvCoeffVals;
+    sysInfo.loadShapePV = loadShapePV;
+    loadShape = simInfo.lambdaVals;
+    sysInfo.loadShape = loadShape;
 
 end
