@@ -99,7 +99,8 @@ end
 %% PV Data
 
 simName = vald.simInfo.simName;
-V_copf_1toT = vald.V_copf;
+% V_copf_1toT = vald.V_copf;
+V_1toT = vald.V_1toT;
 busesWithDERs = vald.busesWithDERs_Area;
 nDER_Area = vald.nDER_Area;
 Pmpp_Area_kW = kVA_B*vald.Pmpp_Area;
@@ -357,7 +358,8 @@ for t = 1:T
         V_opds_1toT( row, t) = V_PU(i);
     end
     
-    disc_V_t = abs(V_opds_1toT(1:N, t) - V_copf_1toT(1:N, t));
+    % disc_V_t = abs(V_opds_1toT(1:N, t) - V_copf_1toT(1:N, t));
+    disc_V_t = abs(V_opds_1toT(1:N, t) - V_1toT(1:N, t));
     disc.V_1toT(1:N, t) = disc_V_t;
 
 
@@ -384,7 +386,8 @@ for t = 1:T
     linewidth = 2.0;
     plot(V_opds_1toT(:, t), 'LineWidth', linewidth, 'Color', 'r');
     hold on;
-    plot(V_copf_1toT(:, t), 'LineWidth', linewidth, 'Color', 'k')
+    % plot(V_copf_1toT(:, t), 'LineWidth', linewidth, 'Color', 'k')
+    plot(V_1toT(:, t), 'LineWidth', linewidth, 'Color', 'k')
     legend({"OpenDSS Voltages", strcat(simName, " Voltages")});
     title([strcat("Validation of ", simName, " vs OpenDSS"), strcat("for ", string(DER_percent), "\% PVs and ", string(Batt_percent), "\% Batteries."), ...
         strcat("Hour = ", string(t), " of T = ", string(T), " hours")]);
@@ -438,5 +441,3 @@ disp(['Maximum All Time Voltage Discrepancy: ', num2str(disc.maxV), ' pu'])
 disp(['Maximum All Time Line Loss Discrepancy: ', num2str(disc.maxPLoss_kW), ' kW'])
 disp(['Maximum All Time Substation Borrowed Real Power Discrepancy: ', num2str(disc_maxPSubs_kW), ' kW'])
 disp('-----------------------------')
-%% 
-%
