@@ -24,7 +24,7 @@ logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
-numAreas = 4
+numAreas = 1
 T = 1
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
@@ -129,6 +129,24 @@ sysInfo.kVA_B = kVA_B;
 sysInfo.kV_B = kV_B;
 sysInfo.Battery.chargeToPowerRatio = chargeToPowerRatio;
 sysInfo.CBTable = CBTable;
+
+% sysInfo.fbus = ?
+% sysInfo.tbus = ?
+% sysInfo.branchData = ?
+sysInfo.Q_C_Full = zeros(N, 1);
+sysInfo.P_L_1toT = zeros(N, T);
+sysInfo.P_L_Total_1toT = zeros(T, 1);
+sysInfo.pD_Full_1toT = zeros(N, T);
+sysInfo.pD_Total_1toT = zeros(T, 1);
+sysInfo.qD_Full_1toT = zeros(N, T);
+sysInfo.qD_Total_1toT = zeros(T, 1);
+sysInfo.Pd_Full_1toT = zeros(N, T);
+sysInfo.Pc_Full_1toT = zeros(N, T);
+sysInfo.Pdc_Full_1toT = zeros(N, T);
+sysInfo.Pd_Total_1toT = zeros(T, 1);
+sysInfo.Pc_Total_1toT = zeros(T, 1);
+sysInfo.Pdc_Total_1toT = zeros(T, 1);
+
 
 PLoss_allT_vs_macroItr = zeros(macroItrMax, 1);
 PLoss_1toT_vs_macroItr = zeros(T, macroItrMax);
@@ -277,6 +295,7 @@ while keepRunningIterations
         S_Area_1toT = complex(P_Area_1toT, Q_Area_1toT); %m_Areax1
         vAll_Area_1toT = xVals_Area(areaInfo.indices_vAllj); %N_Areax1
         V_Area_1toT = sqrt(vAll_Area_1toT);
+        areaInfo.V_Area_1toT = V_Area_1toT;
         qD_Area_1toT = xVals_Area(areaInfo.indices_qDj);
         qD_AreaFull_1toT = sparseArrayFromDense(qD_Area_1toT, N_Area, areaInfo.busesWithDERs_Area);
         PSubs_Area_1toT = P_Area_1toT(1, 1:T);
@@ -409,6 +428,9 @@ while keepRunningIterations
 end
 %%
 sysInfo = truncateSysInfo(sysInfo, macroItr);
+if ~copf 
+    sysInfo = collectCentralizedInfo(sysInfo, simInfo);
+end
 %%
 % saveSCDPlots = true
 if Batt_percent > 0 && saveSCDPlots
@@ -491,56 +513,128 @@ if copf
     vald.loadShape = lambdaVals;
 
     vald.loadShapePV = pvCoeffVals;
-    vald.busesWithDERs_Area = area1Info.busesWithDERs_Area;
-    vald.Pmpp_AreaFull = area1Info.Pmpp_Area;
-    vald.Pmpp_Area = area1Info.Pmpp_Area(vald.busesWithDERs_Area);
-    vald.Sder_AreaFull = area1Info.S_der_Area;
+    % vald.busesWithDERs_Area = area1Info.busesWithDERs_Area;
+    vald.busesWithDERs = area1Info.busesWithDERs_Area;
 
-    vald.V_copf = V_Area_1toT;
-    vald.pL_AreaFull_1toT = area1Info.P_L_Area_1toT;
-    pLTotal_kW_1toT = sum(vald.pL_AreaFull_1toT)*kVA_B;
-    vald.qL_AreaFull_1toT = area1Info.Q_L_Area_1toT;
-    qLTotal_kVAr_1toT = sum(vald.qL_AreaFull_1toT)*kVA_B;
+    % vald.Pmpp_AreaFull = area1Info.Pmpp_Area;
+    vald.Pmpp_Full = area1Info.Pmpp_Area;
+
+    % vald.Pmpp_Area = area1Info.Pmpp_Area(vald.busesWithDERs_Area);
+    vald.Pmpp = area1Info.Pmpp_Area(vald.busesWithDERs);
+
+    % vald.Sder_AreaFull = area1Info.S_der_Area;
+    vald.Sder_Full = area1Info.S_der_Area;
+
+
+    % vald.V_copf = V_Area_1toT;
+    vald.V_1toT = V_Area_1toT;
+    % vald.pL_AreaFull_1toT = area1Info.P_L_Area_1toT;
+    vald.pL_Full_1toT = area1Info.P_L_Area_1toT;
+
+    % pLTotal_kW_1toT = sum(vald.pL_AreaFull_1toT)*kVA_B;
+    pLTotal_kW_1toT = sum(vald.pL_Full_1toT)*kVA_B;
+
+    % vald.qL_AreaFull_1toT = area1Info.Q_L_Area_1toT;
+    vald.qL_Full_1toT = area1Info.Q_L_Area_1toT;
+
+    % qLTotal_kVAr_1toT = sum(vald.qL_AreaFull_1toT)*kVA_B;
+    qLTotal_kVAr_1toT = sum(vald.qL_Full_1toT)*kVA_B;
+
     
     % vald.pD_AreaFull_1toT = area1Info.P_der_Area_1toT;
-    pD_AreaFull_1toT = area1Info.P_der_Area_1toT;
-    vald.pD_AreaFull_1toT = pD_AreaFull_1toT;
-    pDTotal_kW_1toT = sum(vald.pD_AreaFull_1toT)*kVA_B;
-    vald.qD_AreaFull_1toT = qD_AreaFull_1toT;
-    busesWithDERs_Area = area1Info.busesWithDERs_Area;
-    qD_onlyBusesWithDERs_1toT = qD_AreaFull_1toT(busesWithDERs_Area, 1:T);
-    pD_onlyBusesWithDERs_1toT = pD_AreaFull_1toT(busesWithDERs_Area, 1:T);
-    vald.pD_Area_1toT = pD_onlyBusesWithDERs_1toT;
-    vald.qD_Area_1toT = qD_onlyBusesWithDERs_1toT;
-    Sder_AreaFull = area1Info.S_der_Area;
-    Sder_onlyBusesWithDERs = Sder_AreaFull(busesWithDERs_Area);
-    vald.Sder_Area = Sder_onlyBusesWithDERs;
-    qDTotal_kVAr_1toT = sum(vald.qD_AreaFull_1toT)*kVA_B;
+    % pD_AreaFull_1toT = area1Info.P_der_Area_1toT;
+    pD_Full_1toT = area1Info.P_der_Area_1toT;
 
-    vald.qC_AreaFull = area1Info.Q_C_Area;
-    qCTotal_kVAr_1toT = repmat(sum(vald.qC_AreaFull), 1, T)*kVA_B;
+    % vald.pD_AreaFull_1toT = pD_AreaFull_1toT;
+    vald.pD_Full_1toT = pD_Full_1toT;
 
-    vald.busesWithBatt_Area = area1Info.busesWithBatts_Area;
-    vald.S_battMax_Area = area1Info.S_onlyBattBusesMax_Area; % Actually this has 128 elements, so is 'Full'
-    vald.Pd_Area_1toT = area1Info.Pd_Area_1toT;
-    vald.P_battMax_Area = area1Info.P_onlyBattBusesMax_Area;
-    PdTotal_kW_1toT = sum(vald.Pd_Area_1toT)*kVA_B;
-    vald.Pc_Area_1toT = area1Info.Pc_Area_1toT;
-    PcTotal_kW_1toT = sum(vald.Pc_Area_1toT)*kVA_B;
+    % pDTotal_kW_1toT = sum(vald.pD_AreaFull_1toT)*kVA_B;
+    pDTotal_kW_1toT = sum(vald.pD_Full_1toT)*kVA_B;
+
+    % vald.qD_AreaFull_1toT = qD_AreaFull_1toT;
+    % vald.qD_Full_1toT = qD_Full_1toT;
+
+    % busesWithDERs_Area = area1Info.busesWithDERs_Area;
+    busesWithDERs = area1Info.busesWithDERs_Area;
+
+    % qD_onlyBusesWithDERs_1toT = qD_AreaFull_1toT(busesWithDERs_Area, 1:T);
+    % qD_onlyBusesWithDERs_1toT = qD_Full_1toT(busesWithDERs, 1:T);
+    qD_1toT = areaInfo.qD_Area_1toT;
+    qD_onlyBusesWithDERs_1toT = qD_1toT;
+    % pD_onlyBusesWithDERs_1toT = pD_AreaFull_1toT(busesWithDERs_Area, 1:T);
+    pD_onlyBusesWithDERs_1toT = pD_Full_1toT(busesWithDERs, 1:T);
+
+    % vald.pD_Area_1toT = pD_onlyBusesWithDERs_1toT;
+    vald.pD_1toT = pD_onlyBusesWithDERs_1toT;
+
+    % vald.qD_Area_1toT = qD_onlyBusesWithDERs_1toT;
+    vald.qD_1toT = qD_onlyBusesWithDERs_1toT;
+
+    % Sder_AreaFull = area1Info.S_der_Area;
+    Sder_Full = area1Info.S_der_Area;
+
+    % Sder_onlyBusesWithDERs = Sder_AreaFull(busesWithDERs_Area);
+    Sder_onlyBusesWithDERs = Sder_Full(busesWithDERs);
+
+    % vald.Sder_Area = Sder_onlyBusesWithDERs;
+    vald.Sder = Sder_onlyBusesWithDERs;
+
+    % qDTotal_kVAr_1toT = sum(vald.qD_AreaFull_1toT)*kVA_B;
+    % qDTotal_kVAr_1toT = sum(vald.qD_Full_1toT)*kVA_B;
+    qDTotal_kVAr_1toT = sum(vald.qD_1toT)*kVA_B;
+    % vald.qC_AreaFull = area1Info.Q_C_Area;
+    vald.qC_Full = area1Info.Q_C_Area;
+
+    % qCTotal_kVAr_1toT = repmat(sum(vald.qC_AreaFull), 1, T)*kVA_B;
+    qCTotal_kVAr_1toT = repmat(sum(vald.qC_Full), 1, T)*kVA_B;
+
+    % vald.busesWithBatt_Area = area1Info.busesWithBatts_Area;
+    vald.busesWithBatts = area1Info.busesWithBatts_Area;
+
+    % vald.S_battMax_Area = area1Info.S_onlyBattBusesMax_Area; % Actually this has 128 elements, so is 'Full'
+    vald.S_battRated = area1Info.S_onlyBattBusesMax_Area; % Actually this has 128 elements, so is 'Full'
+
+    % vald.Pd_Area_1toT = area1Info.Pd_Area_1toT;
+    vald.Pd_1toT = area1Info.Pd_Area_1toT;
+
+    % vald.P_battMax_Area = area1Info.P_onlyBattBusesMax_Area;
+    vald.P_battRated = area1Info.P_onlyBattBusesMax_Area;
+
+    % PdTotal_kW_1toT = sum(vald.Pd_Area_1toT)*kVA_B;
+    PdTotal_kW_1toT = sum(vald.Pd_1toT)*kVA_B;
+
+    % vald.Pc_Area_1toT = area1Info.Pc_Area_1toT;
+    vald.Pc_1toT = area1Info.Pc_Area_1toT;
+
+    % PcTotal_kW_1toT = sum(vald.Pc_Area_1toT)*kVA_B;
+    PcTotal_kW_1toT = sum(vald.Pc_1toT)*kVA_B;
 
     PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
 
-    vald.B_Area_1toT = area1Info.B_Area_1toT;
-    BTotal_kWh_1toTh = sum(vald.B_Area_1toT)*kVA_B;
-    vald.B0_Area = area1Info.B0Vals_pu_Area;
-    vald.qB_Area_1toT = area1Info.qB_Area_1toT;
-    qBTotal_kVAr_1toT = sum(vald.qB_Area_1toT)*kVA_B;
+    % vald.B_Area_1toT = area1Info.B_Area_1toT;
+    vald.B_1toT = area1Info.B_Area_1toT;
+
+    % BTotal_kWh_1toTh = sum(vald.B_Area_1toT)*kVA_B;
+    BTotal_kWh_1toTh = sum(vald.B_1toT)*kVA_B;
+
+    % vald.B0_Area = area1Info.B0Vals_pu_Area;
+    vald.B0 = area1Info.B0Vals_pu_Area;
+
+    % vald.qB_Area_1toT = area1Info.qB_Area_1toT;
+    vald.qB_1toT = area1Info.qB_Area_1toT;
+
+    % qBTotal_kVAr_1toT = sum(vald.qB_Area_1toT)*kVA_B;
+    qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
 
     pTotal_kW_1toT = PdTotal_kW_1toT + pDTotal_kW_1toT - PcTotal_kW_1toT;
     qTotal_kVAr_1toT = qDTotal_kVAr_1toT + qBTotal_kVAr_1toT + qCTotal_kVAr_1toT;
     
-    vald.nDER_Area = area1Info.nDER_Area;
-    vald.nBatt_Area = area1Info.nBatt_Area;
+    % vald.nDER_Area = area1Info.nDER_Area;
+    vald.nDER = area1Info.nDER_Area;
+
+    % vald.nBatt_Area = area1Info.nBatt_Area;
+    vald.nBatt = area1Info.nBatt_Area;
+
     vald.simInfo = simInfo;
 end
 %%
