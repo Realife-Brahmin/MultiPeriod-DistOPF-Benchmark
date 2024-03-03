@@ -6,16 +6,28 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     kVA_B = sysInfo.kVA_B;
     numAreas = sysInfo.numAreas;
     
-    sysInfo.nDER = 0;
-    sysInfo.nBatt = 0;
+    % sysInfo already has nDER and nBatt
+    nDER = sysInfo.nDER;
+    nBatt = sysInfo.nBatt;
+
+    sysInfo.P_L_1toT, sysInfo.Q_L_1toT = deal( zeros(m, T) );
+    sysInfo.V_1toT = zeros(N, T);
+    sysInfo.Q_C_Full = zeros(N, 1);
     
+    sysInfo.busesWithDERs, sysInfo.Sder, sysInfo.Pmpp = deal( zeros(nDER, 1) );
+    sysInfo.pD_1toT, sysInfo.qD_1toT = deal( zeros(nDER, T) );
+
+    sysInfo.busesWithBatts, sysInfo.B0 = deal( zeros(nBatts, 1) );
+    sysInfo.Sbatt, sysInfo.Pbatt = deal( zeros(nBatt, 1) );
+    sysInfo.B_1toT, sysInfo.Pd_1toT, sysInfo.Pc_1toT, sysInfo.qD_1toT = deal( zeros(nBatt, T) );
+
     for areaNum = 1:numAreas
         areaInfo = sysInfo.Area{areaNum};
         
         error("Have you inserted actual bus1, actual fb and actual tb values for the area?")
         
         % busData, branchData
-        bus1 = areaInfo.bus1_Actual;
+        bus1 = areaInfo.bus1_Actual; % How to get this?
         fb = areaInfo.fb_Actual;
         tb = areaInfo.tb_Actual;
         % sysInfo.PL0(bus1) = areaInfo.
@@ -32,7 +44,6 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % numDERBus will be like [1 7 22 85] which will only contain values
         % between 1:n_DER_System, so no actual bus numbers
         
-        sysInfo.nDER = sysInfo.nDER + areaInfo.nDER_Area;
         % sysInfo.busesWithDERs = 
         % sysInfo.
         sysInfo.Sder(numDERBus) = areaInfo.S_der_Area;
@@ -44,8 +55,7 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % Battery Parameters
         % numBattBus will be like [1 7 22 85] which will only contain values
         % between 1:n_DER_System, so no actual bus numbers
-        sysInfo.nBatt = sysInfo.nBatt + areaInfo.nBatt_Area;
-        sysInfo.busesWithBatts = areaInfo.busesWithBatts_Area;
+        % sysInfo.busesWithBatts(numBattBus) = areaInfo.busesWithBatts_Area;
         sysInfo.Sbatt(numBattBus) = areaInfo.S_battMax_Area; % currently named as S_battRated in vald
         sysInfo.Pbatt(numBattBus) = areaInfo.P_battMax_Area; % currently named as P_battRated in vald
         sysInfo.B0(numBattBus) = areaInfo.B0Vals_pu_Area; 
