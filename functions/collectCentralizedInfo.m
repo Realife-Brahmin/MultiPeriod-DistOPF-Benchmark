@@ -10,16 +10,16 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     nDER = sysInfo.nDER;
     nBatt = sysInfo.nBatt;
 
-    sysInfo.P_L_1toT, sysInfo.Q_L_1toT = deal( zeros(m, T) );
+    [sysInfo.P_L_1toT, sysInfo.Q_L_1toT] = deal( zeros(m, T) );
     sysInfo.V_1toT = zeros(N, T);
     sysInfo.Q_C_Full = zeros(N, 1);
-    
-    sysInfo.busesWithDERs, sysInfo.Sder, sysInfo.Pmpp = deal( zeros(nDER, 1) );
-    sysInfo.pD_1toT, sysInfo.qD_1toT = deal( zeros(nDER, T) );
+    keyboard;
+    [sysInfo.busesWithDERs, sysInfo.Sder, sysInfo.Pmpp] = deal( zeros(nDER, 1) );
+    [sysInfo.pD_1toT, sysInfo.qD_1toT] = deal( zeros(nDER, T) );
 
-    sysInfo.busesWithBatts, sysInfo.B0 = deal( zeros(nBatts, 1) );
-    sysInfo.Sbatt, sysInfo.Pbatt = deal( zeros(nBatt, 1) );
-    sysInfo.B_1toT, sysInfo.Pd_1toT, sysInfo.Pc_1toT, sysInfo.qD_1toT = deal( zeros(nBatt, T) );
+    [sysInfo.busesWithBatts, sysInfo.B0] = deal( zeros(nBatts, 1) );
+    [sysInfo.Sbatt, sysInfo.Pbatt] = deal( zeros(nBatt, 1) );
+    [sysInfo.B_1toT, sysInfo.Pd_1toT, sysInfo.Pc_1toT, sysInfo.qD_1toT] = deal( zeros(nBatt, T) );
 
     for areaNum = 1:numAreas
         areaInfo = sysInfo.Area{areaNum};
