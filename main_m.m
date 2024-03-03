@@ -73,7 +73,7 @@ else
     error("Unknown Power System")
 end
 
-% actualBusNums = [1:36, 119, 126, 127, 117, 54:68, 122, 118, 37:53, 120, 125, 128, 69:116, 121, 123, 124]';
+actualBusNums = [1:36, 119, 126, 127, 117, 54:68, 122, 118, 37:53, 120, 125, 128, 69:116, 121, 123, 124]';
 % N = max(actualBusNums);
 
 if strcmp(objFunction, "loss_min")
@@ -123,6 +123,8 @@ sysInfo.nDER = 0; % will be incremented later
 sysInfo.numRelationships = numRelationships;
 sysInfo.numAreas = numAreas;
 sysInfo.numChildAreas = numChildAreas; % An array of containing no. of 
+sysInfo.actualBusNums = actualBusNums;
+
 % child areas for each area
 sysInfo.systemName = systemName;
 sysInfo.isLeaf = isLeaf;
