@@ -24,7 +24,7 @@ logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
-numAreas = 1
+numAreas = 4
 T = 1
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
@@ -118,6 +118,8 @@ end
 sysInfo = struct();
 sysInfo.N = N;
 sysInfo.m = m;
+sysInfo.nBatt = 0; % will be incremented later
+sysInfo.nDER = 0; % will be incremented later
 sysInfo.numRelationships = numRelationships;
 sysInfo.numAreas = numAreas;
 sysInfo.numChildAreas = numChildAreas; % An array of containing no. of 
@@ -288,7 +290,8 @@ while keepRunningIterations
         areaInfo = sysInfo.Area{Area};
         N_Area = areaInfo.N_Area;
         m_Area = areaInfo.m_Area;
-    
+        nDER_Area = areaInfo.nDER_Area;
+        nBatt_Area = areaInfo.nBatt_Area;
         % indices_Pij = areaInfo.indices_Pij;
         P_Area_1toT = xVals_Area(areaInfo.indices_Pij); %m_Areax1
         Q_Area_1toT = xVals_Area(areaInfo.indices_Qij); %m_Areax1
@@ -310,6 +313,11 @@ while keepRunningIterations
         PSubs_1toT_vs_macroItr(1:T, macroItr+1) = PSubs_1toT_vs_macroItr(1:T, macroItr+1) + areaInfo.PSubs_1toT;
         PSubsCost_allT_vs_macroItr(macroItr+1) = PSubsCost_allT_vs_macroItr(macroItr+1) + areaInfo.PSubsCost_allT;
         PSubsCost_1toT_vs_macroItr(1:T, macroItr+1) = PSubsCost_1toT_vs_macroItr(1:T, macroItr+1) + areaInfo.PSubsCost_1toT;
+        
+        if macroItr == 0
+            sysInfo.nDER = sysInfo.nDER + areaInfo.nDER_Area;
+            sysInfo.nBatt = sysInfo.nBatt + areaInfo.nBatt_Area;
+        end
 
         sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;  
         sysInfo.PLoss_1toT_vs_macroItr = PLoss_1toT_vs_macroItr;
