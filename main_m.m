@@ -261,9 +261,9 @@ S12_1toT_vs_macroItr = zeros(numRelationships, T, macroItrMax);
 Residuals_1toT_vs_macroItr = zeros(2*numRelationships, T, macroItrMax);
 
 while keepRunningIterations
-    for Area = 1:numAreas
+    % for Area = 1:numAreas
     % for Area = 1
-    % for Area = [2 3 1 4]
+    for Area = [2 3 1 4]
         macroItr = simInfo.macroItr;
         myfprintf(true, "Macro-iteration %d: Running OPF for Area %d.\n", macroItr+1, Area);
 
@@ -320,7 +320,8 @@ while keepRunningIterations
             sysInfo.nDER = sysInfo.nDER + areaInfo.nDER_Area;
             sysInfo.nBatt = sysInfo.nBatt + areaInfo.nBatt_Area;
         end
-
+        
+        sysInfo.Area{Area} = areaInfo;
         sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;  
         sysInfo.PLoss_1toT_vs_macroItr = PLoss_1toT_vs_macroItr;
         sysInfo.PSubs_allT_vs_macroItr = PSubs_allT_vs_macroItr;
