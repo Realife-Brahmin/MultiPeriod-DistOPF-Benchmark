@@ -263,9 +263,9 @@ S12_1toT_vs_macroItr = zeros(numRelationships, T, macroItrMax);
 Residuals_1toT_vs_macroItr = zeros(2*numRelationships, T, macroItrMax);
 
 while keepRunningIterations
-    % for Area = 1:numAreas
+    for Area = 1:numAreas
     % for Area = 1
-    for Area = [2 3 1 4]
+    % for Area = [2 3 1 4]
         macroItr = simInfo.macroItr;
         myfprintf(true, "Macro-iteration %d: Running OPF for Area %d.\n", macroItr+1, Area);
 
@@ -303,6 +303,7 @@ while keepRunningIterations
         vAll_Area_1toT = xVals_Area(areaInfo.indices_vAllj); %N_Areax1
         V_Area_1toT = sqrt(vAll_Area_1toT);
         areaInfo.V_Area_1toT = V_Area_1toT;
+        sysInfo.Area{Area} = areaInfo;
         qD_Area_1toT = xVals_Area(areaInfo.indices_qDj);
         qD_AreaFull_1toT = sparseArrayFromDense(qD_Area_1toT, N_Area, areaInfo.busesWithDERs_Area);
         PSubs_Area_1toT = P_Area_1toT(1, 1:T);
@@ -325,29 +326,23 @@ while keepRunningIterations
             sysInfo.Batt_or_not(areaInfo.busesWithBatts_Actual) = 1;
 
         elseif macroItr == 1
-            areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
-            areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
-        
-        else
-            try
-                % Replace 'areaInfo' with your struct variable and 'DERBusNums_Actual' with the field name you are checking
-                if ~isfield(areaInfo, 'DERBusNums_Actual')
-                    % If the field does not exist, throw an error
-                    error('The field DERBusNums_Actual does not exist in areaInfo.');
-                end
+            areaInfo = sysInfo.Area{Area};
+            % areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
+            areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual)
+            sysInfo.Area{Area} = areaInfo;
 
-                % If the field exists, proceed with your code
-                disp('The field DERBusNums_Actual exists in areaInfo. All good!');
-            catch ME
-                % Handle the error
-                disp(['Error occurred: ', ME.message]);
+        else
+            keyboard;
+            if ~isfield(areaInfo, 'DERBusNums_Actual')
+                error("Where is DERBusNums_Actual?")
+            else
+                myfprintf(true, "All good.");
             end
-            % isfield(areaInfo, DERBusNums_Actual);
 
         end
         
 
-        sysInfo.Area{Area} = areaInfo;
+        % sysInfo.Area{Area} = areaInfo;
         
         sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;  
         sysInfo.PLoss_1toT_vs_macroItr = PLoss_1toT_vs_macroItr;
