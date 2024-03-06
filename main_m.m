@@ -323,13 +323,32 @@ while keepRunningIterations
             sysInfo.nBatt = sysInfo.nBatt + areaInfo.nBatt_Area;
             sysInfo.DER_or_not(areaInfo.busesWithDERs_Actual) = 1;
             sysInfo.Batt_or_not(areaInfo.busesWithBatts_Actual) = 1;
+
         elseif macroItr == 1
             areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
             areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
+        
+        else
+            try
+                % Replace 'areaInfo' with your struct variable and 'DERBusNums_Actual' with the field name you are checking
+                if ~isfield(areaInfo, 'DERBusNums_Actual')
+                    % If the field does not exist, throw an error
+                    error('The field DERBusNums_Actual does not exist in areaInfo.');
+                end
+
+                % If the field exists, proceed with your code
+                disp('The field DERBusNums_Actual exists in areaInfo. All good!');
+            catch ME
+                % Handle the error
+                disp(['Error occurred: ', ME.message]);
+            end
+            % isfield(areaInfo, DERBusNums_Actual);
+
         end
         
 
         sysInfo.Area{Area} = areaInfo;
+        
         sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;  
         sysInfo.PLoss_1toT_vs_macroItr = PLoss_1toT_vs_macroItr;
         sysInfo.PSubs_allT_vs_macroItr = PSubs_allT_vs_macroItr;
@@ -351,7 +370,7 @@ while keepRunningIterations
         end
     end
 
-    keyboard;
+    % keyboard;
     if ~copf
         for relationshipNum = 1 : numRelationships
     

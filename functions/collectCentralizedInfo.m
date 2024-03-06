@@ -21,6 +21,8 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     [sysInfo.B_1toT, sysInfo.Pd_1toT, sysInfo.Pc_1toT, sysInfo.qD_1toT] = deal( zeros(nBatt, T) );
 
     for areaNum = 1:numAreas
+    % for areaNum = [2 3 1 4]
+
         areaInfo = sysInfo.Area{areaNum};
         
         % error("Have you inserted actual bus1, actual fb and actual tb values for the area?")
@@ -32,6 +34,7 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % sysInfo.PL0(bus1) = areaInfo.
         sysInfo.P_L_1toT(bus1, 1:T) = areaInfo.P_L_Area_1toT;
         sysInfo.Q_L_1toT(bus1, 1:T) = areaInfo.Q_L_Area_1toT;
+        % keyboard;
         sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT;
         sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area;
 
@@ -46,12 +49,14 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % sysInfo.busesWithDERs = 
         % sysInfo.
 
-        keyboard;
+        % keyboard;
+        numDERBus = areaInfo.DERBusNums_Actual;
         sysInfo.Sder(numDERBus) = areaInfo.S_der_Area;
         sysInfo.Pmpp(numDERBus) = areaInfo.Pmpp_Area;
         sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT;
         sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT;
         
+        keyboard;
 
         % Battery Parameters
         % numBattBus will be like [1 7 22 85] which will only contain values
