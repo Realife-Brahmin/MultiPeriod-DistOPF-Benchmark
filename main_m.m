@@ -269,8 +269,8 @@ while keepRunningIterations
         macroItr = simInfo.macroItr;
         myfprintf(true, "Macro-iteration %d: Running OPF for Area %d.\n", macroItr+1, Area);
 
-        v_parAr_1toT = v1_1toT(Area, 1:T)
-        S_chArs_1toT = S12_allRelationships_1toT(CBTable.parentArea == Area, 1:T)
+        v_parAr_1toT = v1_1toT(Area, 1:T);
+        S_chArs_1toT = S12_allRelationships_1toT(CBTable.parentArea == Area, 1:T);
 
         if macroItr == 0
             areaInfo.Area = Area;
@@ -287,7 +287,7 @@ while keepRunningIterations
         
 %%
         nVars1_Area = length(xVals_Area)/T;
-        xVals_Area_1toT = reshape(xVals_Area, nVars1_Area, T)
+        xVals_Area_1toT = reshape(xVals_Area, nVars1_Area, T);
         % macroItr = simInfo.macroItr;
         
         myfprintf(true, fid, "Current Macro-iteration %d: OPF for Area %d computed.\n", macroItr+1, Area)
@@ -332,8 +332,11 @@ while keepRunningIterations
             sysInfo.Area{Area} = areaInfo;
 
         else
+            fprintf("Printing out area %d for no reason AA: macroItr = %d", Area, macroItr)
+            disp(length(fieldnames(sysInfo.Area{Area})));
             keyboard;
-            areaInfo = sysInfo.Area{Area}
+
+            % areaInfo = sysInfo.Area{Area}
             if ~isfield(areaInfo, 'DERBusNums_Actual')
                 error("Where is DERBusNums_Actual?")
             else
@@ -354,6 +357,11 @@ while keepRunningIterations
         % keyboard
     end
     
+    % for i = 1:numAreas
+        fprintf("Printing out area 1 for no reason A: macroItr = %d", macroItr)
+        disp(length(fieldnames(sysInfo.Area{1})));
+    % end
+
     myfprintf(true, "Macro-iteration %d: OPF's for all Areas completed. Checking for convergence.\n", macroItr+1);
     
     if macroItr == 0
@@ -400,7 +408,9 @@ while keepRunningIterations
                 maxResidual_vs_macroItr_allT(macroItr+1) = currentMaxResidual_1toT;
                 myfprintf(true, "It is even bigger than the previous biggest residual.\n");
             end
-    
+            
+            fprintf("Printing out area 1 for no reason B: macroItr = %d", macroItr)
+            disp(length(fieldnames(sysInfo.Area{1})));
         end
         
         myfprintf(true, "Macro-iteration %d: Checking for convergence among all connected areas completed.\n", macroItr+1);
@@ -417,6 +427,9 @@ while keepRunningIterations
             %Communication-
             myfprintf(true, "Since there is still a difference in boundary variables, " + ...
                 "let's exchange boundary variables.\n")
+            
+            fprintf("Printing out area 1 for no reason C: macroItr = %d", macroItr)
+            disp(length(fieldnames(sysInfo.Area{1})));
 
             for relationshipNum = 1:numRelationships
                 parAr = CBTable.parentArea(relationshipNum);
@@ -457,7 +470,10 @@ while keepRunningIterations
 
     
                 end
-    
+                
+                fprintf("Printing out area 1 for no reason D: macroItr = %d", macroItr)
+                disp(length(fieldnames(sysInfo.Area{1})));
+
             end
 
             simInfo.macroItr = macroItr + 1;

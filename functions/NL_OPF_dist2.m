@@ -140,8 +140,18 @@ function [x, sysInfo, simInfo, ...
     areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, systemName, numAreas, ...
     CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', displayTables);
     
+    if macroItr > 0
+        fprintf("Printing out area %d for before exchangeCompVars: macroItr = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
+    end
+
     areaInfo = exchangeCompVars(areaInfo, S_chArs_1toT);
     
+    if macroItr > 0
+        fprintf("Printing out area %d after exchangeCompVars: macroItr = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
+    end
+
     myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
         "Constructing Aeq and beq for Area %d.\n" + ...
         "***********\n", Area); 
@@ -154,6 +164,12 @@ function [x, sysInfo, simInfo, ...
     folderNameComparison = strcat(dirPath, filesep, "..", filesep, "processedData", filesep, systemName, filesep, "numAreas_", num2str(Area), filesep);
     ext = ".csv";
     [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
+
+    if macroItr > 0
+        fprintf("Printing out area %d after LinEqualities: macroItr = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
+    end
+
     writematrix(Aeq, strcat(folderNameComparison, "Aeq_B", ext));
     writematrix(beq, strcat(folderNameComparison, "beq_B", ext));
     writematrix(lb, strcat(folderNameComparison, "lb_B", ext));
@@ -194,8 +210,8 @@ function [x, sysInfo, simInfo, ...
     % stepTol = simInfo.alg.stepTol;
     % constraintTol = simInfo.alg.constraintTol;
     % optimalityTol = simInfo.alg.optimalityTol;
-    % displayIterations = 'off';
-    displayIterations = 'iter-detailed';
+    displayIterations = 'off';
+    % displayIterations = 'iter-detailed';
 % <<<<<<< HEAD
     % doPlot = true; % Set this to false if you don't want to plot
 
@@ -393,6 +409,9 @@ function [x, sysInfo, simInfo, ...
     areaInfo.fval = fval;
     areaInfo.xvals = xVals_Area;
     sysInfo.Area{Area} = areaInfo;
+    
+    fprintf("Printing out area %d before exiting NL_OPF_dist2: macroItr = %d", Area, macroItr)
+    disp(length(fieldnames(sysInfo.Area{Area})));
 
     if fileOpenedFlag
         fclose(fid);
