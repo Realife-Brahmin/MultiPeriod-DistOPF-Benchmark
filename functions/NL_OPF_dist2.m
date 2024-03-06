@@ -314,8 +314,17 @@ function [x, sysInfo, simInfo, ...
     if fid == -1
         error('Failed to open the file for writing.');
     end
-
+    
+    if macroItr > 0
+        fprintf("Printing out area %d before getProblemSize: macroItr = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
+    end
     [nLinEqnsT, nNonLinEqnsT, nVarsT, areaInfo] = getProblemSize(areaInfo, T);
+    if macroItr > 0
+        fprintf("Printing out area %d after getProblemSize: macroItr = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
+    end
+
     kVA_B = sysInfo.kVA_B;
     kV_B = sysInfo.kV_B;
 
@@ -338,8 +347,16 @@ function [x, sysInfo, simInfo, ...
     % saveSCDPlots = false;
     % saveSCDPlots = true;
     % keyboard;
+    if macroItr  > 0
+        fprintf("Printing out area %d before checkForSCD: macroItr = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
+    end
     if ~noBatteries && saveSCDPlots
         checkForSCD(sysInfo, simInfo, areaInfo, T, x, 'savePlots', true);
+    end
+    if macroItr > 0
+        fprintf("Printing out area %d after checkForSCD: macroItr = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
     end
     
     time_dist(macroItr+1, Area) = t3;
