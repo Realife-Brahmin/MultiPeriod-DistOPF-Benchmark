@@ -323,6 +323,9 @@ while keepRunningIterations
             sysInfo.nBatt = sysInfo.nBatt + areaInfo.nBatt_Area;
             sysInfo.DER_or_not(areaInfo.busesWithDERs_Actual) = 1;
             sysInfo.Batt_or_not(areaInfo.busesWithBatts_Actual) = 1;
+        elseif macroItr == 1
+            areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
+            areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
         end
         
 
@@ -339,11 +342,16 @@ while keepRunningIterations
     myfprintf(true, "Macro-iteration %d: OPF's for all Areas completed. Checking for convergence.\n", macroItr+1);
     
     if macroItr == 0
-        sysInfo.busesWithDERs = find(sysInfo.DER_or_not);
-        sysInfo.busesWithBatts = find(sysInfo.Batt_or_not);
+        myfprintf(true, "Just collecting some mappings for DER and Battery Bus Indices")
+        if DER_percent > 0 
+            sysInfo.busesWithDERs = find(sysInfo.DER_or_not);
+        end
+        if Batt_percent > 0
+            sysInfo.busesWithBatts = find(sysInfo.Batt_or_not);
+        end
     end
 
-    % keyboard;
+    keyboard;
     if ~copf
         for relationshipNum = 1 : numRelationships
     
