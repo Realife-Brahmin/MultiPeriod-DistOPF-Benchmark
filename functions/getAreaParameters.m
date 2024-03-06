@@ -87,11 +87,20 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
 
     % DER Configuration:
     areaInfo.busesWithDERs_Area0 = find(areaInfo.S_der_Area0); % all non-zero element indices
+    areaInfo.busesWithDERs_Actual0 = areaInfo.bus_Actual(areaInfo.busesWithDERs_Area0);
     areaInfo.busesWithDERs_Area = find(areaInfo.S_der_Area); % all non-zero element indices
+    areaInfo.busesWithDERs_Actual = areaInfo.bus_Actual(areaInfo.busesWithDERs_Area);
+
     areaInfo.nDER_Area0 = length(areaInfo.busesWithDERs_Area0);
+
     areaInfo.nDER_Area = length(areaInfo.busesWithDERs_Area);
     areaInfo.busesWithBatts_Area0 = find(areaInfo.S_battMax_Area0);
+    areaInfo.busesWithBatts_Actual0 = areaInfo.bus_Actual(areaInfo.busesWithBatts_Area0);
+
     areaInfo.busesWithBatts_Area = find(areaInfo.S_battMax_Area);
+    areaInfo.busesWithBatts_Actual = areaInfo.bus_Actual(areaInfo.busesWithBatts_Area);
+    % keyboard;
+
     areaInfo.nBatt_Area0 = length(areaInfo.busesWithBatts_Area0);
     areaInfo.nBatt_Area = length(areaInfo.busesWithBatts_Area);
 
