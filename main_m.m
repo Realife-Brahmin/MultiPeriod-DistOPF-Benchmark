@@ -327,12 +327,13 @@ while keepRunningIterations
 
         elseif macroItr == 1
             areaInfo = sysInfo.Area{Area};
-            % areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
+            areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
             areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual)
             sysInfo.Area{Area} = areaInfo;
 
         else
             keyboard;
+            areaInfo = sysInfo.Area{Area}
             if ~isfield(areaInfo, 'DERBusNums_Actual')
                 error("Where is DERBusNums_Actual?")
             else
@@ -374,10 +375,10 @@ while keepRunningIterations
             myfprintf(true, "Checking for convergence between parent Area %d and child Area %d\n", parAr, chAr);
 
             parentAreaConnectingBus = CBTable.conBus_parentAreaTo(relationshipNum);
-            S12_fromParent_1toT = reshape(S_Areas_1toT(parentAreaConnectingBus - 1, parAr, 1:T), 1, T)
-            S12_intoChild_1toT = reshape(S_parent_1toT(chAr, 1:T), 1, T)
+            S12_fromParent_1toT = reshape(S_Areas_1toT(parentAreaConnectingBus - 1, parAr, 1:T), 1, T);
+            S12_intoChild_1toT = reshape(S_parent_1toT(chAr, 1:T), 1, T);
     
-            delta_S12_1toT = S12_fromParent_1toT - S12_intoChild_1toT
+            delta_S12_1toT = S12_fromParent_1toT - S12_intoChild_1toT;
     
             v_parentSide_1toT = reshape(v_Areas_1toT(parentAreaConnectingBus, parAr, 1:T), 1, T);
             v_childSide_1toT = v1_1toT(chAr, 1:T);
@@ -385,7 +386,7 @@ while keepRunningIterations
             v1_1toT_vs_macroItr(relationshipNum, 1:T, macroItr+1) = v_parentSide_1toT;
             S12_1toT_vs_macroItr(relationshipNum, 1:T, macroItr+1) = S12_intoChild_1toT;
 
-            delta_v_1toT = v_parentSide_1toT - v_childSide_1toT
+            delta_v_1toT = v_parentSide_1toT - v_childSide_1toT;
     
             Residual_Area_1toT = reshape([delta_S12_1toT; delta_v_1toT], 2*T, 1);
             
@@ -436,23 +437,23 @@ while keepRunningIterations
                     myfprintf(true, "***Macro-iteration %d Communication Voltage:****\n", macroItr+1)
                     v1_1toT(chAr, 1:T) = a(2)*reshape(V_iter(macroItr, busParTo, parAr, 1:T), 1, T) + ...
                         a(1)*reshape(V_iter(macroItr+1, busParTo, parAr, 1:T), 1, T) + ...
-                        (1-sum(a))*reshape(v_Areas_1toT(busParTo, parAr, 1:T), 1, T)
-                    disp(v1_1toT(char, 1:T))
+                        (1-sum(a))*reshape(v_Areas_1toT(busParTo, parAr, 1:T), 1, T);
+                    % disp(v1_1toT(char, 1:T))
 
                     myfprintf(true, "***Macro-iteration %d Communication Power:****\n", macroItr+1)
 
                     S12_allRelationships_1toT(relationshipNum, 1:T) = a(2)*reshape(Se_iter(macroItr-1, chAr, 1:T), 1, T)+...
                         a(1)*reshape(Se_iter(macroItr, chAr, 1:T), 1, T)+...
                         (1-sum(a))*S_parent_1toT(chAr, 1:T);
-                    disp(S12_allRelationships_1toT(relationshipNum, 1:T));
+                    % disp(S12_allRelationships_1toT(relationshipNum, 1:T));
                 else
                     myfprintf(true, "***Macro-iteration %d Communication Voltage:****\n", macroItr+1)
-                    v1_1toT(chAr, 1:T) = v_Areas_1toT(busParTo, parAr, 1:T)
-                    disp(v1_1toT(chAr, 1:T))
+                    v1_1toT(chAr, 1:T) = v_Areas_1toT(busParTo, parAr, 1:T);
+                    % disp(v1_1toT(chAr, 1:T))
 
                     myfprintf(true, "***Macro-iteration %d Communication Power:****\n", macroItr+1)
-                    S12_allRelationships_1toT(relationshipNum, 1:T) = S_parent_1toT(chAr, 1:T)
-                    disp(S12_allRelationships_1toT(relationshipNum, 1:T));
+                    S12_allRelationships_1toT(relationshipNum, 1:T) = S_parent_1toT(chAr, 1:T);
+                    % disp(S12_allRelationships_1toT(relationshipNum, 1:T));
 
     
                 end
