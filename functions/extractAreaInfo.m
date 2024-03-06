@@ -94,22 +94,33 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     branchData_Area = readmatrix(filenameBranchData_Area);
     branchDataTable_Area = array2table(branchData_Area, 'VariableNames', {'fb', 'tb', 'R', 'X'});
 
-    filenameActualBusNums_Area = strcat(systemDataFolder, "area", num2str(Area), '/powerdataActualBusNums.csv');
-    opts = detectImportOptions(filenameActualBusNums_Area);
+    filenameBusDataActualBusNums_Area = strcat(systemDataFolder, "area", num2str(Area), '/powerdataActualBusNums.csv');
+    opts = detectImportOptions(filenameBusDataActualBusNums_Area);
     opts.DataLines = 2;
     opts.VariableNamesLine = 1;
-    busDataActualBusNumsTable_Area = readtable(filenameActualBusNums_Area, opts);
+    busDataActualBusNumsTable_Area = readtable(filenameBusDataActualBusNums_Area, opts);
+    busDataTable_Area.busActual = busDataActualBusNumsTable_Area.bus;
     
+    filenameBranchDataActualBusNums_Area = strcat(systemDataFolder, "area", num2str(Area), '/linedataActualBusNums.csv');
+    opts = detectImportOptions(filenameBranchDataActualBusNums_Area);
+    opts.DataLines = 2;
+    opts.VariableNamesLine = 1;
+    branchDataActualBusNumsTable_Area = readtable(filenameBranchDataActualBusNums_Area, opts);
+    branchDataTable_Area.fbActual = branchDataActualBusNumsTable_Area.fbus;
+    branchDataTable_Area.tbActual = branchDataActualBusNumsTable_Area.tbus;
+
     if displayTables
         display(busDataTable_Area)
         display(branchDataTable_Area)
         display(busDataActualBusNumsTable_Area)
     end
     
-    writetable(sortrows(busDataTable_Area, "bus"), "sortedBusData.csv")
+    % writetable(sortrows(busDataTable_Area, "bus"), "sortedBusData.csv")
     % Graph Formation
     fb_Area = branchDataTable_Area.fb;
     tb_Area = branchDataTable_Area.tb;
+    % fbActual = barnchDataTable_Area.fbActual;
+    % tbActual = branchDataTable_Area.tbActual;
     graph_Area = graph(fb_Area, tb_Area);
     
     % Line Data
