@@ -13,21 +13,20 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     [sysInfo.P_L_1toT, sysInfo.Q_L_1toT] = deal( zeros(m, T) );
     sysInfo.V_1toT = zeros(N, T);
     sysInfo.Q_C_Full = zeros(N, 1);
-    keyboard;
     [sysInfo.busesWithDERs, sysInfo.Sder, sysInfo.Pmpp] = deal( zeros(nDER, 1) );
     [sysInfo.pD_1toT, sysInfo.qD_1toT] = deal( zeros(nDER, T) );
 
-    [sysInfo.busesWithBatts, sysInfo.B0] = deal( zeros(nBatts, 1) );
+    [sysInfo.busesWithBatts, sysInfo.B0] = deal( zeros(nBatt, 1) );
     [sysInfo.Sbatt, sysInfo.Pbatt] = deal( zeros(nBatt, 1) );
     [sysInfo.B_1toT, sysInfo.Pd_1toT, sysInfo.Pc_1toT, sysInfo.qD_1toT] = deal( zeros(nBatt, T) );
 
     for areaNum = 1:numAreas
         areaInfo = sysInfo.Area{areaNum};
         
-        error("Have you inserted actual bus1, actual fb and actual tb values for the area?")
+        % error("Have you inserted actual bus1, actual fb and actual tb values for the area?")
         
         % busData, branchData
-        bus1 = areaInfo.bus1_Actual; % How to get this?
+        bus1 = areaInfo.bus_Actual; % How to get this?
         fb = areaInfo.fb_Actual;
         tb = areaInfo.tb_Actual;
         % sysInfo.PL0(bus1) = areaInfo.
@@ -46,6 +45,8 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         
         % sysInfo.busesWithDERs = 
         % sysInfo.
+
+        keyboard;
         sysInfo.Sder(numDERBus) = areaInfo.S_der_Area;
         sysInfo.Pmpp(numDERBus) = areaInfo.Pmpp_Area;
         sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT;
