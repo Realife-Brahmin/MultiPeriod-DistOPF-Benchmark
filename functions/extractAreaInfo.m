@@ -83,6 +83,10 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
 
     Area = areaInfo.Area;
     
+    % fprintf("Womp Womp MacroItr = %d" ,macroItr)
+    % fprintf("Printing out area 1 for no reason A: macroItr = %d", macroItr)
+    % disp(length(fieldnames(sysInfo.Area{1})));
+
     filenameBusData_Area = strcat(systemDataFolder, "area", num2str(Area), filesep, 'powerdata.csv');
     busData_Area = readmatrix(filenameBusData_Area);
     busDataTable_Area = array2table(busData_Area, 'VariableNames', {'bus', 'P_L', 'Q_L', 'Q_C', 'P_der', 'busType'});
@@ -114,6 +118,7 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
         display(branchDataTable_Area)
         display(busDataActualBusNumsTable_Area)
     end
+    
     
     % writetable(sortrows(busDataTable_Area, "bus"), "sortedBusData.csv")
     % Graph Formation
