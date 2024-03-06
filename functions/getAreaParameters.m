@@ -36,9 +36,12 @@ function areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branc
     areaInfo.Area = Area;
     areaInfo.N_Area = length(busDataTable_pu_Area.bus);
     areaInfo.m_Area = length(branchDataTable.fb);
+    areaInfo.bus_Area = busDataTable_pu_Area.bus;
+    areaInfo.bus_Actual = busDataTable_pu_Area.busActual; 
     areaInfo.fb_Area = branchDataTable.fb;
     areaInfo.tb_Area = branchDataTable.tb;
-
+    areaInfo.fb_Actual = branchDataTable.fbActual;
+    areaInfo.tb_Actual = branchDataTable.tbActual;
     % areaInfo.P_L_Area = busDataTable_pu_Area.P_L;
     % keyboard;
     areaInfo.P_L_Area_1toT = busDataTable_pu_Area.P_L_1toT;
