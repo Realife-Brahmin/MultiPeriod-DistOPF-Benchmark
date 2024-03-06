@@ -137,6 +137,8 @@ sysInfo.CBTable = CBTable;
 % sysInfo.fbus = ?
 % sysInfo.tbus = ?
 % sysInfo.branchData = ?
+sysInfo.DER_or_not = zeros(N, 1);
+sysInfo.Batt_or_not = zeros(N, 1);
 sysInfo.Q_C_Full = zeros(N, 1);
 sysInfo.P_L_1toT = zeros(N, T);
 sysInfo.P_L_Total_1toT = zeros(T, 1);
@@ -319,8 +321,11 @@ while keepRunningIterations
         if macroItr == 0
             sysInfo.nDER = sysInfo.nDER + areaInfo.nDER_Area;
             sysInfo.nBatt = sysInfo.nBatt + areaInfo.nBatt_Area;
+            sysInfo.DER_or_not(areaInfo.busesWithDERs_Actual) = 1;
+            sysInfo.Batt_or_not(areaInfo.busesWithBatts_Actual) = 1;
         end
         
+
         sysInfo.Area{Area} = areaInfo;
         sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;  
         sysInfo.PLoss_1toT_vs_macroItr = PLoss_1toT_vs_macroItr;
@@ -333,6 +338,12 @@ while keepRunningIterations
     
     myfprintf(true, "Macro-iteration %d: OPF's for all Areas completed. Checking for convergence.\n", macroItr+1);
     
+    if macroItr == 0
+        sysInfo.busesWithDERs = find(sysInfo.DER_or_not);
+        sysInfo.busesWithBatts = find(sysInfo.Batt_or_not);
+    end
+
+    % keyboard;
     if ~copf
         for relationshipNum = 1 : numRelationships
     
