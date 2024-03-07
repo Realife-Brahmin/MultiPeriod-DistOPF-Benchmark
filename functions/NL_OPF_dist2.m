@@ -140,8 +140,10 @@ function [x, sysInfo, simInfo, ...
     fprintf("Printing out area %d before extractAreaInfo: macroItr (areaInfo) = %d", Area, macroItr)
     disp(length(fieldnames(areaInfo)));
 
-    areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, systemName, numAreas, ...
+    if macroItr == 0
+        areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, systemName, numAreas, ...
     CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', displayTables);
+    end
     
     fprintf("Printing out area %d after extractAreaInfo: macroItr (areaInfo) = %d", Area, macroItr)
     disp(length(fieldnames(areaInfo)));
