@@ -80,8 +80,11 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     else
         logging = false;
     end
-
+    
     Area = areaInfo.Area;
+
+    fprintf("extractAreaInfo: Printing out area %d: macroItr (areaInfo) = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
     
     % fprintf("Womp Womp MacroItr = %d" ,macroItr)
     % fprintf("Printing out area 1 for no reason A: macroItr = %d", macroItr)
@@ -91,7 +94,7 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     busData_Area = readmatrix(filenameBusData_Area);
     busDataTable_Area = array2table(busData_Area, 'VariableNames', {'bus', 'P_L', 'Q_L', 'Q_C', 'P_der', 'busType'});
     % % display(busDataTable_Area)
-    Area = areaInfo.Area;
+    % Area = areaInfo.Area;
     N_Area = size(busData_Area, 1);     % total number of nodes
     
     filenameBranchData_Area = strcat(systemDataFolder, "area", num2str(Area), '/linedata.csv');
@@ -180,8 +183,11 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     busDataTable_pu_Area.S_der = S_der_Area;
     busDataTable_pu_Area.S_batt = S_batt_Area;
 
+    fprintf("extractAreaInfo: Printing out area %d: macroItr (areaInfo) before getAreaParameters = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
     areaInfo = getAreaParameters(simInfo, Area, busDataTable_pu_Area, branchDataTable_Area, R_Area, X_Area);
-
+    fprintf("extractAreaInfo: Printing out area %d: macroItr (areaInfo) after getAreaParameters = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
     % Optional: Plot Graphs which highlight the relationships between different Areas.
     
     if macroItr == 0
