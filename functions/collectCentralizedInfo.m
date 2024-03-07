@@ -49,21 +49,25 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % sysInfo.busesWithDERs = 
         % sysInfo.
 
-        % keyboard;
+        % % keyboard;
         numDERBus = areaInfo.DERBusNums_Actual;
-        sysInfo.Sder(numDERBus) = areaInfo.S_der_Area;
-        sysInfo.Pmpp(numDERBus) = areaInfo.Pmpp_Area;
-        sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT;
+        % areaInfo.S_der_Area % FULL
+        busesWithDERs_Area = areaInfo.busesWithDERs_Area;
+        sysInfo.Sder(numDERBus) = areaInfo.S_onlyDERbuses_Area;
+        sysInfo.Pmpp(numDERBus) = areaInfo.Pmpp_Area(busesWithDERs_Area); % FULL
+        sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT(busesWithDERs_Area); % FULL
         sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT;
         
-        keyboard;
+        % keyboard;
 
         % Battery Parameters
         % numBattBus will be like [1 7 22 85] which will only contain values
         % between 1:n_DER_System, so no actual bus numbers
         % sysInfo.busesWithBatts(numBattBus) = areaInfo.busesWithBatts_Area;
-        sysInfo.Sbatt(numBattBus) = areaInfo.S_battMax_Area; % currently named as S_battRated in vald
-        sysInfo.Pbatt(numBattBus) = areaInfo.P_battMax_Area; % currently named as P_battRated in vald
+        numBattBus = areaInfo.BattBusNums_Actual;
+        busesWithBatts_Area = areaInfo.busesWithBatts_Area;
+        sysInfo.Sbatt(numBattBus) = areaInfo.S_battMax_Area(busesWithBatts_Area); % currently named as S_battRated in vald
+        sysInfo.Pbatt(numBattBus) = areaInfo.P_battMax_Area(busesWithBatts_Area); % currently named as P_battRated in vald
         sysInfo.B0(numBattBus) = areaInfo.B0Vals_pu_Area; 
         sysInfo.B_1toT(numBattBus, 1:T) = areaInfo.B_Area_1toT;
         sysInfo.Pd_1toT(numBattBus, 1:T) = areaInfo.Pd_Area_1toT;
