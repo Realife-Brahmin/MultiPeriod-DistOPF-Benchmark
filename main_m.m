@@ -340,7 +340,7 @@ while keepRunningIterations
         else
             % fprintf("Printing out area %d for no reason AA: macroItr = %d", Area, macroItr)
             % disp(length(fieldnames(sysInfo.Area{Area})));
-            keyboard;
+            % keyboard;
 
             % areaInfo = sysInfo.Area{Area}
             if ~isfield(areaInfo, 'DERBusNums_Actual')
