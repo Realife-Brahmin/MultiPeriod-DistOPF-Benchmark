@@ -137,9 +137,15 @@ function [x, sysInfo, simInfo, ...
     CB_FullTable = sysInfo.CBTable;
     numChildAreas_Area = sysInfo.numChildAreas(Area);
 
+    fprintf("Printing out area %d before extractAreaInfo: macroItr (areaInfo) = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
+
     areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, systemName, numAreas, ...
     CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', displayTables);
     
+    fprintf("Printing out area %d after extractAreaInfo: macroItr (areaInfo) = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
+
     if macroItr > 0
         fprintf("Printing out area %d for before exchangeCompVars: macroItr = %d", Area, macroItr)
         disp(length(fieldnames(sysInfo.Area{Area})));
