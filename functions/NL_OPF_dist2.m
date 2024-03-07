@@ -163,8 +163,22 @@ function [x, sysInfo, simInfo, ...
 
     folderNameComparison = strcat(dirPath, filesep, "..", filesep, "processedData", filesep, systemName, filesep, "numAreas_", num2str(Area), filesep);
     ext = ".csv";
+    fprintf("Printing out area %d before LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
+    if macroItr > 0
+        fprintf("Printing out sysInfo's memory of Area %d before LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
+    end
     [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
-
+    fprintf("Printing out area %d after LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
+    if macroItr > 0
+        fprintf("Printing out sysInfo's memory of Area %d after LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
+    end
+    % fprintf("Printing out area %d after LinEqualities: macroItr = %d", Area, macroItr)
+    % disp(length(fieldnames(sysInfo.Area{Area})));
+    sysInfo.Area{Area} = areaInfo;
     if macroItr > 0
         fprintf("Printing out area %d after LinEqualities: macroItr = %d", Area, macroItr)
         disp(length(fieldnames(sysInfo.Area{Area})));
@@ -324,6 +338,8 @@ function [x, sysInfo, simInfo, ...
         fprintf("Printing out area %d after getProblemSize: macroItr = %d", Area, macroItr)
         disp(length(fieldnames(sysInfo.Area{Area})));
     end
+    
+    sysInfo.Area{Area} = areaInfo;
 
     kVA_B = sysInfo.kVA_B;
     kV_B = sysInfo.kV_B;
@@ -358,7 +374,7 @@ function [x, sysInfo, simInfo, ...
         fprintf("Printing out area %d after checkForSCD: macroItr = %d", Area, macroItr)
         disp(length(fieldnames(sysInfo.Area{Area})));
     end
-    
+
     time_dist(macroItr+1, Area) = t3;
     
     N_Area = areaInfo.N_Area;
@@ -375,7 +391,13 @@ function [x, sysInfo, simInfo, ...
     vAll_Area_1toT = reshape(xVals_Area(areaInfo.indices_vAllj), N_Area, T); %N_Areax1
     
     qD_Area_1toT = reshape(xVals_Area(areaInfo.indices_qDj), nDER_Area, T);
+
+    fprintf("Printing out area %d before if ~noBatteries condition: macroItr = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
     
+    sysInfo.Area{Area} = areaInfo;
+    areaInfo = sysInfo.Area{Area};
+
     if ~noBatteries
         B_Area_1toT = reshape(xVals_Area(areaInfo.indices_Bj), nBatt_Area, T);
         Pc_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pcj), nBatt_Area, T);
@@ -400,6 +422,14 @@ function [x, sysInfo, simInfo, ...
         areaInfo.scd = "NA";
         areaInfo.changeInSOC = "NA";
     end
+    
+    sysInfo.Area{Area} = areaInfo;
+
+    fprintf("Printing out area %d after if ~noBatteries condition: macroItr = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
+
+    fprintf("Printing out area %d before State/Control Variables are added: macroItr (areaInfo) = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
 
     areaInfo.P_Area_1toT = P_Area_1toT;
     areaInfo.Q_Area_1toT = Q_Area_1toT;
@@ -425,8 +455,17 @@ function [x, sysInfo, simInfo, ...
     areaInfo.PSubsCost_1toT = PSubsCost_1toT;
     areaInfo.fval = fval;
     areaInfo.xvals = xVals_Area;
+
+    fprintf("Printing out area %d after State/Control Variables are added: macroItr (areaInfo) = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
+
+    fprintf("Printing out area %d before exiting NL_OPF_dist2 (areaInfo 0): macroItr = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
     sysInfo.Area{Area} = areaInfo;
     
+    fprintf("Printing out area %d before exiting NL_OPF_dist2 (areaInfo 1): macroItr = %d", Area, macroItr)
+    disp(length(fieldnames(areaInfo)));
+
     fprintf("Printing out area %d before exiting NL_OPF_dist2: macroItr = %d", Area, macroItr)
     disp(length(fieldnames(sysInfo.Area{Area})));
 
