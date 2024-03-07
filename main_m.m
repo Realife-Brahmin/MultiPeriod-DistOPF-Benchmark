@@ -302,8 +302,14 @@ while keepRunningIterations
         S_Area_1toT = complex(P_Area_1toT, Q_Area_1toT); %m_Areax1
         vAll_Area_1toT = xVals_Area(areaInfo.indices_vAllj); %N_Areax1
         V_Area_1toT = sqrt(vAll_Area_1toT);
+        fprintf("Printing out area %d before V_1toT added: macroItr (areaInfo) = %d", Area, macroItr)
+        disp(length(fieldnames(areaInfo)));
         areaInfo.V_Area_1toT = V_Area_1toT;
+        fprintf("Printing out area %d after V_1toT added: macroItr (areaInfo) = %d", Area, macroItr)
+        disp(length(fieldnames(areaInfo)));
         sysInfo.Area{Area} = areaInfo;
+        fprintf("Printing out sysInfo's memory of Area %d immediately after areaInfo inserted: macroItr = %d", Area, macroItr)
+        disp(length(fieldnames(sysInfo.Area{Area})));
         qD_Area_1toT = xVals_Area(areaInfo.indices_qDj);
         qD_AreaFull_1toT = sparseArrayFromDense(qD_Area_1toT, N_Area, areaInfo.busesWithDERs_Area);
         PSubs_Area_1toT = P_Area_1toT(1, 1:T);
@@ -328,12 +334,12 @@ while keepRunningIterations
         elseif macroItr == 1
             areaInfo = sysInfo.Area{Area};
             areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
-            areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual)
+            areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
             sysInfo.Area{Area} = areaInfo;
 
         else
-            fprintf("Printing out area %d for no reason AA: macroItr = %d", Area, macroItr)
-            disp(length(fieldnames(sysInfo.Area{Area})));
+            % fprintf("Printing out area %d for no reason AA: macroItr = %d", Area, macroItr)
+            % disp(length(fieldnames(sysInfo.Area{Area})));
             keyboard;
 
             % areaInfo = sysInfo.Area{Area}
@@ -358,8 +364,8 @@ while keepRunningIterations
     end
     
     % for i = 1:numAreas
-        fprintf("Printing out area 1 for no reason A: macroItr = %d", macroItr)
-        disp(length(fieldnames(sysInfo.Area{1})));
+        % fprintf("Printing out area 1 for no reason A: macroItr = %d", macroItr)
+        % disp(length(fieldnames(sysInfo.Area{1})));
     % end
 
     myfprintf(true, "Macro-iteration %d: OPF's for all Areas completed. Checking for convergence.\n", macroItr+1);
@@ -409,8 +415,8 @@ while keepRunningIterations
                 myfprintf(true, "It is even bigger than the previous biggest residual.\n");
             end
             
-            fprintf("Printing out area 1 for no reason B: macroItr = %d", macroItr)
-            disp(length(fieldnames(sysInfo.Area{1})));
+            % fprintf("Printing out area 1 for no reason B: macroItr = %d", macroItr)
+            % disp(length(fieldnames(sysInfo.Area{1})));
         end
         
         myfprintf(true, "Macro-iteration %d: Checking for convergence among all connected areas completed.\n", macroItr+1);
@@ -428,8 +434,8 @@ while keepRunningIterations
             myfprintf(true, "Since there is still a difference in boundary variables, " + ...
                 "let's exchange boundary variables.\n")
             
-            fprintf("Printing out area 1 for no reason C: macroItr = %d", macroItr)
-            disp(length(fieldnames(sysInfo.Area{1})));
+            % fprintf("Printing out area 1 for no reason C: macroItr = %d", macroItr)
+            % disp(length(fieldnames(sysInfo.Area{1})));
 
             for relationshipNum = 1:numRelationships
                 parAr = CBTable.parentArea(relationshipNum);
@@ -471,8 +477,8 @@ while keepRunningIterations
     
                 end
                 
-                fprintf("Printing out area 1 for no reason D: macroItr = %d", macroItr)
-                disp(length(fieldnames(sysInfo.Area{1})));
+                % fprintf("Printing out area 1 for no reason D: macroItr = %d", macroItr)
+                % disp(length(fieldnames(sysInfo.Area{1})));
 
             end
 
