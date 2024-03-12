@@ -356,6 +356,7 @@ while keepRunningIterations
         if DER_percent > 0 
             myfprintf(true, "Just collecting some mappings for DER Bus Indices")
             sysInfo.busesWithDERs = find(sysInfo.DER_or_not > 0);
+            % keyboard
         end
         if Batt_percent > 0
             myfprintf(true, "Just collecting some mappings for Battery Bus Indices")
@@ -485,7 +486,9 @@ while keepRunningIterations
 
 end
 %%
+% keyboard;
 sysInfo = truncateSysInfo(sysInfo, macroItr);
+% keyboard;
 % if ~copf 
     sysInfo = collectCentralizedInfo(sysInfo, simInfo);
 % end
