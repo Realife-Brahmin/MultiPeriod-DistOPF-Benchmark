@@ -354,10 +354,12 @@ while keepRunningIterations
     if macroItr == 0
         myfprintf(true, "Just collecting some mappings for DER and Battery Bus Indices")
         if DER_percent > 0 
-            sysInfo.busesWithDERs = find(sysInfo.DER_or_not);
+            myfprintf(true, "Just collecting some mappings for DER Bus Indices")
+            sysInfo.busesWithDERs = find(sysInfo.DER_or_not > 0);
         end
         if Batt_percent > 0
-            sysInfo.busesWithBatts = find(sysInfo.Batt_or_not);
+            myfprintf(true, "Just collecting some mappings for Battery Bus Indices")
+            sysInfo.busesWithBatts = find(sysInfo.Batt_or_not > 0);
         end
 
         for Area = 1:numAreas
@@ -569,7 +571,8 @@ if copf
     % vald.loadShape = lambdaVals;
     vald.loadShape = sysInfo.loadShape;
 
-    vald.loadShapePV = pvCoeffVals;
+    % vald.loadShapePV = pvCoeffVals;
+    vald.loadShapePV = sysInfo.loadShapePV;
     % vald.busesWithDERs_Area = area1Info.busesWithDERs_Area;
     vald.busesWithDERs = area1Info.busesWithDERs_Area;
 
