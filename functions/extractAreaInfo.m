@@ -106,6 +106,9 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     opts.DataLines = 2;
     opts.VariableNamesLine = 1;
     busDataActualBusNumsTable_Area = readtable(filenameBusDataActualBusNums_Area, opts);
+    if macroItr == 0
+        display(busDataActualBusNumsTable_Area)
+    end
     busDataTable_Area.busActual = busDataActualBusNumsTable_Area.bus;
     
     filenameBranchDataActualBusNums_Area = strcat(systemDataFolder, "area", num2str(Area), '/linedataActualBusNums.csv');
