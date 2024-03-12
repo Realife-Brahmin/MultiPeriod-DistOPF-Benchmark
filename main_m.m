@@ -330,25 +330,6 @@ while keepRunningIterations
             sysInfo.nBatt = sysInfo.nBatt + areaInfo.nBatt_Area;
             sysInfo.DER_or_not(areaInfo.busesWithDERs_Actual) = 1;
             sysInfo.Batt_or_not(areaInfo.busesWithBatts_Actual) = 1;
-
-        elseif macroItr == 1
-            areaInfo = sysInfo.Area{Area};
-            areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
-            areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
-            sysInfo.Area{Area} = areaInfo;
-
-        % else
-            % fprintf("Printing out area %d for no reason AA: macroItr = %d", Area, macroItr)
-            % disp(length(fieldnames(sysInfo.Area{Area})));
-            % keyboard;
-
-            % areaInfo = sysInfo.Area{Area}
-            % if ~isfield(areaInfo, 'DERBusNums_Actual')
-            %     error("Where is DERBusNums_Actual?")
-            % else
-            %     myfprintf(true, "All good.");
-            % end
-
         end
         
 
@@ -378,6 +359,14 @@ while keepRunningIterations
         if Batt_percent > 0
             sysInfo.busesWithBatts = find(sysInfo.Batt_or_not);
         end
+
+        for Area = 1:numAreas
+            areaInfo = sysInfo.Area{Area};
+            areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
+            areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
+            sysInfo.Area{Area} = areaInfo;
+        end
+
     end
 
     % keyboard;
@@ -495,9 +484,9 @@ while keepRunningIterations
 end
 %%
 sysInfo = truncateSysInfo(sysInfo, macroItr);
-if ~copf 
+% if ~copf 
     sysInfo = collectCentralizedInfo(sysInfo, simInfo);
-end
+% end
 %%
 % saveSCDPlots = true
 if Batt_percent > 0 && saveSCDPlots
@@ -577,7 +566,8 @@ vald = struct();
 vald.res = results;
 
 if copf
-    vald.loadShape = lambdaVals;
+    % vald.loadShape = lambdaVals;
+    vald.loadShape = sysInfo.loadShape;
 
     vald.loadShapePV = pvCoeffVals;
     % vald.busesWithDERs_Area = area1Info.busesWithDERs_Area;
