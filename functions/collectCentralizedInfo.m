@@ -9,7 +9,10 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     % sysInfo already has nDER and nBatt
     nDER = sysInfo.nDER;
     nBatt = sysInfo.nBatt;
+    isRoot = sysInfo.isRoot;
 
+    [sysInfo.bus1] = deal( zeros(N, 1) );
+    [sysInfo.fb, sysInfo.tb] = deal( zeros(m, 1) );
     [sysInfo.P_L_1toT, sysInfo.Q_L_1toT] = deal( zeros(m, T) );
     sysInfo.V_1toT = zeros(N, T);
     sysInfo.Q_C_Full = zeros(N, 1);
@@ -26,21 +29,44 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
 
     for areaNum = 1:numAreas
     % for areaNum = [2 3 1 4]
-
-        areaInfo = sysInfo.Area{areaNum};
         
+        areaInfo = sysInfo.Area{areaNum};
+        N_Area = areaInfo.N_Area;
+        m_Area = areaInfo.m_Area;
         % error("Have you inserted actual bus1, actual fb and actual tb values for the area?")
         
         % busData, branchData
-        bus1 = areaInfo.bus_Actual; % How to get this?
-        fb = areaInfo.fb_Actual;
-        tb = areaInfo.tb_Actual;
+        bus1_expanded = areaInfo.bus_Actual; % How to get this?
+        fb_expanded = areaInfo.fb_Actual;
+        tb_expanded = areaInfo.tb_Actual;
+        
+
+        if ~isRoot(areaNum)
+            bus1 = bus1_expanded(3:end);
+            bus1_Area = 3:N_Area;
+            fb = fb_expanded(2:end);
+            fb_Area = 2:m_Area;
+            tb = tb_expanded(2:end);
+            tb_Area = 2:m_Area;
+        else
+            bus1 = bus1_expanded;
+            bus1_Area = 1:N_Area;
+            fb = fb_expanded;
+            fb_Area = 1:m_Area;
+            tb = tb_expanded;
+            tb_Area = 1:m_Area;
+        end
+        
+        % sysInfo.bus1(bus1) = bus1;
+        % sysInfo.fb(fb) = fb;
+        % sysInfo.tb = tb;
+
         % sysInfo.PL0(bus1) = areaInfo.
-        sysInfo.P_L_1toT(bus1, 1:T) = areaInfo.P_L_Area_1toT;
-        sysInfo.Q_L_1toT(bus1, 1:T) = areaInfo.Q_L_Area_1toT;
+        sysInfo.P_L_1toT(bus1, 1:T) = areaInfo.P_L_Area_1toT(bus1_Area);
+        sysInfo.Q_L_1toT(bus1, 1:T) = areaInfo.Q_L_Area_1toT(bus1_Area);
         % keyboard;
-        sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT;
-        sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area;
+        sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT(bus1_Area);
+        sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area(bus1_Area);
 
         % figure out how to create sysInfo.pD_1toT with only nDER buses
 
