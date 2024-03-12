@@ -464,11 +464,7 @@ function [x, sysInfo, simInfo, ...
     areaInfo.fval = fval;
     areaInfo.xvals = xVals_Area;
     
-    fprintf("Printing out area %d before exiting NL_OPF_dist2 (areaInfo 1): macroItr = %d", Area, macroItr)
-    disp(length(fieldnames(areaInfo)));
-
-    fprintf("Printing out area %d before exiting NL_OPF_dist2: macroItr = %d", Area, macroItr)
-    disp(length(fieldnames(sysInfo.Area{Area})));
+    sysInfo.Area{Area} = areaInfo;
     % fprintf("Printing out area %d after State/Control Variables are added: macroItr (areaInfo) = %d", Area, macroItr)
     % disp(length(fieldnames(areaInfo)));
     % 
