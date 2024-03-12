@@ -24,7 +24,7 @@ logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
-numAreas = 1
+numAreas = 4
 T = 1
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
@@ -491,7 +491,7 @@ sysInfo = truncateSysInfo(sysInfo, macroItr);
 % keyboard;
 % if ~copf 
     sysInfo = collectCentralizedInfo(sysInfo, simInfo);
-% end
+% ends
 %%
 % saveSCDPlots = true
 if Batt_percent > 0 && saveSCDPlots
@@ -570,7 +570,7 @@ end
 vald = struct();
 vald.res = results;
 
-if copf
+% if copf
     % vald.loadShape = lambdaVals;
     vald.loadShape = sysInfo.loadShape;
 
@@ -720,7 +720,7 @@ if copf
     vald.nBatt = sysInfo.nBatt;
 
     vald.simInfo = simInfo;
-end
+% end
 %%
 disp('------------------------------------------------------------')
 disp(['Machine ID: ', getenv("COMPUTERNAME")])
