@@ -577,97 +577,113 @@ if copf
     % vald.loadShapePV = pvCoeffVals;
     vald.loadShapePV = sysInfo.loadShapePV;
     % vald.busesWithDERs_Area = area1Info.busesWithDERs_Area;
-    vald.busesWithDERs = area1Info.busesWithDERs_Area;
-
+    % vald.busesWithDERs = area1Info.busesWithDERs_Area;
+    vald.busesWithDERs = sysInfo.busesWithDERs;
     % vald.Pmpp_AreaFull = area1Info.Pmpp_Area;
-    vald.Pmpp_Full = area1Info.Pmpp_Area;
+    % vald.Pmpp_Full = area1Info.Pmpp_Area;
+    
 
     % vald.Pmpp_Area = area1Info.Pmpp_Area(vald.busesWithDERs_Area);
-    vald.Pmpp = area1Info.Pmpp_Area(vald.busesWithDERs);
+    % vald.Pmpp = area1Info.Pmpp_Area(vald.busesWithDERs);
+    vald.Pmpp = sysInfo.Pmpp;
 
     % vald.Sder_AreaFull = area1Info.S_der_Area;
-    vald.Sder_Full = area1Info.S_der_Area;
+    % vald.Sder_Full = area1Info.S_der_Area;
+    
 
 
     % vald.V_copf = V_Area_1toT;
-    vald.V_1toT = V_Area_1toT;
+    % vald.V_1toT = V_Area_1toT;
+    vald.V_1toT = sysInfo.V_1toT;
     % vald.pL_AreaFull_1toT = area1Info.P_L_Area_1toT;
-    vald.pL_Full_1toT = area1Info.P_L_Area_1toT;
+    % vald.pL_Full_1toT = area1Info.P_L_Area_1toT;
 
     % pLTotal_kW_1toT = sum(vald.pL_AreaFull_1toT)*kVA_B;
-    pLTotal_kW_1toT = sum(vald.pL_Full_1toT)*kVA_B;
-
+    % pLTotal_kW_1toT = sum(vald.pL_Full_1toT)*kVA_B;
+    pLTotal_kW_1toT = sum(sysInfo.P_L_1toT)*kVA_B;
     % vald.qL_AreaFull_1toT = area1Info.Q_L_Area_1toT;
-    vald.qL_Full_1toT = area1Info.Q_L_Area_1toT;
+    % vald.qL_Full_1toT = area1Info.Q_L_Area_1toT;
 
     % qLTotal_kVAr_1toT = sum(vald.qL_AreaFull_1toT)*kVA_B;
-    qLTotal_kVAr_1toT = sum(vald.qL_Full_1toT)*kVA_B;
-
+    % qLTotal_kVAr_1toT = sum(vald.qL_Full_1toT)*kVA_B;
+    qLTotal_kVAr_1toT = sum(sysInfo.Q_L_1toT)*kVA_B;
     
     % vald.pD_AreaFull_1toT = area1Info.P_der_Area_1toT;
     % pD_AreaFull_1toT = area1Info.P_der_Area_1toT;
-    pD_Full_1toT = area1Info.P_der_Area_1toT;
+    % pD_Full_1toT = area1Info.P_der_Area_1toT;
 
     % vald.pD_AreaFull_1toT = pD_AreaFull_1toT;
-    vald.pD_Full_1toT = pD_Full_1toT;
+    % vald.pD_Full_1toT = pD_Full_1toT;
 
     % pDTotal_kW_1toT = sum(vald.pD_AreaFull_1toT)*kVA_B;
-    pDTotal_kW_1toT = sum(vald.pD_Full_1toT)*kVA_B;
-
+    % pDTotal_kW_1toT = sum(vald.pD_Full_1toT)*kVA_B;
+    pDTotal_kW_1toT = sum(sysInfo.pD_1toT)*kVA_B;
+    
     % vald.qD_AreaFull_1toT = qD_AreaFull_1toT;
     % vald.qD_Full_1toT = qD_Full_1toT;
 
     % busesWithDERs_Area = area1Info.busesWithDERs_Area;
-    busesWithDERs = area1Info.busesWithDERs_Area;
+    % busesWithDERs = area1Info.busesWithDERs_Area;
+    busesWithDERs = sysInfo.busesWithDERs;
 
     % qD_onlyBusesWithDERs_1toT = qD_AreaFull_1toT(busesWithDERs_Area, 1:T);
     % qD_onlyBusesWithDERs_1toT = qD_Full_1toT(busesWithDERs, 1:T);
-    qD_1toT = areaInfo.qD_Area_1toT;
-    qD_onlyBusesWithDERs_1toT = qD_1toT;
+    % qD_1toT = areaInfo.qD_Area_1toT;
+
+    % qD_onlyBusesWithDERs_1toT = qD_1toT;
+    
     % pD_onlyBusesWithDERs_1toT = pD_AreaFull_1toT(busesWithDERs_Area, 1:T);
     pD_onlyBusesWithDERs_1toT = pD_Full_1toT(busesWithDERs, 1:T);
 
     % vald.pD_Area_1toT = pD_onlyBusesWithDERs_1toT;
-    vald.pD_1toT = pD_onlyBusesWithDERs_1toT;
+    % vald.pD_1toT = pD_onlyBusesWithDERs_1toT;
+    vald.pD_1toT = sysInfo.pD_1toT;
 
     % vald.qD_Area_1toT = qD_onlyBusesWithDERs_1toT;
-    vald.qD_1toT = qD_onlyBusesWithDERs_1toT;
+    % vald.qD_1toT = qD_onlyBusesWithDERs_1toT;
+    vald.qD_1toT = sysInfo.qD_1toT;
 
     % Sder_AreaFull = area1Info.S_der_Area;
-    Sder_Full = area1Info.S_der_Area;
+    % Sder_Full = area1Info.S_der_Area;
 
     % Sder_onlyBusesWithDERs = Sder_AreaFull(busesWithDERs_Area);
-    Sder_onlyBusesWithDERs = Sder_Full(busesWithDERs);
+    % Sder_onlyBusesWithDERs = Sder_Full(busesWithDERs);
 
     % vald.Sder_Area = Sder_onlyBusesWithDERs;
-    vald.Sder = Sder_onlyBusesWithDERs;
+    % vald.Sder = Sder_onlyBusesWithDERs;
+    vald.Sder = sysInfo.Sder;
 
     % qDTotal_kVAr_1toT = sum(vald.qD_AreaFull_1toT)*kVA_B;
     % qDTotal_kVAr_1toT = sum(vald.qD_Full_1toT)*kVA_B;
     qDTotal_kVAr_1toT = sum(vald.qD_1toT)*kVA_B;
     % vald.qC_AreaFull = area1Info.Q_C_Area;
-    vald.qC_Full = area1Info.Q_C_Area;
+    % vald.qC_Full = area1Info.Q_C_Area;
+    vald.qC_Full = sysInfo.Q_C_Full;
 
     % qCTotal_kVAr_1toT = repmat(sum(vald.qC_AreaFull), 1, T)*kVA_B;
     qCTotal_kVAr_1toT = repmat(sum(vald.qC_Full), 1, T)*kVA_B;
 
     % vald.busesWithBatt_Area = area1Info.busesWithBatts_Area;
-    vald.busesWithBatts = area1Info.busesWithBatts_Area;
+    % vald.busesWithBatts = area1Info.busesWithBatts_Area;
+    vald.busesWithBatts = sysInfo.busesWithBatts;
 
     % vald.S_battMax_Area = area1Info.S_onlyBattBusesMax_Area; % Actually this has 128 elements, so is 'Full'
-    vald.S_battRated = area1Info.S_onlyBattBusesMax_Area; % Actually this has 128 elements, so is 'Full'
-
+    % vald.S_battRated = area1Info.S_onlyBattBusesMax_Area; % Actually this has 128 elements, so is 'Full'
+    vald.S_battRated = sysInfo.Sbatt;
     % vald.Pd_Area_1toT = area1Info.Pd_Area_1toT;
-    vald.Pd_1toT = area1Info.Pd_Area_1toT;
+    % vald.Pd_1toT = area1Info.Pd_Area_1toT;
+    vald.Pd_1toT = sysInfo.Pd_1toT;
 
     % vald.P_battMax_Area = area1Info.P_onlyBattBusesMax_Area;
-    vald.P_battRated = area1Info.P_onlyBattBusesMax_Area;
+    % vald.P_battRated = area1Info.P_onlyBattBusesMax_Area;
+    vald.P_battRated = sysInfo.Pbatt;
 
     % PdTotal_kW_1toT = sum(vald.Pd_Area_1toT)*kVA_B;
     PdTotal_kW_1toT = sum(vald.Pd_1toT)*kVA_B;
 
     % vald.Pc_Area_1toT = area1Info.Pc_Area_1toT;
-    vald.Pc_1toT = area1Info.Pc_Area_1toT;
+    % vald.Pc_1toT = area1Info.Pc_Area_1toT;
+    vald.Pc_1toT = sysInfo.Pc_1toT;
 
     % PcTotal_kW_1toT = sum(vald.Pc_Area_1toT)*kVA_B;
     PcTotal_kW_1toT = sum(vald.Pc_1toT)*kVA_B;
@@ -675,16 +691,19 @@ if copf
     PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
 
     % vald.B_Area_1toT = area1Info.B_Area_1toT;
-    vald.B_1toT = area1Info.B_Area_1toT;
+    % vald.B_1toT = area1Info.B_Area_1toT;
+    vald.B_1toT = sysInfo.B_1toT;
 
     % BTotal_kWh_1toTh = sum(vald.B_Area_1toT)*kVA_B;
     BTotal_kWh_1toTh = sum(vald.B_1toT)*kVA_B;
 
     % vald.B0_Area = area1Info.B0Vals_pu_Area;
-    vald.B0 = area1Info.B0Vals_pu_Area;
+    % vald.B0 = area1Info.B0Vals_pu_Area;
+    vald.B0 = sysInfo.B0;
 
     % vald.qB_Area_1toT = area1Info.qB_Area_1toT;
-    vald.qB_1toT = area1Info.qB_Area_1toT;
+    % vald.qB_1toT = area1Info.qB_Area_1toT;
+    vald.qB_1toT = sysInfo.qB_1toT;
 
     % qBTotal_kVAr_1toT = sum(vald.qB_Area_1toT)*kVA_B;
     qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
@@ -693,10 +712,12 @@ if copf
     qTotal_kVAr_1toT = qDTotal_kVAr_1toT + qBTotal_kVAr_1toT + qCTotal_kVAr_1toT;
     
     % vald.nDER_Area = area1Info.nDER_Area;
-    vald.nDER = area1Info.nDER_Area;
+    % vald.nDER = area1Info.nDER_Area;
+    vald.nDER = sysInfo.nDER;
 
     % vald.nBatt_Area = area1Info.nBatt_Area;
-    vald.nBatt = area1Info.nBatt_Area;
+    % vald.nBatt = area1Info.nBatt_Area;
+    vald.nBatt = sysInfo.nBatt;
 
     vald.simInfo = simInfo;
 end
