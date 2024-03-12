@@ -302,14 +302,14 @@ while keepRunningIterations
         S_Area_1toT = complex(P_Area_1toT, Q_Area_1toT); %m_Areax1
         vAll_Area_1toT = xVals_Area(areaInfo.indices_vAllj); %N_Areax1
         V_Area_1toT = sqrt(vAll_Area_1toT);
-        fprintf("Printing out area %d before V_1toT added: macroItr (areaInfo) = %d", Area, macroItr)
-        disp(length(fieldnames(areaInfo)));
+        % fprintf("Printing out area %d before V_1toT added: macroItr (areaInfo) = %d", Area, macroItr)
+        % disp(length(fieldnames(areaInfo)));
         areaInfo.V_Area_1toT = V_Area_1toT;
-        fprintf("Printing out area %d after V_1toT added: macroItr (areaInfo) = %d", Area, macroItr)
-        disp(length(fieldnames(areaInfo)));
+        % fprintf("Printing out area %d after V_1toT added: macroItr (areaInfo) = %d", Area, macroItr)
+        % disp(length(fieldnames(areaInfo)));
         sysInfo.Area{Area} = areaInfo;
-        fprintf("Printing out sysInfo's memory of Area %d immediately after areaInfo inserted: macroItr = %d", Area, macroItr)
-        disp(length(fieldnames(sysInfo.Area{Area})));
+        % fprintf("Printing out sysInfo's memory of Area %d immediately after areaInfo inserted: macroItr = %d", Area, macroItr)
+        % disp(length(fieldnames(sysInfo.Area{Area})));
         qD_Area_1toT = xVals_Area(areaInfo.indices_qDj);
         qD_AreaFull_1toT = sparseArrayFromDense(qD_Area_1toT, N_Area, areaInfo.busesWithDERs_Area);
         PSubs_Area_1toT = P_Area_1toT(1, 1:T);
@@ -337,17 +337,17 @@ while keepRunningIterations
             areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
             sysInfo.Area{Area} = areaInfo;
 
-        else
+        % else
             % fprintf("Printing out area %d for no reason AA: macroItr = %d", Area, macroItr)
             % disp(length(fieldnames(sysInfo.Area{Area})));
             % keyboard;
 
             % areaInfo = sysInfo.Area{Area}
-            if ~isfield(areaInfo, 'DERBusNums_Actual')
-                error("Where is DERBusNums_Actual?")
-            else
-                myfprintf(true, "All good.");
-            end
+            % if ~isfield(areaInfo, 'DERBusNums_Actual')
+            %     error("Where is DERBusNums_Actual?")
+            % else
+            %     myfprintf(true, "All good.");
+            % end
 
         end
         
