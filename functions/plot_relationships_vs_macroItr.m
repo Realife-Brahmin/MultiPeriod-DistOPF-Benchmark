@@ -1,4 +1,4 @@
-function plot_relationships_over_time(results, simInfo, sysInfo)
+function plot_relationships_vs_macroItr(results, simInfo, sysInfo)
     
     P12_1toT_vs_macroItr = results.P12_1toT_vs_macroItr;
     v1_1toT_vs_macroItr = results.v1_1toT_vs_macroItr;
