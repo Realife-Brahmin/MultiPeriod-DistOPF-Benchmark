@@ -416,13 +416,18 @@ while keepRunningIterations
             % delta_S12_1toT = S12_fromParent_1toT - S12_intoChild_1toT;
     
             v_parentSide_1toT = reshape(v_Areas_1toT(parentAreaConnectingBus, parAr, 1:T), 1, T);
-            v_childSide_1toT = v1_1toT(chAr, 1:T);
+            % v_childSide_1toT = v1_1toT(chAr, 1:T);
     
             v1_1toT_vs_macroItr(relationshipNum, 1:T, macroItr+1) = v_parentSide_1toT;
             S12_1toT_vs_macroItr(relationshipNum, 1:T, macroItr+1) = S12_intoChild_1toT;
-
-            delta_v_1toT = v_parentSide_1toT - v_childSide_1toT;
-    
+            
+            if macroItr+1 > 1 % not macroItr == 0
+                v1_parentSide_1toT_mIm1 = v1_1toT_vs_macroItr(relationshipNum, 1:T, macroItr);
+            else
+                v1_parentSide_1toT_mIm1 = v1_1(1);
+            end
+            % delta_v_1toT = v_parentSide_1toT - v_childSide_1toT;
+            delta_v_1toT = v_parentSide_1toT - v1_parentSide_1toT_mIm1;
             Residual_Area_1toT = reshape([delta_S12_1toT; delta_v_1toT], 2*T, 1);
             
             [currentMaxResidual_1toT, lin_idx] = max(abs(Residual_Area_1toT));
