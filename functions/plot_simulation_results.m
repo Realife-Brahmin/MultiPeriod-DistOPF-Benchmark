@@ -43,7 +43,7 @@ function plot_simulation_results(results)
     colors{9} = [0.929, 0.612, 0.329];   % Salmon
     % Define some colors for the lines
     % colors = lines(totalMacroItr); % MATLAB's built-in colormap for lines
-    alphaValues = linspace(1.0, 1.0, totalMacroItr); % From opaque to more transparent
+    alphaValues = linspace(1.0, 1.0, T); % From opaque to more transparent
     % noBatteries = simInfo.noBatteries;
     DER_percent = simInfo.DER_percent;
     Batt_percent = simInfo.Batt_percent;
@@ -88,6 +88,7 @@ function plot_simulation_results(results)
                             error("Uknown thing to plot.");
                         end
                         % Plot the data over time
+                        % keyboard;
                         plot(1:totalMacroItr, abs(dependentVariable), ...
                         'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
                         'Color', [colors{mod(t, numColours)+1},  alphaValues(t)], 'LineWidth', 2.5, ...
