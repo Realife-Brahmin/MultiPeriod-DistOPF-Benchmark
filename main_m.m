@@ -325,10 +325,6 @@ while keepRunningIterations
         
         PLoss_allT_vs_macroItr(macroItr+1) = PLoss_allT_vs_macroItr(macroItr+1) + areaInfo.PLoss_allT;
         PLoss_1toT_vs_macroItr(1:T, macroItr+1) = PLoss_1toT_vs_macroItr(1:T, macroItr+1) + areaInfo.PLoss_1toT;
-        PSubs_allT_vs_macroItr(macroItr+1) = PSubs_allT_vs_macroItr(macroItr+1) + areaInfo.PSubs_allT;
-        PSubs_1toT_vs_macroItr(1:T, macroItr+1) = PSubs_1toT_vs_macroItr(1:T, macroItr+1) + areaInfo.PSubs_1toT;
-        PSubsCost_allT_vs_macroItr(macroItr+1) = PSubsCost_allT_vs_macroItr(macroItr+1) + areaInfo.PSubsCost_allT;
-        PSubsCost_1toT_vs_macroItr(1:T, macroItr+1) = PSubsCost_1toT_vs_macroItr(1:T, macroItr+1) + areaInfo.PSubsCost_1toT;
         
         if Area == 1
             PSubs_allT_vs_macroItr(macroItr+1) = areaInfo.PSubs_allT;
@@ -534,6 +530,8 @@ results.PSubs_allT_vs_macroItr = PSubs_allT_vs_macroItr;
 results.PSubs_1toT_vs_macroItr = PSubs_1toT_vs_macroItr;
 results.PSubsCost_allT_vs_macroItr = PSubsCost_allT_vs_macroItr;
 results.PSubsCost_1toT_vs_macroItr = PSubsCost_1toT_vs_macroItr;
+results.QSubs_allT_vs_macroItr = QSubs_allT_vs_macroItr;
+results.QSubs_1toT_vs_macroItr = QSubs_1toT_vs_macroItr;
 results.v1_1toT_vs_macroItr = v1_1toT_vs_macroItr;
 results.S12_1toT_vs_macroItr = S12_1toT_vs_macroItr;
 
@@ -546,6 +544,8 @@ results.PSubs_allT = PSubs_allT_vs_macroItr(macroItr+1);
 results.PSubs_1toT = PSubs_1toT_vs_macroItr(1:T, macroItr+1);
 results.PSubsCost_allT = PSubsCost_allT_vs_macroItr(macroItr+1);
 results.PSubsCost_1toT = PSubsCost_1toT_vs_macroItr(1:T, macroItr+1);
+results.QSubs_allT = QSubs_allT_vs_macroItr(macroItr+1);
+results.QSubs_1toT = QSubs_1toT_vs_macroItr(1:T, macroItr+1);
 
 results.simInfo = simInfo;
 results.sysInfo = sysInfo;
@@ -568,8 +568,9 @@ area1Info = sysInfo.Area{1};
 genCost_dollars_1toT = area1Info.PSubsCost_1toT * 1e-2;
 
 % substationPower_kW_1toT = area1Info.P_Area_1toT(1, :)*kVA_B;
-substationPower_kW_1toT = sysInfo.PSubs_1toT_vs_macroItr(1:T, macroItr+1) * kVA_B;
-
+% substationPower_kW_1toT = sysInfo.PSubs_1toT_vs_macroItr(1:T, macroItr+1) * kVA_B;
+substationPower_kW_1toT = sysInfo.PSubs_1toT * kVA_B;
+substationPower_kVAr_1toT = sysInfo.QSubs_1toT * kVA_B;
 
 maxTimes_vs_macroItr = max(time_dist, [], 2);
 time_if_parallel = sum(maxTimes_vs_macroItr);
@@ -745,7 +746,7 @@ for t = 1:T
     disp('-----------------------------')
     disp(['Hour: ', num2str(t)])
     disp(['Line Loss: ', num2str(lineLoss_kW_1toT(t)),' kW'])                       
-    disp(['Substation Power: ', num2str(substationPower_kW_1toT(t)),' kW'])
+    disp(['Substation Power: ', num2str(substationPower_kW_1toT(t)),' kW + ', num2str(substationPower_kVAr_1toT(t)), ' kVAr'])
     disp(['Total Load: ', num2str(pLTotal_kW_1toT(t)), ' kW + ', num2str(qLTotal_kVAr_1toT(t)), ' kVAr'])
     disp(['Total Generation: ', num2str(pTotal_kW_1toT(t)), ' kW + ', num2str(qTotal_kVAr_1toT(t)), ' kVAr' ])
     disp(['Total PV Generation: ', num2str(pDTotal_kW_1toT(t)), ' kW + ', num2str(qDTotal_kVAr_1toT(t)), ' kVAr'])
