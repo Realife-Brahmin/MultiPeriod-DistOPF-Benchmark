@@ -10,7 +10,7 @@ Total Reactive Load: 432.43 kVAr
 Total PV Real Power Generation: 41.47 kW
 Total PV Reactive Power Generation: 5.47 kVAr
 Number of Macro-Iterations: 5
-Simulation Time: 18.70 s
-Time to solve with sequential (non-parallel) computation:11.0548 s
-Time to Solve if OPF computation parallelized: 6.25 s
+Simulation Time: 18.50 s
+Time to solve with sequential (non-parallel) computation:11.2038 s
+Time to Solve if OPF computation parallelized: 6.33 s
 ------------------------------------------------------------
