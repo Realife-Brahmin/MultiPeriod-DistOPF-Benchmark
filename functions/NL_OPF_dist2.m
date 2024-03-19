@@ -321,6 +321,9 @@ function [x, sysInfo, simInfo, ...
     [genCost, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubsCost"});
     [~, genCost_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubsCost_1toT"});
 
+    [genkVAr, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_QSubs"});
+    [~, genkVAr_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_QSubs_1toT"});
+
     if ~noBatteries
         [scd, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_SCD"});
         [changeInSOC, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_netChangeInSOC"});
@@ -461,6 +464,10 @@ function [x, sysInfo, simInfo, ...
     PSubsCost_1toT = genCost_1toT;
     areaInfo.PSubsCost_allT = PSubsCost_allT;
     areaInfo.PSubsCost_1toT = PSubsCost_1toT;
+    QSubs_allT = genkVAr;
+    QSubs_1toT = genkVAr_1toT;
+    areaInfo.QSubs_allT = QSubs_allT;
+    areaInfo.QSubs_1toT = QSubs_1toT;
     areaInfo.fval = fval;
     areaInfo.xvals = xVals_Area;
     
