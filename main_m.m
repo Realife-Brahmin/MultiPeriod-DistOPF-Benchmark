@@ -491,7 +491,7 @@ sysInfo = truncateSysInfo(sysInfo, macroItr);
 % keyboard;
 % if ~copf 
     sysInfo = collectCentralizedInfo(sysInfo, simInfo);
-% ends
+% end
 %%
 % saveSCDPlots = true
 if Batt_percent > 0 && saveSCDPlots
@@ -633,7 +633,7 @@ vald.res = results;
     % qD_onlyBusesWithDERs_1toT = qD_1toT;
     
     % pD_onlyBusesWithDERs_1toT = pD_AreaFull_1toT(busesWithDERs_Area, 1:T);
-    pD_onlyBusesWithDERs_1toT = pD_Full_1toT(busesWithDERs, 1:T);
+    % pD_onlyBusesWithDERs_1toT = pD_Full_1toT(busesWithDERs, 1:T);
 
     % vald.pD_Area_1toT = pD_onlyBusesWithDERs_1toT;
     % vald.pD_1toT = pD_onlyBusesWithDERs_1toT;
