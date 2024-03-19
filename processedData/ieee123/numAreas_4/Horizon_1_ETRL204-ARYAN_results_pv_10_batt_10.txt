@@ -5,12 +5,12 @@ Nature of Simulation: Spatially-Distributed-OPF with 4 Areas.
 Line Loss: 15.56 kW
 Substation Power: 1886.02 kW
 Substation Power Cost: 30.070 $
-Total Real Load: 1942.40 kW
-Total Reactive Load: 432.43 kVAr
+Total Real Load: 915.44 kW
+Total Reactive Load: 503.69 kVAr
 Total PV Real Power Generation: 41.47 kW
 Total PV Reactive Power Generation: 5.47 kVAr
 Number of Macro-Iterations: 5
-Simulation Time: 18.50 s
-Time to solve with sequential (non-parallel) computation:11.2038 s
-Time to Solve if OPF computation parallelized: 6.33 s
+Simulation Time: 18.91 s
+Time to solve with sequential (non-parallel) computation:11.4531 s
+Time to Solve if OPF computation parallelized: 6.51 s
 ------------------------------------------------------------

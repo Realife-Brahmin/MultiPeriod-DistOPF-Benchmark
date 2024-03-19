@@ -40,17 +40,22 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         fb_expanded = areaInfo.fb_Actual;
         tb_expanded = areaInfo.tb_Actual;
         
+        numChildAreas = sysInfo.numChildAreas(areaNum);
 
         if ~isRoot(areaNum)
-            bus1 = bus1_expanded(3:end);
+            bus1 = bus1_expanded(3:end); % good for copying voltages.
             bus1_Area = 3:N_Area;
+            bus1_ownLoads = bus1_expanded(3:end-numChildAreas); % good for copying loads
+            bus1_ownLoads_Area = 3:N_Area-numChildAreas;
             fb = fb_expanded(2:end);
             fb_Area = 2:m_Area;
             tb = tb_expanded(2:end);
             tb_Area = 2:m_Area;
         else
-            bus1 = bus1_expanded;
-            bus1_Area = 1:N_Area;
+            bus1 = bus1_expanded; % good for copying voltages.
+            bus1_Area = 1:N_Area; 
+            bus1_ownLoads = bus1_expanded(1:end-numChildAreas); % good for copying loads
+            bus1_ownLoads_Area = 1:N_Area-numChildAreas;
             fb = fb_expanded;
             fb_Area = 1:m_Area;
             tb = tb_expanded;
@@ -62,8 +67,12 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % sysInfo.tb = tb;
 
         % sysInfo.PL0(bus1) = areaInfo.
-        sysInfo.P_L_1toT(bus1, 1:T) = areaInfo.P_L_Area_1toT(bus1_Area);
-        sysInfo.Q_L_1toT(bus1, 1:T) = areaInfo.Q_L_Area_1toT(bus1_Area);
+        % sysInfo.P_L_1toT(bus1, 1:T) = areaInfo.P_L_Area_1toT(bus1_Area);
+        sysInfo.P_L_1toT(bus1_ownLoads, 1:T) = areaInfo.P_L_Area_1toT(bus1_ownLoads_Area);
+
+        % sysInfo.Q_L_1toT(bus1, 1:T) = areaInfo.Q_L_Area_1toT(bus1_Area);
+        sysInfo.Q_L_1toT(bus1_ownLoads, 1:T) = areaInfo.Q_L_Area_1toT(bus1_ownLoads_Area);
+
         % keyboard;
         sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT(bus1_Area);
         sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area(bus1_Area);
