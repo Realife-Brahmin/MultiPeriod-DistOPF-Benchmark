@@ -292,6 +292,11 @@ while keepRunningIterations
         
         myfprintf(true, fid, "Current Macro-iteration %d: OPF for Area %d computed.\n", macroItr+1, Area)
         areaInfo = sysInfo.Area{Area};
+
+        P_L_Area_1toT_kW = kVA_B*sum(areaInfo.P_L_Area_1toT);
+        Q_L_Area_1toT_kW = kVA_B*sum(areaInfo.Q_L_Area_1toT);
+        myfprintf(true, "Current Macro-iteration %d: Total Load for Area %d is %4.4f kW + %4.4f kVAr.\n", macroItr+1, Area, P_L_Area_1toT_kW, Q_L_Area_1toT_kW);
+
         N_Area = areaInfo.N_Area;
         m_Area = areaInfo.m_Area;
         nDER_Area = areaInfo.nDER_Area;
