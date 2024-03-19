@@ -125,7 +125,7 @@ function [f, f_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, varargin)
     
     indices_Pij = varIndicesT{1};
 
-    % indices_Qij = varIndicesT{2};
+    indices_Qij = varIndicesT{2};
     indices_lij = varIndicesT{3};
     % indices_vAllj = varIndicesT{4};
     % indices_vj = excludeFirstElement(indices_vAllj);
@@ -153,6 +153,19 @@ function [f, f_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, varargin)
                     indices_PSubs_1toT = getIndicesT(indices_Pij, 1);
                     indices_PSubs_t = indices_PSubs_1toT(t);
                     row = indices_PSubs_t;
+                    f_1toT(t) = f_1toT(t) + sum(x(row));
+                end
+
+            case "func_QSubs"
+                indices_QSubs_1toT = getIndicesT(indices_Qij, 1);
+                row = indices_QSubs_1toT;
+                f = f + sum(x(row)); % will give a value of cents
+
+            case "func_QSubs_1toT" % don't use it for optimization
+                for t = 1 : T
+                    indices_QSubs_1toT = getIndicesT(indices_Qij, 1);
+                    indices_QSubs_t = indices_QSubs_1toT(t);
+                    row = indices_QSubs_t;
                     f_1toT(t) = f_1toT(t) + sum(x(row));
                 end
 
