@@ -330,6 +330,15 @@ while keepRunningIterations
         PSubsCost_allT_vs_macroItr(macroItr+1) = PSubsCost_allT_vs_macroItr(macroItr+1) + areaInfo.PSubsCost_allT;
         PSubsCost_1toT_vs_macroItr(1:T, macroItr+1) = PSubsCost_1toT_vs_macroItr(1:T, macroItr+1) + areaInfo.PSubsCost_1toT;
         
+        if Area == 1
+            PSubs_allT_vs_macroItr(macroItr+1) = areaInfo.PSubs_allT;
+            PSubs_1toT_vs_macroItr(1:T, macroItr+1) = areaInfo.PSubs_1toT;
+            PSubsCost_allT_vs_macroItr(macroItr+1) = areaInfo.PSubsCost_allT;
+            PSubsCost_1toT_vs_macroItr(1:T, macroItr+1) = areaInfo.PSubsCost_1toT;
+            QSubs_allT_vs_macroItr(macroItr+1) = areaInfo.QSubs_allT;
+            QSubs_1toT_vs_macroItr(1:T, macroItr+1) = areaInfo.QSubs_1toT;
+        end
+
         if macroItr == 0
             sysInfo.nDER = sysInfo.nDER + areaInfo.nDER_Area;
             sysInfo.nBatt = sysInfo.nBatt + areaInfo.nBatt_Area;
