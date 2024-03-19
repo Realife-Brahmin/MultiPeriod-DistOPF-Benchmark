@@ -342,6 +342,9 @@ for t = 1:T
     disc.PSubs_1toT_kW(t) = disc_PSubs_t_kW;
     
     QSubs_opds_t_kVAr = sum(MyPowerArray(2));
+    disc_QSubs_t_kVAr = abs(QSubs_opds_t_kVAr - kVA_B*vald.res.QSubs_1toT(t));
+    disc.QSubs_1toT_kVAr(t) = disc_QSubs_t_kVAr;
+
     SLoss_t_opds_kVA = MytotalCircuitLosses;
     PLoss_t_opds_kW = SLoss_t_opds_kVA(1);
     QLoss_t_opds_kVAr = SLoss_t_opds_kVA(2);
@@ -432,12 +435,14 @@ moveBatteryMonitorFiles(circuitName, busesWithBatts, nBatt, batteryMonitorFolder
 
 disc.maxV = max(max(disc.V_1toT));
 disc.maxPLoss_kW = max(disc.PLoss_1toT_kW);
-disc_maxPSubs_kW = max(disc.PSubs_1toT_kW);
+disc.maxPSubs_kW = max(disc.PSubs_1toT_kW);
+disc.maxQSubs_kVAr = max(disc.QSubs_1toT_kVAr);
 
 disp('-----------------------------')
 disp(['Horizon Period (hourly time-steps): ', num2str(T), ' h']);
 disp(['GED Penetration: ', num2str(DER_percent), '% PVs + ', num2str(Batt_percent), '% Batteries']);
 disp(['Maximum All Time Voltage Discrepancy: ', num2str(disc.maxV), ' pu'])
 disp(['Maximum All Time Line Loss Discrepancy: ', num2str(disc.maxPLoss_kW), ' kW'])
-disp(['Maximum All Time Substation Borrowed Real Power Discrepancy: ', num2str(disc_maxPSubs_kW), ' kW'])
+disp(['Maximum All Time Substation Borrowed Real Power Discrepancy: ', num2str(disc.maxPSubs_kW), ' kW'])
+disp(['Maximum All Time Substation Borrowed Reactive Power Discrepancy: ', num2str(disc.maxQSubs_kVAr), ' kVAr'])
 disp('-----------------------------')
