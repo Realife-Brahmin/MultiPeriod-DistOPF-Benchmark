@@ -160,8 +160,10 @@ sysInfo.Pdc_Total_1toT = zeros(T, 1);
 % PSubs_1toT_vs_macroItr = zeros(T, macroItrMax);
 % PSubsCost_allT_vs_macroItr = zeros(macroItrMax, 1);
 % PSubsCost_1toT_vs_macroItr = zeros(T, macroItrMax);
-[PLoss_allT_vs_macroItr, PSubs_allT_vs_macroItr, PSubsCost_allT_vs_macroItr, QSubs_allT_vs_macroItr] = deal(zeros(macroItrMax, 1));
-[PLoss_1toT_vs_macroItr, PSubs_1toT_vs_macroItr, PSubsCost_1toT_vs_macroItr, QSubs_1toT_vs_macroItr] = deal(zeros(T, macroItrMax));
+[PLoss_allT_vs_macroItr, PSubs_allT_vs_macroItr, ...
+    PSubsCost_allT_vs_macroItr, QSubs_allT_vs_macroItr] = deal(zeros(macroItrMax, 1));
+[PLoss_1toT_vs_macroItr, PSubs_1toT_vs_macroItr, ...
+    PSubsCost_1toT_vs_macroItr, QSubs_1toT_vs_macroItr] = deal(zeros(T, macroItrMax));
 
 % y_allR_
 sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;
@@ -255,10 +257,12 @@ v1_1 = 1.03^2*ones(numAreas, 1);
 v1_1toT = repmat(v1_1, 1, T);
 
 Se_iter = zeros(macroItrMax, numAreas, T);
+
 % Se_iter = zeros(macroItrMax, m, numAreas, T);
 V_iter = zeros(macroItrMax, N, numUniqueParents, T);
 S12_allRelationships = CBTable.S_childArea;
 S12_allRelationships_1toT = repmat(S12_allRelationships, 1, T);
+
 S_parent_1toT = zeros(numAreas, T);
 S_Areas_1toT = zeros(N, numAreas, T);
 v_Areas_1toT = zeros(N, numAreas, T);
@@ -398,10 +402,18 @@ while keepRunningIterations
             myfprintf(true, "Checking for convergence between parent Area %d and child Area %d\n", parAr, chAr);
 
             parentAreaConnectingBus = CBTable.conBus_parentAreaTo(relationshipNum);
-            S12_fromParent_1toT = reshape(S_Areas_1toT(parentAreaConnectingBus - 1, parAr, 1:T), 1, T);
-            S12_intoChild_1toT = reshape(S_parent_1toT(chAr, 1:T), 1, T);
+            % S12_fromParent_1toT = reshape(S_Areas_1toT(parentAreaConnectingBus - 1, parAr, 1:T), 1, T);
+            S12_intoChild_1toT = reshape(S_Areas_1toT(1, chAr, 1:T), 1, T);
+            if macroItr+1 > 1 % not macroItr == 0
+                S12_intoChild_1toT_mIm1 = S12_1toT_vs_macroItr(relationshipNum, 1:T, macroItr);
+            else
+                S12_intoChild_1toT_mIm1 = 0;
+            end
+            
+            delta_S12_1toT = S12_intoChild_1toT - S12_intoChild_1toT_mIm1;
+            % S12_intoChild_1toT = reshape(S_parent_1toT(chAr, 1:T), 1, T);
     
-            delta_S12_1toT = S12_fromParent_1toT - S12_intoChild_1toT;
+            % delta_S12_1toT = S12_fromParent_1toT - S12_intoChild_1toT;
     
             v_parentSide_1toT = reshape(v_Areas_1toT(parentAreaConnectingBus, parAr, 1:T), 1, T);
             v_childSide_1toT = v1_1toT(chAr, 1:T);
@@ -429,6 +441,7 @@ while keepRunningIterations
         end
         
         myfprintf(true, "Macro-iteration %d: Checking for convergence among all connected areas completed.\n", macroItr+1);
+        
         if macroItr == macroItrMax - 1
             error("Didn't converge even after %d macro-iterations, terminating.\n", macroItrMax);
     
@@ -519,6 +532,7 @@ if Batt_percent > 0 && saveSCDPlots
     end
 end
 %%
+V_iter = V_iter(1:macroItr+1, :, :, :);
 PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr(1:macroItr+1);
 PLoss_1toT_vs_macroItr = PLoss_1toT_vs_macroItr(:, 1:macroItr+1);
 PSubs_allT_vs_macroItr = PSubs_allT_vs_macroItr(1:macroItr+1);
