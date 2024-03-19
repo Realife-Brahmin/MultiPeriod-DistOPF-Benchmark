@@ -31,9 +31,9 @@ noBatteries = false;
 alpha = 1e-3;
 % gamma = 1e-1;
 gamma = 1e0;
-DER_percent = 10;
+DER_percent = 30;
 % Batt_percent = ~noBatteries*DER_percent;
-Batt_percent = ~noBatteries * 10;
+Batt_percent = ~noBatteries * 30;
 delta_t = 1.00; % one hour
 displayTables = true;
 displayNetworkGraphs = false;
@@ -300,7 +300,7 @@ while keepRunningIterations
 
         P_L_Area_1toT_kW = kVA_B*sum(areaInfo.P_L_Area_1toT);
         Q_L_Area_1toT_kW = kVA_B*sum(areaInfo.Q_L_Area_1toT);
-        myfprintf(true, "Current Macro-iteration %d: Total Load for Area %d is %4.4f kW + %4.4f kVAr.\n", macroItr+1, Area, P_L_Area_1toT_kW, Q_L_Area_1toT_kW);
+        % myfprintf(true, "Current Macro-iteration %d: Total Load for Area %d is %4.4f kW + %4.4f kVAr.\n", macroItr+1, Area, P_L_Area_1toT_kW, Q_L_Area_1toT_kW);
 
         N_Area = areaInfo.N_Area;
         m_Area = areaInfo.m_Area;
