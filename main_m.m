@@ -154,12 +154,14 @@ sysInfo.Pc_Total_1toT = zeros(T, 1);
 sysInfo.Pdc_Total_1toT = zeros(T, 1);
 
 
-PLoss_allT_vs_macroItr = zeros(macroItrMax, 1);
-PLoss_1toT_vs_macroItr = zeros(T, macroItrMax);
-PSubs_allT_vs_macroItr = zeros(macroItrMax, 1);
-PSubs_1toT_vs_macroItr = zeros(T, macroItrMax);
-PSubsCost_allT_vs_macroItr = zeros(macroItrMax, 1);
-PSubsCost_1toT_vs_macroItr = zeros(T, macroItrMax);
+% PLoss_allT_vs_macroItr = zeros(macroItrMax, 1);
+% PLoss_1toT_vs_macroItr = zeros(T, macroItrMax);
+% PSubs_allT_vs_macroItr = zeros(macroItrMax, 1);
+% PSubs_1toT_vs_macroItr = zeros(T, macroItrMax);
+% PSubsCost_allT_vs_macroItr = zeros(macroItrMax, 1);
+% PSubsCost_1toT_vs_macroItr = zeros(T, macroItrMax);
+[PLoss_allT_vs_macroItr, PSubs_allT_vs_macroItr, PSubsCost_allT_vs_macroItr, QSubs_allT_vs_macroItr] = deal(zeros(macroItrMax, 1));
+[PLoss_1toT_vs_macroItr, PSubs_1toT_vs_macroItr, PSubsCost_1toT_vs_macroItr, QSubs_1toT_vs_macroItr] = deal(zeros(T, macroItrMax));
 
 % y_allR_
 sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;
@@ -168,6 +170,9 @@ sysInfo.PSubs_allT_vs_macroItr = PSubs_allT_vs_macroItr;
 sysInfo.PSubs_1toT_vs_macroItr = PSubs_1toT_vs_macroItr;
 sysInfo.PSubsCost_allT_vs_macroItr = PSubsCost_allT_vs_macroItr;
 sysInfo.PSubsCost_1toT_vs_macroItr = PSubsCost_1toT_vs_macroItr;
+sysInfo.QSubs_allT_vs_macroItr = QSubs_allT_vs_macroItr;
+sysInfo.QSubs_1toT_vs_macroItr = QSubs_1toT_vs_macroItr;
+
 
 simInfo = struct();
 if copf
@@ -351,6 +356,8 @@ while keepRunningIterations
         sysInfo.PSubs_1toT_vs_macroItr = PSubs_1toT_vs_macroItr;
         sysInfo.PSubsCost_allT_vs_macroItr = PSubsCost_allT_vs_macroItr;
         sysInfo.PSubsCost_1toT_vs_macroItr = PSubsCost_1toT_vs_macroItr;
+        sysInfo.QSubs_allT_vs_macroItr = QSubs_allT_vs_macroItr;
+        sysInfo.QSubs_1toT_vs_macroItr = QSubs_1toT_vs_macroItr;
         % keyboard
     end
     
