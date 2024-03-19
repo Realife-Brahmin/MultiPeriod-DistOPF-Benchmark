@@ -75,6 +75,7 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
 
         % keyboard;
         sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT(bus1_Area);
+
         sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area(bus1_Area);
 
         % figure out how to create sysInfo.pD_1toT with only nDER buses
@@ -114,6 +115,9 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         sysInfo.qB_1toT(numBattBus, 1:T) = areaInfo.qB_Area_1toT;
     
     end
+    
+    sysInfo.PSubs_1toT = sysInfo.Area{1}.P_Area_1toT(1, 1:T);
+    sysInfo.QSubs_1toT = sysInfo.Area{1}.Q_Area_1toT(1, 1:T);
     
     loadShapePV = simInfo.pvCoeffVals;
     sysInfo.loadShapePV = loadShapePV;
