@@ -68,13 +68,13 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
 
         % sysInfo.PL0(bus1) = areaInfo.
         % sysInfo.P_L_1toT(bus1, 1:T) = areaInfo.P_L_Area_1toT(bus1_Area);
-        sysInfo.P_L_1toT(bus1_ownLoads, 1:T) = areaInfo.P_L_Area_1toT(bus1_ownLoads_Area);
+        sysInfo.P_L_1toT(bus1_ownLoads, 1:T) = areaInfo.P_L_Area_1toT(bus1_ownLoads_Area, 1:T);
 
         % sysInfo.Q_L_1toT(bus1, 1:T) = areaInfo.Q_L_Area_1toT(bus1_Area);
-        sysInfo.Q_L_1toT(bus1_ownLoads, 1:T) = areaInfo.Q_L_Area_1toT(bus1_ownLoads_Area);
+        sysInfo.Q_L_1toT(bus1_ownLoads, 1:T) = areaInfo.Q_L_Area_1toT(bus1_ownLoads_Area, 1:T);
 
         % keyboard;
-        sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT(bus1_Area);
+        sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT(bus1_Area, 1:T);
 
         sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area(bus1_Area);
 
@@ -95,9 +95,10 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         busesWithDERs_Area = areaInfo.busesWithDERs_Area;
         sysInfo.Sder(numDERBus) = areaInfo.S_onlyDERbuses_Area;
         sysInfo.Pmpp(numDERBus) = areaInfo.Pmpp_Area(busesWithDERs_Area); % FULL
-        sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT(busesWithDERs_Area); % FULL
+        sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT(busesWithDERs_Area, 1:T); % FULL
+        % sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT(:, 1:T);
         sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT;
-        
+
         % keyboard;
 
         % Battery Parameters
@@ -118,7 +119,7 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     
     sysInfo.PSubs_1toT = sysInfo.Area{1}.P_Area_1toT(1, 1:T);
     sysInfo.QSubs_1toT = sysInfo.Area{1}.Q_Area_1toT(1, 1:T);
-    
+
     loadShapePV = simInfo.pvCoeffVals;
     sysInfo.loadShapePV = loadShapePV;
     loadShape = simInfo.lambdaVals;
