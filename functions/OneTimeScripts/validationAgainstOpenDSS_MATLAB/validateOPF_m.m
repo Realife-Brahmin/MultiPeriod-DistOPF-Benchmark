@@ -17,9 +17,10 @@ end
 visible = 'on'; % display voltage snapshot plots (they are still generated and saved either way)
 
 systemName = sysInfo.systemName;
-T = simInfo.T;
+T = vald.simInfo.T;
 kVA_B = sysInfo.kVA_B;
 kV_B = sysInfo.kV_B;
+costArray = simInfo.costArray;
 CVR = [0 0];
 
 DSSObj = DSS_MATLAB.IDSS;
@@ -54,7 +55,19 @@ resod.PSubsCost_Total_dollars_1toT, ...
 resod.pL_Total_kW_1toT, resod.qL_Total_kVAr_1toT, ...
     resod.pD_Total_kW_1toT, resod.qD_Total_kVAr_1toT, ...
     resod.Pdc_Total_kW_1toT, resod.qB_Total_kVAr_1toT, ...
+    resod.p_Total_kW_1toT, resod.qGED_Total_kVAr_1toT, ...
+    resod.q_Total_kVAr_1toT, ...
     resod.QC_Total_kVAr_1toT] = deal(zeros(T, 1));
+
+[resod.PLoss_Total_kW_allT, ...
+ resod.PSubs_Total_kW_allT, resod.QSubs_Total_kVAr_allT, ...
+ resod.PSubsCost_Total_dollars_allT, ...
+ resod.pL_Total_kW_allT, resod.qL_Total_kVAr_allT, ...
+ resod.pD_Total_kW_allT, resod.qD_Total_kVAr_allT, ...
+ resod.Pdc_Total_kW_allT, resod.qB_Total_kVAr_allT, ...
+ resod.p_Total_kW_allT, resod.qGED_Total_kVAr_allT, ...
+ resod.q_Total_kVAr_allT, ...
+ resod.QC_Total_kVAr_allT] = deal(0);
 
 V_opds_1toT = zeros(N, T);
 
@@ -283,6 +296,9 @@ for t = 1:T
         loadkvarsum = loadkvarsum + Loads.kvar() * loadShape(t);
         loadnumber = Loads.Next();
     end
+
+    resod.pL_Total_kW_1toT(t) = loadkWsum;
+    resod.qL_Total_kVAr_1toT(t) = loadkvarsum;
 % Saving capacitor injected kvars
 
     Capacitors = DSSCircuit.Generators;
@@ -292,6 +308,8 @@ for t = 1:T
         qC_Total_t_kVAr = qC_Total_t_kVAr + Capacitors.kVAr();
         capNum = Capacitors.Next();
     end
+
+    resod.QC_Total_kVAr_1toT(t) = qC_Total_t_kVAr;
 % Saving generated powers of PVs at |t|
 
     PVSystems = DSSCircuit.PVSystems;
@@ -309,6 +327,8 @@ for t = 1:T
         derBusNum = PVSystems.Next();
     end
     
+    resod.pD_Total_kW_1toT(t) = pD_Total_t_kW;
+    resod.qD_Total_kVAr_1toT(t) = qD_Total_t_kVAr;
     % Now pD_Total_t_kW and qD_Total_t_kVAr hold the total kW and kVAr PV generation, respectively
 % Saving generated powers of Storage at |t|
 
@@ -328,10 +348,16 @@ for t = 1:T
         Pdc_Total_t_kW = Pdc_Total_t_kW + Pdcj_t_kW;
         qB_Total_t_kVAr = qB_Total_t_kVAr + qBj_t_kVAr;
     end
+    
+    resod.Pdc_Total_kW_1toT(t) = Pdc_Total_t_kW;
+    resod.qB_Total_kVAr_1toT(t) = qB_Total_t_kVAr;
 
     Pged_Total_t_kW = pD_Total_t_kW + Pdc_Total_t_kW;
+    resod.p_Total_kW_1toT(t) = Pged_Total_t_kW;
     Qged_Total_t_kVAr = qD_Total_t_kVAr + qB_Total_t_kVAr;
+    resod.qGED_Total_kVAr_1toT(t) = Qged_Total_t_kVAr;
     Q_Total_t_kVAr = Qged_Total_t_kVAr + qC_Total_t_kVAr;
+    resod.q_Total_kVAr_1toT(t) = Q_Total_t_kVAr;
 %     Save .DSS file
 
     ext = ".dss";
@@ -343,20 +369,27 @@ for t = 1:T
 
     V_PU = DSSCircuit.AllBusVmagPU;
     MytotalCircuitLosses= (DSSCircuit.Losses)/1000;
-    
+
     DSSCircuit.SetActiveElement('Line.L1');
     MyPowerArray = DSSCircuit.ActiveCktElement.Powers;
     PSubs_opds_t_kW = sum(MyPowerArray(1));
-    
+    resod.PSubs_Total_kW_1toT(t) = PSubs_opds_t_kW;
+    resod.PSubsCost_Total_dollars_1toT(t) = costArray(t)*PSubs_opds_t_kW;
+
     disc_PSubs_t_kW = abs(PSubs_opds_t_kW - kVA_B*vald.res.PSubs_1toT(t));
     disc.PSubs_1toT_kW(t) = disc_PSubs_t_kW;
     
+
     QSubs_opds_t_kVAr = sum(MyPowerArray(2));
+    resod.QSubs_Total_kVAr_1toT(t) = QSubs_opds_t_kVAr;
+
     disc_QSubs_t_kVAr = abs(QSubs_opds_t_kVAr - kVA_B*vald.res.QSubs_1toT(t));
     disc.QSubs_1toT_kVAr(t) = disc_QSubs_t_kVAr;
 
     SLoss_t_opds_kVA = MytotalCircuitLosses;
     PLoss_t_opds_kW = SLoss_t_opds_kVA(1);
+    resod.PLoss_Total_kW_1toT(t) = PLoss_t_opds_kW;
+
     QLoss_t_opds_kVAr = SLoss_t_opds_kVA(2);
 
     disc_PLoss_t_kW = abs( PLoss_t_opds_kW - kVA_B*vald.res.PLoss_1toT(t));
@@ -441,6 +474,23 @@ circuitName = DSSCircuit.Name;
 
 moveBatteryMonitorFiles(circuitName, busesWithBatts, nBatt, batteryMonitorFolder);
 
+% Compute All Time (Horizon-wide) Totals    
+
+% Sum up each _1toT field and assign it to the corresponding _allT field
+resod.PLoss_Total_kW_allT = sum(resod.PLoss_Total_kW_1toT);
+resod.PSubs_Total_kW_allT = sum(resod.PSubs_Total_kW_1toT);
+resod.QSubs_Total_kVAr_allT = sum(resod.QSubs_Total_kVAr_1toT);
+resod.PSubsCost_Total_dollars_allT = sum(resod.PSubsCost_Total_dollars_1toT);
+resod.pL_Total_kW_allT = sum(resod.pL_Total_kW_1toT);
+resod.qL_Total_kVAr_allT = sum(resod.qL_Total_kVAr_1toT);
+resod.pD_Total_kW_allT = sum(resod.pD_Total_kW_1toT);
+resod.qD_Total_kVAr_allT = sum(resod.qD_Total_kVAr_1toT);
+resod.Pdc_Total_kW_allT = sum(resod.Pdc_Total_kW_1toT);
+resod.qB_Total_kVAr_allT = sum(resod.qB_Total_kVAr_1toT);
+resod.p_Total_kW_allT = sum(resod.p_Total_kW_1toT);
+resod.qGED_Total_kVAr_allT = sum(resod.qGED_Total_kVAr_1toT);
+resod.q_Total_kVAr_allT = sum(resod.q_Total_kVAr_1toT);
+resod.QC_Total_kVAr_allT = sum(resod.QC_Total_kVAr_1toT);
 % Store Maximum Discrepancies
 
 disc.maxV = max(max(disc.V_1toT));
