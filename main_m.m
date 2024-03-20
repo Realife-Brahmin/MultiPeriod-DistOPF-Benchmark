@@ -826,14 +826,13 @@ disp(['Horizon Total Generation: ', num2str(p_Total_kW_allT), ' kW + ', num2str(
 disp(['Horizon Total PV Generation: ', num2str(pD_Total_kW_allT), ' kW + ', num2str(qD_Total_kVAr_allT), ' kVAr'])
 disp(['Horizon Total Battery Generation: ', num2str(Pdc_Total_kW_allT), ' kW + ', num2str(qB_Total_kVAr_allT), ' kVAr'])
 disp(['Horizon Total Static Capacitor Reactive Power Generation: ', num2str(QC_Total_kVAr_allT), ' kVAr'])
-% disp(['Total Reactive Power Generation: ', num2str(qTotal_kVAr_1toT(t)), ' kVAr'])
 disp(['Horizon Substation Power Cost: $ ', num2str(genCost_dollars_allT)])
 
 disp('------------------------------------------------------------')
 disp(['Number of Macro-Iterations: ', num2str(macroItr+1)])
 disp(['Simulation Time: ', num2str(grandTotalTime), ' s'])
 disp(['Time to solve with sequential (non-parallel) computation: ', num2str(time_if_serial), ' s'])
-disp(['Time to solve if OPF computation paralellized: ', num2str(time_if_parallel), ' s'])
+disp(['Time to solve if OPF computation parallelized: ', num2str(time_if_parallel), ' s'])
 disp('------------------------------------------------------------')
 %%
 % Assuming sysInfo, numAreas, T, and noBatteries are already defined in your workspace
