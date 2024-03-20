@@ -40,11 +40,21 @@ varNames = cellfun(@char, varNames0, 'UniformOutput', false);
 busData = readtable(text_powerdata_r);
 busData.Properties.VariableNames = varNames;
 
+
 N = length(busData.busNum);
 busNums = busData.busNum;
 P_L = busData.P_L;
 Q_L = busData.Q_L;
 Q_C = busData.Q_C;
+
+resod = struct();
+[resod.PLoss_Total_kW_1toT, ...
+resod.PSubs_Total_kW_1toT, resod.QSubs_Total_kVAr_1toT, ...
+resod.PSubsCost_Total_dollars_1toT, ...
+resod.pL_Total_kW_1toT, resod.qL_Total_kVAr_1toT, ...
+    resod.pD_Total_kW_1toT, resod.qD_Total_kVAr_1toT, ...
+    resod.Pdc_Total_kW_1toT, resod.qB_Total_kVAr_1toT, ...
+    resod.QC_Total_kVAr_1toT] = deal(zeros(T, 1));
 
 V_opds_1toT = zeros(N, T);
 
@@ -109,9 +119,9 @@ Pmpp_kW = kVA_B*vald.Pmpp;
 pD_1toT_kW = kVA_B*vald.pD_1toT;
 qD_1toT_kVAr = kVA_B*vald.qD_1toT;
 SDer_kVA = kVA_B*vald.Sder;
-% loadShapePV = vald.loadShapePV;
+loadShapePV = vald.loadShapePV;
 
-% strLoadShapePV = strcat('New Loadshape.LoadShapePV npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapePV'), ']')
+strLoadShapePV = strcat('New Loadshape.LoadShapePV npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapePV'), ']')
 
 % DSSText.Command = strLoadShapePV;
 % tempsArray = 25*ones(1, T);
