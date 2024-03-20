@@ -25,15 +25,15 @@ logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
 numAreas = 4
-T = 1
+T = 6
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
 % gamma = 1e-1;
 gamma = 1e0;
-DER_percent = 30;
+DER_percent = 10;
 % Batt_percent = ~noBatteries*DER_percent;
-Batt_percent = ~noBatteries * 30;
+Batt_percent = ~noBatteries * 10;
 delta_t = 1.00; % one hour
 displayTables = true;
 displayNetworkGraphs = false;
@@ -528,7 +528,7 @@ sysInfo = truncateSysInfo(sysInfo, macroItr);
     sysInfo = collectCentralizedInfo(sysInfo, simInfo);
 % end
 %%
-% saveSCDPlots = true
+saveSCDPlots = true
 if Batt_percent > 0 && saveSCDPlots
     for Area = 1:numAreas
         areaInfo = sysInfo.Area{Area};
@@ -592,11 +592,46 @@ for areaNum = 1:numAreas
 end
 area1Info = sysInfo.Area{1};
 genCost_dollars_1toT = area1Info.PSubsCost_1toT * 1e-2;
-
+genCost_dollars_allT = area1Info.PSubsCost_allT * 1e-2;
 % substationPower_kW_1toT = area1Info.P_Area_1toT(1, :)*kVA_B;
 % substationPower_kW_1toT = sysInfo.PSubs_1toT_vs_macroItr(1:T, macroItr+1) * kVA_B;
 substationPower_kW_1toT = sysInfo.PSubs_1toT * kVA_B;
 substationPower_kVAr_1toT = sysInfo.QSubs_1toT * kVA_B;
+
+substationPower_kW_allT = sysInfo.PSubs_allT * kVA_B;
+substationPower_kVAr_allT = sysInfo.QSubs_allT * kVA_B;
+
+battery_scd_Total_kW_1toT = sysInfo.P_scd_Total_1toT * kVA_B;
+battery_scd_Total_kW_allT = sysInfo.P_scd_Total_1toT * kVA_B;
+
+battery_soc_abuse_Total_kWh = sysInfo.B_violation_abs_Total * kVA_B;
+
+pL_Total_kW_1toT = sysInfo.P_L_Total_1toT * kVA_B;
+pL_Total_kW_allT = sysInfo.P_L_Total_allT * kVA_B;
+
+qL_Total_kVAr_1toT = sysInfo.Q_L_Total_1toT * kVA_B;
+qL_Total_kVAr_allT = sysInfo.Q_L_Total_allT * kVA_B;
+
+pD_Total_kW_1toT = sysInfo.pD_Total_1toT * kVA_B;
+pD_Total_kW_allT = sysInfo.pD_Total_allT * kVA_B;
+
+qD_Total_kVAr_1toT = sysInfo.qD_Total_1toT * kVA_B;
+qD_Total_kVAr_allT = sysInfo.qD_Total_allT * kVA_B;
+
+Pdc_Total_kW_1toT = sysInfo.Pdc_Total_1toT * kVA_B;
+Pdc_Total_kW_allT = sysInfo.Pdc_Total_allT * kVA_B;
+
+p_Total_kW_1toT = sysInfo.p_Total_1toT * kVA_B;
+p_Total_kW_allT = sysInfo.p_Total_allT * kVA_B;
+
+q_Total_kVAr_1toT = sysInfo.q_Total_1toT * kVA_B;
+q_Total_kVAr_allT = sysInfo.q_Total_allT * kVA_B;
+
+qB_Total_kVAr_1toT = sysInfo.qB_Total_1toT * kVA_B;
+qB_Total_kVAr_allT = sysInfo.qB_Total_allT * kVA_B;
+
+QC_Total_kVAr_1toT = sysInfo.QC_Total_1toT * kVA_B;
+QC_Total_kVAr_allT = sysInfo.QC_Total_allT * kVA_B;
 
 maxTimes_vs_macroItr = max(time_dist, [], 2);
 time_if_parallel = sum(maxTimes_vs_macroItr);
@@ -779,8 +814,21 @@ for t = 1:T
     disp(['Total Battery Generation: ', num2str(PdcTotal_kW_1toT(t)), ' kW + ', num2str(qBTotal_kVAr_1toT(t)), ' kVAr'])
     disp(['Total Static Capacitor Reactive Power Generation: ', num2str(qCTotal_kVAr_1toT(t)), ' kVAr'])
     % disp(['Total Reactive Power Generation: ', num2str(qTotal_kVAr_1toT(t)), ' kVAr'])
-    disp(['Substation Power Cost: ', num2str(genCost_dollars_1toT(t)), ' $'])
+    disp(['Substation Power Cost: $ ', num2str(genCost_dollars_1toT(t))])
 end
+
+disp('-----------------------------')
+disp(['Hour: Full ', num2str(T), ' Hour Horizon'])
+disp(['Horizon Line Loss: ', num2str(lineLoss_kW_allT),' kW'])                       
+disp(['Horizon Total Substation Power: ', num2str(substationPower_kW_allT),' kW + ', num2str(substationPower_kVAr_allT), ' kVAr'])
+disp(['Horizon Total Load: ', num2str(pL_Total_kW_allT), ' kW + ', num2str(qL_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Total Generation: ', num2str(p_Total_kW_allT), ' kW + ', num2str(q_Total_kVAr_allT), ' kVAr' ])
+disp(['Horizon Total PV Generation: ', num2str(pD_Total_kW_allT), ' kW + ', num2str(qD_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Total Battery Generation: ', num2str(Pdc_Total_kW_allT), ' kW + ', num2str(qB_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Total Static Capacitor Reactive Power Generation: ', num2str(QC_Total_kVAr_allT), ' kVAr'])
+% disp(['Total Reactive Power Generation: ', num2str(qTotal_kVAr_1toT(t)), ' kVAr'])
+disp(['Horizon Substation Power Cost: $ ', num2str(genCost_dollars_allT)])
+
 disp('------------------------------------------------------------')
 disp(['Number of Macro-Iterations: ', num2str(macroItr+1)])
 disp(['Simulation Time: ', num2str(grandTotalTime), ' s'])
