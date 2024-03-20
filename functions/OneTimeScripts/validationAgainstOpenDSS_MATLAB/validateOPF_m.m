@@ -374,7 +374,7 @@ for t = 1:T
     MyPowerArray = DSSCircuit.ActiveCktElement.Powers;
     PSubs_opds_t_kW = sum(MyPowerArray(1));
     resod.PSubs_Total_kW_1toT(t) = PSubs_opds_t_kW;
-    resod.PSubsCost_Total_dollars_1toT(t) = costArray(t)*PSubs_opds_t_kW;
+    resod.PSubsCost_Total_dollars_1toT(t) = costArray(t)*PSubs_opds_t_kW*1e-2;
 
     disc_PSubs_t_kW = abs(PSubs_opds_t_kW - kVA_B*vald.res.PSubs_1toT(t));
     disc.PSubs_1toT_kW(t) = disc_PSubs_t_kW;
@@ -491,6 +491,17 @@ resod.p_Total_kW_allT = sum(resod.p_Total_kW_1toT);
 resod.qGED_Total_kVAr_allT = sum(resod.qGED_Total_kVAr_1toT);
 resod.q_Total_kVAr_allT = sum(resod.q_Total_kVAr_1toT);
 resod.QC_Total_kVAr_allT = sum(resod.QC_Total_kVAr_1toT);
+
+disp('-----------------------------')
+disp(['Hour: Full ', num2str(T), ' Hour Horizon'])
+disp(['Horizon Line Loss: ', num2str(resod.PLoss_Total_kW_allT),' kW'])
+disp(['Horizon Total Substation Power: ', num2str(resod.PSubs_Total_kW_allT),' kW + ', num2str(resod.QSubs_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Total Load: ', num2str(resod.pL_Total_kW_allT), ' kW + ', num2str(resod.qL_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Total Generation: ', num2str(resod.p_Total_kW_allT), ' kW + ', num2str(resod.q_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Total PV Generation: ', num2str(resod.pD_Total_kW_allT), ' kW + ', num2str(resod.qD_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Total Battery Generation: ', num2str(resod.Pdc_Total_kW_allT), ' kW + ', num2str(resod.qB_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Total Static Capacitor Reactive Power Generation: ', num2str(resod.QC_Total_kVAr_allT), ' kVAr'])
+disp(['Horizon Substation Power Cost: $ ', num2str(resod.PSubsCost_Total_dollars_allT)])
 % Store Maximum Discrepancies
 
 disc.maxV = max(max(disc.V_1toT));
