@@ -1,2 +1,2 @@
-This area has only the substation as its 'parent area'.
-This area has 2 child areas, which include the Areas: Area 2 and Areas 3.
+This area's parent is Area 2.
+This area has no child areas.
