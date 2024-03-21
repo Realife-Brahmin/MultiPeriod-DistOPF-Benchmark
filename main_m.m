@@ -134,9 +134,6 @@ sysInfo.kV_B = kV_B;
 sysInfo.Battery.chargeToPowerRatio = chargeToPowerRatio;
 sysInfo.CBTable = CBTable;
 
-% sysInfo.fbus = ?
-% sysInfo.tbus = ?
-% sysInfo.branchData = ?
 sysInfo.DER_or_not = zeros(N, 1);
 sysInfo.Batt_or_not = zeros(N, 1);
 sysInfo.Q_C_Full = zeros(N, 1);
@@ -153,19 +150,11 @@ sysInfo.Pd_Total_1toT = zeros(T, 1);
 sysInfo.Pc_Total_1toT = zeros(T, 1);
 sysInfo.Pdc_Total_1toT = zeros(T, 1);
 
-
-% PLoss_allT_vs_macroItr = zeros(macroItrMax, 1);
-% PLoss_1toT_vs_macroItr = zeros(T, macroItrMax);
-% PSubs_allT_vs_macroItr = zeros(macroItrMax, 1);
-% PSubs_1toT_vs_macroItr = zeros(T, macroItrMax);
-% PSubsCost_allT_vs_macroItr = zeros(macroItrMax, 1);
-% PSubsCost_1toT_vs_macroItr = zeros(T, macroItrMax);
 [PLoss_allT_vs_macroItr, PSubs_allT_vs_macroItr, ...
     PSubsCost_allT_vs_macroItr, QSubs_allT_vs_macroItr] = deal(zeros(macroItrMax, 1));
 [PLoss_1toT_vs_macroItr, PSubs_1toT_vs_macroItr, ...
     PSubsCost_1toT_vs_macroItr, QSubs_1toT_vs_macroItr] = deal(zeros(T, macroItrMax));
 
-% y_allR_
 sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;
 sysInfo.PLoss_1toT_vs_macroItr = PLoss_1toT_vs_macroItr;
 sysInfo.PSubs_allT_vs_macroItr = PSubs_allT_vs_macroItr;
@@ -258,7 +247,6 @@ v1_1toT = repmat(v1_1, 1, T);
 
 Se_iter = zeros(macroItrMax, numAreas, T);
 
-% Se_iter = zeros(macroItrMax, m, numAreas, T);
 V_iter = zeros(macroItrMax, N, numUniqueParents, T);
 S12_allRelationships = CBTable.S_childArea;
 S12_allRelationships_1toT = repmat(S12_allRelationships, 1, T);
@@ -266,7 +254,6 @@ S12_allRelationships_1toT = repmat(S12_allRelationships, 1, T);
 S_parent_1toT = zeros(numAreas, T);
 S_Areas_1toT = zeros(N, numAreas, T);
 v_Areas_1toT = zeros(N, numAreas, T);
-% v1_1toT_vs_macroItr = zeros(numAreas, T, macroItrMax);
 v1_1toT_vs_macroItr = zeros(numRelationships, T, macroItrMax);
 S12_1toT_vs_macroItr = zeros(numRelationships, T, macroItrMax);
 Residuals_1toT_vs_macroItr = zeros(2*numRelationships, T, macroItrMax);
@@ -297,7 +284,6 @@ while keepRunningIterations
 %%
         nVars1_Area = length(xVals_Area)/T;
         xVals_Area_1toT = reshape(xVals_Area, nVars1_Area, T);
-        % macroItr = simInfo.macroItr;
         
         myfprintf(true, fid, "Current Macro-iteration %d: OPF for Area %d computed.\n", macroItr+1, Area)
         areaInfo = sysInfo.Area{Area};
@@ -310,20 +296,13 @@ while keepRunningIterations
         m_Area = areaInfo.m_Area;
         nDER_Area = areaInfo.nDER_Area;
         nBatt_Area = areaInfo.nBatt_Area;
-        % indices_Pij = areaInfo.indices_Pij;
         P_Area_1toT = xVals_Area(areaInfo.indices_Pij); %m_Areax1
         Q_Area_1toT = xVals_Area(areaInfo.indices_Qij); %m_Areax1
         S_Area_1toT = complex(P_Area_1toT, Q_Area_1toT); %m_Areax1
         vAll_Area_1toT = xVals_Area(areaInfo.indices_vAllj); %N_Areax1
         V_Area_1toT = sqrt(vAll_Area_1toT);
-        % fprintf("Printing out area %d before V_1toT added: macroItr (areaInfo) = %d", Area, macroItr)
-        % disp(length(fieldnames(areaInfo)));
         areaInfo.V_Area_1toT = V_Area_1toT;
-        % fprintf("Printing out area %d after V_1toT added: macroItr (areaInfo) = %d", Area, macroItr)
-        % disp(length(fieldnames(areaInfo)));
         sysInfo.Area{Area} = areaInfo;
-        % fprintf("Printing out sysInfo's memory of Area %d immediately after areaInfo inserted: macroItr = %d", Area, macroItr)
-        % disp(length(fieldnames(sysInfo.Area{Area})));
         qD_Area_1toT = xVals_Area(areaInfo.indices_qDj);
         qD_AreaFull_1toT = sparseArrayFromDense(qD_Area_1toT, N_Area, areaInfo.busesWithDERs_Area);
         PSubs_Area_1toT = P_Area_1toT(1, 1:T);
@@ -350,10 +329,7 @@ while keepRunningIterations
             sysInfo.DER_or_not(areaInfo.busesWithDERs_Actual) = 1;
             sysInfo.Batt_or_not(areaInfo.busesWithBatts_Actual) = 1;
         end
-        
-
-        % sysInfo.Area{Area} = areaInfo;
-        
+                
         sysInfo.PLoss_allT_vs_macroItr = PLoss_allT_vs_macroItr;  
         sysInfo.PLoss_1toT_vs_macroItr = PLoss_1toT_vs_macroItr;
         sysInfo.PSubs_allT_vs_macroItr = PSubs_allT_vs_macroItr;
@@ -362,13 +338,7 @@ while keepRunningIterations
         sysInfo.PSubsCost_1toT_vs_macroItr = PSubsCost_1toT_vs_macroItr;
         sysInfo.QSubs_allT_vs_macroItr = QSubs_allT_vs_macroItr;
         sysInfo.QSubs_1toT_vs_macroItr = QSubs_1toT_vs_macroItr;
-        % keyboard
     end
-    
-    % for i = 1:numAreas
-        % fprintf("Printing out area 1 for no reason A: macroItr = %d", macroItr)
-        % disp(length(fieldnames(sysInfo.Area{1})));
-    % end
 
     myfprintf(true, "Macro-iteration %d: OPF's for all Areas completed. Checking for convergence.\n", macroItr+1);
     
@@ -377,7 +347,6 @@ while keepRunningIterations
         if DER_percent > 0 
             myfprintf(true, "Just collecting some mappings for DER Bus Indices")
             sysInfo.busesWithDERs = find(sysInfo.DER_or_not > 0);
-            % keyboard
         end
         if Batt_percent > 0
             myfprintf(true, "Just collecting some mappings for Battery Bus Indices")
@@ -393,7 +362,6 @@ while keepRunningIterations
 
     end
 
-    % keyboard;
     if ~copf
         for relationshipNum = 1 : numRelationships
     
@@ -402,7 +370,6 @@ while keepRunningIterations
             myfprintf(true, "Checking for convergence between parent Area %d and child Area %d\n", parAr, chAr);
 
             parentAreaConnectingBus = CBTable.conBus_parentAreaTo(relationshipNum);
-            % S12_fromParent_1toT = reshape(S_Areas_1toT(parentAreaConnectingBus - 1, parAr, 1:T), 1, T);
             S12_intoChild_1toT = reshape(S_Areas_1toT(1, chAr, 1:T), 1, T);
             if macroItr+1 > 1 % not macroItr == 0
                 S12_intoChild_1toT_mIm1 = S12_1toT_vs_macroItr(relationshipNum, 1:T, macroItr);
@@ -411,12 +378,9 @@ while keepRunningIterations
             end
             
             delta_S12_1toT = S12_intoChild_1toT - S12_intoChild_1toT_mIm1;
-            % S12_intoChild_1toT = reshape(S_parent_1toT(chAr, 1:T), 1, T);
     
-            % delta_S12_1toT = S12_fromParent_1toT - S12_intoChild_1toT;
     
             v_parentSide_1toT = reshape(v_Areas_1toT(parentAreaConnectingBus, parAr, 1:T), 1, T);
-            % v_childSide_1toT = v1_1toT(chAr, 1:T);
     
             v1_1toT_vs_macroItr(relationshipNum, 1:T, macroItr+1) = v_parentSide_1toT;
             S12_1toT_vs_macroItr(relationshipNum, 1:T, macroItr+1) = S12_intoChild_1toT;
@@ -426,7 +390,6 @@ while keepRunningIterations
             else
                 v1_parentSide_1toT_mIm1 = v1_1(1);
             end
-            % delta_v_1toT = v_parentSide_1toT - v_childSide_1toT;
             delta_v_1toT = v_parentSide_1toT - v1_parentSide_1toT_mIm1;
             Residual_Area_1toT = reshape([delta_S12_1toT; delta_v_1toT], 2*T, 1);
             
@@ -441,8 +404,6 @@ while keepRunningIterations
                 myfprintf(true, "It is even bigger than the previous biggest residual.\n");
             end
             
-            % fprintf("Printing out area 1 for no reason B: macroItr = %d", macroItr)
-            % disp(length(fieldnames(sysInfo.Area{1})));
         end
         
         myfprintf(true, "Macro-iteration %d: Checking for convergence among all connected areas completed.\n", macroItr+1);
@@ -460,9 +421,6 @@ while keepRunningIterations
             %Communication-
             myfprintf(true, "Since there is still a difference in boundary variables, " + ...
                 "let's exchange boundary variables.\n")
-            
-            % fprintf("Printing out area 1 for no reason C: macroItr = %d", macroItr)
-            % disp(length(fieldnames(sysInfo.Area{1})));
 
             for relationshipNum = 1:numRelationships
                 parAr = CBTable.parentArea(relationshipNum);
@@ -484,28 +442,21 @@ while keepRunningIterations
                     v1_1toT(chAr, 1:T) = a(2)*reshape(V_iter(macroItr, busParTo, parAr, 1:T), 1, T) + ...
                         a(1)*reshape(V_iter(macroItr+1, busParTo, parAr, 1:T), 1, T) + ...
                         (1-sum(a))*reshape(v_Areas_1toT(busParTo, parAr, 1:T), 1, T);
-                    % disp(v1_1toT(char, 1:T))
 
                     myfprintf(true, "***Macro-iteration %d Communication Power:****\n", macroItr+1)
 
                     S12_allRelationships_1toT(relationshipNum, 1:T) = a(2)*reshape(Se_iter(macroItr-1, chAr, 1:T), 1, T)+...
                         a(1)*reshape(Se_iter(macroItr, chAr, 1:T), 1, T)+...
                         (1-sum(a))*S_parent_1toT(chAr, 1:T);
-                    % disp(S12_allRelationships_1toT(relationshipNum, 1:T));
                 else
                     myfprintf(true, "***Macro-iteration %d Communication Voltage:****\n", macroItr+1)
                     v1_1toT(chAr, 1:T) = v_Areas_1toT(busParTo, parAr, 1:T);
-                    % disp(v1_1toT(chAr, 1:T))
 
                     myfprintf(true, "***Macro-iteration %d Communication Power:****\n", macroItr+1)
                     S12_allRelationships_1toT(relationshipNum, 1:T) = S_parent_1toT(chAr, 1:T);
-                    % disp(S12_allRelationships_1toT(relationshipNum, 1:T));
 
     
                 end
-                
-                % fprintf("Printing out area 1 for no reason D: macroItr = %d", macroItr)
-                % disp(length(fieldnames(sysInfo.Area{1})));
 
             end
 
@@ -521,12 +472,8 @@ while keepRunningIterations
 
 end
 %%
-% keyboard;
 sysInfo = truncateSysInfo(sysInfo, macroItr);
-% keyboard;
-% if ~copf 
-    sysInfo = collectCentralizedInfo(sysInfo, simInfo);
-% end
+sysInfo = collectCentralizedInfo(sysInfo, simInfo);
 %%
 saveSCDPlots = true
 if Batt_percent > 0 && saveSCDPlots
@@ -575,7 +522,6 @@ results.QSubs_1toT = QSubs_1toT_vs_macroItr(1:T, macroItr+1);
 
 results.simInfo = simInfo;
 results.sysInfo = sysInfo;
-% plot_relationships_over_time(results, simInfo, sysInfo)
 plot_simulation_results(results)
 %%
 grandTotalTime = toc(start)
@@ -593,8 +539,6 @@ end
 area1Info = sysInfo.Area{1};
 genCost_dollars_1toT = area1Info.PSubsCost_1toT * 1e-2;
 genCost_dollars_allT = area1Info.PSubsCost_allT * 1e-2;
-% substationPower_kW_1toT = area1Info.P_Area_1toT(1, :)*kVA_B;
-% substationPower_kW_1toT = sysInfo.PSubs_1toT_vs_macroItr(1:T, macroItr+1) * kVA_B;
 substationPower_kW_1toT = sysInfo.PSubs_1toT * kVA_B;
 substationPower_kVAr_1toT = sysInfo.QSubs_1toT * kVA_B;
 
@@ -651,157 +595,40 @@ end
 vald = struct();
 vald.res = results;
 
-% if copf
-    % vald.loadShape = lambdaVals;
-    vald.loadShape = sysInfo.loadShape;
+vald.loadShape = sysInfo.loadShape;
+vald.loadShapePV = sysInfo.loadShapePV;
+vald.busesWithDERs = sysInfo.busesWithDERs;
+vald.Pmpp = sysInfo.Pmpp;
+vald.V_1toT = sysInfo.V_1toT;
+pLTotal_kW_1toT = sum(sysInfo.P_L_1toT)*kVA_B;
+qLTotal_kVAr_1toT = sum(sysInfo.Q_L_1toT)*kVA_B;
+pDTotal_kW_1toT = sum(sysInfo.pD_1toT)*kVA_B;
+busesWithDERs = sysInfo.busesWithDERs;
+vald.pD_1toT = sysInfo.pD_1toT;
+vald.qD_1toT = sysInfo.qD_1toT;
+vald.Sder = sysInfo.Sder;
+qDTotal_kVAr_1toT = sum(vald.qD_1toT)*kVA_B;
+vald.qC_Full = sysInfo.Q_C_Full;
+qCTotal_kVAr_1toT = repmat(sum(vald.qC_Full), 1, T)*kVA_B;
+vald.busesWithBatts = sysInfo.busesWithBatts;
+vald.S_battRated = sysInfo.Sbatt;
+vald.Pd_1toT = sysInfo.Pd_1toT;
+vald.P_battRated = sysInfo.Pbatt;
+PdTotal_kW_1toT = sum(vald.Pd_1toT)*kVA_B;
+vald.Pc_1toT = sysInfo.Pc_1toT;
+PcTotal_kW_1toT = sum(vald.Pc_1toT)*kVA_B;
+PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
+vald.B_1toT = sysInfo.B_1toT;
+BTotal_kWh_1toTh = sum(vald.B_1toT)*kVA_B;
+vald.B0 = sysInfo.B0;
+vald.qB_1toT = sysInfo.qB_1toT;
+qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
+pTotal_kW_1toT = PdTotal_kW_1toT + pDTotal_kW_1toT - PcTotal_kW_1toT;
+qTotal_kVAr_1toT = qDTotal_kVAr_1toT + qBTotal_kVAr_1toT + qCTotal_kVAr_1toT;
+vald.nDER = sysInfo.nDER;
+vald.nBatt = sysInfo.nBatt;
 
-    % vald.loadShapePV = pvCoeffVals;
-    vald.loadShapePV = sysInfo.loadShapePV;
-    % vald.busesWithDERs_Area = area1Info.busesWithDERs_Area;
-    % vald.busesWithDERs = area1Info.busesWithDERs_Area;
-    vald.busesWithDERs = sysInfo.busesWithDERs;
-    % vald.Pmpp_AreaFull = area1Info.Pmpp_Area;
-    % vald.Pmpp_Full = area1Info.Pmpp_Area;
-    
-
-    % vald.Pmpp_Area = area1Info.Pmpp_Area(vald.busesWithDERs_Area);
-    % vald.Pmpp = area1Info.Pmpp_Area(vald.busesWithDERs);
-    vald.Pmpp = sysInfo.Pmpp;
-
-    % vald.Sder_AreaFull = area1Info.S_der_Area;
-    % vald.Sder_Full = area1Info.S_der_Area;
-    
-
-
-    % vald.V_copf = V_Area_1toT;
-    % vald.V_1toT = V_Area_1toT;
-    vald.V_1toT = sysInfo.V_1toT;
-    % vald.pL_AreaFull_1toT = area1Info.P_L_Area_1toT;
-    % vald.pL_Full_1toT = area1Info.P_L_Area_1toT;
-
-    % pLTotal_kW_1toT = sum(vald.pL_AreaFull_1toT)*kVA_B;
-    % pLTotal_kW_1toT = sum(vald.pL_Full_1toT)*kVA_B;
-    pLTotal_kW_1toT = sum(sysInfo.P_L_1toT)*kVA_B;
-    % vald.qL_AreaFull_1toT = area1Info.Q_L_Area_1toT;
-    % vald.qL_Full_1toT = area1Info.Q_L_Area_1toT;
-
-    % qLTotal_kVAr_1toT = sum(vald.qL_AreaFull_1toT)*kVA_B;
-    % qLTotal_kVAr_1toT = sum(vald.qL_Full_1toT)*kVA_B;
-    qLTotal_kVAr_1toT = sum(sysInfo.Q_L_1toT)*kVA_B;
-    
-    % vald.pD_AreaFull_1toT = area1Info.P_der_Area_1toT;
-    % pD_AreaFull_1toT = area1Info.P_der_Area_1toT;
-    % pD_Full_1toT = area1Info.P_der_Area_1toT;
-
-    % vald.pD_AreaFull_1toT = pD_AreaFull_1toT;
-    % vald.pD_Full_1toT = pD_Full_1toT;
-
-    % pDTotal_kW_1toT = sum(vald.pD_AreaFull_1toT)*kVA_B;
-    % pDTotal_kW_1toT = sum(vald.pD_Full_1toT)*kVA_B;
-    pDTotal_kW_1toT = sum(sysInfo.pD_1toT)*kVA_B;
-    
-    % vald.qD_AreaFull_1toT = qD_AreaFull_1toT;
-    % vald.qD_Full_1toT = qD_Full_1toT;
-
-    % busesWithDERs_Area = area1Info.busesWithDERs_Area;
-    % busesWithDERs = area1Info.busesWithDERs_Area;
-    busesWithDERs = sysInfo.busesWithDERs;
-
-    % qD_onlyBusesWithDERs_1toT = qD_AreaFull_1toT(busesWithDERs_Area, 1:T);
-    % qD_onlyBusesWithDERs_1toT = qD_Full_1toT(busesWithDERs, 1:T);
-    % qD_1toT = areaInfo.qD_Area_1toT;
-
-    % qD_onlyBusesWithDERs_1toT = qD_1toT;
-    
-    % pD_onlyBusesWithDERs_1toT = pD_AreaFull_1toT(busesWithDERs_Area, 1:T);
-    % pD_onlyBusesWithDERs_1toT = pD_Full_1toT(busesWithDERs, 1:T);
-
-    % vald.pD_Area_1toT = pD_onlyBusesWithDERs_1toT;
-    % vald.pD_1toT = pD_onlyBusesWithDERs_1toT;
-    vald.pD_1toT = sysInfo.pD_1toT;
-
-    % vald.qD_Area_1toT = qD_onlyBusesWithDERs_1toT;
-    % vald.qD_1toT = qD_onlyBusesWithDERs_1toT;
-    vald.qD_1toT = sysInfo.qD_1toT;
-
-    % Sder_AreaFull = area1Info.S_der_Area;
-    % Sder_Full = area1Info.S_der_Area;
-
-    % Sder_onlyBusesWithDERs = Sder_AreaFull(busesWithDERs_Area);
-    % Sder_onlyBusesWithDERs = Sder_Full(busesWithDERs);
-
-    % vald.Sder_Area = Sder_onlyBusesWithDERs;
-    % vald.Sder = Sder_onlyBusesWithDERs;
-    vald.Sder = sysInfo.Sder;
-
-    % qDTotal_kVAr_1toT = sum(vald.qD_AreaFull_1toT)*kVA_B;
-    % qDTotal_kVAr_1toT = sum(vald.qD_Full_1toT)*kVA_B;
-    qDTotal_kVAr_1toT = sum(vald.qD_1toT)*kVA_B;
-    % vald.qC_AreaFull = area1Info.Q_C_Area;
-    % vald.qC_Full = area1Info.Q_C_Area;
-    vald.qC_Full = sysInfo.Q_C_Full;
-
-    % qCTotal_kVAr_1toT = repmat(sum(vald.qC_AreaFull), 1, T)*kVA_B;
-    qCTotal_kVAr_1toT = repmat(sum(vald.qC_Full), 1, T)*kVA_B;
-
-    % vald.busesWithBatt_Area = area1Info.busesWithBatts_Area;
-    % vald.busesWithBatts = area1Info.busesWithBatts_Area;
-    vald.busesWithBatts = sysInfo.busesWithBatts;
-
-    % vald.S_battMax_Area = area1Info.S_onlyBattBusesMax_Area; % Actually this has 128 elements, so is 'Full'
-    % vald.S_battRated = area1Info.S_onlyBattBusesMax_Area; % Actually this has 128 elements, so is 'Full'
-    vald.S_battRated = sysInfo.Sbatt;
-    % vald.Pd_Area_1toT = area1Info.Pd_Area_1toT;
-    % vald.Pd_1toT = area1Info.Pd_Area_1toT;
-    vald.Pd_1toT = sysInfo.Pd_1toT;
-
-    % vald.P_battMax_Area = area1Info.P_onlyBattBusesMax_Area;
-    % vald.P_battRated = area1Info.P_onlyBattBusesMax_Area;
-    vald.P_battRated = sysInfo.Pbatt;
-
-    % PdTotal_kW_1toT = sum(vald.Pd_Area_1toT)*kVA_B;
-    PdTotal_kW_1toT = sum(vald.Pd_1toT)*kVA_B;
-
-    % vald.Pc_Area_1toT = area1Info.Pc_Area_1toT;
-    % vald.Pc_1toT = area1Info.Pc_Area_1toT;
-    vald.Pc_1toT = sysInfo.Pc_1toT;
-
-    % PcTotal_kW_1toT = sum(vald.Pc_Area_1toT)*kVA_B;
-    PcTotal_kW_1toT = sum(vald.Pc_1toT)*kVA_B;
-
-    PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
-
-    % vald.B_Area_1toT = area1Info.B_Area_1toT;
-    % vald.B_1toT = area1Info.B_Area_1toT;
-    vald.B_1toT = sysInfo.B_1toT;
-
-    % BTotal_kWh_1toTh = sum(vald.B_Area_1toT)*kVA_B;
-    BTotal_kWh_1toTh = sum(vald.B_1toT)*kVA_B;
-
-    % vald.B0_Area = area1Info.B0Vals_pu_Area;
-    % vald.B0 = area1Info.B0Vals_pu_Area;
-    vald.B0 = sysInfo.B0;
-
-    % vald.qB_Area_1toT = area1Info.qB_Area_1toT;
-    % vald.qB_1toT = area1Info.qB_Area_1toT;
-    vald.qB_1toT = sysInfo.qB_1toT;
-
-    % qBTotal_kVAr_1toT = sum(vald.qB_Area_1toT)*kVA_B;
-    qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
-
-    pTotal_kW_1toT = PdTotal_kW_1toT + pDTotal_kW_1toT - PcTotal_kW_1toT;
-    qTotal_kVAr_1toT = qDTotal_kVAr_1toT + qBTotal_kVAr_1toT + qCTotal_kVAr_1toT;
-    
-    % vald.nDER_Area = area1Info.nDER_Area;
-    % vald.nDER = area1Info.nDER_Area;
-    vald.nDER = sysInfo.nDER;
-
-    % vald.nBatt_Area = area1Info.nBatt_Area;
-    % vald.nBatt = area1Info.nBatt_Area;
-    vald.nBatt = sysInfo.nBatt;
-
-    vald.simInfo = simInfo;
-% end
+vald.simInfo = simInfo;
 %%
 disp('------------------------------------------------------------')
 disp(['Machine ID: ', getenv("COMPUTERNAME")])
