@@ -262,10 +262,10 @@ function [x, sysInfo, simInfo, ...
 
     T = simInfo.T;
 
-    if T >= 7
-        profiling = true;
-        profile on
-    end
+    % if T >= 7
+    %     profiling = true;
+    %     profile on
+    % end
     
     objFunction = simInfo.objFunction;
     if strcmp(objFunction, "loss_min")
@@ -309,9 +309,9 @@ function [x, sysInfo, simInfo, ...
     
     writematrix(x, areaSolutionName_x);
 
-    if profiling
-        profile viewer;
-    end
+    % if profiling
+    %     profile viewer;
+    % end
 
     [lineLosses, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss"});
     [~, lineLosses_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss_1toT"});
