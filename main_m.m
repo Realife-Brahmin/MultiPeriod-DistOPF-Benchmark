@@ -269,9 +269,10 @@ while keepRunningIterations
         S_chArs_1toT = S12_allRelationships_1toT(CBTable.parentArea == Area, 1:T);
 
         if macroItr == 0
-            areaInfo.Area = Area;
+            areaInfo = struct(); % Area struct not created yet, so create it
+            areaInfo.Area = Area; 
         else
-            areaInfo = sysInfo.Area{Area};
+            areaInfo = sysInfo.Area{Area}; % extract the latest Area struct
         end
 
         [xVals_Area, sysInfo, simInfo, ...
