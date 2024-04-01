@@ -212,7 +212,8 @@ simInfo.macroItrsCompleted = 0;
 simInfo.alg.correctionStep = a;
 simInfo.macroItr = 0;
 
-simInfo.alg.microItrMax = 100;
+% simInfo.alg.microItrMax = 100;
+simInfo.alg.microItrMax = 200;
 simInfo.alg.tolfun = 1e-6;
 simInfo.alg.stepTol = 1e-6;
 simInfo.alg.constraintTol = 1e-6;
