@@ -25,7 +25,7 @@ logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
 numAreas = 4
-T = 7
+T = 1
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
@@ -258,6 +258,21 @@ v_Areas_1toT = zeros(N, numAreas, T);
 v1_1toT_vs_macroItr = zeros(numRelationships, T, macroItrMax);
 S12_1toT_vs_macroItr = zeros(numRelationships, T, macroItrMax);
 Residuals_1toT_vs_macroItr = zeros(2*numRelationships, T, macroItrMax);
+
+sysInfo = getSysInfo(sysInfo, simInfo, systemName, ...
+    'verbose', verbose, 'logging', logging, 'displayTables', displayTables)
+% if ~copf
+%     % Retrieve busesWithDERs_Area for COPF Area 1.
+%     % Take X% of them and save them.
+%     % Assign the buses in that list into each Area's corresponding list.
+%     % sysInfo.busesWithDERs0
+%     % sysInfo.busesWithDERs
+%     % sysInfo.busesWithBatts0
+%     % sysInfo.busesWithBatts
+%     % somehow specify all correct X%, Y% DER, Battery buses in each area
+%     % USING COPF Area (actual numbered) X%, Y% DER, Battery buses
+%     % and store them in each areaInfo
+% end
 
 while keepRunningIterations
     for Area = 1:numAreas
