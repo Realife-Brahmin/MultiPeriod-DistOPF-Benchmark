@@ -129,23 +129,20 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     busesWithDERs_Actual = sysInfo.busesWithDERs_Actual(ismember(sysInfo.busesWithDERs_Actual, busDataActualBusNumsTable_Area.bus));
     % busesWithDERs_Area0 = busDataTable_Area.bus(find(busDataActualBusNumsTable_Area.bus == busesWithDERs_Actual0));
     % busesWithDERs_Area = busDataTable_Area.bus(find(busDataActualBusNumsTable_Area.bus == busesWithDERs_Actual));
-    [~, indicesDERs0] = ismember(busesWithDERs_Actual0, busDataActualBusNumsTable_Area.bus);
+        [~, indicesDERs] = ismember(busesWithDERs_Actual, busDataActualBusNumsTable_Area.bus);
+
     [~, indicesDERs] = ismember(busesWithDERs_Actual, busDataActualBusNumsTable_Area.bus);
     % Filter out zero indices if there are any. Zero means the value was not found.
     indicesDERs = indicesDERs(indicesDERs > 0);
-    indicesDERs0 = indicesDERs0(indicesDERs0 > 0);
 
     % Now, use these indices to access the values from busDataActualBusNumsTable_Area.bus directly
-    busesWithDERs_Area0 = busDataTable_Area.bus(indicesDERs0);
+    busesWithDERs_Area0 = busDataTable_Area.bus(indicesDERs);
     busesWithDERs_Area = busDataTable_Area.bus(indicesDERs);
 
     busesWithBatts_Actual0 = sysInfo.busesWithBatts_Actual0(ismember(sysInfo.busesWithBatts_Actual0, busDataActualBusNumsTable_Area.bus));
     busesWithBatts_Actual = sysInfo.busesWithBatts_Actual(ismember(sysInfo.busesWithBatts_Actual, busDataActualBusNumsTable_Area.bus));
-    [~, indicesBatts0] = ismember(busesWithBatts_Actual0, busDataActualBusNumsTable_Area.bus);
     [~, indicesBatts] = ismember(busesWithBatts_Actual, busDataActualBusNumsTable_Area.bus);
-    indicesBatts0 = indicesBatts0(indicesBatts0 > 0);
     indicesBatts = indicesBatts(indicesBatts > 0);
-    busesWithBatts_Area0 = busDataTable_Area.bus(indicesBatts0);
     busesWithBatts_Area = busDataTable_Area.bus(indicesBatts);
 
     keyboard;
