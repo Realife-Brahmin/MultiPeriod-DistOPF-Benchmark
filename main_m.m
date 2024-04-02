@@ -24,7 +24,7 @@ logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
-numAreas = 4
+numAreas = 1
 T = 1
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
@@ -33,7 +33,7 @@ alpha = 1e-3;
 gamma = 1e0;
 DER_percent = 10;
 % Batt_percent = ~noBatteries*DER_percent;
-Batt_percent = ~noBatteries * 10;
+Batt_percent = ~noBatteries * 0;
 delta_t = 1.00; % one hour
 displayTables = true;
 displayNetworkGraphs = false;
@@ -373,7 +373,9 @@ while keepRunningIterations
         for Area = 1:numAreas
             areaInfo = sysInfo.Area{Area};
             areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
-            areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
+            if Batt_percent > 0
+                areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
+            end
             sysInfo.Area{Area} = areaInfo;
         end
 
@@ -492,7 +494,7 @@ end
 sysInfo = truncateSysInfo(sysInfo, macroItr);
 sysInfo = collectCentralizedInfo(sysInfo, simInfo);
 %%
-saveSCDPlots = true
+% saveSCDPlots = true
 if Batt_percent > 0 && saveSCDPlots
     for Area = 1:numAreas
         areaInfo = sysInfo.Area{Area};
@@ -627,19 +629,36 @@ vald.Sder = sysInfo.Sder;
 qDTotal_kVAr_1toT = sum(vald.qD_1toT)*kVA_B;
 vald.qC_Full = sysInfo.Q_C_Full;
 qCTotal_kVAr_1toT = repmat(sum(vald.qC_Full), 1, T)*kVA_B;
-vald.busesWithBatts = sysInfo.busesWithBatts;
-vald.S_battRated = sysInfo.Sbatt;
-vald.Pd_1toT = sysInfo.Pd_1toT;
-vald.P_battRated = sysInfo.Pbatt;
-PdTotal_kW_1toT = sum(vald.Pd_1toT)*kVA_B;
-vald.Pc_1toT = sysInfo.Pc_1toT;
-PcTotal_kW_1toT = sum(vald.Pc_1toT)*kVA_B;
-PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
-vald.B_1toT = sysInfo.B_1toT;
-BTotal_kWh_1toTh = sum(vald.B_1toT)*kVA_B;
-vald.B0 = sysInfo.B0;
-vald.qB_1toT = sysInfo.qB_1toT;
-qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
+if Batt_percent > 0
+    vald.busesWithBatts = sysInfo.busesWithBatts;
+    vald.S_battRated = sysInfo.Sbatt;
+    vald.Pd_1toT = sysInfo.Pd_1toT;
+    vald.P_battRated = sysInfo.Pbatt;
+    PdTotal_kW_1toT = sum(vald.Pd_1toT)*kVA_B;
+    vald.Pc_1toT = sysInfo.Pc_1toT;
+    PcTotal_kW_1toT = sum(vald.Pc_1toT)*kVA_B;
+    PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
+    vald.B_1toT = sysInfo.B_1toT;
+    BTotal_kWh_1toTh = sum(vald.B_1toT)*kVA_B;
+    vald.B0 = sysInfo.B0;
+    vald.qB_1toT = sysInfo.qB_1toT;
+    qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
+else
+    vald.busesWithBatts = [];
+    vald.S_battRated = [];
+    vald.Pd_1toT = [];
+    vald.P_battRated = [];
+    PdTotal_kW_1toT = zeros(T, 1);
+    vald.Pc_1toT = [];
+    PcTotal_kW_1toT = zeros(T, 1);
+    PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
+    vald.B_1toT = [];
+    BTotal_kWh_1toTh = [];
+    vald.B0 = [];
+    vald.qB_1toT = zeros(T, 1);
+    qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
+end
+
 pTotal_kW_1toT = PdTotal_kW_1toT + pDTotal_kW_1toT - PcTotal_kW_1toT;
 qTotal_kVAr_1toT = qDTotal_kVAr_1toT + qBTotal_kVAr_1toT + qCTotal_kVAr_1toT;
 vald.nDER = sysInfo.nDER;

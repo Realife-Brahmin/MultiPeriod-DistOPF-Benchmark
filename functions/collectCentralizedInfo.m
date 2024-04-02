@@ -105,15 +105,18 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         % numBattBus will be like [1 7 22 85] which will only contain values
         % between 1:n_DER_System, so no actual bus numbers
         % sysInfo.busesWithBatts(numBattBus) = areaInfo.busesWithBatts_Area;
-        numBattBus = areaInfo.BattBusNums_Actual;
-        busesWithBatts_Area = areaInfo.busesWithBatts_Area;
-        sysInfo.Sbatt(numBattBus) = areaInfo.S_battMax_Area(busesWithBatts_Area); % currently named as S_battRated in vald
-        sysInfo.Pbatt(numBattBus) = areaInfo.P_battMax_Area(busesWithBatts_Area); % currently named as P_battRated in vald
-        sysInfo.B0(numBattBus) = areaInfo.B0Vals_pu_Area; 
-        sysInfo.B_1toT(numBattBus, 1:T) = areaInfo.B_Area_1toT;
-        sysInfo.Pd_1toT(numBattBus, 1:T) = areaInfo.Pd_Area_1toT;
-        sysInfo.Pc_1toT(numBattBus, 1:T) = areaInfo.Pc_Area_1toT;
-        sysInfo.qB_1toT(numBattBus, 1:T) = areaInfo.qB_Area_1toT;
+        Batt_percent = simInfo.Batt_percent;
+        if Batt_percent > 0
+            numBattBus = areaInfo.BattBusNums_Actual;
+            busesWithBatts_Area = areaInfo.busesWithBatts_Area;
+            sysInfo.Sbatt(numBattBus) = areaInfo.S_battMax_Area(busesWithBatts_Area); % currently named as S_battRated in vald
+            sysInfo.Pbatt(numBattBus) = areaInfo.P_battMax_Area(busesWithBatts_Area); % currently named as P_battRated in vald
+            sysInfo.B0(numBattBus) = areaInfo.B0Vals_pu_Area; 
+            sysInfo.B_1toT(numBattBus, 1:T) = areaInfo.B_Area_1toT;
+            sysInfo.Pd_1toT(numBattBus, 1:T) = areaInfo.Pd_Area_1toT;
+            sysInfo.Pc_1toT(numBattBus, 1:T) = areaInfo.Pc_Area_1toT;
+            sysInfo.qB_1toT(numBattBus, 1:T) = areaInfo.qB_Area_1toT;
+        end
     
     end
     
@@ -128,14 +131,25 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     sysInfo.QSubs_1toT = sysInfo.Area{1}.Q_Area_1toT(1, 1:T);
     sysInfo.QSubs_allT = sum(sysInfo.QSubs_1toT);
     
-    sysInfo.Pd_Total_1toT = sum(sysInfo.Pd_1toT);
-    sysInfo.Pd_Total_allT = sum(sysInfo.Pd_Total_1toT);
-    sysInfo.Pc_Total_1toT = sum(sysInfo.Pc_1toT);
-    sysInfo.Pc_Total_allT = sum(sysInfo.Pc_Total_1toT);
-    sysInfo.Pdc_Total_1toT = sum(sysInfo.Pd_1toT - sysInfo.Pc_1toT);
-    sysInfo.Pdc_Total_allT = sum(sysInfo.Pdc_Total_1toT);
-    sysInfo.qB_Total_1toT = sum(sysInfo.qB_1toT);
-    sysInfo.qB_Total_allT = sum(sysInfo.qB_Total_1toT);
+    if Batt_percent > 0
+        sysInfo.Pd_Total_1toT = sum(sysInfo.Pd_1toT);
+        sysInfo.Pd_Total_allT = sum(sysInfo.Pd_Total_1toT);
+        sysInfo.Pc_Total_1toT = sum(sysInfo.Pc_1toT);
+        sysInfo.Pc_Total_allT = sum(sysInfo.Pc_Total_1toT);
+        sysInfo.Pdc_Total_1toT = sum(sysInfo.Pd_1toT - sysInfo.Pc_1toT);
+        sysInfo.Pdc_Total_allT = sum(sysInfo.Pdc_Total_1toT);
+        sysInfo.qB_Total_1toT = sum(sysInfo.qB_1toT);
+        sysInfo.qB_Total_allT = sum(sysInfo.qB_Total_1toT);
+    else
+        sysInfo.Pd_Total_1toT = zeros(T, 1);
+        sysInfo.Pd_Total_allT = 0;
+        sysInfo.Pc_Total_1toT = zeros(T, 1);
+        sysInfo.Pc_Total_allT = 0;
+        sysInfo.Pdc_Total_1toT = zeros(T, 1);
+        sysInfo.Pdc_Total_allT = 0;
+        sysInfo.qB_Total_1toT = zeros(T, 1);
+        sysInfo.qB_Total_allT = 0;
+    end
 
     sysInfo.pD_Total_1toT = sum(sysInfo.pD_1toT);
     sysInfo.pD_Total_allT = sum(sysInfo.pD_Total_1toT);
@@ -152,11 +166,18 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     sysInfo.qGED_Total_allT = sysInfo.qD_Total_allT + sysInfo.qB_Total_allT;
     sysInfo.q_Total_1toT = sysInfo.qGED_Total_1toT + sysInfo.QC_Total_1toT;
     sysInfo.q_Total_allT = sysInfo.qGED_Total_allT + sysInfo.QC_Total_allT;
-
-    sysInfo.B_violation = sysInfo.B0 - sysInfo.B_1toT(:, T);
-    sysInfo.B_violation_abs = abs(sysInfo.B_violation);
-    sysInfo.B_violation_Total = sum(sysInfo.B_violation);
-    sysInfo.B_violation_abs_Total = sum(sysInfo.B_violation_abs);
+    
+    if Batt_percent > 0
+        sysInfo.B_violation = sysInfo.B0 - sysInfo.B_1toT(:, T);
+        sysInfo.B_violation_abs = abs(sysInfo.B_violation);
+        sysInfo.B_violation_Total = sum(sysInfo.B_violation);
+        sysInfo.B_violation_abs_Total = sum(sysInfo.B_violation_abs);
+    else
+        sysInfo.B_violation = 0;
+        sysInfo.B_violation_abs = 0;
+        sysInfo.B_violation_Total = 0;
+        sysInfo.B_violation_abs_Total = 0;
+    end
     
     sysInfo.P_scd_1toT = min(sysInfo.Pd_1toT, sysInfo.Pc_1toT);
     sysInfo.P_scd_Total_1toT = sum(sysInfo.P_scd_1toT);
