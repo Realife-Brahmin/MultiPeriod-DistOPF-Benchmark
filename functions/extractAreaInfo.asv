@@ -129,23 +129,26 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     busesWithDERs_Actual = sysInfo.busesWithDERs_Actual(ismember(sysInfo.busesWithDERs_Actual, busDataActualBusNumsTable_Area.bus));
     % busesWithDERs_Area0 = busDataTable_Area.bus(find(busDataActualBusNumsTable_Area.bus == busesWithDERs_Actual0));
     % busesWithDERs_Area = busDataTable_Area.bus(find(busDataActualBusNumsTable_Area.bus == busesWithDERs_Actual));
-        [~, indicesDERs] = ismember(busesWithDERs_Actual, busDataActualBusNumsTable_Area.bus);
-
+    [~, indicesDERs0] = ismember(busesWithDERs_Actual0, busDataActualBusNumsTable_Area.bus);
     [~, indicesDERs] = ismember(busesWithDERs_Actual, busDataActualBusNumsTable_Area.bus);
     % Filter out zero indices if there are any. Zero means the value was not found.
     indicesDERs = indicesDERs(indicesDERs > 0);
+    indicesDERs0 = indicesDERs0(indicesDERs0 > 0);
 
     % Now, use these indices to access the values from busDataActualBusNumsTable_Area.bus directly
-    busesWithDERs_Area0 = busDataTable_Area.bus(indicesDERs);
+    busesWithDERs_Area0 = busDataTable_Area.bus(indicesDERs0);
     busesWithDERs_Area = busDataTable_Area.bus(indicesDERs);
 
     busesWithBatts_Actual0 = sysInfo.busesWithBatts_Actual0(ismember(sysInfo.busesWithBatts_Actual0, busDataActualBusNumsTable_Area.bus));
     busesWithBatts_Actual = sysInfo.busesWithBatts_Actual(ismember(sysInfo.busesWithBatts_Actual, busDataActualBusNumsTable_Area.bus));
+    [~, indicesBatts0] = ismember(busesWithBatts_Actual0, busDataActualBusNumsTable_Area.bus);
     [~, indicesBatts] = ismember(busesWithBatts_Actual, busDataActualBusNumsTable_Area.bus);
+    indicesBatts0 = indicesBatts0(indicesBatts0 > 0);
     indicesBatts = indicesBatts(indicesBatts > 0);
+    busesWithBatts_Area0 = busDataTable_Area.bus(indicesBatts0);
     busesWithBatts_Area = busDataTable_Area.bus(indicesBatts);
 
-    keyboard;
+    % keyboard;
 
     % writetable(sortrows(busDataTable_Area, "bus"), "sortedBusData.csv")
     % Graph Formation
@@ -167,15 +170,23 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     Q_L_Area = busDataTable_Area.Q_L.*load_mult/kVA_B;           % Rated Qload of node
     Q_C_Area = busDataTable_Area.Q_C/kVA_B;                           % Rated Q of Capacitor
     
-    P_der_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power, all DERs from original CSV file
+
+    % P_der_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B;          % Rated  DER active power, all DERs from original CSV file
+    P_der_Area0 = centralizedGEDs2areaGEDs(busDataTable_Area, busesWithDERs_Area0)*gen_mult/kVA_B;
+
     Pmpp_Area0 = P_der_Area0;
     P_batt_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B; % Rated Battery Active Power
-    P_der_Area = select_percentage_of_nz_elements(P_der_Area0, DER_percent);          % Rated  DER active power, only DER_percent elements selected
+    % P_der_Area = select_percentage_of_nz_elements(P_der_Area0, DER_percent);          % Rated  DER active power, only DER_percent elements selected
+    P_der_Area = centralizedGEDs2areaGEDs(busDataTable_Area, busesWithDERs_Area)*gen_mult/kVA_B;
+
     Pmpp_Area = P_der_Area;
     P_batt_Area = select_percentage_of_nz_elements(P_batt_Area0, Batt_percent); % Rated Battery Real Power, only Batt_percent elements selected
 
-    S_der_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B; 
-    S_der_Area = select_percentage_of_nz_elements(S_der_Area0, DER_percent);
+    % S_der_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B; 
+    S_der_Area0 = S_to_P_ratio_PV*P_der_Area0; 
+
+    % S_der_Area = select_percentage_of_nz_elements(S_der_Area0, DER_percent);
+    S_der_Area = S_to_P_ratio_PV*P_der_Area;
     S_batt_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B;
     S_batt_Area = select_percentage_of_nz_elements(S_batt_Area0, Batt_percent);
 
