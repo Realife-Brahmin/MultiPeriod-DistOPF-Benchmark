@@ -175,21 +175,25 @@ function areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, sys
     P_der_Area0 = centralizedGEDs2areaGEDs(busDataTable_Area, busesWithDERs_Area0)*gen_mult/kVA_B;
 
     Pmpp_Area0 = P_der_Area0;
-    P_batt_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B; % Rated Battery Active Power
+
+    % P_batt_Area0 = busDataTable_Area.P_der*gen_mult/kVA_B; % Rated Battery Active Power
+    % P_batt_Area0 = P_der_Area0; % Rated Battery Active Power
+    P_batt_Area0 = centralizedGEDs2areaGEDs(busDataTable_Area, busesWithBatts_Area0)*gen_mult/kVA_B;
     % P_der_Area = select_percentage_of_nz_elements(P_der_Area0, DER_percent);          % Rated  DER active power, only DER_percent elements selected
     P_der_Area = centralizedGEDs2areaGEDs(busDataTable_Area, busesWithDERs_Area)*gen_mult/kVA_B;
-
     Pmpp_Area = P_der_Area;
-    P_batt_Area = select_percentage_of_nz_elements(P_batt_Area0, Batt_percent); % Rated Battery Real Power, only Batt_percent elements selected
-
+    % P_batt_Area = select_percentage_of_nz_elements(P_batt_Area0, Batt_percent); % Rated Battery Real Power, only Batt_percent elements selected
+    P_batt_Area = centralizedGEDs2areaGEDs(busDataTable_Area, busesWithBatts_Area)*gen_mult/kVA_B;
+    % P_batt_Area = P_der_Area;
     % S_der_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B; 
     S_der_Area0 = S_to_P_ratio_PV*P_der_Area0; 
 
     % S_der_Area = select_percentage_of_nz_elements(S_der_Area0, DER_percent);
     S_der_Area = S_to_P_ratio_PV*P_der_Area;
-    S_batt_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B;
-    S_batt_Area = select_percentage_of_nz_elements(S_batt_Area0, Batt_percent);
-
+    % S_batt_Area0 = S_to_P_ratio_PV*busDataTable_Area.P_der/kVA_B;
+    S_batt_Area0 = S_to_P_ratio_PV*P_batt_Area0;
+    % S_batt_Area = select_percentage_of_nz_elements(S_batt_Area0, Batt_percent);
+    S_batt_Area = S_to_P_ratio_PV*P_batt_Area;
     % keyboard;
     % P_L_Area_1toT = repmat(P_L_Area, 1, T) .* lambdaVals;
     % Q_L_Area_1toT = repmat(Q_L_Area, 1, T) .* lambdaVals;
