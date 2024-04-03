@@ -14,7 +14,7 @@ else
     fprintf("Are you not me? Might want to add the folder to the path or add folder to the workspace.\n");
 end
 
-visible = 'on'; % display voltage snapshot plots (they are still generated and saved either way)
+visible = 'off'; % display voltage snapshot plots (they are still generated and saved either way)
 
 systemName = sysInfo.systemName;
 T = vald.simInfo.T;
