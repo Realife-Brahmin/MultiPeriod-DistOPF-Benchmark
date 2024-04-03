@@ -285,6 +285,12 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
                 Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
 
             elseif strcmp(batteryTerminalChargeConstraint, "hard")
+                row = indices_SOC_j_T_2toT;
+                Aeq(sub2ind(sz, row, indices_Bj_T(2:T))) = -1;
+                Aeq(sub2ind(sz, row, indices_Bj_T(1:T-1))) = 1;
+                Aeq(sub2ind(sz, row, indices_Pcj_T(2:T))) = delta_t*etta_C;
+                Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
+
                 row = indices_SOC_j_T_2toTm1;
                 Aeq(sub2ind(sz, row, indices_Bj_T(2:T-1))) = -1;
                 Aeq(sub2ind(sz, row, indices_Bj_T(1:T-2))) = 1;
