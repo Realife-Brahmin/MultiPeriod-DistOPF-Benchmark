@@ -25,15 +25,21 @@ logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
 numAreas = 1
-T = 1
+T = 3
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
 % gamma = 1e-1;
-gamma = 1e0;
+batteryTerminalChargeConstraint = "soft";
+if strcmp(batteryTerminalChargeConstraint, "soft")
+    gamma = 1e0;
+else
+    gamma = 0;
+end
+
 DER_percent = 10;
 % Batt_percent = ~noBatteries*DER_percent;
-Batt_percent = ~noBatteries * 0;
+Batt_percent = ~noBatteries * 15;
 delta_t = 1.00; % one hour
 displayTables = true;
 displayNetworkGraphs = false;
@@ -42,7 +48,7 @@ saveNetworkGraphPlots = false;
 generateTextFilesForResults = true;
 displaySimulationResultPlots = false;
 saveSimulationResultPlots = false;
-saveSCDPlots = false;
+saveSCDPlots = true;
 
 globalPVCoeff = 1.0;
 [pvCoeffVals, lambdaVals, S_to_P_ratio_PV, ...
@@ -174,6 +180,7 @@ end
 simInfo.copf = copf;
 simInfo.simNatureString = simNatureString;
 simInfo.alpha = alpha;
+simInfo.batteryTerminalChargeConstraint = batteryTerminalChargeConstraint;
 simInfo.gamma = gamma;
 simInfo.DER_percent = DER_percent;
 simInfo.Batt_percent = Batt_percent;
@@ -260,7 +267,7 @@ S12_1toT_vs_macroItr = zeros(numRelationships, T, macroItrMax);
 Residuals_1toT_vs_macroItr = zeros(2*numRelationships, T, macroItrMax);
 
 sysInfo = getSysInfo(sysInfo, simInfo, systemName, ...
-    'verbose', verbose, 'logging', logging, 'displayTables', displayTables)
+    'verbose', verbose, 'logging', logging, 'displayTables', false);
 % if ~copf
 %     % Retrieve busesWithDERs_Area for COPF Area 1.
 %     % Take X% of them and save them.
