@@ -1,0 +1,62 @@
+% Assuming sysInfo, numAreas, T, and other necessary variables are already defined in your workspace
+
+% Construct the folder and file names
+folderName = fullfile('processedData', sysInfo.systemName, strcat('numAreas_', num2str(numAreas), "/"));
+prefixName = strcat(folderName, strcat('Horizon_', num2str(T)));
+
+% Construct the full path for the TXT file
+systemsSolutionName_fval = strcat(prefixName, "_", getenv('COMPUTERNAME'), '_results_', battstring, '.txt');
+
+% Open the file for writing
+fileID = fopen(systemsSolutionName_fval, 'w');
+
+% Check if the file was opened successfully
+if fileID == -1
+    error('Failed to open file for writing.');
+end
+
+% Initialize line number counter
+locNum = 0;
+
+% Starting block
+fprintf(fileID, '------------------------------------------------------------\n');
+fprintf(1, '------------------------------------------------------------\n');
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Machine ID: %s\n', getenv("COMPUTERNAME"));
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Duration: %d\n', T);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Nature of Simulation: %s\n', simNatureStringFull);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'GED Configuration: %s\n', battstring);
+
+% Loop for hourly details
+for t = 1:T
+    fprintf(fileID, '-----------------------------\n');
+    fprintf(1, '-----------------------------\n');
+    fprintf(fileID, 'Hour: %d\n', t);
+    fprintf(1, 'Hour: %d\n', t);
+    locNum = locNum + 1; print_and_write(fileID, locNum, 'Line Loss: %.2f kW\n', lineLoss_kW_1toT(t));
+    % Include other metrics per hour using print_and_write function
+    % Example:
+    % locNum = locNum + 1; print_and_write(fileID, locNum, 'Substation Power: %.2f kW + %.2f kVAr\n', substationPower_kW_1toT(t), substationPower_kVAr_1toT(t));
+end
+
+% Horizon summary block
+fprintf(fileID, '-----------------------------\n');
+fprintf(1, '-----------------------------\n');
+fprintf(fileID, 'Hour: Full %d Hour Horizon\n', T);
+fprintf(1, 'Hour: Full %d Hour Horizon\n', T);
+% Include summary metrics using print_and_write function
+% Example:
+% locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Line Loss: %.2f kW\n', lineLoss_kW_allT);
+
+% Simulation metadata block
+fprintf(fileID, '------------------------------------------------------------\n');
+fprintf(1, '------------------------------------------------------------\n');
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Number of Macro-Iterations: %d\n', macroItr+1);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Simulation Time: %.2f s\n', grandTotalTime);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Time to solve with sequential (non-parallel) computation: %.2f s\n', time_if_serial);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Time to solve if OPF computation parallelized: %.2f s\n', time_if_parallel);
+
+% Close the file
+fclose(fileID);
+
+% Display a message indicating that the results were saved
+disp(['Results saved to ', systemsSolutionName_fval]);

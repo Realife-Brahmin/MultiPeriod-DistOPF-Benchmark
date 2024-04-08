@@ -673,45 +673,4 @@ vald.nBatt = sysInfo.nBatt;
 
 vald.simInfo = simInfo;
 %%
-displayResults();
-%%
-% Assuming sysInfo, numAreas, T, and noBatteries are already defined in your workspace
-
-% Construct the folder and file names
-folderName = fullfile('processedData', sysInfo.systemName, strcat('numAreas_', num2str(numAreas), "/"));
-prefixName = strcat(folderName, strcat('Horizon_', num2str(T)));
-
-% Construct the full path for the TXT file
-systemsSolutionName_fval = strcat(prefixName, "_", getenv('COMPUTERNAME'), '_results_', battstring, '.txt');
-
-% Open the file for writing
-fileID = fopen(systemsSolutionName_fval, 'w');
-
-% Check if the file was opened successfully
-if fileID == -1
-    error('Failed to open file for writing.');
-end
-
-% Write the results to the file
-fprintf(fileID, '------------------------------------------------------------\n');
-fprintf(fileID, 'Machine ID: %s\n', getenv("COMPUTERNAME"));
-fprintf(fileID, 'Horizon Duration: %d\n', T);
-fprintf(fileID, 'Nature of Simulation: %s\n', simNatureStringFull);
-fprintf(fileID, 'Line Loss: %.2f kW\n', lineLoss_kW_allT);                       
-fprintf(fileID, 'Substation Power: %.2f kW\n', substationPower_kW_1toT);
-fprintf(fileID, 'Substation Power Cost: %.3f $\n', genCost_dollars_1toT);
-fprintf(fileID, 'Total Real Load: %.2f kW\n', pLTotal_kW_1toT);                       
-fprintf(fileID, 'Total Reactive Load: %.2f kVAr\n', qLTotal_kVAr_1toT);
-fprintf(fileID, 'Total PV Real Power Generation: %.2f kW\n', pDTotal_kW_1toT);
-fprintf(fileID, 'Total PV Reactive Power Generation: %.2f kVAr\n', qDTotal_kVAr_1toT);
-fprintf(fileID, 'Number of Macro-Iterations: %d\n', macroItr+1);
-fprintf(fileID, 'Simulation Time: %.2f s\n', grandTotalTime);
-fprintf(fileID, strcat('Time to solve with sequential (non-parallel) computation: ', num2str(time_if_serial), ' s\n'));
-fprintf(fileID, 'Time to Solve if OPF computation parallelized: %.2f s\n', time_if_parallel);
-fprintf(fileID, '------------------------------------------------------------\n');
-
-% Close the file
-fclose(fileID);
-
-% Display a message indicating that the results were saved
-disp(['Results saved to ', systemsSolutionName_fval]);
+printAndSaveResults();
