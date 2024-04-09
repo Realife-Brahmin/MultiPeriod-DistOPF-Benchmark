@@ -1,0 +1,55 @@
+------------------------------------------------------------
+1. Machine ID: ETRL204-ARYAN
+2. Horizon Duration: 3
+3. Nature of Simulation: Spatially-Distributed-OPF with 4 Areas.
+4. GED Configuration: pv_10_batt_15
+-----------------------------
+Hour: 1
+1. Line Loss: 16.28 kW
+2. Substation Power: 886.72 kW + 180.51 kVAr
+3. Total Load: 903.80 kW + 497.29 kVAr
+4. Total Generation: 33.28 kW + 349.26 kVAr
+5. Total PV Generation: 27.99 kW + 5.85 kVAr
+6. Total Battery Generation: 5.28 kW + -6.58 kVAr
+7. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+8. Substation Power Cost: $38.13
+9. SCD Observed: 0.00 kW
+-----------------------------
+Hour: 2
+1. Line Loss: 16.39 kW
+2. Substation Power: 887.81 kW + 186.84 kVAr
+3. Total Load: 915.44 kW + 503.69 kVAr
+4. Total Generation: 44.04 kW + 349.56 kVAr
+5. Total PV Generation: 31.49 kW + 6.14 kVAr
+6. Total Battery Generation: 12.55 kW + -6.58 kVAr
+7. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+8. Substation Power Cost: $31.07
+9. SCD Observed: 0.00 kW
+-----------------------------
+Hour: 3
+1. Line Loss: 16.45 kW
+2. Substation Power: 887.52 kW + 192.47 kVAr
+3. Total Load: 925.90 kW + 509.45 kVAr
+4. Total Generation: 55.02 kW + 349.82 kVAr
+5. Total PV Generation: 34.99 kW + 6.40 kVAr
+6. Total Battery Generation: 20.03 kW + -6.58 kVAr
+7. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+8. Substation Power Cost: $24.85
+9. SCD Observed: 0.00 kW
+-----------------------------
+Hour: Full 3 Hour Horizon
+1. Horizon Line Loss: 49.11 kW
+2. Horizon Total Substation Power: 2662.05 kW + 559.82 kVAr
+3. Horizon Total Load: 2745.14 kW + 1510.43 kVAr
+4. Horizon Total Generation: 132.34 kW + 1048.64 kVAr
+5. Horizon Total PV Generation: 94.48 kW + 18.39 kVAr
+6. Horizon Total Battery Generation: 37.86 kW + -19.75 kVAr
+7. Horizon Total Static Capacitor Reactive Power Generation: 1050.00 kVAr
+8. Horizon Total Substation Power Cost: $94.05
+9. Horizon Total SCD Observed: 0.00 kW
+10. Horizon-end Battery Energy Deviation from Reference: 39.85 kWh
+------------------------------------------------------------
+1. Number of Macro-Iterations: 5
+2. Simulation Time: 216.68 s
+3. Time to solve with sequential (non-parallel) computation: 179.10 s
+4. Time to solve if OPF computation parallelized: 113.77 s
