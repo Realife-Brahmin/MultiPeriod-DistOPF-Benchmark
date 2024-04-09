@@ -10,7 +10,7 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
     % addParameter(p, 'showPlots', false, @(x) islogical(x) || ismember(lower(x), {'true', 'false'}));
     addParameter(p, 'showPlots', false, @(x) islogical(x) || x == 1 || x == 0 || ismember(lower(x), {'true', 'false'}));
 
-
+    kVA_B = sysInfo.kVA_B;
     parse(p, varargin{:});
     savePlots = p.Results.savePlots;
     showPlots = p.Results.showPlots;
@@ -30,6 +30,7 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
     
     alpha = simInfo.alpha;
     gamma = simInfo.gamma;
+    threshold = 0.001; % Values below this threshold are treated as zero
     
     for batt_num = 1:nBatt_Area
         f = figure('visible', visible);        
@@ -40,11 +41,21 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         indices_Pc = getIndicesT(areaInfo.indices_Pcj, batt_num);
         indices_Pd = getIndicesT(areaInfo.indices_Pdj, batt_num); 
         
-        bar(1:T, x(indices_Pc)*1000, 'FaceColor', darkGreen); 
+        Pc_1toT_kW = x(indices_Pc)*kVA_B;
+        Pd_1toT_kW = -x(indices_Pd)*kVA_B;
+
+        % Apply threshold
+        Pc_1toT_kW(abs(Pc_1toT_kW) < threshold) = 0;
+        Pd_1toT_kW(abs(Pd_1toT_kW) < threshold) = 0;
+
+        % bar(1:T, x(indices_Pc)*kVA_B, 'FaceColor', darkGreen); 
+        bar(1:T, Pc_1toT_kW, 'FaceColor', darkGreen); 
         hold on;
-        bar(1:T, -x(indices_Pd)*1000, 'FaceColor', wineRed);
+        % bar(1:T, -x(indices_Pd)*kVA_B, 'FaceColor', wineRed);
+        bar(1:T, -Pd_1toT_kW, 'FaceColor', wineRed);
         hold off;
         
+        % keyboard;
         % Modify y-tick labels for Pd to be positive
         ax = gca;
         ax.YTickLabel = cellfun(@(v) num2str(abs(str2double(v))), ax.YTickLabel, 'UniformOutput', false);
