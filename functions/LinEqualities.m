@@ -9,6 +9,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     V_min = simInfo.V_min;
     V_max = simInfo.V_max;
     noBatteries = simInfo.noBatteries;
+    Batt_percent = simInfo.Batt_percent;
     batteryTerminalChargeConstraint = simInfo.batteryTerminalChargeConstraint;
     % Input parser
     p = inputParser;
@@ -50,7 +51,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     % Emax_batt_Area = areaInfo.Emax_batt_Area;
     busesWithDERs_Area = areaInfo.busesWithDERs_Area;
     nDER_Area = areaInfo.nDER_Area;
-    if ~noBatteries
+    if Batt_percent > 0
         busesWithBatts_Area = areaInfo.busesWithBatts_Area;
         nBatt_Area = areaInfo.nBatt_Area;
     else
@@ -72,7 +73,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     ub_qD_onlyDERbuses_Area = areaInfo.ub_qD_onlyDERbuses_Area;
     lb_qB_onlyBattBuses_Area = areaInfo.lb_qB_onlyBattBuses_Area;
     ub_qB_onlyBattBuses_Area = areaInfo.ub_qB_onlyBattBuses_Area;
-    if ~noBatteries
+    if Batt_percent > 0
         B0Vals_pu_Area = areaInfo.B0Vals_pu_Area;
     else
         B0Vals_pu_Area = [];
@@ -250,7 +251,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     
     % [[1:m_Area]' beq(1:m_Area)]
 
-    if ~noBatteries
+    if Batt_percent > 0
         for batt_num = 1:nBatt_Area
             j = busesWithBatts_Area(batt_num);
             i_Idx = find(tb_Area == j);
@@ -325,7 +326,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     lbVals4 = [0, -5, -15, 0, V_min^2];
     ubVals4 = [5, 5, 5, 15, V_max^2];
     [lb_Area4, ub_Area4] = constructBoundVectors(numVarsBFM4, lbVals4, ubVals4);
-    if ~noBatteries
+    if Batt_percent > 0
         lb_Area9 = repmat([lb_Area4; lb_qD_onlyDERbuses_Area; lb_B_onlyBattBuses_Area; lb_Pc_onlyBattBuses_Area; lb_Pd_onlyBattBuses_Area; lb_qB_onlyBattBuses_Area], T, 1);
         ub_Area9 = repmat([ub_Area4; ub_qD_onlyDERbuses_Area; ub_B_onlyBattBuses_Area; ub_Pc_onlyBattBuses_Area; ub_Pd_onlyBattBuses_Area; ub_qB_onlyBattBuses_Area], T, 1);
         lb_AreaAll = lb_Area9;
