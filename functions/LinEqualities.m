@@ -80,21 +80,33 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     R_Area_Matrix = areaInfo.R_Area_Matrix;
     X_Area_Matrix = areaInfo.X_Area_Matrix;
 
-    listNumVars1 = [m_Area*ones(1, 3), N_Area, nDER_Area, nBatt_Area*ones(1, 4)];
-    nVars1 = sum(listNumVars1);
-    nVarsT = nVars1 * T;
-    listNumLinEqns1 = [m_Area*ones(1, 2), N_Area, nBatt_Area];
-    nLinEqns1 = sum(listNumLinEqns1);
-    nLinEqnsT = nLinEqns1 * T;
-    
-    Aeq = zeros(nLinEqnsT, nVarsT);
-    sz = size(Aeq);
-    beq = zeros(nLinEqnsT, 1);
+    listNumVars_t_1toT = [m_Area*ones(1, 3), N_Area, nDER_Area, nBatt_Area*ones(1, 4)];
 
-    eqnIndicesT = generateRangesFromValuesT(listNumLinEqns1, T);
-    varIndicesT = generateRangesFromValuesT(listNumVars1, T);
-    % keyboard;
+    nVars_t_1toT = sum(listNumVars_t_1toT);
+    nVars_allT = nVars_t_1toT * T;
     
+    listNumLinEqns_t_1toTm1 = [m_Area*ones(1, 2), N_Area, nBatt_Area];
+    
+    if strcmp(batteryTerminalChargeConstraint, "soft")
+        listNumLinEqns_t_T = [m_Area*ones(1, 2), N_Area, nBatt_Area];
+    elseif strcmp(batteryTerminalChargeConstraint, "hard")
+        listNumLinEqns_t_T = [m_Area*ones(1, 2), N_Area, 2*nBatt_Area];
+    else
+        error("floc")
+    end
+
+    nLinEqns_t_1toTm1 = sum(listNumLinEqns_t_1toTm1);
+    nLinEqns_t_T = sum(listNumLinEqns_t_T);
+    
+    nLinEqns_allT = nLinEqns_t_1toTm1 * (T-1) + nLinEqns_t_T * 1;
+    
+    Aeq = zeros(nLinEqns_allT, nVars_allT);
+    sz = size(Aeq);
+    beq = zeros(nLinEqns_allT, 1);
+
+    eqnIndicesT = generateRangesFromValuesT(listNumLinEqns_t_1toTm1, T);
+    varIndicesT = generateRangesFromValuesT(listNumVars_t_1toT, T);
+    % keyboard;
 
     indices_Pflow = eqnIndicesT{1};
     indices_Qflow = eqnIndicesT{2};
@@ -309,7 +321,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         end
     end
 
-    numVarsBFM4 = [1, listNumVars1(1) - 1, listNumVars1(2:4) ]; % qD limits are specific to each machine, will be appended later.
+    numVarsBFM4 = [1, listNumVars_t_1toT(1) - 1, listNumVars_t_1toT(2:4) ]; % qD limits are specific to each machine, will be appended later.
     lbVals4 = [0, -5, -15, 0, V_min^2];
     ubVals4 = [5, 5, 5, 15, V_max^2];
     [lb_Area4, ub_Area4] = constructBoundVectors(numVarsBFM4, lbVals4, ubVals4);
