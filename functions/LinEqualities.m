@@ -133,7 +133,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     indices_qBj = varIndicesT{9};
     % Assuming you have already created the 'areaInfo' structure
     
-    % keyboard;
+    keyboard;
     % Assign each variable as a field in areaInfo
     areaInfo.indices_Pflow = indices_Pflow;
     areaInfo.indices_Qflow = indices_Qflow;
