@@ -1,7 +1,6 @@
 function eqnIndices = generateRangesForMultiPeriod(valuesPeriodsSet1, numPeriodsSet1, valuesPeriodsSet2, numPeriodsSet2)
-    % Calculate the total number of variables in one normal time step
+    % Calculate the total number of variables in each time step set
     numVarsPerTimePeriod1 = sum(valuesPeriodsSet1);
-    % Calculate the total number of variables in one end time step
     numVarsPerTimePeriod2 = sum(valuesPeriodsSet2);
 
     % Calculate the cumulative sums to determine borders of index ranges
@@ -29,7 +28,7 @@ function eqnIndices = generateRangesForMultiPeriod(valuesPeriodsSet1, numPeriods
         numIndices = indexRangeBorders2(i+1) - indexRangeBorders2(i);
         tempMatrix = zeros(numIndices, numPeriodsSet2);
         for t = 1:numPeriodsSet2
-            offset = (numPeriodsSet1 + t - 1) * numVarsPerTimePeriod1;  % Note: Adjust if end period has different numVars
+            offset = numPeriodsSet1 * numVarsPerTimePeriod1 + (t-1) * numVarsPerTimePeriod2;  % Correct offset for different vars count
             tempMatrix(:, t) = (indexRangeBorders2(i) + 1 + offset):(indexRangeBorders2(i+1) + offset);
         end
         if i <= numel(eqnIndices)
