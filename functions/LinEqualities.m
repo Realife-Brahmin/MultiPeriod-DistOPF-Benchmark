@@ -105,8 +105,11 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     sz = size(Aeq);
     beq = zeros(nLinEqns_allT, 1);
 
-    eqnIndicesT = generateRangesFromValuesT(listNumLinEqns_t_1toTm1, T);
+    % eqnIndicesT = generateRangesFromValuesT(listNumLinEqns_t_1toTm1, T);
+    eqnIndicesT = generateRangesForMultiPeriod(listNumLinEqns_t_1toTm1, T-1, listNumLinEqns_t_T, 1);
     varIndicesT = generateRangesFromValuesT(listNumVars_t_1toT, T);
+    % varIndicesT = generateRangesForMultiPeriod(listNumVars_t_1toT, T);
+
     % keyboard;
 
     indices_Pflow = eqnIndicesT{1};
@@ -129,7 +132,8 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     indices_Pdj = varIndicesT{8};
     indices_qBj = varIndicesT{9};
     % Assuming you have already created the 'areaInfo' structure
-
+    
+    % keyboard;
     % Assign each variable as a field in areaInfo
     areaInfo.indices_Pflow = indices_Pflow;
     areaInfo.indices_Qflow = indices_Qflow;
@@ -146,7 +150,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     areaInfo.indices_Pcj = indices_Pcj;
     areaInfo.indices_Pdj = indices_Pdj;
     areaInfo.indices_qBj = indices_qBj;
-
+    
     % [areaInfo.fb_Area areaInfo.tb_Area]
      for j = 2 : N_Area
         myfprintf(verbose, 1, "*****\n" + ...
