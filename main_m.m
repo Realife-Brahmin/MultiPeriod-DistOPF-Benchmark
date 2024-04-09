@@ -24,7 +24,7 @@ logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
-numAreas = 1
+numAreas = 4
 T = 3
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
@@ -282,9 +282,9 @@ sysInfo = getSysInfo(sysInfo, simInfo, systemName, ...
 % end
 
 while keepRunningIterations
-    for Area = 1:numAreas
+    % for Area = 1:numAreas
     % for Area = 1
-    % for Area = [2 3 1 4]
+    for Area = [2 3 1 4]
         macroItr = simInfo.macroItr;
         myfprintf(true, "Macro-iteration %d: Running OPF for Area %d.\n", macroItr+1, Area);
 
@@ -303,7 +303,7 @@ while keepRunningIterations
             ...
             NL_OPF_dist2(sysInfo, simInfo, areaInfo, v_parAr_1toT, S_chArs_1toT, ...
             time_dist, 'verbose', verbose, 'saveToFile', true, 'logging', logging, ...
-            'saveSCDPlots', saveSCDPlots);
+            'saveSCDPlots', false);
         
 %%
         nVars1_Area = length(xVals_Area)/T;
