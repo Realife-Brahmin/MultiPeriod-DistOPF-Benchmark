@@ -1,0 +1,12 @@
+Machine this simulation was solved on: ETRL204-ARYAN
+Optimization for Area 1 for 3 time periods took 2.186294e+00 [s] and 5 iterations.
+where a micro-iteration limit of 200 and a minimum improvement of 1.000000e-03 [kW] was imposed.
+Average time per iteration: 4.372588e-01 [s]
+Number of Linear Equations: 378
+Number of Nonlinear Equalities: 120
+Number of Optimization Variables: 552
+Total Objective Function Value for Area 1 for 3 time periods = 2.815913e-02 
+Total Real Power Line Losses for Area 1 for 3 time periods = 2.815913e+01 [kW]
+Total Battery Power losses for Area 1 for 3 time periods = 7.549424e-17 [kW]
+Average SOC Level constraint violation for Area 1 for 3 time periods = NaN [kWh]
+where alpha = 1.000000e-02 and gamma = 0
