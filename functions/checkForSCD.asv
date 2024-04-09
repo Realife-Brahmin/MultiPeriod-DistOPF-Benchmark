@@ -10,7 +10,7 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
     % addParameter(p, 'showPlots', false, @(x) islogical(x) || ismember(lower(x), {'true', 'false'}));
     addParameter(p, 'showPlots', false, @(x) islogical(x) || x == 1 || x == 0 || ismember(lower(x), {'true', 'false'}));
 
-
+    kVA_B = simInfo.kVA_B;
     parse(p, varargin{:});
     savePlots = p.Results.savePlots;
     showPlots = p.Results.showPlots;
@@ -40,9 +40,9 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         indices_Pc = getIndicesT(areaInfo.indices_Pcj, batt_num);
         indices_Pd = getIndicesT(areaInfo.indices_Pdj, batt_num); 
         
-        bar(1:T, x(indices_Pc)*1000, 'FaceColor', darkGreen); 
+        bar(1:T, x(indices_Pc)*kVA_B, 'FaceColor', darkGreen); 
         hold on;
-        bar(1:T, -x(indices_Pd)*1000, 'FaceColor', wineRed);
+        bar(1:T, -x(indices_Pd)*kVA_B, 'FaceColor', wineRed);
         hold off;
         
         % Modify y-tick labels for Pd to be positive
