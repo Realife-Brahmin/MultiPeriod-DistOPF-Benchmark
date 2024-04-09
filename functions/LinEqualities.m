@@ -151,6 +151,7 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
     areaInfo.indices_Pdj = indices_Pdj;
     areaInfo.indices_qBj = indices_qBj;
     
+    
     % [areaInfo.fb_Area areaInfo.tb_Area]
      for j = 2 : N_Area
         myfprintf(verbose, 1, "*****\n" + ...
@@ -259,11 +260,18 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
         for batt_num = 1:nBatt_Area
             j = busesWithBatts_Area(batt_num);
             i_Idx = find(tb_Area == j);
-            indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
+            if strcmp(batteryTerminalChargeConstraint, "soft")
+                indices_SOC_j_T = getIndicesT(indices_SOC, batt_num);
+            elseif strcmp(batteryTerminalChargeConstraint, "hard")
+                indices_SOC_j_T = getIndicesT_SOC(indices_SOC, batt_num);
+            else
+                error("floc")
+            end
             indices_SOC_j_T_2toT = indices_SOC_j_T(2:T);
-            indices_SOC_j_T_2toTm1 = indices_SOC_j_T(2:T-1);
+            indices_SOC_j_T_2toT1 = indices_SOC_j_T(2:T);
+            indices_SOC_j_T_T2 = indices_SOC_j_T(T+1);
             indices_SOC_j_T_1 = indices_SOC_j_T(1);
-            indices_SOC_j_T_T = indices_SOC_j_T(T);
+            % indices_SOC_j_T_T = indices_SOC_j_T(T);
 
             indices_Bj_T = getIndicesT(indices_Bj, batt_num);
             indices_Pdj_T = getIndicesT(indices_Pdj, batt_num);
@@ -302,21 +310,29 @@ function [Aeq, beq, lb_AreaAll, ub_AreaAll, x0, areaInfo] = LinEqualities(areaIn
                 Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
 
             elseif strcmp(batteryTerminalChargeConstraint, "hard")
-                row = indices_SOC_j_T_2toT;
+                % row = indices_SOC_j_T_2toT;
+                % Aeq(sub2ind(sz, row, indices_Bj_T(2:T))) = -1;
+                % Aeq(sub2ind(sz, row, indices_Bj_T(1:T-1))) = 1;
+                % Aeq(sub2ind(sz, row, indices_Pcj_T(2:T))) = delta_t*etta_C;
+                % Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
+
+                % row = indices_SOC_j_T_2toTm1;
+                % Aeq(sub2ind(sz, row, indices_Bj_T(2:T-1))) = -1;
+                % Aeq(sub2ind(sz, row, indices_Bj_T(1:T-2))) = 1;
+                % Aeq(sub2ind(sz, row, indices_Pcj_T(2:T-1))) = delta_t*etta_C;
+                % Aeq(sub2ind(sz, row, indices_Pdj_T(2:T-1))) = -delta_t/etta_D;
+                
+                row = indices_SOC_j_T_2toT1;
                 Aeq(sub2ind(sz, row, indices_Bj_T(2:T))) = -1;
                 Aeq(sub2ind(sz, row, indices_Bj_T(1:T-1))) = 1;
                 Aeq(sub2ind(sz, row, indices_Pcj_T(2:T))) = delta_t*etta_C;
                 Aeq(sub2ind(sz, row, indices_Pdj_T(2:T))) = -delta_t/etta_D;
 
-                row = indices_SOC_j_T_2toTm1;
-                Aeq(sub2ind(sz, row, indices_Bj_T(2:T-1))) = -1;
-                Aeq(sub2ind(sz, row, indices_Bj_T(1:T-2))) = 1;
-                Aeq(sub2ind(sz, row, indices_Pcj_T(2:T-1))) = delta_t*etta_C;
-                Aeq(sub2ind(sz, row, indices_Pdj_T(2:T-1))) = -delta_t/etta_D;
-                
-                row = indices_SOC_j_T_T;
-                Aeq(sub2ind(sz, row, indices_Bj_T(T))) = -1;
-                beq(row) = -B0Vals_pu_Area(batt_num);
+                row = indices_SOC_j_T_T2;
+
+                % keyboard;
+                Aeq(sub2ind(sz, row, indices_Bj_T(T))) = 1;
+                beq(row) = B0Vals_pu_Area(batt_num);
 
             else
                 error("floc");
