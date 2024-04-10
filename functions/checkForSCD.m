@@ -52,7 +52,7 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         bar(1:T, Pc_1toT_kW, 'FaceColor', darkGreen); 
         hold on;
         % bar(1:T, -x(indices_Pd)*kVA_B, 'FaceColor', wineRed);
-        bar(1:T, -Pd_1toT_kW, 'FaceColor', wineRed);
+        bar(1:T, Pd_1toT_kW, 'FaceColor', wineRed);
         hold off;
         
         % keyboard;
