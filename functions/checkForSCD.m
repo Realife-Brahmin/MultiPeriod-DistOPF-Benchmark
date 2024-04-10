@@ -73,8 +73,9 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         % Determine dynamic range for y-axis based on data
         maxCharging = max(Pc_1toT_kW);
         maxDischarging = max(abs(Pd_1toT_kW));
-        maxYValue = max(maxCharging, maxDischarging);
+        maxYValue = max(1, max(maxCharging, maxDischarging));
         maxYValue = ceil(maxYValue / 5) * 5; % Round up to the nearest 10 for aesthetics
+        % keyboard;
         ylim([-maxYValue maxYValue]);
         yticks(linspace(-maxYValue, maxYValue, 6)); % Set y-ticks at every integer within the range
 
