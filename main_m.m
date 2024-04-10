@@ -24,13 +24,13 @@ logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
-numAreas = 4
-T = 3
+numAreas = 1
+T = 10
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
 % gamma = 1e-1;
-batteryTerminalChargeConstraint = "soft";
+batteryTerminalChargeConstraint = "hard";
 if strcmp(batteryTerminalChargeConstraint, "soft")
     gamma = 1e0;
 else
@@ -282,9 +282,9 @@ sysInfo = getSysInfo(sysInfo, simInfo, systemName, ...
 % end
 
 while keepRunningIterations
-    % for Area = 1:numAreas
+    for Area = 1:numAreas
     % for Area = 1
-    for Area = [2 3 1 4]
+    % for Area = [2 3 1 4]
         macroItr = simInfo.macroItr;
         myfprintf(true, "Macro-iteration %d: Running OPF for Area %d.\n", macroItr+1, Area);
 

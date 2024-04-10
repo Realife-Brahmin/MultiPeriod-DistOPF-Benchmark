@@ -58,11 +58,38 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         % keyboard;
         % Modify y-tick labels for Pd to be positive
         ax = gca;
-        ax.YTickLabel = cellfun(@(v) num2str(abs(str2double(v))), ax.YTickLabel, 'UniformOutput', false);
-        ax.YAxis.Exponent = 0;
-        ax.YTickLabel = arrayfun(@(v) sprintf('%.1e', v), ax.YTick, 'UniformOutput', false);
+        % ax.YTickLabel = cellfun(@(v) num2str(abs(str2double(v))), ax.YTickLabel, 'UniformOutput', false);
+        % ax.YTickLabel = arrayfun(@(v) num2str(v, '%.1f'), ax.YTick, 'UniformOutput', false);  % Format as float with 1 decimal
+        % ax.YAxis.Exponent = 0;
+        % ax.YTickLabel = arrayfun(@(v) sprintf('%.1e', v), ax.YTick, 'UniformOutput', false);
+        
+        % Set y-axis limits and ticks
+        % ylimlb = min(-1, -max(ceil(Pd_1toT_kW)));
+        % ylimub = max(1, max(ceil(Pc_1toT_kW)));
+        % ylim([ylimlb ylimub]);
+        % yticks(-ylimlb:1:ylimub);  % This sets the main ticks to be at every integer and minor ticks at every 0.1
+        % ax = gca;
+        % ax.YAxis.Exponent = 0;  % Turns off scientific notation
+        % Determine dynamic range for y-axis based on data
+        maxCharging = max(Pc_1toT_kW);
+        maxDischarging = max(abs(Pd_1toT_kW));
+        maxYValue = max(maxCharging, maxDischarging);
+        maxYValue = ceil(maxYValue / 10) * 10; % Round up to the nearest 10 for aesthetics
+        ylim([-maxYValue maxYValue]);
+        yticks(linespace(-maxYValue, maxYValue, 6)); % Set y-ticks at every integer within the range
 
-    % ... o
+        % Adjust tick labels and grid
+        ax = gca;
+        ax.YAxis.Exponent = 0;  % Ensure no scientific notation
+        ax.YTickLabel = arrayfun(@(v) num2str(v, '%d'), ax.YTick, 'UniformOutput', false);
+
+        % Turn on minor grid lines
+        ax.MinorGridLineStyle = '-';
+        ax.MinorGridColor = [0.8 0.8 0.8];
+        ax.MinorGridAlpha = 0.5;
+        ax.YMinorGrid = 'on';
+        ax.YMinorTick = 'on';
+
         title(sprintf('Area %d Battery %d Charging and Discharging', areaInfo.Area, batt_num));
         xlabel('Time Interval Number');
         ylabel('[kW]');
