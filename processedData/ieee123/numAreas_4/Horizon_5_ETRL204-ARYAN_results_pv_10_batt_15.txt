@@ -1,40 +1,77 @@
 ------------------------------------------------------------
-Machine ID: ETRL204-ARYAN
-Horizon Duration: 5
-Nature of Simulation: Spatially-Distributed-OPF with 4 Areas.
-Line Loss: 81.23 kW
-Substation Power: 869.70 kW
-Substation Power: 888.08 kW
-Substation Power: 889.16 kW
-Substation Power: 888.82 kW
-Substation Power: 887.76 kW
-Substation Power Cost: 44.355 $
-Substation Power Cost: 38.188 $
-Substation Power Cost: 31.121 $
-Substation Power Cost: 24.887 $
-Substation Power Cost: 24.857 $
-Total Real Load: 872.40 kW
-Total Real Load: 903.80 kW
-Total Real Load: 915.44 kW
-Total Real Load: 925.90 kW
-Total Real Load: 909.62 kW
-Total Reactive Load: 480.01 kVAr
-Total Reactive Load: 497.29 kVAr
-Total Reactive Load: 503.69 kVAr
-Total Reactive Load: 509.45 kVAr
-Total Reactive Load: 500.49 kVAr
-Total PV Real Power Generation: 17.50 kW
-Total PV Real Power Generation: 27.99 kW
-Total PV Real Power Generation: 31.49 kW
-Total PV Real Power Generation: 34.99 kW
-Total PV Real Power Generation: 34.99 kW
-Total PV Reactive Power Generation: 5.02 kVAr
-Total PV Reactive Power Generation: 5.84 kVAr
-Total PV Reactive Power Generation: 6.14 kVAr
-Total PV Reactive Power Generation: 6.42 kVAr
-Total PV Reactive Power Generation: 6.00 kVAr
-Number of Macro-Iterations: 5
-Simulation Time: 566.95 s
-Time to solve with sequential (non-parallel) computation:549.4084 s
-Time to Solve if OPF computation parallelized: 401.26 s
+1. Machine ID: ETRL204-ARYAN
+2. Horizon Duration: 5
+3. Nature of Simulation: Spatially-Distributed-OPF with 4 Areas.
+4. GED Configuration: pv_10_batt_15
+-----------------------------
+Hour: 1
+1. Line Loss: 15.66 kW
+2. Substation Power: 870.51 kW + 162.82 kVAr
+3. Total Load: 872.40 kW + 480.01 kVAr
+4. Total Generation: 17.50 kW + 348.47 kVAr
+5. Total PV Generation: 17.50 kW + 5.05 kVAr
+6. Total Battery Generation: -0.00 kW + -6.58 kVAr
+7. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+8. Substation Power Cost: $44.40
+9. SCD Observed: 0.00 kW
+-----------------------------
+Hour: 2
+1. Line Loss: 16.46 kW
+2. Substation Power: 892.21 kW + 180.88 kVAr
+3. Total Load: 903.80 kW + 497.29 kVAr
+4. Total Generation: 27.99 kW + 349.27 kVAr
+5. Total PV Generation: 27.99 kW + 5.85 kVAr
+6. Total Battery Generation: -0.00 kW + -6.58 kVAr
+7. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+8. Substation Power Cost: $38.36
+9. SCD Observed: 0.00 kW
+-----------------------------
+Hour: 3
+1. Line Loss: 16.78 kW
+2. Substation Power: 900.65 kW + 187.61 kVAr
+3. Total Load: 915.44 kW + 503.69 kVAr
+4. Total Generation: 31.49 kW + 349.57 kVAr
+5. Total PV Generation: 31.49 kW + 6.15 kVAr
+6. Total Battery Generation: 0.00 kW + -6.58 kVAr
+7. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+8. Substation Power Cost: $31.52
+9. SCD Observed: 0.00 kW
+-----------------------------
+Hour: 4
+1. Line Loss: 17.05 kW
+2. Substation Power: 907.90 kW + 193.66 kVAr
+3. Total Load: 925.90 kW + 509.45 kVAr
+4. Total Generation: 34.99 kW + 349.83 kVAr
+5. Total PV Generation: 34.99 kW + 6.41 kVAr
+6. Total Battery Generation: 0.00 kW + -6.58 kVAr
+7. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+8. Substation Power Cost: $25.42
+9. SCD Observed: 0.00 kW
+-----------------------------
+Hour: 5
+1. Line Loss: 16.45 kW
+2. Substation Power: 891.02 kW + 183.92 kVAr
+3. Total Load: 909.62 kW + 500.49 kVAr
+4. Total Generation: 34.99 kW + 349.41 kVAr
+5. Total PV Generation: 34.99 kW + 5.99 kVAr
+6. Total Battery Generation: -0.00 kW + -6.58 kVAr
+7. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+8. Substation Power Cost: $24.95
+9. SCD Observed: 0.00 kW
+-----------------------------
+Hour: Full 5 Hour Horizon
+1. Horizon Line Loss: 82.40 kW
+2. Horizon Total Substation Power: 4462.29 kW + 908.88 kVAr
+3. Horizon Total Load: 4527.16 kW + 2490.93 kVAr
+4. Horizon Total Generation: 146.97 kW + 1746.54 kVAr
+5. Horizon Total PV Generation: 146.97 kW + 29.45 kVAr
+6. Horizon Total Battery Generation: 0.00 kW + -32.91 kVAr
+7. Horizon Total Static Capacitor Reactive Power Generation: 1750.00 kVAr
+8. Horizon Total Substation Power Cost: $164.65
+9. Horizon Total SCD Observed: 0.00 kW
+10. Horizon-end Battery Energy Deviation from Reference: 0.00 kWh
 ------------------------------------------------------------
+1. Number of Macro-Iterations: 5
+2. Simulation Time: 250.31 s
+3. Time to solve with sequential (non-parallel) computation: 225.22 s
+4. Time to solve if OPF computation parallelized: 161.92 s
