@@ -32,7 +32,7 @@ for t = 1:T
     locNum = 0;
     fprintf(fileID, '-----------------------------\n');
     fprintf(1, '-----------------------------\n');
-    fprintf(fileID, 'Hour: %d\n', t);
+    fprintf(fileID, 'Hour: %s\n', t);
     fprintf(1, 'Hour: %d\n', t);
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Line Loss: %.2f kW\n', lineLoss_kW_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Substation Power: %.2f kW + %.2f kVAr\n', substationPower_kW_1toT(t), substationPower_kVAr_1toT(t));
