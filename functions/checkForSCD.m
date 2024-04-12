@@ -93,7 +93,8 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         ax.YMinorGrid = 'on';
         ax.YMinorTick = 'on';
 
-        title(sprintf('Area %d Battery %d Charging and Discharging', areaInfo.Area, batt_num));
+        % title(sprintf('Area %d Battery %d Charging and Discharging', areaInfo.Area, batt_num));
+        title(sprintf('Area %d Battery %d Charging and Discharging', areaInfo.Area, batt_num_Actual));
         xlabel('Time Interval Number');
         ylabel('[kW]');
         legend('Charging', 'Discharging', 'Location', 'southwest');
