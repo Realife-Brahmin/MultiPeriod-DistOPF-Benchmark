@@ -182,6 +182,14 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     sysInfo.P_scd_1toT = min(sysInfo.Pd_1toT, sysInfo.Pc_1toT);
     sysInfo.P_scd_Total_1toT = sum(sysInfo.P_scd_1toT);
     sysInfo.P_scd_Total_allT = sum(sysInfo.P_scd_Total_1toT);
+    
+    sysInfo.P_batt_abs_1toT = max(sysInfo.Pd_1toT, sysInfo.Pc_1toT);
+    sysInfo.P_batt_abs_Total_1toT = sum(sysInfo.P_batt_abs_1toT);
+    sysInfo.P_batt_abs_Total_allT = sum(sysInfo.P_batt_abs_Total_1toT);
+
+    sysInfo.qB_abs_1toT = abs(sysInfo.qB_1toT);
+    sysInfo.qB_abs_Total_1toT = sum(sysInfo.qB_abs_1toT);
+    sysInfo.qB_abs_Total_allT = sum(sysInfo.qB_abs_Total_1toT);
 
     loadShapePV = simInfo.pvCoeffVals;
     sysInfo.loadShapePV = loadShapePV;
