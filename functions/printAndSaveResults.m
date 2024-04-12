@@ -39,7 +39,9 @@ for t = 1:T
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Load: %.2f kW + %.2f kVAr\n', pLTotal_kW_1toT(t), qLTotal_kVAr_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Generation: %.2f kW + %.2f kVAr\n', pTotal_kW_1toT(t), qTotal_kVAr_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total PV Generation: %.2f kW + %.2f kVAr\n', pDTotal_kW_1toT(t), qDTotal_kVAr_1toT(t));
+    locNum = locNum + 1; print_and_write(fileID, locNum, 'Total PV Generation: %.2f kW + %.2f kVAr\n', pDTotal_kW_1toT(t), qDTotal_kVAr_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Battery Generation: %.2f kW + %.2f kVAr\n', PdcTotal_kW_1toT(t), qBTotal_kVAr_1toT(t));
+    locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Battery Flexibility v: %.2f kW + %.2f kVAr\n', Pbatt_abs_Total_kW_1toT(t), qB_abs_Total_kVAr_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Static Capacitor Reactive Power Generation: %.2f kVAr\n', qCTotal_kVAr_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Substation Power Cost: $%.2f\n', genCost_dollars_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'SCD Observed: %.2f kW\n', P_scd_Total_kW_1toT(t));
@@ -47,7 +49,7 @@ for t = 1:T
 end
 
 locNum = 0;
-%% Horizon summary block
+% Horizon summary block
 fprintf(fileID, '-----------------------------\n');
 fprintf(1, '-----------------------------\n');
 fprintf(fileID, 'Hour: Full %d Hour Horizon\n', T);
@@ -58,6 +60,7 @@ locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total Load: %.2f k
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total Generation: %.2f kW + %.2f kVAr\n', p_Total_kW_allT, q_Total_kVAr_allT);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total PV Generation: %.2f kW + %.2f kVAr\n', pD_Total_kW_allT, qD_Total_kVAr_allT);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total Battery Generation: %.2f kW + %.2f kVAr\n', Pdc_Total_kW_allT, qB_Total_kVAr_allT);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total Battery Flexibility Utilized: %.2f kW + %.2f kVAr\n', Pbatt_abs_Total_kW_allT, qB_abs_Total_kVAr_allT);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total Static Capacitor Reactive Power Generation: %.2f kVAr\n', QC_Total_kVAr_allT);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total Substation Power Cost: $%.2f\n', genCost_dollars_allT);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total SCD Observed: %.2f kW\n', P_scd_Total_kW_allT);
