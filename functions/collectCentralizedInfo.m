@@ -6,7 +6,6 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     kVA_B = sysInfo.kVA_B;
     numAreas = sysInfo.numAreas;
     
-    % sysInfo already has nDER and nBatt
     nDER = sysInfo.nDER;
     nBatt = sysInfo.nBatt;
     isRoot = sysInfo.isRoot;
@@ -16,26 +15,21 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     [sysInfo.P_L_1toT, sysInfo.Q_L_1toT] = deal( zeros(m, T) );
     sysInfo.V_1toT = zeros(N, T);
     sysInfo.Q_C_Full = zeros(N, 1);
-    % [sysInfo.busesWithDERs, sysInfo.Sder, sysInfo.Pmpp] = deal( zeros(nDER, 1) );
     [sysInfo.Sder, sysInfo.Pmpp] = deal( zeros(nDER, 1) );
 
     [sysInfo.pD_1toT, sysInfo.qD_1toT] = deal( zeros(nDER, T) );
 
-    % [sysInfo.busesWithBatts, sysInfo.B0] = deal( zeros(nBatt, 1) );
     [sysInfo.B0] = deal( zeros(nBatt, 1) );
 
     [sysInfo.Sbatt, sysInfo.Pbatt] = deal( zeros(nBatt, 1) );
     [sysInfo.B_1toT, sysInfo.Pd_1toT, sysInfo.Pc_1toT, sysInfo.qD_1toT] = deal( zeros(nBatt, T) );
 
     for areaNum = 1:numAreas
-    % for areaNum = [2 3 1 4]
         
         areaInfo = sysInfo.Area{areaNum};
         N_Area = areaInfo.N_Area;
         m_Area = areaInfo.m_Area;
-        % error("Have you inserted actual bus1, actual fb and actual tb values for the area?")
         
-        % busData, branchData
         bus1_expanded = areaInfo.bus_Actual; % How to get this?
         fb_expanded = areaInfo.fb_Actual;
         tb_expanded = areaInfo.tb_Actual;
@@ -62,49 +56,21 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
             tb_Area = 1:m_Area;
         end
         
-        % sysInfo.bus1(bus1) = bus1;
-        % sysInfo.fb(fb) = fb;
-        % sysInfo.tb = tb;
-
-        % sysInfo.PL0(bus1) = areaInfo.
-        % sysInfo.P_L_1toT(bus1, 1:T) = areaInfo.P_L_Area_1toT(bus1_Area);
         sysInfo.P_L_1toT(bus1_ownLoads, 1:T) = areaInfo.P_L_Area_1toT(bus1_ownLoads_Area, 1:T);
 
-        % sysInfo.Q_L_1toT(bus1, 1:T) = areaInfo.Q_L_Area_1toT(bus1_Area);
         sysInfo.Q_L_1toT(bus1_ownLoads, 1:T) = areaInfo.Q_L_Area_1toT(bus1_ownLoads_Area, 1:T);
 
-        % keyboard;
         sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT(bus1_Area, 1:T);
 
         sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area(bus1_Area);
 
-        % figure out how to create sysInfo.pD_1toT with only nDER buses
-
-        % figure out how to create busesWithDERSonly for sysInfo
-        
-        % DER Parameters
-        % numDERBus will be like [1 7 22 85] which will only contain values
-        % between 1:n_DER_System, so no actual bus numbers
-        
-        % sysInfo.busesWithDERs = 
-        % sysInfo.
-
-        % % keyboard;
         numDERBus = areaInfo.DERBusNums_Actual;
-        % areaInfo.S_der_Area % FULL
         busesWithDERs_Area = areaInfo.busesWithDERs_Area;
         sysInfo.Sder(numDERBus) = areaInfo.S_onlyDERbuses_Area;
         sysInfo.Pmpp(numDERBus) = areaInfo.Pmpp_Area(busesWithDERs_Area); % FULL
         sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT(busesWithDERs_Area, 1:T); % FULL
-        % sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT(:, 1:T);
         sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT;
 
-        % keyboard;
-
-        % Battery Parameters
-        % numBattBus will be like [1 7 22 85] which will only contain values
-        % between 1:n_DER_System, so no actual bus numbers
-        % sysInfo.busesWithBatts(numBattBus) = areaInfo.busesWithBatts_Area;
         Batt_percent = simInfo.Batt_percent;
         if Batt_percent > 0
             numBattBus = areaInfo.BattBusNums_Actual;
