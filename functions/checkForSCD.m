@@ -14,7 +14,7 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
     parse(p, varargin{:});
     savePlots = p.Results.savePlots;
     showPlots = p.Results.showPlots;
-
+    
     nBatt_Area = areaInfo.nBatt_Area;
     fprintf('Checking for SCD for Area %d\n', areaInfo.Area);
 
@@ -30,9 +30,11 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
     
     alpha = simInfo.alpha;
     gamma = simInfo.gamma;
+    batteryTerminalChargeConstraint = simInfo.batteryTerminalChargeConstraint;
     threshold = 0.001; % Values below this threshold are treated as zero
     
     for batt_num = 1:nBatt_Area
+        batt_num_Actual = areaInfo.BattBusNums_Actual(batt_num);
         f = figure('visible', visible);        
         SOC_Max = areaInfo.E_onlyBattBusesMax_Area(batt_num);
         
@@ -115,18 +117,36 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
             % folderName = strcat("processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, "area", num2str(areaInfo.Area), filesep, "BatteryVariables");
             battstring = simInfo.battstring;
 
+            % folderName = strcat("processedData", filesep, sysInfo.systemName, ...
+            %     filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, ...
+            %     "area", num2str(areaInfo.Area), filesep, "BatteryVariables", filesep, ...
+            %     "Horizon_", num2str(T), filesep, battstring);
+
             folderName = strcat("processedData", filesep, sysInfo.systemName, ...
                 filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, ...
-                "area", num2str(areaInfo.Area), filesep, "BatteryVariables", filesep, ...
+                "BatteryVariables", filesep, ...
                 "Horizon_", num2str(T), filesep, battstring);
 
             if ~exist(folderName, 'dir')
                 mkdir(folderName);
             end
 
-            filename = strcat(folderName, filesep, ...
-                "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num), ...
-                "_alpha_", num2str(alpha), "_gamma_", num2str(gamma),  ".png");
+            % filename = strcat(folderName, filesep, ...
+            %     "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num), ...
+            %     "_alpha_", num2str(alpha), "_gamma_", num2str(gamma),  ".png");t
+            if strcmp(batteryTerminalChargeConstraint, "soft")
+                filename = strcat(folderName, filesep, ...
+                    "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num_Actual), ...
+                    "_alpha_", num2str(alpha), "_gamma_", num2str(gamma),  ".png");
+            elseif strcmp(batteryTerminalChargeConstraint, "hard")
+                filename = strcat(folderName, filesep, ...
+                "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num_Actual), ...
+                "_alpha_", num2str(alpha),  ".png");
+            else
+                error("floc")
+            end
+
+
             saveas(f, filename);
         end
     end
