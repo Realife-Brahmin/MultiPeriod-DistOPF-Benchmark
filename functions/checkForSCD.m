@@ -50,28 +50,14 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         Pc_1toT_kW(abs(Pc_1toT_kW) < threshold) = 0;
         Pd_1toT_kW(abs(Pd_1toT_kW) < threshold) = 0;
 
-        % bar(1:T, x(indices_Pc)*kVA_B, 'FaceColor', darkGreen); 
         bar(1:T, Pc_1toT_kW, 'FaceColor', darkGreen); 
         hold on;
-        % bar(1:T, -x(indices_Pd)*kVA_B, 'FaceColor', wineRed);
         bar(1:T, -Pd_1toT_kW, 'FaceColor', wineRed);
         hold off;
         
-        % keyboard;
         % Modify y-tick labels for Pd to be positive
         ax = gca;
-        % ax.YTickLabel = cellfun(@(v) num2str(abs(str2double(v))), ax.YTickLabel, 'UniformOutput', false);
-        % ax.YTickLabel = arrayfun(@(v) num2str(v, '%.1f'), ax.YTick, 'UniformOutput', false);  % Format as float with 1 decimal
-        % ax.YAxis.Exponent = 0;
-        % ax.YTickLabel = arrayfun(@(v) sprintf('%.1e', v), ax.YTick, 'UniformOutput', false);
-        
-        % Set y-axis limits and ticks
-        % ylimlb = min(-1, -max(ceil(Pd_1toT_kW)));
-        % ylimub = max(1, max(ceil(Pc_1toT_kW)));
-        % ylim([ylimlb ylimub]);
-        % yticks(-ylimlb:1:ylimub);  % This sets the main ticks to be at every integer and minor ticks at every 0.1
-        % ax = gca;
-        % ax.YAxis.Exponent = 0;  % Turns off scientific notation
+
         % Determine dynamic range for y-axis based on data
         maxCharging = max(Pc_1toT_kW);
         maxDischarging = max(abs(Pd_1toT_kW));
@@ -116,13 +102,7 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
 
         % Save plot if requested
         if savePlots
-            % folderName = strcat("processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, "area", num2str(areaInfo.Area), filesep, "BatteryVariables");
             battstring = simInfo.battstring;
-
-            % folderName = strcat("processedData", filesep, sysInfo.systemName, ...
-            %     filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, ...
-            %     "area", num2str(areaInfo.Area), filesep, "BatteryVariables", filesep, ...
-            %     "Horizon_", num2str(T), filesep, battstring);
 
             folderName = strcat("processedData", filesep, sysInfo.systemName, ...
                 filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, ...
@@ -133,9 +113,6 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
                 mkdir(folderName);
             end
 
-            % filename = strcat(folderName, filesep, ...
-            %     "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num), ...
-            %     "_alpha_", num2str(alpha), "_gamma_", num2str(gamma),  ".png");t
             if strcmp(batteryTerminalChargeConstraint, "soft")
                 filename = strcat(folderName, filesep, ...
                     "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num_Actual), ...
