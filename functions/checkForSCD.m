@@ -93,7 +93,7 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         B0Val = areaInfo.B0Vals_pu_Area(batt_num);
         b = bar([0, 1:T], [B0Val*100/SOC_Max; x(indices_B)*100/SOC_Max], 'FaceColor', gptPurple, 'BarWidth', 0.8); % adjusted bar width
         
-        title(sprintf('Area %d Battery %d SOC', areaInfo.Area, batt_num));
+        title(sprintf('Area %d Battery %d SOC', areaInfo.Area, batt_num_Actual));
         xlabel('Time Interval Number');
         ylabel('[\%]');
         legend('Battery State of Charge', 'Location', 'southwest');
