@@ -104,7 +104,8 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         % SOC subplot
         subplot(2, 1, 2);
         indices_B = getIndicesT(areaInfo.indices_Bj, batt_num); 
-        b = bar(1:T, x(indices_B)*100/SOC_Max, 'FaceColor', gptPurple, 'BarWidth', 0.8); % adjusted bar width
+        B0Val = areaInfo.B0Vals_pu_Area(batt_num);
+        b = bar([0, 1:T], [B0Val*100/SOC_Max; x(indices_B)*100/SOC_Max], 'FaceColor', gptPurple, 'BarWidth', 0.8); % adjusted bar width
         
         title(sprintf('Area %d Battery %d SOC', areaInfo.Area, batt_num));
         xlabel('Time Interval Number');
