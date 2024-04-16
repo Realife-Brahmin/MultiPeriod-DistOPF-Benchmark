@@ -7,8 +7,9 @@ localUsername = getenv('USERNAME');
 listOfUsernames = {'aryan', 'Aryan Ritwajeet Jha'};
 if ismember(localUsername,  listOfUsernames)
     % For user 'aryan', change the current directory to the specified path
-    cd(strcat("C:", filesep, "Users", filesep, localUsername, filesep, "Documents", filesep, ...
-        "documents_general", filesep, "MultiPeriod-DistOPF-Benchmark", filesep) )
+    wdSim = strcat("C:", filesep, "Users", filesep, localUsername, filesep, "Documents", filesep, ...
+        "documents_general", filesep, "MultiPeriod-DistOPF-Benchmark", filesep);
+    cd(wdSim);
     addpath(genpath('functions\'))
     latex_interpreter
 else
@@ -17,15 +18,15 @@ end
 addDirectories; % adds rawDataFolder, latex_interpreter
 rawDataFolder = "rawData";
 clearVariables(clearVars);
-
+%%
 start = tic;
 verbose = false;
 logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
-numAreas = 1
-T = 10
+numAreas = 4
+T = 5
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
@@ -645,6 +646,14 @@ if Batt_percent > 0
     vald.Pc_1toT = sysInfo.Pc_1toT;
     PcTotal_kW_1toT = sum(vald.Pc_1toT)*kVA_B;
     PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
+    Pbatt_abs_Total_kW_1toT = kVA_B*sysInfo.P_batt_abs_Total_1toT;
+    vald.Pbatt_abs_Total_kW_1toT = Pbatt_abs_Total_kW_1toT;
+    Pbatt_abs_Total_kW_allT = kVA_B*sysInfo.P_batt_abs_Total_allT;
+    vald.Pbatt_abs_Total_kW_allT = Pbatt_abs_Total_kW_allT;
+    qB_abs_Total_kVAr_1toT = kVA_B*sysInfo.qB_abs_Total_1toT;
+    vald.qB_abs_Total_kVAr_1toT = qB_abs_Total_kVAr_1toT;
+    qB_abs_Total_kVAr_allT = kVA_B*sysInfo.qB_abs_Total_allT;
+    vald.qB_abs_Total_kVAr_allT = qB_abs_Total_kVAr_allT;
     vald.B_1toT = sysInfo.B_1toT;
     BTotal_kWh_1toTh = sum(vald.B_1toT)*kVA_B;
     vald.B0 = sysInfo.B0;
@@ -659,6 +668,10 @@ else
     vald.Pc_1toT = [];
     PcTotal_kW_1toT = zeros(T, 1);
     PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
+    vald.Pbatt_abs_Total_kW_1toT = zeros(T, 1);
+    vald.Pbatt_abs_Total_kW_allT = 0;
+    vald.qB_abs_Total_kVAr_1toT = zeros(T, 1);
+    vald.qB_abs_Total_kVAr_allT = 0;
     vald.B_1toT = [];
     BTotal_kWh_1toTh = [];
     vald.B0 = [];
