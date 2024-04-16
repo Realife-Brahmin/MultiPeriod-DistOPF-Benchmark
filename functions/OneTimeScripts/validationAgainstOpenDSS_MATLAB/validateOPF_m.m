@@ -2,10 +2,11 @@ localUsername = getenv('USERNAME');
 listOfUsernames = {'aryan', 'Aryan Ritwajeet Jha'};
 if ismember(localUsername,  listOfUsernames)
     % For user 'aryan', change the current directory to the specified path
-    validationFolder = strcat("C:", filesep, "Users", filesep, localUsername, filesep, "Documents", filesep, ...
+    wdVald = strcat("C:", filesep, "Users", filesep, localUsername, filesep, "Documents", filesep, ...
         "documents_general", filesep, "MultiPeriod-DistOPF-Benchmark", filesep, "functions", filesep, ...
         "OneTimeScripts", filesep, "validationAgainstOpenDSS_MATLAB");
-    cd(validationFolder)
+    simInfo.wdVald = wdVald;
+    cd(wdVald)
     addpath("rawData\");
     addpath(genpath('dss_matlab\'))
     addpath(genpath('..\..\'))
@@ -29,7 +30,7 @@ DSSText=DSSObj.Text;
 DSSCircuit=DSSObj.ActiveCircuit;
 DSSBus = DSSCircuit.ActiveBus;
 
-strSetPath = strcat('Set DataPath = "', char(validationFolder), '"');
+strSetPath = strcat('Set DataPath = "', char(wdVald), '"');
 DSSText.Command = strSetPath;
 
 MasterFileString = strcat('Compile (.\', systemName, 'master_r.dss)'); 

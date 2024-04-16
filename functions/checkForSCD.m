@@ -1,7 +1,7 @@
 function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
     %checkForSCD Plots Charging, Discharging, and SOC for each battery in 
     % each area to check for simultaneous charging and discharging (SCD).
-
+    wdSim = simInfo.wdSim;
     % Parse input arguments
     p = inputParser;
     % addParameter(p, 'savePlots', false, @(x) islogical(x) || ismember(lower(x), {'true', 'false'}));
@@ -103,22 +103,22 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         % Save plot if requested
         if savePlots
             battstring = simInfo.battstring;
-
-            folderName = strcat("processedData", filesep, sysInfo.systemName, ...
+            
+            folderName = strcat(wdSim, filesep, "processedData", filesep, sysInfo.systemName, ...
                 filesep, "numAreas_", num2str(sysInfo.numAreas), filesep, ...
                 "BatteryVariables", filesep, ...
                 "Horizon_", num2str(T), filesep, battstring);
-
+            
             if ~exist(folderName, 'dir')
                 mkdir(folderName);
             end
 
             if strcmp(batteryTerminalChargeConstraint, "soft")
-                filename = strcat(folderName, filesep, ...
+                filename = strcat(wdSim, filesep, folderName, filesep, ...
                     "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num_Actual), ...
                     "_alpha_", num2str(alpha), "_gamma_", num2str(gamma),  ".png");
             elseif strcmp(batteryTerminalChargeConstraint, "hard")
-                filename = strcat(folderName, filesep, ...
+                filename = strcat(wdSim, filesep, folderName, filesep, ...
                 "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num_Actual), ...
                 "_alpha_", num2str(alpha),  ".png");
             else
