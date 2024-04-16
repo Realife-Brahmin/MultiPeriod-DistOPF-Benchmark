@@ -1,12 +1,12 @@
 Machine this simulation was solved on: ETRL204-ARYAN
-Optimization for Area 4 for 3 time periods took 1.270002e+01 [s] and 20 iterations.
+Optimization for Area 4 for 3 time periods took 1.710129e+01 [s] and 29 iterations.
 where a micro-iteration limit of 200 and a minimum improvement of 1.000000e-03 [kW] was imposed.
-Average time per iteration: 6.350008e-01 [s]
+Average time per iteration: 5.896998e-01 [s]
 Number of Linear Equations: 498
 Number of Nonlinear Equalities: 159
 Number of Optimization Variables: 723
-Total Objective Function Value for Area 4 for 3 time periods = 5.749028e-03 
-Total Real Power Line Losses for Area 4 for 3 time periods = 5.749028e+00 [kW]
-Total Battery Power losses for Area 4 for 3 time periods = 9.348244e-17 [kW]
+Total Objective Function Value for Area 4 for 3 time periods = 5.920163e-03 
+Total Real Power Line Losses for Area 4 for 3 time periods = 5.915298e+00 [kW]
+Total Battery Power losses for Area 4 for 3 time periods = 4.865174e+00 [kW]
 Average SOC Level constraint violation for Area 4 for 3 time periods = NaN [kWh]
 where alpha = 1.000000e-03 and gamma = 0
