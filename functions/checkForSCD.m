@@ -50,9 +50,9 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
         Pc_1toT_kW(abs(Pc_1toT_kW) < threshold) = 0;
         Pd_1toT_kW(abs(Pd_1toT_kW) < threshold) = 0;
 
-        bar(1:T, Pc_1toT_kW, 'FaceColor', darkGreen); 
+        bar(1:T, Pc_1toT_kW, 'FaceColor', darkGreen, 'BarWidth', 0.8); 
         hold on;
-        bar(1:T, -Pd_1toT_kW, 'FaceColor', wineRed);
+        bar(1:T, -Pd_1toT_kW, 'FaceColor', wineRed, 'BarWidth', 0.8);
         hold off;
         
         % Modify y-tick labels for Pd to be positive
