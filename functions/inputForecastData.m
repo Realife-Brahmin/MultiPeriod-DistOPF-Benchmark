@@ -21,7 +21,7 @@ function [pvCoeffVals, lambdaVals, S_to_P_ratio_PV, S_to_P_ratio_Batt, costArray
 
     % Apply global PV Coefficient and choose middle T points
     % pvCoeffVals = globalPVCoeff * choose_middle_T_points(LoadShapePV24, T);
-    pvCoeffVals = transpose(globalPVCoeff * generatePVProfile(T, 0.6, 1.4, 0.8));
+    pvCoeffVals = transpose(globalPVCoeff * generatePVProfile(T, 0.6, 1.0, 0.8));
 
     % lambdaVals = choose_middle_T_points(LoadShape24, T);
     lambdaVals = transpose(generateLoadProfile(T, 0.7, 1.0, 'normal'));
