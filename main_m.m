@@ -173,6 +173,7 @@ sysInfo.QSubs_1toT_vs_macroItr = QSubs_1toT_vs_macroItr;
 
 
 simInfo = struct();
+simInfo.wdSim = wdSim;
 if copf
     simInfo.simName = "MPCOPF";
 else
@@ -655,7 +656,7 @@ if Batt_percent > 0
     qB_abs_Total_kVAr_allT = kVA_B*sysInfo.qB_abs_Total_allT;
     vald.qB_abs_Total_kVAr_allT = qB_abs_Total_kVAr_allT;
     vald.B_1toT = sysInfo.B_1toT;
-    BTotal_kWh_1toTh = sum(vald.B_1toT)*kVA_B;
+    BTotal_kWh_1toT = sum(vald.B_1toT)*kVA_B;
     vald.B0 = sysInfo.B0;
     vald.qB_1toT = sysInfo.qB_1toT;
     qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
@@ -673,7 +674,7 @@ else
     vald.qB_abs_Total_kVAr_1toT = zeros(T, 1);
     vald.qB_abs_Total_kVAr_allT = 0;
     vald.B_1toT = [];
-    BTotal_kWh_1toTh = [];
+    BTotal_kWh_1toT = [];
     vald.B0 = [];
     vald.qB_1toT = zeros(T, 1);
     qBTotal_kVAr_1toT = sum(vald.qB_1toT)*kVA_B;
