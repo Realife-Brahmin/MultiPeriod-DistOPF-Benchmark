@@ -177,7 +177,13 @@ function [x, sysInfo, simInfo, ...
     %     fprintf("Printing out sysInfo's memory of Area %d before LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
     %     disp(length(fieldnames(sysInfo.Area{Area})));
     % end
-    [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
+    if macroItr == 0
+        [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
+    elseif macroItr >= 1 % at least one macroItr already completed
+        [Aeq, beq, lb, ub, ~, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
+        xVals_vs_Area_vs_LastMacroItr = simInfo.xVals_vs_Area_vs_LastMacroItr; % shoudl exist and shouldn't be empty
+        x0 = xVals_vs_Area_vs_LastMacroItr.Area{Area};
+    end
     % fprintf("Printing out area %d after LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
     % disp(length(fieldnames(areaInfo)));
     % if macroItr > 0
