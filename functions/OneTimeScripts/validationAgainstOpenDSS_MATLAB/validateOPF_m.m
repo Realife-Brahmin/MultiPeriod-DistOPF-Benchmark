@@ -211,9 +211,10 @@ end
 
 %% Storage Controller
 
-Pd_1toT_kW = kVA_B*vald.Pd_1toT;
-Pc_1toT_kW = kVA_B*vald.Pc_1toT;
-Pdc_1toT_kW = Pd_1toT_kW - Pc_1toT_kW;
+% Pd_1toT_kW = kVA_B*vald.Pd_1toT;
+% Pc_1toT_kW = kVA_B*vald.Pc_1toT;
+Pdc_1toT_kW = kVA_B*vald.Pdc_1toT;
+% Pdc_1toT_kW = Pd_1toT_kW - Pc_1toT_kW;
 
 for battBusNum = 1:nBatt
     bus1 = busesWithBatts(battBusNum);
@@ -259,12 +260,14 @@ for t = 1:T
     DSSText.Command = strcat('Set hour = ', num2str(t-1));
 
     qB_t_kVAr = qB_1toT_kVAr(:, t);
+    Pdc_t_kW = Pdc_1toT_kW(:, t);
     for battBusNum = 1:nBatt
         bus1 = busesWithBatts(battBusNum);
         qBj_t_kVAr = qB_t_kVAr(battBusNum);
-        strStorageQ = strcat( 'Edit Storage.Battery', num2str(bus1), ' kVAr = ', num2str(qBj_t_kVAr) );
+        Pdcj_t_kW = Pdc_t_kW(battBusNum);
+        strStorage = strcat( 'Edit Storage.Battery',  num2str(bus1), ' kW = ', num2str(Pdcj_t_kW), ' kVAr = ', num2str(qBj_t_kVAr) );
     
-        DSSText.Command = strStorageQ;
+        DSSText.Command = strStorage;
     end
 
     qD_t_kVAr = qD_1toT_kVAr(:, t);
@@ -318,7 +321,6 @@ for t = 1:T
     % Initialize variables to sum the generation values
     derBusNum = PVSystems.First();
     pD_Total_t_kW = 0.0;
-    pD_Total_t_kW1 = 0.0;
     qD_Total_t_kVAr = 0.0;
     
     % Iterate through each generator
