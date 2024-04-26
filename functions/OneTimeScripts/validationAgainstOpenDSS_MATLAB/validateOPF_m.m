@@ -149,6 +149,8 @@ strLoadShapePV = strcat('New Loadshape.LoadShapePV npts = ', num2str(T), ' inter
 % DSSText.Command = strPvsTPV;
 
 % for bus1 = busesWithDERs'
+percentCutin = 0.001;
+percentCutout = 0.001;
 for derBusNum = 1:nDER
     bus1 = busesWithDERs(derBusNum);
     % Pmpp_j_kW = PmppFull_kW(bus1);
@@ -163,7 +165,7 @@ for derBusNum = 1:nDER
 
     stGa = strcat('New PVSystem.PV', num2str(bus1), ' irrad = 1.0 Phases = 1   Bus1 = ', num2str(bus1), ...
     '.1  kV = ', num2str(kV_B), ' kVA = ', num2str(kVA_j_kVA),  ...
-    ' Pmpp = ', num2str(Pmpp_j_kW) );
+    ' Pmpp = ', num2str(Pmpp_j_kW), ' %cutin = ', num2str(percentCutin), ' %cutout = ', num2str(percentCutout) );
 
     DSSText.Command = stGa;      
 end
