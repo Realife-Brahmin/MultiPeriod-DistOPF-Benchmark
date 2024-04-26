@@ -4,74 +4,81 @@
 03. Nature of Simulation: Centralized-OPF
 04. GED Configuration: pv_10_batt_15
 -----------------------------
-Hour: 
-01. Line Loss: 15.64 kW
-02. Substation Power: 870.54 kW + 144.70 kVAr
-03. Total Load: 872.40 kW + 480.01 kVAr
-04. Total Generation: 17.50 kW + 366.63 kVAr
-05. Total PV Generation: 17.50 kW + 17.02 kVAr
-06. Total Battery Generation: 0.00 kW + -0.39 kVAr
-07. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
-08. Substation Power Cost: $44.40
-09. SCD Observed: -0.00 kW
+Hour: 1
+01. Line Loss: 15.36 kW
+02. Substation Power: 860.89 kW + 123.19 kVAr
+03. Total Load: 814.24 kW + 448.01 kVAr
+04. Total Generation: -31.29 kW + 355.65 kVAr
+05. Total PV Generation: 27.99 kW + 9.13 kVAr
+06. Total Battery Generation: -59.28 kW + -3.48 kVAr
+07. Total Battery Flexibility Utilized: 59.27 kW + 46.83 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $43.91
+10. SCD Observed: -0.01 kW
 -----------------------------
-Hour: 
-01. Line Loss: 16.42 kW
-02. Substation Power: 892.23 kW + 163.55 kVAr
-03. Total Load: 903.80 kW + 497.29 kVAr
-04. Total Generation: 27.99 kW + 366.63 kVAr
-05. Total PV Generation: 27.99 kW + 17.02 kVAr
-06. Total Battery Generation: -0.00 kW + -0.39 kVAr
-07. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
-08. Substation Power Cost: $38.37
-09. SCD Observed: -0.00 kW
+Hour: 2
+01. Line Loss: 18.83 kW
+02. Substation Power: 957.34 kW + 198.80 kVAr
+03. Total Load: 988.72 kW + 544.01 kVAr
+04. Total Generation: 50.21 kW + 382.91 kVAr
+05. Total PV Generation: 32.94 kW + 17.03 kVAr
+06. Total Battery Generation: 17.26 kW + 15.88 kVAr
+07. Total Battery Flexibility Utilized: 17.25 kW + 30.56 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $41.17
+10. SCD Observed: -0.01 kW
 -----------------------------
-Hour: 
-01. Line Loss: 16.73 kW
-02. Substation Power: 900.68 kW + 170.58 kVAr
-03. Total Load: 915.44 kW + 503.69 kVAr
-04. Total Generation: 31.49 kW + 366.63 kVAr
-05. Total PV Generation: 31.49 kW + 17.02 kVAr
-06. Total Battery Generation: -0.00 kW + -0.39 kVAr
-07. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
-08. Substation Power Cost: $31.52
-09. SCD Observed: -0.00 kW
+Hour: 3
+01. Line Loss: 24.00 kW
+02. Substation Power: 1081.61 kW + 278.42 kVAr
+03. Total Load: 1163.20 kW + 640.01 kVAr
+04. Total Generation: 105.58 kW + 409.58 kVAr
+05. Total PV Generation: 34.99 kW + 19.40 kVAr
+06. Total Battery Generation: 70.59 kW + 40.18 kVAr
+07. Total Battery Flexibility Utilized: 70.58 kW + 44.19 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $37.86
+10. SCD Observed: -0.01 kW
 -----------------------------
-Hour: 
-01. Line Loss: 17.01 kW
-02. Substation Power: 907.92 kW + 176.88 kVAr
-03. Total Load: 925.90 kW + 509.45 kVAr
-04. Total Generation: 34.99 kW + 366.63 kVAr
-05. Total PV Generation: 34.99 kW + 17.02 kVAr
-06. Total Battery Generation: 0.00 kW + -0.39 kVAr
-07. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
-08. Substation Power Cost: $25.42
-09. SCD Observed: -0.00 kW
+Hour: 4
+01. Line Loss: 18.84 kW
+02. Substation Power: 956.78 kW + 198.73 kVAr
+03. Total Load: 988.72 kW + 544.01 kVAr
+04. Total Generation: 50.78 kW + 383.00 kVAr
+05. Total PV Generation: 31.49 kW + 17.03 kVAr
+06. Total Battery Generation: 19.28 kW + 15.98 kVAr
+07. Total Battery Flexibility Utilized: 19.27 kW + 30.46 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $26.79
+10. SCD Observed: -0.01 kW
 -----------------------------
-Hour: 
-01. Line Loss: 16.41 kW
-02. Substation Power: 891.04 kW + 166.73 kVAr
-03. Total Load: 909.62 kW + 500.49 kVAr
-04. Total Generation: 34.99 kW + 366.63 kVAr
-05. Total PV Generation: 34.99 kW + 17.02 kVAr
-06. Total Battery Generation: 0.00 kW + -0.39 kVAr
-07. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
-08. Substation Power Cost: $24.95
-09. SCD Observed: -0.00 kW
+Hour: 5
+01. Line Loss: 15.36 kW
+02. Substation Power: 861.03 kW + 123.23 kVAr
+03. Total Load: 814.24 kW + 448.01 kVAr
+04. Total Generation: -31.43 kW + 355.61 kVAr
+05. Total PV Generation: 27.99 kW + 9.09 kVAr
+06. Total Battery Generation: -59.42 kW + -3.48 kVAr
+07. Total Battery Flexibility Utilized: 59.41 kW + 46.82 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $24.11
+10. SCD Observed: -0.01 kW
 -----------------------------
 Hour: Full 5 Hour Horizon
-01. Horizon Line Loss: 82.22 kW
-02. Horizon Total Substation Power: 4462.41 kW + 822.45 kVAr
-03. Horizon Total Load: 4527.16 kW + 2490.93 kVAr
-04. Horizon Total Generation: 146.97 kW + 1833.16 kVAr
-05. Horizon Total PV Generation: 146.97 kW + 85.11 kVAr
-06. Horizon Total Battery Generation: -0.00 kW + -1.95 kVAr
-07. Horizon Total Static Capacitor Reactive Power Generation: 1750.00 kVAr
-08. Horizon Total Substation Power Cost: $164.66
-09. Horizon Total SCD Observed: -0.00 kW
-10. Horizon-end Battery Energy Deviation from Reference: 0.00 kWh
+01. Horizon Line Loss: 92.40 kW
+02. Horizon Total Substation Power: 4717.65 kW + 922.37 kVAr
+03. Horizon Total Load: 4769.11 kW + 2624.05 kVAr
+04. Horizon Total Generation: 143.85 kW + 1886.76 kVAr
+05. Horizon Total PV Generation: 155.42 kW + 71.68 kVAr
+06. Horizon Total Battery Generation: -11.57 kW + 65.07 kVAr
+07. Horizon Total Battery Flexibility Utilized: 225.78 kW + 198.86 kVAr
+08. Horizon Total Static Capacitor Reactive Power Generation: 1750.00 kVAr
+09. Horizon Total Substation Power Cost: $173.83
+10. Horizon Total SCD Observed: -0.06 kW
+11. Horizon-end Battery Energy Deviation from Reference: 0.00 kWh
 ------------------------------------------------------------
-01. Number of Macro-Iterations: 1
-02. Simulation Time: 307.88 s
-03. Time to solve with sequential (non-parallel) computation: 291.72 s
-04. Time to solve if OPF computation parallelized: 291.72 s
+12. Number of Macro-Iterations: 1
+13. Simulation Time: 1065.04 s
+14. Time to solve with sequential (non-parallel) computation: 1047.31 s
+15. Time to solve if OPF computation parallelized: 1047.31 s
+------------------------------------------------------------
