@@ -1,12 +1,12 @@
 Machine this simulation was solved on: ETRL204-ARYAN
-Optimization for Area 2 for 9 time periods took 4.363583e+00 [s] and 12 iterations.
+Optimization for Area 2 for 9 time periods took 3.449034e+00 [s] and 9 iterations.
 where a micro-iteration limit of 200 and a minimum improvement of 1.000000e-03 [kW] was imposed.
-Average time per iteration: 3.636319e-01 [s]
+Average time per iteration: 3.832260e-01 [s]
 Number of Linear Equations: 504
 Number of Nonlinear Equalities: 162
 Number of Optimization Variables: 702
-Total Objective Function Value for Area 2 for 9 time periods = 3.833028e-02 
-Total Real Power Line Losses for Area 2 for 9 time periods = 3.833006e+01 [kW]
-Total Battery Power losses for Area 2 for 9 time periods = 2.194177e-01 [kW]
+Total Objective Function Value for Area 2 for 9 time periods = 3.833052e-02 
+Total Real Power Line Losses for Area 2 for 9 time periods = 3.833029e+01 [kW]
+Total Battery Power losses for Area 2 for 9 time periods = 2.251603e-01 [kW]
 Average SOC Level constraint violation for Area 2 for 9 time periods = NaN [kWh]
 where alpha = 1.000000e-03 and gamma = 0
