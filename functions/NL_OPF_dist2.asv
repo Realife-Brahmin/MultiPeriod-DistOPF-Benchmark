@@ -1,0 +1,501 @@
+function [x, sysInfo, simInfo, ...
+     time_dist] = ...
+    ...
+    NL_OPF_dist2(sysInfo, simInfo, areaInfo, v_parAr_1toT, S_chArs_1toT,  ...
+    time_dist, varargin)
+    
+    noBatteries = simInfo.noBatteries;
+ % Default values for optional arguments
+    verbose = false;
+    logging_Aeq_beq = false;
+    logging = false;
+    % DER_percent = simInfo.DER_percent;
+    % CVR = [0; 0];
+    % % V_max = 1.05;
+    % V_max = simInfo.V_max;
+    % % V_min = 0.95;
+    % V_min = simInfo.V_min;
+    % Qref_DER = 0.00;
+    % Vref_DER = 1.00;
+    % % delta_t = 0.25;
+    % delta_t = simInfo.delta_t;
+    % % etta_C = 0.95;
+    % etta_C = simInfo.etta_C;
+    % % etta_D = 0.95;
+    % etta_D = simInfo.etta_D;
+    % % chargeToPowerRatio = 4;
+    % chargeToPowerRatio = simInfo.chargeToPowerRatio;
+    % % soc_min = 0.30;
+    % soc_min = simInfo.soc_min;
+    % % soc_max = 0.95;
+    % soc_max = simInfo.soc_max;
+    % alpha = 1e-3;
+    alpha = simInfo.alpha;
+    % gamma = 1e0;
+    % gamma = 1e-1;
+    gamma = simInfo.gamma;
+    % DER_percent = simInfo.DER_percent;
+    % Batt_percent = simInfo.Batt_percent;
+    profiling = false;
+    saveSCDPlots = false;
+    displayTables = false;
+    plotLinDS = false;
+
+    saveToFile = false;
+    Area = areaInfo.Area;
+    strArea = convert2doubleDigits(Area);
+    fileExtension = ".txt";
+    systemName = "ieee123";
+    saveLocationName = "logfiles/";
+    % fileOpenedFlag_Aeq_beq = false;
+
+    % Process optional arguments
+    numArgs = numel(varargin);
+
+    if mod(numArgs, 2) ~= 0
+        error('Optional arguments must be specified as name-value pairs.');
+    end
+    
+    validArgs = ["verbose", "logging", "logging_Aeq_beq", "systemName", ...
+        "CVR", "saveToFile", "saveLocation", "Qref_DER", ...
+        "Vref_DER", "fileExtension", ...
+        "profiling", ...
+        "saveSCDPlots", "displayTables", "plotLinDS"];
+    
+    for kwarg_num = 1:2:numArgs
+        argName = varargin{kwarg_num};
+        argValue = varargin{kwarg_num+1};
+        
+        if ~ischar(argName) || ~any(argName == validArgs)
+            error('Invalid optional argument name.');
+        end
+        
+        switch argName
+            case "verbose"
+                verbose = argValue;
+            case "logging"
+                logging = argValue;
+            case "logging_Aeq_beq"
+                logging_Aeq_beq = argValue;
+            case "systemName"
+                systemName = argValue;
+            case "CVR"
+                CVR = argValue;
+            case 'saveToFile'
+                saveToFile = argValue;
+            case 'saveLocation'
+                saveLocationName = argValue;
+            case 'Vref_DER'
+                Vref_DER = argValue;
+            case 'Qref_DER'
+                Qref_DER = argValue;
+            case "profiling"
+                profiling = argValue;
+            case "saveSCDPlots"
+                saveSCDPlots = argValue;
+            case "displayTables"
+                displayTables = argValue;
+            case "plotLinDS"
+                plotLinDS = argValue;
+        end
+    end
+    
+    numAreas = sysInfo.numAreas;
+
+    saveLocationFilename = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/optimizationLogs", fileExtension);
+    saveLocationFilename_Aeq_beq = strcat(saveLocationName , systemName, "/numAreas_", num2str(numAreas), "/Aeq_beq_area", strArea, fileExtension);
+    
+    macroItr = simInfo.macroItr; % completed macro-iterations, starts at 0
+
+    if macroItr ~= 0
+        logging_Aeq_beq = false;
+    end
+
+    if logging_Aeq_beq && saveToFile && macroItr == 0 && Area == 2
+        fileOpenedFlag_Aeq_beq = true;
+        fid_Aeq_beq = fopen(saveLocationFilename_Aeq_beq, 'w');  % Open file for writing
+    else
+        logging_Aeq_beq = false;
+        fid_Aeq_beq = 1;
+    end
+    
+    if logging && verbose
+        error("Kindly specify ONLY one of the following arguments as true: verbose and logging.")
+    elseif logging && ~verbose
+        fileOpenedFlag = true;
+        fid = fopen(saveLocationFilename, 'w');
+    elseif ~logging
+        logging = verbose;
+        fid = 1;
+    end
+    
+    logging_Aeq_beq = false;
+    
+    isRoot_Area = sysInfo.isRoot(Area);
+    numAreas = sysInfo.numAreas;
+    systemName = sysInfo.systemName;
+    CB_FullTable = sysInfo.CBTable;
+    numChildAreas_Area = sysInfo.numChildAreas(Area);
+
+    % fprintf("Printing out area %d before extractAreaInfo: macroItr (areaInfo) = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+
+    if macroItr == 0
+        areaInfo = extractAreaInfo(areaInfo, sysInfo, simInfo, isRoot_Area, systemName, numAreas, ...
+    CB_FullTable, numChildAreas_Area, 'verbose', verbose, 'logging', logging, 'displayNetworkGraphs', false, 'displayTables', displayTables);
+    end
+    
+    % fprintf("Printing out area %d after extractAreaInfo: macroItr (areaInfo) = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+
+    % if macroItr > 0
+    %     fprintf("Printing out area %d for before exchangeCompVars: macroItr = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+
+    areaInfo = exchangeCompVars(areaInfo, S_chArs_1toT);
+    
+    % if macroItr > 0
+    %     fprintf("Printing out area %d after exchangeCompVars: macroItr = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+
+    myfprintf(logging_Aeq_beq, fid_Aeq_beq, "**********" + ...
+        "Constructing Aeq and beq for Area %d.\n" + ...
+        "***********\n", Area); 
+
+    % CVR_P = CVR(1);
+    % CVR_Q = CVR(2);
+    scriptPath = mfilename('fullpath');
+    [dirPath, ~, ~] = fileparts(scriptPath);
+
+    folderNameComparison = strcat(dirPath, filesep, "..", filesep, "processedData", filesep, systemName, filesep, "numAreas_", num2str(Area), filesep);
+    ext = ".csv";
+    % fprintf("Printing out area %d before LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+    % if macroItr > 0
+    %     fprintf("Printing out sysInfo's memory of Area %d before LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+    if macroItr == 0
+        [Aeq, beq, lb, ub, x0, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
+    elseif macroItr >= 1 % at least one macroItr already completed
+        [Aeq, beq, lb, ub, ~, areaInfo] = LinEqualities(areaInfo, simInfo, v_parAr_1toT);
+        xVals_vs_Area_vs_LastMacroItr = simInfo.xVals_vs_Area_vs_LastMacroItr; % shoudl exist and shouldn't be empty
+        x0 = xVals_vs_Area_vs_LastMacroItr.Area{Area};
+    end
+    % fprintf("Printing out area %d after LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+    % if macroItr > 0
+    %     fprintf("Printing out sysInfo's memory of Area %d after LinEqualities: macroItr (areaInfo) = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+    % fprintf("Printing out area %d after LinEqualities: macroItr = %d", Area, macroItr)
+    % disp(length(fieldnames(sysInfo.Area{Area})));
+    sysInfo.Area{Area} = areaInfo;
+    % if macroItr > 0
+    %     fprintf("Printing out area %d after LinEqualities: macroItr = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+
+    % writematrix(Aeq, strcat(folderNameComparison, "Aeq_B", ext));
+    % writematrix(beq, strcat(folderNameComparison, "beq_B", ext));
+    % writematrix(lb, strcat(folderNameComparison, "lb_B", ext));
+    % writematrix(ub, strcat(folderNameComparison, "ub_B", ext));
+
+    % writematrix(Aeq, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\Aeq_B.csv")
+    % writematrix(beq, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\beq_B.csv")
+    % writematrix(lb, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\lb_B.csv")
+    % writematrix(ub, "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\PQI_untouched\PQI\ub_B.csv")
+
+    % plotLinDS = true;
+
+    if plotLinDS && macroItr == 0
+        plotSparsity(Aeq, beq);
+    end
+    
+    ext = ".csv";
+    battstring = simInfo.battstring;
+    % if ~noBatteries
+    %     battstring = strcat('withBatteries_', num2str(DER_percent));
+    % else
+    %     battstring = 'withoutBatteries_0';
+    % end
+    saveLocationFolderName = strcat("processedData", filesep , systemName, filesep, "numAreas_", num2str(numAreas), filesep, "Area", num2str(Area));
+    isfolder(saveLocationFolderName) || mkdir(saveLocationFolderName); %#ok
+    filenameAeq = strcat(saveLocationFolderName, filesep, "Aeq_B_T_", num2str(simInfo.T), "_", battstring, "_macroItr_", num2str(1+macroItr), ext);
+    % Saving Aeq to a CSV file
+    writematrix(Aeq, filenameAeq);
+    filenamebeq = strcat(saveLocationFolderName, filesep, "beq_B_T_", num2str(simInfo.T), "_", battstring,  "_macroItr_", num2str(1+macroItr), ext);
+
+    % Saving beq to a CSV file
+    writematrix(beq, filenamebeq);
+
+    t3Start = tic;
+    
+    microItrMax = simInfo.alg.microItrMax;
+    tolfun = simInfo.alg.tolfun;
+    % stepTol = simInfo.alg.stepTol;
+    % constraintTol = simInfo.alg.constraintTol;
+    % optimalityTol = simInfo.alg.optimalityTol;
+    displayIterations = 'off';
+    % displayIterations = 'iter-detailed';
+% <<<<<<< HEAD
+    % doPlot = true; % Set this to false if you don't want to plot
+
+    % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    %     'FunctionTolerance', tolfun, ...
+    %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    % 'OptimalityTolerance', optimalityTol);
+        % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+
+    %     options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    %     'FunctionTolerance', tolfun, ...
+    %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    % 'OptimalityTolerance', optimalityTol, ...
+    % 'OutputFcn', @outfun);
+% =======
+% >>>>>>> main
+    
+    % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp', ...
+    %     'FunctionTolerance', tolfun, ...
+    %     'StepTolerance', stepTol, ...             % Equivalent to 10 watts
+    % 'ConstraintTolerance', constraintTol, ...       % For line flows, voltages, etc.
+    % 'OptimalityTolerance', optimalityTol);
+    % options = optimoptions('fmincon', 'Display', displayIterations, 'MaxIterations', microItrMax, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+    options = optimoptions('fmincon', 'Display', displayIterations, 'MaxFunctionEvaluations', 100000000, 'Algorithm', 'sqp');
+
+    T = simInfo.T;
+
+    % if T >= 7
+    %     profiling = true;
+    %     profile on
+    % end
+    
+    objFunction = simInfo.objFunction;
+    if strcmp(objFunction, "loss_min")
+        mainObjFunc = "func_PLoss";
+    elseif strcmp(objFunction, "gen_cost")
+        mainObjFunc = "func_PSubsCost";
+    else
+        error("Unknown objective function");
+    end
+
+    if ~noBatteries
+        objectiveFuns = {mainObjFunc, "func_SCD", "func_netChangeInSOC"};
+        % objectiveFuns = {mainObjFunc, "func_SCD"};
+        % objectiveFuns = {mainObjFunc, "func_netChangeInSOC"};
+    else
+        objectiveFuns = {mainObjFunc};
+    end
+    
+    % lb
+    % ub
+    [x, fval, ~, output] = fmincon(@(x)objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', objectiveFuns), ...
+    x0, [], [], Aeq, beq, lb, ub, ...
+    @(x)NonLinEqualities(x, simInfo, areaInfo, T, "verbose", false, "saveToFile", false), ...
+    options);
+    
+    iterations_taken = output.iterations;
+    
+    folderName = strcat("processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(numAreas), filesep, "area", num2str(Area));
+    % if ~exist(folderName, 'dir')
+    %     mkdir(folderName)
+    % end
+    createFolderIfNotExisting(folderName);
+    prefixName = strcat(folderName, filesep, "Horizon_", num2str(T), "_macroItr_", num2str(macroItr+1));
+    areaSolutionName_x = strcat(prefixName, "_optimalSolutions.csv");
+    % if ~noBatteries
+    %     battstring = "withBatteries";
+    % else
+    %     battstring = "withoutBatteries";
+    % end
+    areaSolutionName_fval = strcat(prefixName, "_", getenv('COMPUTERNAME'), "_optimalObjectiveFunctionValue_", battstring, ".txt");
+    
+    writematrix(x, areaSolutionName_x);
+
+    % if profiling
+    %     profile viewer;
+    % end
+
+    [lineLosses, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss"});
+    [~, lineLosses_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PLoss_1toT"});
+    [genPower, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubs"});
+    [~, genPower_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubs_1toT"});
+
+    [genCost, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubsCost"});
+    [~, genCost_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_PSubsCost_1toT"});
+
+    [genkVAr, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_QSubs"});
+    [~, genkVAr_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_QSubs_1toT"});
+
+    if ~noBatteries
+        [scd, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_SCD"});
+        [changeInSOC, ~] = objfun(x, simInfo, sysInfo, areaInfo, T, 'objectiveFuns', {"func_netChangeInSOC"});
+    end
+
+    t3 = toc(t3Start);
+
+    % Open the file for writing
+    fid = fopen(areaSolutionName_fval, 'w');
+    fileOpenedFlag = true;
+
+    % Check if the file opened successfully
+    if fid == -1
+        error('Failed to open the file for writing.');
+    end
+    
+    % if macroItr > 0
+    %     fprintf("Printing out area %d before getProblemSize: macroItr = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+    [nLinEqnsT, nNonLinEqnsT, nVarsT, areaInfo] = getProblemSize(areaInfo, T);
+    % if macroItr > 0
+    %     fprintf("Printing out area %d after getProblemSize: macroItr = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+    
+    sysInfo.Area{Area} = areaInfo;
+
+    kVA_B = sysInfo.kVA_B;
+    kV_B = sysInfo.kV_B;
+
+    myfprintf(true, fid, "Machine this simulation was solved on: %s\n", getenv('COMPUTERNAME'));
+    myfprintf(true, fid, "Optimization for Area %d for %d time periods took %d [s] and %d iterations.\n", Area, T,  t3, iterations_taken);
+    myfprintf(true, fid, "where a micro-iteration limit of %d and a minimum improvement of %d [kW] was imposed.\n", microItrMax, tolfun*1e3);
+    myfprintf(true, fid, "Average time per iteration: %d [s]\n", t3/iterations_taken);
+    myfprintf(true, fid, "Number of Linear Equations: %d\n", nLinEqnsT);
+    myfprintf(true, fid, "Number of Nonlinear Equalities: %d\n", nNonLinEqnsT);
+    myfprintf(true, fid, "Number of Optimization Variables: %d\n", nVarsT);
+    myfprintf(true, fid, "Total Objective Function Value for Area %d for %d time periods = %d \n", Area, T, fval);
+    myfprintf(true, fid, "Total Real Power Line Losses for Area %d for %d time periods = %d [kW]\n", Area, T, lineLosses*kVA_B);
+    if ~noBatteries
+        myfprintf(true, fid, "Total Battery Power losses for Area %d for %d time periods = %d [kW]\n", Area, T, scd*kVA_B/alpha);
+        myfprintf(true, fid, "Average SOC Level constraint violation for Area %d for %d time periods = %d [kWh]\n", Area, T, sqrt( changeInSOC*(kVA_B^2)/(gamma * areaInfo.nBatt_Area)));
+        myfprintf(true, fid, "where alpha = %d and gamma = %d\n", alpha, gamma);
+    end
+    
+    saveSCDPlots = ~macroItr && saveSCDPlots;
+    % saveSCDPlots = false;
+    % saveSCDPlots = true;
+    % keyboard;
+    % if macroItr  > 0
+    %     fprintf("Printing out area %d before checkForSCD: macroItr = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+    if ~noBatteries && saveSCDPlots
+        checkForSCD(sysInfo, simInfo, areaInfo, T, x, 'savePlots', true);
+    end
+    % if macroItr > 0
+    %     fprintf("Printing out area %d after checkForSCD: macroItr = %d", Area, macroItr)
+    %     disp(length(fieldnames(sysInfo.Area{Area})));
+    % end
+
+    time_dist(macroItr+1, Area) = t3;
+    
+    N_Area = areaInfo.N_Area;
+    m_Area = areaInfo.m_Area;
+    nDER_Area = areaInfo.nDER_Area;
+    nBatt_Area = areaInfo.nBatt_Area;
+    
+    xVals_Area = x;
+    P_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pij), m_Area, T); %m_Areax1
+    Q_Area_1toT = reshape(xVals_Area(areaInfo.indices_Qij), m_Area, T); %m_Areax1
+    S_Area_1toT = complex(P_Area_1toT, Q_Area_1toT); %m_Areax1
+
+    l_Area_1toT = reshape(xVals_Area(areaInfo.indices_lij), m_Area, T);
+    vAll_Area_1toT = reshape(xVals_Area(areaInfo.indices_vAllj), N_Area, T); %N_Areax1
+    
+    qD_Area_1toT = reshape(xVals_Area(areaInfo.indices_qDj), nDER_Area, T);
+
+    % fprintf("Printing out area %d before if ~noBatteries condition: macroItr = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+    
+    sysInfo.Area{Area} = areaInfo;
+    areaInfo = sysInfo.Area{Area};
+
+    if ~noBatteries
+        B_Area_1toT = reshape(xVals_Area(areaInfo.indices_Bj), nBatt_Area, T);
+        Pc_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pcj), nBatt_Area, T);
+        Pd_Area_1toT = reshape(xVals_Area(areaInfo.indices_Pdj), nBatt_Area, T);
+        qB_Area_1toT = reshape(xVals_Area(areaInfo.indices_qBj), nBatt_Area, T);
+
+        areaInfo.B_Area_1toT = B_Area_1toT;
+        areaInfo.Pc_Area_1toT = Pc_Area_1toT;
+        areaInfo.Pd_Area_1toT = Pd_Area_1toT;
+        areaInfo.qB_Area_1toT = qB_Area_1toT;
+
+        areaInfo.scd = scd;
+        areaInfo.changeInSOC = changeInSOC;
+        areaInfo.genCost = genCost;
+    else
+
+        areaInfo.B_Area_1toT = "NA";
+        areaInfo.Pc_Area_1toT = "NA";
+        areaInfo.Pd_Area_1toT = "NA";
+        areaInfo.qB_Area_1toT = "NA";
+
+        areaInfo.scd = "NA";
+        areaInfo.changeInSOC = "NA";
+    end
+    
+    sysInfo.Area{Area} = areaInfo;
+
+    % fprintf("Printing out area %d after if ~noBatteries condition: macroItr = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+
+    % fprintf("Printing out area %d before State/Control Variables are added: macroItr (areaInfo) = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+
+    areaInfo.P_Area_1toT = P_Area_1toT;
+    areaInfo.Q_Area_1toT = Q_Area_1toT;
+    areaInfo.S_Area_1toT = S_Area_1toT;
+
+    areaInfo.l_Area_1toT = l_Area_1toT;
+    areaInfo.vAll_Area_1toT = vAll_Area_1toT;
+
+    areaInfo.qD_Area_1toT = qD_Area_1toT;
+    
+    
+    PLoss_allT = lineLosses;
+    PLoss_1toT = lineLosses_1toT;
+    areaInfo.PLoss_allT = PLoss_allT;
+    areaInfo.PLoss_1toT = PLoss_1toT;
+    PSubs_allT = genPower;
+    PSubs_1toT = genPower_1toT;
+    areaInfo.PSubs_allT = PSubs_allT;
+    areaInfo.PSubs_1toT = PSubs_1toT;
+    PSubsCost_allT = genCost;
+    PSubsCost_1toT = genCost_1toT;
+    areaInfo.PSubsCost_allT = PSubsCost_allT;
+    areaInfo.PSubsCost_1toT = PSubsCost_1toT;
+    QSubs_allT = genkVAr;
+    QSubs_1toT = genkVAr_1toT;
+    areaInfo.QSubs_allT = QSubs_allT;
+    areaInfo.QSubs_1toT = QSubs_1toT;
+    areaInfo.fval = fval;
+    areaInfo.xvals = xVals_Area;
+    
+    sysInfo.Area{Area} = areaInfo;
+    % fprintf("Printing out area %d after State/Control Variables are added: macroItr (areaInfo) = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+    % 
+    % fprintf("Printing out area %d before exiting NL_OPF_dist2 (areaInfo 0): macroItr = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+    % sysInfo.Area{Area} = areaInfo;
+    % 
+    % fprintf("Printing out area %d before exiting NL_OPF_dist2 (areaInfo 1): macroItr = %d", Area, macroItr)
+    % disp(length(fieldnames(areaInfo)));
+    % 
+    % fprintf("Printing out area %d before exiting NL_OPF_dist2: macroItr = %d", Area, macroItr)
+    % disp(length(fieldnames(sysInfo.Area{Area})));
+
+    if fileOpenedFlag
+        fclose(fid);
+    end
+
+    % keyboard;
+
+end
