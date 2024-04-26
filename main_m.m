@@ -26,7 +26,7 @@ logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction = "loss_min"
 numAreas = 4
-T = 5
+T = 3
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
@@ -646,6 +646,7 @@ if Batt_percent > 0
     PdTotal_kW_1toT = sum(vald.Pd_1toT)*kVA_B;
     vald.Pc_1toT = sysInfo.Pc_1toT;
     PcTotal_kW_1toT = sum(vald.Pc_1toT)*kVA_B;
+    vald.Pdc_1toT = vald.Pd_1toT - vald.Pc_1toT;
     PdcTotal_kW_1toT = PdTotal_kW_1toT - PcTotal_kW_1toT;
     Pbatt_abs_Total_kW_1toT = kVA_B*sysInfo.P_batt_abs_Total_1toT;
     vald.Pbatt_abs_Total_kW_1toT = Pbatt_abs_Total_kW_1toT;
