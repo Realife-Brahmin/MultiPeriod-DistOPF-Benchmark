@@ -54,7 +54,7 @@ saveSCDPlots = true;
 globalPVCoeff = 1.0;
 [pvCoeffVals, lambdaVals, S_to_P_ratio_PV, ...
     S_to_P_ratio_Batt, costArray] = inputForecastData(rawDataFolder, T, globalPVCoeff);
-
+%%
 V_min = 0.95;
 V_max = 1.05;
 etta_C = 0.95;
@@ -282,6 +282,7 @@ sysInfo = getSysInfo(sysInfo, simInfo, systemName, ...
 %     % USING COPF Area (actual numbered) X%, Y% DER, Battery buses
 %     % and store them in each areaInfo
 % end
+xVals_vs_Area_vs_LastMacroItr = struct();
 
 while keepRunningIterations
     for Area = 1:numAreas
@@ -307,6 +308,8 @@ while keepRunningIterations
             time_dist, 'verbose', verbose, 'saveToFile', true, 'logging', logging, ...
             'saveSCDPlots', false);
         
+        xVals_vs_Area_vs_LastMacroItr.Area{Area} = xVals_Area;
+        simInfo.xVals_vs_Area_vs_LastMacroItr = xVals_vs_Area_vs_LastMacroItr;
 %%
         nVars1_Area = length(xVals_Area)/T;
         xVals_Area_1toT = reshape(xVals_Area, nVars1_Area, T);
