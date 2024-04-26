@@ -465,7 +465,7 @@ for battBusNum = 1:nBatt
     % DSSText.Command = strGenerators;
 end
 
-resultsFolder = strcat(".", filesep, "results", filesep, battstring);
+resultsFolder = strcat(wdVald, filesep, "results", filesep, battstring);
 
 batteryMonitorFolder = strcat(resultsFolder, filesep, "batteryMonitors");
 
