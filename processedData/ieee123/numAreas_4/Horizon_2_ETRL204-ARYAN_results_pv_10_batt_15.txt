@@ -10,12 +10,11 @@ Hour: 1
 03. Total Load: 1163.20 kW + 640.01 kVAr
 04. Total Generation: 96.62 kW + 363.54 kVAr
 05. Total PV Generation: 34.99 kW + 17.02 kVAr
-06. Total PV Generation: 34.99 kW + 17.02 kVAr
-07. Total Battery Generation: 61.62 kW + -3.49 kVAr
-08. Total Battery Flexibility Utilized: 61.62 kW + 46.82 kVAr
-09. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
-10. Substation Power Cost: $38.22
-11. SCD Observed: 0.00 kW
+06. Total Battery Generation: 61.62 kW + -3.49 kVAr
+07. Total Battery Flexibility Utilized: 61.62 kW + 46.82 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $38.22
+10. SCD Observed: 0.00 kW
 -----------------------------
 Hour: 2
 01. Line Loss: 15.66 kW
@@ -23,12 +22,11 @@ Hour: 2
 03. Total Load: 814.24 kW + 448.01 kVAr
 04. Total Generation: -40.28 kW + 346.14 kVAr
 05. Total PV Generation: 27.99 kW + 3.64 kVAr
-06. Total PV Generation: 27.99 kW + 3.64 kVAr
-07. Total Battery Generation: -68.28 kW + -7.50 kVAr
-08. Total Battery Flexibility Utilized: 68.28 kW + 45.90 kVAr
-09. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
-10. Substation Power Cost: $24.34
-11. SCD Observed: 0.00 kW
+06. Total Battery Generation: -68.28 kW + -7.50 kVAr
+07. Total Battery Flexibility Utilized: 68.28 kW + 45.90 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $24.34
+10. SCD Observed: 0.00 kW
 -----------------------------
 Hour: Full 2 Hour Horizon
 01. Horizon Line Loss: 40.31 kW
@@ -44,7 +42,7 @@ Hour: Full 2 Hour Horizon
 11. Horizon-end Battery Energy Deviation from Reference: 0.00 kWh
 ------------------------------------------------------------
 12. Number of Macro-Iterations: 5
-13. Simulation Time: 83.83 s
-14. Time to solve with sequential (non-parallel) computation: 61.20 s
-15. Time to solve if OPF computation parallelized: 50.08 s
+13. Simulation Time: 81.69 s
+14. Time to solve with sequential (non-parallel) computation: 60.15 s
+15. Time to solve if OPF computation parallelized: 49.81 s
 ------------------------------------------------------------

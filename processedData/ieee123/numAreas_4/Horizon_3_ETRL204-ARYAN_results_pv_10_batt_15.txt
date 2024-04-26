@@ -54,7 +54,7 @@ Hour: Full 3 Hour Horizon
 11. Horizon-end Battery Energy Deviation from Reference: 0.00 kWh
 ------------------------------------------------------------
 12. Number of Macro-Iterations: 5
-13. Simulation Time: 211.52 s
-14. Time to solve with sequential (non-parallel) computation: 106.16 s
-15. Time to solve if OPF computation parallelized: 89.52 s
+13. Simulation Time: 126.11 s
+14. Time to solve with sequential (non-parallel) computation: 103.11 s
+15. Time to solve if OPF computation parallelized: 87.15 s
 ------------------------------------------------------------
