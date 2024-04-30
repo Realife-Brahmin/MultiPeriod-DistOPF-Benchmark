@@ -196,5 +196,7 @@ function plot_simulation_results(results)
         end
 
     end
+
+    plotSubstationPowers(results);
     
 end

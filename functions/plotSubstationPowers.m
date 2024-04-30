@@ -2,11 +2,6 @@ function plotSubstationPowers(results)
     
     simInfo = results.simInfo;
     sysInfo = results.sysInfo;
-    P12_1toT_vs_macroItr = results.P12_1toT_vs_macroItr;
-    v1_1toT_vs_macroItr = results.v1_1toT_vs_macroItr;
-    PLoss_allT_vs_macroItr = results.PLoss_allT_vs_macroItr;
-    PLoss_1toT_vs_macroItr = results.PLoss_1toT_vs_macroItr;
-    PSubs_1toT_vs_macroItr = results.PSubs_1toT_vs_macroItr;str;
 
     systemName = "ieee123";
     simNatureString = simInfo.simNatureString;
@@ -14,17 +9,13 @@ function plotSubstationPowers(results)
     fileExtensionData = ".csv";
     saveSimulationResultPlots = true;
     processedDataFolder = strcat("processedData", filesep);
-    CBTable = sysInfo.CBTable;
-    
-    copf = simInfo.copf;
-    % Determine the size of the input matrix
-    [numRelationships, T, totalMacroItr] = size(P12_1toT_vs_macroItr);
 
     latex_interpreter
-    % indParamString = "t";
 
     numColours = 9;
     colors = cell(numColours, 1);
+    T = simInfo.T;
+    totalMacroItr = simInfo.macroItr+1;
     
     colors{1} = [0.929, 0.694, 0.125];   % Yellow
     colors{2} = [0.494, 0.184, 0.556];   % Purple
@@ -43,7 +34,7 @@ function plotSubstationPowers(results)
     Batt_percent = simInfo.Batt_percent;
 
     battstring = simInfo.battstring;
-    battstringTitle = strcat("with $", num2str(DER_percent), "\%$ PVs and $\n", num2str(Batt_percent), "\%$ Batteries");
+    battstringTitle = strcat("with $", num2str(DER_percent), "\%$ PVs and $", num2str(Batt_percent), "\%$ Batteries");
 
 
     numAreas = sysInfo.numAreas;
@@ -51,62 +42,51 @@ function plotSubstationPowers(results)
     kV_B = sysInfo.kV_B;
     % Iterate over each relationship
 
-                xLabelString = "Time Period $t$";
-    
-                figure; % Create a new figure for each relationship
-                hold on; % Hold on to plot multiple lines
-                grid minor;
-    
-                if run == 3
-                    data0 = PLoss_1toT_vs_macroItr(1:T, totalMacroItr);
-    
-                else
-                    error("Unknown thing to plot.");
-                end
-    
-                data = squeeze(data0);
-    
-                if run == 3
-                    dependentVariable = data*kVA_B;
-                else
-                    error("Unknown thing to plot.");
-                end
-                % Plot the data over time
-                plotSubstationPowers(1:T, abs(dependentVariable), ...
-                    'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
-                    'Color', [colors{mod(totalMacroItr, numColours)+1},  alphaValues(totalMacroItr)], 'LineWidth', 2.5, ...
-                    'DisplayName', 'Converged values');
-    
-            % Customize the plot
-    
-            if run == 3
-                titlePre = "$P_{Loss}$";
-                yLabelString = "$P_{Loss} \, [kW]$";
-                filenamePre = "SystemRealPowerLosses";
-            else
-                error("floc")
-            end
-    
-            titleString = strcat(titlePre, " across the horizon for the system using ", simNatureString, " ", battstringTitle);
-            title(titleString)
-            xlabel(xLabelString);
-    
-            % xlabel('t [units]');
-            ylabel(yLabelString);
-            legend show; % Show the legend
-            ax = gca; % Get the current axes object
-            ax.XTick = 1:T; % Set x-ticks to integers from 1 to totalMacroItr
-    
-            saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-            if ~exist(saveLocation, 'dir')
-                mkdir(saveLocation)
-            end
-    
-    
-            filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_vs_macroItr_", num2str(T), "_", battstring,  fileExtensionImage);
-            myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
-            filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
-            writematrix(dependentVariable, filenameCSV)
+    xLabelString = "Time Period $t$";
 
+    figure; % Create a new figure for each relationship
+    hold on; % Hold on to plot multiple lines
+    grid minor;
+    
+    PSubs_1toT = results.PSubs_1toT;
+    data0 = PSubs_1toT(1:T);
+
+    data = squeeze(data0);
+
+    dependentVariable = data*kVA_B;
+
+    % Plot the data over time
+    plot(1:T, abs(dependentVariable), ...
+        'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
+        'Color', [colors{mod(totalMacroItr, numColours)+1},  alphaValues(totalMacroItr)], 'LineWidth', 2.5, ...
+        'DisplayName', 'Converged values');
+
+    % Customize the plot
+
+    titlePre = "$P_{Subs}$";
+    yLabelString = "$P_{Subs} \, [kW]$";
+    filenamePre = "SubstationRealPowers";
+
+
+    titleString = strcat(titlePre, " across the horizon for the system using \n", simNatureString, " ", battstringTitle);
+    title(titleString)
+    xlabel(xLabelString);
+
+    % xlabel('t [units]');
+    ylabel(yLabelString);
+    legend show; % Show the legend
+    ax = gca; % Get the current axes object
+    ax.XTick = 1:T; % Set x-ticks to integers from 1 to totalMacroItr
+
+    saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
+    if ~exist(saveLocation, 'dir')
+        mkdir(saveLocation)
+    end
+
+
+    filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_", num2str(T), "_", battstring,  fileExtensionImage);
+    myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
+    filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
+    writematrix(dependentVariable, filenameCSV)
 
 end
