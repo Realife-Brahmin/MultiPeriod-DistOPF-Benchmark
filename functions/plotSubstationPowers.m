@@ -43,93 +43,14 @@ function plotSubstationPowers(results)
     Batt_percent = simInfo.Batt_percent;
 
     battstring = simInfo.battstring;
-    battstringTitle = strcat("with $", num2str(DER_percent), "\%$ PVs and $", num2str(Batt_percent), "\%$ Batteries");
+    battstringTitle = strcat("with $", num2str(DER_percent), "\%$ PVs and $\n", num2str(Batt_percent), "\%$ Batteries");
 
 
     numAreas = sysInfo.numAreas;
     kVA_B = sysInfo.kVA_B;
     kV_B = sysInfo.kV_B;
     % Iterate over each relationship
-    for run = 1:3
-        if run <= 2
-            if ~copf
-                xLabelString = "Macro-iteration Number";
-    
-                for r = 1:numRelationships
-                    figure; % Create a new figure for each relationship
-                    hold on; % Hold on to plot multiple lines
-                    grid minor;
-            
-                    % Iterate over each macro iteration
-                    for t = 1:T
-                        % Extract the data for the current relationship and macro iteration
-                        if run == 2
-                            data0 = P12_1toT_vs_macroItr(r, t, :);
-                        elseif run == 1
-                            data0 = v1_1toT_vs_macroItr(r, t, :);
-                        else
-                            error("Uknown thing to plot.");
-                        end
-        
-                        data = squeeze(data0);
-                        
-                        if run == 2
-                            dependentVariable = data*kVA_B;
-                        elseif run == 1
-                            % dependentVariable = data*kV_B;
-                            dependentVariable = data;
-                        else
-                            error("Uknown thing to plot.");
-                        end
-                        % Plot the data over time
-                        % keyboard;
-                        plotSubstationPowers(1:totalMacroItr, abs(dependentVariable), ...
-                        'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'k', ...
-                        'Color', [colors{mod(t, numColours)+1},  alphaValues(t)], 'LineWidth', 2.5, ...
-                        'DisplayName', ['t = ' num2str(t)]);
-        
-                    end
-                    
-                    parentArea = CBTable.parentArea(r);
-                    childArea = CBTable.childArea(r);
-                    % Customize the plot
-                    if run == 2
-                        titlePre = "$P_{12}$";
-                        yLabelString = "$P_{12} \, [kW]$";
-                        filenamePre = "BoundaryRealPower";
-                    elseif run == 1
-                        titlePre = "$v_{1}$";
-                        yLabelString = "$v_{1} \, [pu]$";
-                        filenamePre = "BoundaryVoltage";
-                    else
-                        error("floc")
-                    end
-        
-                    titleString = [ strcat(titlePre, " across the horizon between Area $", num2str(CBTable.parentArea(r)),  "$ and Area $", num2str(CBTable.childArea(r)), "$"); battstringTitle];
-                    title(titleString)
-                    xlabel(xLabelString);
-            
-                    % xlabel('t [units]');
-                    ylabel(yLabelString);
-                    legend show; % Show the legend
-                    ax = gca; % Get the current axes object
-                    ax.XTick = 1:totalMacroItr; % Set x-ticks to integers from 1 to totalMacroItr
-            
-                    saveLocation = strcat(processedDataFolder, systemName, filesep, "numAreas_", num2str(numAreas), filesep);
-                    if ~exist(saveLocation, 'dir')
-                        mkdir(saveLocation)
-                    end
-                    
-                    
-                    filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_vs_macroItr_", num2str(T), "Areas_", num2str(parentArea), "_", num2str(childArea), "_", battstring,  fileExtensionImage);
-                    myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
-                    filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
-                    writematrix(dependentVariable, filenameCSV)
-                         
-                end
-            end
-        
-        elseif run == 3
+
                 xLabelString = "Time Period $t$";
     
                 figure; % Create a new figure for each relationship
@@ -187,12 +108,5 @@ function plotSubstationPowers(results)
             filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
             writematrix(dependentVariable, filenameCSV)
 
-        else
 
-            error("floc");
-    
-        end
-
-    end
-    
 end
