@@ -26,8 +26,8 @@ logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction0 = "gen_cost"
 peakShavingToo = true
-PTarget_kW = 850;
-numAreas = 1
+PTarget_kW = 920;
+numAreas = 4
 T = 3
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
@@ -598,6 +598,7 @@ substationPower_kVAr_1toT = sysInfo.QSubs_1toT * kVA_B;
 
 substationPower_kW_allT = sysInfo.PSubs_allT * kVA_B;
 substationPower_kVAr_allT = sysInfo.QSubs_allT * kVA_B;
+PSubsMax_allT_kW = max(substationPower_kW_1toT);
 
 battery_scd_Total_kW_1toT = sysInfo.P_scd_Total_1toT * kVA_B;
 battery_scd_Total_kW_allT = sysInfo.P_scd_Total_1toT * kVA_B;
