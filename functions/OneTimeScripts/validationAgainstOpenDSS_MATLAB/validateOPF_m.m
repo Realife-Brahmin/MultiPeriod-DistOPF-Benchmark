@@ -452,7 +452,7 @@ for t = 1:T
     ext = ".png";
     figureFolder = "figures";
     isfolder(figureFolder) || mkdir(figureFolder); %#ok
-    filename = strcat(simName, "_vs_OpenDSS_T_", string(T), "_t_", string(t), "_pv_", string(DER_percent), "_batt_", string(Batt_percent), ext);
+    filename = strcat(simName, "_vs_OpenDSS_T_", string(T), "_", suffixObj, "_t_", string(t), "_pv_", string(DER_percent), "_batt_", string(Batt_percent), ext);
     saveFigure = true;
     addr = strcat(figureFolder, filesep, filename);
     myexportgraphics(saveFigure, gcf, addr, 'Resolution', 300);
@@ -472,7 +472,7 @@ for battBusNum = 1:nBatt
     % DSSText.Command = strGenerators;
 end
 
-resultsFolder = strcat(wdVald, filesep, "results", filesep, battstring);
+resultsFolder = strcat(wdVald, filesep, "results", filesep, battstring, filesep, suffixObj);
 
 batteryMonitorFolder = strcat(resultsFolder, filesep, "batteryMonitors");
 
