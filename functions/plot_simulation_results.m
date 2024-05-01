@@ -198,5 +198,7 @@ function plot_simulation_results(results)
     end
 
     plotSubstationPowers(results);
+
+    plotSubstationPowerCosts(results);
     
 end
