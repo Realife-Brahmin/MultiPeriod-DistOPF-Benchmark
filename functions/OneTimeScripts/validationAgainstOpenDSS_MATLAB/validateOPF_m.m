@@ -6,7 +6,7 @@ if ismember(localUsername,  listOfUsernames)
         "documents_general", filesep, "MultiPeriod-DistOPF-Benchmark", filesep, "functions", filesep, ...
         "OneTimeScripts", filesep, "validationAgainstOpenDSS_MATLAB");
     simInfo.wdVald = wdVald;
-    cd(wdVald)
+    cd(wdVald)  
     addpath("rawData\");
     addpath(genpath('dss_matlab\'))
     addpath(genpath('..\..\'))
@@ -134,8 +134,11 @@ pD_1toT_kW = kVA_B*vald.pD_1toT;
 qD_1toT_kVAr = kVA_B*vald.qD_1toT;
 SDer_kVA = kVA_B*vald.Sder;
 loadShapePV = vald.loadShapePV;
+loadShapeCost = vald.loadShapeCost;
 
 strLoadShapePV = strcat('New Loadshape.LoadShapePV npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapePV'), ']')
+
+strLoadShapeCost = strcat('New Loadshape.LoadShapeCost npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapeCost'), ']')
 
 % DSSText.Command = strLoadShapePV;
 % tempsArray = 25*ones(1, T);
@@ -379,7 +382,7 @@ for t = 1:T
     MyPowerArray = DSSCircuit.ActiveCktElement.Powers;
     PSubs_opds_t_kW = sum(MyPowerArray(1));
     resod.PSubs_Total_kW_1toT(t) = PSubs_opds_t_kW;
-    resod.PSubsCost_Total_dollars_1toT(t) = costArray(t)*PSubs_opds_t_kW*1e-2;
+    resod.PSubsCost_Total_dollars_1toT(t) = costArray(t)*PSubs_opds_t_kW;
 
     disc_PSubs_t_kW = abs(PSubs_opds_t_kW - kVA_B*vald.res.PSubs_1toT(t));
     disc.PSubs_1toT_kW(t) = disc_PSubs_t_kW;
