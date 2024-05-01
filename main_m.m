@@ -24,9 +24,9 @@ verbose = false;
 logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
-objFunction = "loss_min"
+objFunction = "gen_cost"
 numAreas = 4
-T = 3
+T = 5
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
@@ -553,6 +553,7 @@ results.QSubs_1toT = QSubs_1toT_vs_macroItr(1:T, macroItr+1);
 
 results.simInfo = simInfo;
 results.sysInfo = sysInfo;
+%%
 plot_simulation_results(results)
 %%
 grandTotalTime = toc(start)
@@ -568,8 +569,8 @@ for areaNum = 1:numAreas
     lineLoss_kW_allT = lineLoss_kW_allT + lineLoss_Area_kW_allT;
 end
 area1Info = sysInfo.Area{1};
-genCost_dollars_1toT = area1Info.PSubsCost_1toT * 1e-2;
-genCost_dollars_allT = area1Info.PSubsCost_allT * 1e-2;
+genCost_dollars_1toT = area1Info.PSubsCost_1toT;
+genCost_dollars_allT = area1Info.PSubsCost_allT;
 substationPower_kW_1toT = sysInfo.PSubs_1toT * kVA_B;
 substationPower_kVAr_1toT = sysInfo.QSubs_1toT * kVA_B;
 
