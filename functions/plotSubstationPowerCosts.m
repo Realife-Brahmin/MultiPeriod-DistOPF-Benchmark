@@ -9,7 +9,8 @@ function plotSubstationPowerCosts(results)
     fileExtensionData = ".csv";
     saveSimulationResultPlots = true;
     processedDataFolder = strcat("processedData", filesep);
-
+    
+    suffixObj = simInfo.suffixObj;
     latex_interpreter
 
     numColours = 9;
@@ -88,7 +89,7 @@ function plotSubstationPowerCosts(results)
     end
 
 
-    filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_", num2str(T), "_", battstring,  fileExtensionImage);
+    filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_", num2str(T), "_", suffixObj, "_", battstring,  fileExtensionImage);
     myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
     filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
     writematrix(dependentVariable, filenameCSV)

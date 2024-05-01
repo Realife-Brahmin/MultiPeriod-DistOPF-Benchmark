@@ -11,7 +11,9 @@ function plotSubstationPowers(results)
     processedDataFolder = strcat("processedData", filesep);
 
     latex_interpreter
-
+    
+    suffixObj = simInfo.suffixObj;
+    
     numColours = 9;
     colors = cell(numColours, 1);
     T = simInfo.T;
@@ -87,7 +89,7 @@ function plotSubstationPowers(results)
     end
 
 
-    filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_", num2str(T), "_", battstring,  fileExtensionImage);
+    filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_", num2str(T), "_", suffixObj, "_", battstring,  fileExtensionImage);
     myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
     filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
     writematrix(dependentVariable, filenameCSV)
