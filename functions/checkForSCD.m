@@ -16,6 +16,7 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
     showPlots = p.Results.showPlots;
     
     nBatt_Area = areaInfo.nBatt_Area;
+    suffixObj = simInfo.suffixObj;
     fprintf('Checking for SCD for Area %d\n', areaInfo.Area);
 
     wineRed = [0.7, 0.0, 0.3];
@@ -115,11 +116,11 @@ function checkForSCD(sysInfo, simInfo, areaInfo, T, x, varargin)
 
             if strcmp(batteryTerminalChargeConstraint, "soft")
                 filename = strcat(folderName, filesep, ...
-                    "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num_Actual), ...
+                    "macroItr_", num2str(simInfo.macroItr+1),  "_", suffixObj, "_Battery_", num2str(batt_num_Actual), ...
                     "_alpha_", num2str(alpha), "_gamma_", num2str(gamma),  ".png");
             elseif strcmp(batteryTerminalChargeConstraint, "hard")
                 filename = strcat(folderName, filesep, ...
-                "macroItr_", num2str(simInfo.macroItr+1), "_Battery_", num2str(batt_num_Actual), ...
+                "macroItr_", num2str(simInfo.macroItr+1), "_",  suffixObj, "_Battery_", num2str(batt_num_Actual), ...
                 "_alpha_", num2str(alpha),  ".png");
             else
                 error("floc")
