@@ -124,7 +124,7 @@ function plot_simulation_results(results)
                     end
                     
                     
-                    filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_vs_macroItr_", num2str(T), "Areas_", num2str(parentArea), ...
+                    filenamePNG = strcat(saveLocation, filenamePre, "_vs_t_vs_macroItr_T_", num2str(T), "_Areas_", num2str(parentArea), ...
                         "_", num2str(childArea), "_",  suffixObj, "_", battstring, "_",  fileExtensionImage);
                     myexportgraphics(saveSimulationResultPlots, gcf, filenamePNG, 'Resolution', 300);
                     filenameCSV = replace(filenamePNG, fileExtensionImage, fileExtensionData);
