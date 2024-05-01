@@ -168,7 +168,10 @@ function plot_simulation_results(results)
                 error("floc")
             end
     
-            titleString = strcat(titlePre, " across the horizon for the system using ", simNatureString, " ", battstringTitle);
+            titleString = [
+                strcat(titlePre, " across the horizon for the system using"), 
+                strcat(simNatureString, " ", battstringTitle) 
+                ];           
             title(titleString)
             xlabel(xLabelString);
     
@@ -198,5 +201,7 @@ function plot_simulation_results(results)
     end
 
     plotSubstationPowers(results);
+
+    plotSubstationPowerCosts(results);
     
 end
