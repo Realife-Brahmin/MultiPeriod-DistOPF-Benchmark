@@ -167,10 +167,10 @@ function [x, sysInfo, simInfo, ...
 
     T = simInfo.T;
     
-    objFunction = simInfo.objFunction;
-    if strcmp(objFunction, "loss_min")
+    objFunction0 = simInfo.objFunction0;
+    if strcmp(objFunction0, "loss_min")
         mainObjFunc = "func_PLoss";
-    elseif strcmp(objFunction, "gen_cost")
+    elseif strcmp(objFunction0, "gen_cost")
         mainObjFunc = "func_PSubsCost";
     else
         error("Unknown objective function");
