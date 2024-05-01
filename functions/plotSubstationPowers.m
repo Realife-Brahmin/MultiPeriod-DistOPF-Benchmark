@@ -16,7 +16,7 @@ function plotSubstationPowers(results)
     colors = cell(numColours, 1);
     T = simInfo.T;
     totalMacroItr = simInfo.macroItr+1;
-    
+
     colors{1} = [0.929, 0.694, 0.125];   % Yellow
     colors{2} = [0.494, 0.184, 0.556];   % Purple
     colors{3} = [0.466, 0.674, 0.188];   % Green
@@ -68,7 +68,10 @@ function plotSubstationPowers(results)
     filenamePre = "SubstationRealPowers";
 
 
-    titleString = strcat(titlePre, " across the horizon for the system using \n", simNatureString, " ", battstringTitle);
+    titleString = [
+        strcat(titlePre, " across the horizon for the system using"), 
+        strcat(simNatureString, " ", battstringTitle) 
+    ];
     title(titleString)
     xlabel(xLabelString);
 
