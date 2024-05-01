@@ -1,4 +1,4 @@
-function plotSubstationPowers(results)
+function plotSubstationPowerCosts(results)
     
     simInfo = results.simInfo;
     sysInfo = results.sysInfo;
@@ -16,7 +16,7 @@ function plotSubstationPowers(results)
     colors = cell(numColours, 1);
     T = simInfo.T;
     totalMacroItr = simInfo.macroItr+1;
-
+    
     colors{1} = [0.929, 0.694, 0.125];   % Yellow
     colors{2} = [0.494, 0.184, 0.556];   % Purple
     colors{3} = [0.466, 0.674, 0.188];   % Green
@@ -48,12 +48,13 @@ function plotSubstationPowers(results)
     hold on; % Hold on to plot multiple lines
     grid minor;
     
-    PSubs_1toT = results.PSubs_1toT;
-    data0 = PSubs_1toT(1:T);
+    PSubsCost_1toT = results.PSubsCost_1toT;
+    data0 = PSubsCost_1toT(1:T);
 
     data = squeeze(data0);
-
-    dependentVariable = data*kVA_B;
+    
+    factor = kVA_B*1e-2; % converting substation powers into kW from pu and cost into $ from cents
+    dependentVariable = data*factor;
 
     % Plot the data over time
     plot(1:T, abs(dependentVariable), ...
@@ -63,15 +64,15 @@ function plotSubstationPowers(results)
 
     % Customize the plot
 
-    titlePre = "$P_{Subs}$";
-    yLabelString = "$P_{Subs} \, [kW]$";
-    filenamePre = "SubstationRealPowers";
+    titlePre = "$P_{SubsCost}$";
+    yLabelString = "$P_{SubsCost} \, [\$]$";
+    filenamePre = "SubstationRealPowerCosts";
 
 
     titleString = [
         strcat(titlePre, " across the horizon for the system using"), 
         strcat(simNatureString, " ", battstringTitle) 
-    ];
+    ];    
     title(titleString)
     xlabel(xLabelString);
 
