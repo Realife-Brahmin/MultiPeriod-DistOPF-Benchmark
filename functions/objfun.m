@@ -159,7 +159,7 @@ function [f, f_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, varargin)
             case "func_QSubs"
                 indices_QSubs_1toT = getIndicesT(indices_Qij, 1);
                 row = indices_QSubs_1toT;
-                f = f + sum(x(row)); % will give a value of cents
+                f = f + sum(x(row));
 
             case "func_QSubs_1toT" % don't use it for optimization
                 for t = 1 : T
@@ -172,14 +172,14 @@ function [f, f_1toT] = objfun(x, simInfo, sysInfo, areaInfo, T, varargin)
             case "func_PSubsCost"
                 indices_PSubs_1toT = getIndicesT(indices_Pij, 1);
                 row = indices_PSubs_1toT;
-                f = f + sum(x(row) .* costArray)*kVA_B*delta_t; % will give a value of cents
+                f = f + sum(x(row) .* costArray)*kVA_B*delta_t; % will give a value of dollars
             
             case "func_PSubsCost_1toT" % don't use it for optimization
                 for t = 1 : T
                     indices_PSubs_1toT = getIndicesT(indices_Pij, 1);
                     indices_PSubs_t = indices_PSubs_1toT(t);
                     row = indices_PSubs_t;
-                    f_1toT(t) = f_1toT(t) + sum(x(row) .* costArray(t)) * kVA_B * delta_t;
+                    f_1toT(t) = f_1toT(t) + sum(x(row) .* costArray(t)) * kVA_B * delta_t; % will give a value of dollars
                 end
 
             case "func_PLoss"
