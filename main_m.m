@@ -628,6 +628,7 @@ vald.res = results;
 
 vald.loadShape = sysInfo.loadShape;
 vald.loadShapePV = sysInfo.loadShapePV;
+vald.loadShapeCost = simInfo.costArray;
 vald.busesWithDERs = sysInfo.busesWithDERs;
 vald.Pmpp = sysInfo.Pmpp;
 vald.V_1toT = sysInfo.V_1toT;
