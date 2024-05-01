@@ -5,7 +5,7 @@ folderName = fullfile('processedData', sysInfo.systemName, strcat('numAreas_', n
 prefixName = strcat(folderName, strcat('Horizon_', num2str(T)));
 
 % Construct the full path for the TXT file
-systemsSolutionName_fval = strcat(prefixName, "_", getenv('COMPUTERNAME'), '_results_', battstring, '.txt');
+systemsSolutionName_fval = strcat(prefixName, "_", getenv('COMPUTERNAME'), '_results_', suffixObj, '_',  battstring, '.txt');
 
 % Open the file for writing
 fileID = fopen(systemsSolutionName_fval, 'w');
@@ -24,6 +24,7 @@ fprintf(1, '------------------------------------------------------------\n');
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Machine ID: %s\n', getenv("COMPUTERNAME"));
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Duration: %d\n', T);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Nature of Simulation: %s\n', simNatureStringFull);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Objective: %s\n', strObjectiveFunction);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'GED Configuration: %s\n', battstring);
 
 % Loop for hourly details
