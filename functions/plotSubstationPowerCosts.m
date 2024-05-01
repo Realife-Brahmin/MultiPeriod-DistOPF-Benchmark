@@ -53,7 +53,7 @@ function plotSubstationPowerCosts(results)
 
     data = squeeze(data0);
     
-    factor = kVA_B*1e-2; % converting substation powers into kW from pu and cost into $ from cents
+    factor = 1; % PSubsCost is already in dollars (true dollar value used in objective function directly)
     dependentVariable = data*factor;
 
     % Plot the data over time
