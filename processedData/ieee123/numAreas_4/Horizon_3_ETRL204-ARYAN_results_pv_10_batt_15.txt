@@ -2,7 +2,8 @@
 01. Machine ID: ETRL204-ARYAN
 02. Horizon Duration: 3
 03. Nature of Simulation: Spatially-Distributed-OPF with 4 Areas.
-04. GED Configuration: pv_10_batt_15
+04. Objective: Cost of Substation Power
+05. GED Configuration: pv_10_batt_15
 -----------------------------
 Hour: 1
 01. Line Loss: 18.03 kW
