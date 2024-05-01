@@ -1,7 +1,7 @@
 % Assuming sysInfo, numAreas, T, and other necessary variables are already defined in your workspace
 
 % Construct the folder and file names
-folderName = fullfile('processedData', sysInfo.systemName, strcat('numAreas_', num2str(numAreas), "/"));
+folderName = fullfile(wdSim, 'processedData', sysInfo.systemName, strcat('numAreas_', num2str(numAreas), "/"));
 prefixName = strcat(folderName, strcat('Horizon_', num2str(T)));
 
 % Construct the full path for the TXT file
@@ -26,6 +26,8 @@ locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Duration: %d\n', T
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Nature of Simulation: %s\n', simNatureStringFull);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Objective: %s\n', strObjectiveFunction);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'GED Configuration: %s\n', battstring);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Maximum Substation Power Allowed: %d kW\n', PSubsPeak_kW);
+
 
 % Loop for hourly details
 % Print and write loop for hourly details
@@ -65,6 +67,8 @@ locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total Static Capac
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total Substation Power Cost: $%.2f\n', genCost_dollars_allT);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon Total SCD Observed: %.2f kW\n', P_scd_Total_kW_allT);
 locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon-end Battery Energy Deviation from Reference: %.2f kWh\n', B_violation_abs_Total_kWh);
+locNum = locNum + 1; print_and_write(fileID, locNum, 'Horizon-Total All time Substation Power Peak: %.2f kW\n', PSubsMax_allT_kW);
+
 
 % locNum = 0;
 % Simulation metadata block
