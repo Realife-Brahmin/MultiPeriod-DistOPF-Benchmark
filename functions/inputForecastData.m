@@ -31,8 +31,10 @@ function [pvCoeffVals, lambdaVals, S_to_P_ratio_PV, S_to_P_ratio_Batt, costArray
 
     % Sample cost array and choosing middle T points
     % costArray0 = [1.6, 3.8, 1.7, 1.8, 2.1, 2.2, 2.4, 2.9, 4.4, 5.1, 4.3, 3.5, 2.8, 2.8, 2.3, 2.0, 2.3, 4.1, 3.4, 6.6, 4.7, 4.7, 5.0, 2.6]';
-    % costArray0 = LoadShapeLMPCost24;
-    costArray = generateCostProfileBasedOnLoads_OnPeakOffPeak(lambdaVals, 1, 1.5, 0.4);
+    costArray0 = LoadShapeLMPCost24;
+    peakPrice = max(costArray0); % like 19 cents/unit
+    offpeakPrice = min(costArray0); % like 5 cents/unit
+    costArray = generateCostProfileBasedOnLoads_OnPeakOffPeak(lambdaVals, offpeakPrice, peakPrice, 0.4);
     % costArray = choose_middle_T_points(costArray0, T);
     
 end
