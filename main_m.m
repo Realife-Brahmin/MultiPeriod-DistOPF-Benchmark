@@ -24,9 +24,11 @@ verbose = false;
 logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
-objFunction = "gen_cost"
-numAreas = 4
-T = 5
+objFunction0 = "gen_cost"
+peakShavingToo = true
+PTarget_kW = 850;
+numAreas = 1
+T = 3
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
@@ -83,15 +85,31 @@ end
 actualBusNums = [1:36, 119, 126, 127, 117, 54:68, 122, 118, 37:53, 120, 125, 128, 69:116, 121, 123, 124]';
 % N = max(actualBusNums);
 
-if strcmp(objFunction, "loss_min")
-    strObjectiveFunction = "Loss Minimization";
-    suffixObj = "minLoss";
-elseif strcmp(objFunction, "gen_cost")
-    strObjectiveFunction = "Cost of Substation Power";
-    suffixObj = "genCost";
+if peakShavingToo
+    PSubsPeak_kW = PTarget_kW;
+    suffixObjFunctionPeak = "_peak_shave";
+    suffixPeak = "_peakShave";
+    suffixStrObjectiveFunctionPeak = " with Peak Shaving";
+else
+    PSubsPeak_kW = Inf;
+    suffixObjFunctionPeak = "";
+    suffixPeak = "";
+    suffixStrObjectiveFunctionPeak = "";
+end
+
+if strcmp(objFunction0, "loss_min")
+    strObjectiveFunction0 = "Loss Minimization";
+    suffixObj0 = "minLoss";
+elseif strcmp(objFunction0, "gen_cost")
+    strObjectiveFunction0 = "Cost of Substation Power";
+    suffixObj0 = "genCost";
 else
     error("Objective Function NOT recognized.")
 end
+
+objFunction = strcat(objFunction0, suffixObjFunctionPeak)
+suffixObj = strcat(suffixObj0, suffixPeak);
+strObjectiveFunction = strcat(strObjectiveFunction0, suffixStrObjectiveFunctionPeak);
 
 loggingLocationName = "logfiles/";
 
@@ -202,10 +220,12 @@ simInfo.pvCoeffVals = pvCoeffVals;
 simInfo.S_to_P_ratio_PV = S_to_P_ratio_PV;
 simInfo.S_to_P_ratio_Batt = S_to_P_ratio_Batt;
 simInfo.noBatteries = noBatteries;
+simInfo.objFunction0 = objFunction0;
 simInfo.objFunction = objFunction;
 simInfo.strObjectiveFunction = strObjectiveFunction;
 simInfo.suffixObj = suffixObj;
 simInfo.T = T;
+simInfo.PSubsPeak_kW = PSubsPeak_kW;
 if copf
     simInfo.alg.spatial = "CentralizedOPF";
 else
