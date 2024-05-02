@@ -1,2 +1,0 @@
-This area has only the substation as its 'parent area'.
-This area has no child areas.
