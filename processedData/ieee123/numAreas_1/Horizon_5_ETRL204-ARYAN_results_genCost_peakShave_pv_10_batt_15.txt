@@ -1,0 +1,87 @@
+------------------------------------------------------------
+01. Machine ID: ETRL204-ARYAN
+02. Horizon Duration: 5
+03. Nature of Simulation: Centralized-OPF
+04. Objective: Cost of Substation Power with Peak Shaving
+05. GED Configuration: pv_10_batt_15
+06. Maximum Substation Power Allowed: 925 kW
+-----------------------------
+Hour: 1
+01. Line Loss: 17.47 kW
+02. Substation Power: 925.00 kW + 148.44 kVAr
+03. Total Load: 872.40 kW + 480.01 kVAr
+04. Total Generation: -35.13 kW + 366.63 kVAr
+05. Total PV Generation: 17.50 kW + 17.02 kVAr
+06. Total Battery Generation: -52.63 kW + -0.39 kVAr
+07. Total Battery Flexibility Utilized: 52.62 kW + 46.82 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $44.59
+10. SCD Observed: -0.01 kW
+-----------------------------
+Hour: 2
+01. Line Loss: 17.53 kW
+02. Substation Power: 925.00 kW + 165.81 kVAr
+03. Total Load: 903.80 kW + 497.29 kVAr
+04. Total Generation: -3.66 kW + 366.64 kVAr
+05. Total PV Generation: 27.99 kW + 17.03 kVAr
+06. Total Battery Generation: -31.66 kW + -0.39 kVAr
+07. Total Battery Flexibility Utilized: 31.64 kW + 46.82 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $44.59
+10. SCD Observed: -0.01 kW
+-----------------------------
+Hour: 3
+01. Line Loss: 15.12 kW
+02. Substation Power: 848.65 kW + 167.28 kVAr
+03. Total Load: 915.44 kW + 503.69 kVAr
+04. Total Generation: 81.91 kW + 366.63 kVAr
+05. Total PV Generation: 31.49 kW + 17.02 kVAr
+06. Total Battery Generation: 50.41 kW + -0.39 kVAr
+07. Total Battery Flexibility Utilized: 50.40 kW + 46.82 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $256.13
+10. SCD Observed: -0.01 kW
+-----------------------------
+Hour: 4
+01. Line Loss: 15.17 kW
+02. Substation Power: 850.67 kW + 173.14 kVAr
+03. Total Load: 925.90 kW + 509.45 kVAr
+04. Total Generation: 90.41 kW + 366.63 kVAr
+05. Total PV Generation: 34.99 kW + 17.02 kVAr
+06. Total Battery Generation: 55.41 kW + -0.39 kVAr
+07. Total Battery Flexibility Utilized: 55.40 kW + 46.82 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $256.74
+10. SCD Observed: -0.01 kW
+-----------------------------
+Hour: 5
+01. Line Loss: 17.41 kW
+02. Substation Power: 925.00 kW + 168.75 kVAr
+03. Total Load: 909.62 kW + 500.49 kVAr
+04. Total Generation: 2.03 kW + 366.64 kVAr
+05. Total PV Generation: 34.99 kW + 17.03 kVAr
+06. Total Battery Generation: -32.97 kW + -0.39 kVAr
+07. Total Battery Flexibility Utilized: 32.95 kW + 46.82 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $44.59
+10. SCD Observed: -0.01 kW
+-----------------------------
+Hour: Full 5 Hour Horizon
+01. Horizon Line Loss: 82.71 kW
+02. Horizon Total Substation Power: 4474.32 kW + 823.43 kVAr
+03. Horizon Total Load: 4527.16 kW + 2490.93 kVAr
+04. Horizon Total Generation: 135.55 kW + 1833.18 kVAr
+05. Horizon Total PV Generation: 146.97 kW + 85.12 kVAr
+06. Horizon Total Battery Generation: -11.43 kW + -1.94 kVAr
+07. Horizon Total Battery Flexibility Utilized: 223.02 kW + 234.10 kVAr
+08. Horizon Total Static Capacitor Reactive Power Generation: 1750.00 kVAr
+09. Horizon Total Substation Power Cost: $646.63
+10. Horizon Total SCD Observed: -0.06 kW
+11. Horizon-end Battery Energy Deviation from Reference: 0.00 kWh
+12. Horizon-Total All time Substation Power Peak: 925.00 kW
+------------------------------------------------------------
+13. Number of Macro-Iterations: 1
+14. Simulation Time: 273.30 s
+15. Time to solve with sequential (non-parallel) computation: 254.81 s
+16. Time to solve if OPF computation parallelized: 254.81 s
+------------------------------------------------------------
