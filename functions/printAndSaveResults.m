@@ -42,8 +42,13 @@ for t = 1:T
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Load: %.2f kW + %.2f kVAr\n', pLTotal_kW_1toT(t), qLTotal_kVAr_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Generation: %.2f kW + %.2f kVAr\n', pTotal_kW_1toT(t), qTotal_kVAr_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total PV Generation: %.2f kW + %.2f kVAr\n', pDTotal_kW_1toT(t), qDTotal_kVAr_1toT(t));
-    locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Battery Generation: %.2f kW + %.2f kVAr\n', PdcTotal_kW_1toT(t), qBTotal_kVAr_1toT(t));
-    locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Battery Flexibility Utilized: %.2f kW + %.2f kVAr\n', Pbatt_abs_Total_kW_1toT(t), qB_abs_Total_kVAr_1toT(t));
+    if Batt_percent > 0
+        locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Battery Generation: %.2f kW + %.2f kVAr\n', PdcTotal_kW_1toT(t), qBTotal_kVAr_1toT(t));
+        locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Battery Flexibility Utilized: %.2f kW + %.2f kVAr\n', Pbatt_abs_Total_kW_1toT(t), qB_abs_Total_kVAr_1toT(t));
+    else
+        locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Battery Generation: %.2f kW + %.2f kVAr\n', 0, 0);
+        locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Battery Flexibility Utilized: %.2f kW + %.2f kVAr\n', 0, 0);
+    end
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Total Static Capacitor Reactive Power Generation: %.2f kVAr\n', qCTotal_kVAr_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'Substation Power Cost: $%.2f\n', genCost_dollars_1toT(t));
     locNum = locNum + 1; print_and_write(fileID, locNum, 'SCD Observed: %.2f kW\n', P_scd_Total_kW_1toT(t));
