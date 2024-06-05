@@ -63,13 +63,16 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
         sysInfo.V_1toT(bus1, 1:T) = areaInfo.V_Area_1toT(bus1_Area, 1:T);
 
         sysInfo.Q_C_Full(bus1) = areaInfo.Q_C_Area(bus1_Area);
-
-        numDERBus = areaInfo.DERBusNums_Actual;
-        busesWithDERs_Area = areaInfo.busesWithDERs_Area;
-        sysInfo.Sder(numDERBus) = areaInfo.S_onlyDERbuses_Area;
-        sysInfo.Pmpp(numDERBus) = areaInfo.Pmpp_Area(busesWithDERs_Area); % FULL
-        sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT(busesWithDERs_Area, 1:T); % FULL
-        sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT;
+        
+        DER_percent = simInfo.DER_percent;
+        if DER_percent > 0
+            numDERBus = areaInfo.DERBusNums_Actual;
+            busesWithDERs_Area = areaInfo.busesWithDERs_Area;
+            sysInfo.Sder(numDERBus) = areaInfo.S_onlyDERbuses_Area;
+            sysInfo.Pmpp(numDERBus) = areaInfo.Pmpp_Area(busesWithDERs_Area); % FULL
+            sysInfo.pD_1toT(numDERBus, 1:T) = areaInfo.P_der_Area_1toT(busesWithDERs_Area, 1:T); % FULL
+            sysInfo.qD_1toT(numDERBus, 1:T) = areaInfo.qD_Area_1toT;
+        end
 
         Batt_percent = simInfo.Batt_percent;
         if Batt_percent > 0
@@ -152,10 +155,12 @@ function sysInfo = collectCentralizedInfo(sysInfo, simInfo)
     sysInfo.P_batt_abs_1toT = max(sysInfo.Pd_1toT, sysInfo.Pc_1toT);
     sysInfo.P_batt_abs_Total_1toT = sum(sysInfo.P_batt_abs_1toT);
     sysInfo.P_batt_abs_Total_allT = sum(sysInfo.P_batt_abs_Total_1toT);
-
-    sysInfo.qB_abs_1toT = abs(sysInfo.qB_1toT);
-    sysInfo.qB_abs_Total_1toT = sum(sysInfo.qB_abs_1toT);
-    sysInfo.qB_abs_Total_allT = sum(sysInfo.qB_abs_Total_1toT);
+    
+    if Batt_percent > 0
+        sysInfo.qB_abs_1toT = abs(sysInfo.qB_1toT);
+        sysInfo.qB_abs_Total_1toT = sum(sysInfo.qB_abs_1toT);
+        sysInfo.qB_abs_Total_allT = sum(sysInfo.qB_abs_Total_1toT);
+    end
 
     loadShapePV = simInfo.pvCoeffVals;
     sysInfo.loadShapePV = loadShapePV;

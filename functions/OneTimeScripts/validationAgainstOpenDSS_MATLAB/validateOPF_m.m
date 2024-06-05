@@ -7,7 +7,7 @@ if ismember(localUsername,  listOfUsernames)
         "OneTimeScripts", filesep, "validationAgainstOpenDSS_MATLAB");
     simInfo.wdVald = wdVald;
     cd(wdVald)  
-    addpath("rawData\");
+    % addpath("rawData\");
     addpath(genpath('dss_matlab\'))
     addpath(genpath('..\..\'))
     latex_interpreter
@@ -218,21 +218,26 @@ end
 
 % Pd_1toT_kW = kVA_B*vald.Pd_1toT;
 % Pc_1toT_kW = kVA_B*vald.Pc_1toT;
-Pdc_1toT_kW = kVA_B*vald.Pdc_1toT;
-% Pdc_1toT_kW = Pd_1toT_kW - Pc_1toT_kW;
+if Batt_percent > 0
+    Pdc_1toT_kW = kVA_B*vald.Pdc_1toT;
+    % Pdc_1toT_kW = Pd_1toT_kW - Pc_1toT_kW;
+    
+    for battBusNum = 1:nBatt
+        bus1 = busesWithBatts(battBusNum);
+        dispatch = Pdc_1toT_kW(battBusNum, 1:T) / P_battRated_kW(battBusNum);
+    
+        strLoadShapeSC = strcat('New LoadShape.SCLoadShape', num2str(bus1), ' interval = 1 npts = ', num2str(T), ' mult = [', num2str(dispatch), ']');
+    
+        DSSText.Command = strLoadShapeSC;
+    
+        strSC = strcat('New StorageController.SC', num2str(bus1), ' Element = Line.L1', ' terminal = 1', ' ElementList = [Battery', num2str(bus1), ']', ' modedis = loadshape', ' daily = SCLoadShape', num2str(bus1), ' eventlog = yes');
+    
+        DSSText.Command = strSC;
+    
+    end
 
-for battBusNum = 1:nBatt
-    bus1 = busesWithBatts(battBusNum);
-    dispatch = Pdc_1toT_kW(battBusNum, 1:T) / P_battRated_kW(battBusNum);
-
-    strLoadShapeSC = strcat('New LoadShape.SCLoadShape', num2str(bus1), ' interval = 1 npts = ', num2str(T), ' mult = [', num2str(dispatch), ']');
-
-    DSSText.Command = strLoadShapeSC;
-
-    strSC = strcat('New StorageController.SC', num2str(bus1), ' Element = Line.L1', ' terminal = 1', ' ElementList = [Battery', num2str(bus1), ']', ' modedis = loadshape', ' daily = SCLoadShape', num2str(bus1), ' eventlog = yes');
-
-    DSSText.Command = strSC;
-
+else
+    Pdc_1toT_kW = 0.0;
 end
 %% Capacitors
 
@@ -263,27 +268,36 @@ DSSText.Command = strcat('Set number = 1');
 for t = 1:T
 
     DSSText.Command = strcat('Set hour = ', num2str(t-1));
-
-    qB_t_kVAr = qB_1toT_kVAr(:, t);
-    Pdc_t_kW = Pdc_1toT_kW(:, t);
-    for battBusNum = 1:nBatt
-        bus1 = busesWithBatts(battBusNum);
-        qBj_t_kVAr = qB_t_kVAr(battBusNum);
-        Pdcj_t_kW = Pdc_t_kW(battBusNum);
-        strStorage = strcat( 'Edit Storage.Battery',  num2str(bus1), ' kW = ', num2str(Pdcj_t_kW), ' kVAr = ', num2str(qBj_t_kVAr) );
-    
-        DSSText.Command = strStorage;
+    if Batt_percent > 0
+        qB_t_kVAr = qB_1toT_kVAr(:, t);
+        Pdc_t_kW = Pdc_1toT_kW(:, t);
+        for battBusNum = 1:nBatt
+            bus1 = busesWithBatts(battBusNum);
+            qBj_t_kVAr = qB_t_kVAr(battBusNum);
+            Pdcj_t_kW = Pdc_t_kW(battBusNum);
+            strStorage = strcat( 'Edit Storage.Battery',  num2str(bus1), ' kW = ', num2str(Pdcj_t_kW), ' kVAr = ', num2str(qBj_t_kVAr) );
+        
+            DSSText.Command = strStorage;
+        end
+    else
+        qB_t_kVAr = 0.0;
+        Pdc_t_kW = 0.0;
     end
-
-    qD_t_kVAr = qD_1toT_kVAr(:, t);
-    pD_t_kW = pD_1toT_kW(:, t);
-    for derBusNum = 1:nDER
-        bus1 = busesWithDERs(derBusNum);
-        qDj_t_kVAr = qD_t_kVAr(derBusNum);
-        pDj_t_kW = pD_t_kW(derBusNum);
-        strPVQ = strcat( 'Edit PVSystem.PV', num2str(bus1), ' Pmpp = ', num2str(pDj_t_kW), ' kVAr = ', num2str( qDj_t_kVAr) );
-
-        DSSText.Command = strPVQ;
+    
+    if DER_percent > 0
+        qD_t_kVAr = qD_1toT_kVAr(:, t);
+        pD_t_kW = pD_1toT_kW(:, t);
+        for derBusNum = 1:nDER
+            bus1 = busesWithDERs(derBusNum);
+            qDj_t_kVAr = qD_t_kVAr(derBusNum);
+            pDj_t_kW = pD_t_kW(derBusNum);
+            strPVQ = strcat( 'Edit PVSystem.PV', num2str(bus1), ' Pmpp = ', num2str(pDj_t_kW), ' kVAr = ', num2str( qDj_t_kVAr) );
+    
+            DSSText.Command = strPVQ;
+        end
+    else
+        qD_t_kVAr = 0.0;
+        pD_t_kW = 0.0;
     end
 
     DSSText.Command = 'CalcVoltageBases' ; %! PERFORMS ZERO LOAD POWER FLOW TO ESTIMATE VOLTAGE BASES

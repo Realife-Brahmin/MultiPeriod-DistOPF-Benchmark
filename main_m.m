@@ -24,11 +24,12 @@ verbose = false;
 logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
-objFunction0 = "gen_cost"
+objFunction0 = "loss_min"
 peakShavingToo = true
-PTarget_kW = 920;
-numAreas = 4
-T = 3
+% Rated Total System Load = 1164 kW
+PTarget_kW = 1200;
+numAreas = 1
+T = 5
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
@@ -40,9 +41,9 @@ else
     gamma = 0;
 end
 
-DER_percent = 10;
+DER_percent = 0;
 % Batt_percent = ~noBatteries*DER_percent;
-Batt_percent = ~noBatteries * 15;
+Batt_percent = ~noBatteries * 0;
 delta_t = 1.00; % one hour
 displayTables = true;
 displayNetworkGraphs = false;
@@ -406,7 +407,9 @@ while keepRunningIterations
 
         for Area = 1:numAreas
             areaInfo = sysInfo.Area{Area};
-            areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
+            if DER_percent > 0
+                areaInfo.DERBusNums_Actual = findIndicesInArray(sysInfo.busesWithDERs, areaInfo.busesWithDERs_Actual);
+            end
             if Batt_percent > 0
                 areaInfo.BattBusNums_Actual = findIndicesInArray(sysInfo.busesWithBatts, areaInfo.busesWithBatts_Actual);
             end
@@ -653,13 +656,19 @@ vald.res = results;
 vald.loadShape = sysInfo.loadShape;
 vald.loadShapePV = sysInfo.loadShapePV;
 vald.loadShapeCost = simInfo.costArray;
-vald.busesWithDERs = sysInfo.busesWithDERs;
+if DER_percent > 0
+    vald.busesWithDERs = sysInfo.busesWithDERs;
+    busesWithDERs = sysInfo.busesWithDERs;
+else
+    vald.busesWithDERs = [];
+    busesWithDERs = [];
+end
+
 vald.Pmpp = sysInfo.Pmpp;
 vald.V_1toT = sysInfo.V_1toT;
 pLTotal_kW_1toT = sum(sysInfo.P_L_1toT)*kVA_B;
 qLTotal_kVAr_1toT = sum(sysInfo.Q_L_1toT)*kVA_B;
 pDTotal_kW_1toT = sum(sysInfo.pD_1toT)*kVA_B;
-busesWithDERs = sysInfo.busesWithDERs;
 vald.pD_1toT = sysInfo.pD_1toT;
 vald.qD_1toT = sysInfo.qD_1toT;
 vald.Sder = sysInfo.Sder;
