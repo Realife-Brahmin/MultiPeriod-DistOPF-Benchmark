@@ -2,8 +2,8 @@ New "PVSystem.pv3" irradiance=1 phases=1 bus1=3.1 kv=2.4018 kVA=5.5986 %Cutin=0.
 New "PVSystem.pv18" irradiance=1 phases=1 bus1=18.1 kv=2.4018 kVA=5.5986 %Cutin=0.001 %Cutout=0.001 Pmpp=4.6655 kvar=3.0947
 New "PVSystem.pv35" irradiance=1 phases=1 bus1=35.1 kv=2.4018 kVA=5.5986 %Cutin=0.001 %Cutout=0.001 Pmpp=4.6655 kvar=3.0947
 New "PVSystem.pv48" irradiance=1 phases=1 bus1=48.1 kv=2.4018 kVA=2.8001 %Cutin=0.001 %Cutout=0.001 Pmpp=2.3335 kvar=1.5478
-New "PVSystem.pv61" irradiance=1 phases=1 bus1=61.1 kv=2.4018 kVA=2.8001 %Cutin=0.001 %Cutout=0.001 Pmpp=2.3335 kvar=1.5478
-New "PVSystem.pv73" irradiance=1 phases=1 bus1=73.1 kv=2.4018 kVA=5.5986 %Cutin=0.001 %Cutout=0.001 Pmpp=4.6655 kvar=3.0947
+New "PVSystem.pv61" irradiance=1 phases=1 bus1=61.1 kv=2.4018 kVA=2.8001 %Cutin=0.001 %Cutout=0.001 Pmpp=2.3335 kvar=-1.5478
+New "PVSystem.pv73" irradiance=1 phases=1 bus1=73.1 kv=2.4018 kVA=5.5986 %Cutin=0.001 %Cutout=0.001 Pmpp=4.6655 kvar=1.5574
 New "PVSystem.pv87" irradiance=1 phases=1 bus1=87.1 kv=2.4018 kVA=5.5986 %Cutin=0.001 %Cutout=0.001 Pmpp=4.6655 kvar=-3.0947
-New "PVSystem.pv101" irradiance=1 phases=1 bus1=101.1 kv=2.4018 kVA=5.5986 %Cutin=0.001 %Cutout=0.001 Pmpp=4.6655 kvar=3.0947
+New "PVSystem.pv101" irradiance=1 phases=1 bus1=101.1 kv=2.4018 kVA=5.5986 %Cutin=0.001 %Cutout=0.001 Pmpp=4.6655 kvar=-3.0947
 New "PVSystem.pv116" irradiance=1 phases=1 bus1=116.1 kv=2.4018 kVA=2.8001 %Cutin=0.001 %Cutout=0.001 Pmpp=2.3335 kvar=1.5478
