@@ -25,11 +25,11 @@ logging = true;
 logging_Aeq_beq = false;
 systemName = 'ieee123'
 objFunction0 = "gen_cost"
-peakShavingToo = true
+peakShavingToo = false
 % Rated Total System Load = 1164 kW
-PTarget_kW = 1200;
+PTarget_kW = 940;
 numAreas = 1
-T = 5
+T = 10
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
@@ -41,9 +41,9 @@ else
     gamma = 0;
 end
 
-DER_percent = 0;
+DER_percent = 20;
 % Batt_percent = ~noBatteries*DER_percent;
-Batt_percent = ~noBatteries * 0;
+Batt_percent = ~noBatteries * 30;
 delta_t = 1.00; % one hour
 displayTables = true;
 displayNetworkGraphs = false;
