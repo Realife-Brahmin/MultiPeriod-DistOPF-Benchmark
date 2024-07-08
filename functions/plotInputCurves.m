@@ -15,7 +15,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     battstring = simInfo.battstring;
     T = simInfo.T;
     savePlots = p.Results.savePlots;
-    figName = strcat("Horizon_", num2str(T), "_", battstring);
+    figName = strcat("InputCurves_Horizon_", num2str(T), "_", battstring);
     showPlots = p.Results.showPlots;
     wdSim = p.Results.wdSim;
 
