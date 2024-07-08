@@ -34,7 +34,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
 
     % Second y-axis (right side)
     yyaxis right;
-    display(costArray)
+    % display(costArray)
     plot(t, costArray, '-d', 'Color', [0, 0.5, 0], 'MarkerFaceColor', [0, 0.5, 0], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Cost');
     ylabel('Cost [\$/kWh]', 'Color', 'k');  % Use backslash to escape the dollar sign in ylabel
 
