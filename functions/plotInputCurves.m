@@ -6,7 +6,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     addParameter(p, 'savePlots', true, @islogical);
     addParameter(p, 'figName', 'plot.png', @ischar);
     addParameter(p, 'showPlots', true, @islogical);
-    addParameter(p, 'wdSim', './processedData', @ischar);
+    % addParameter(p, 'wdSim', './processedData', @ischar);
     parse(p, varargin{:});
     
     costArray = simInfo.costArray;
@@ -17,8 +17,8 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     savePlots = p.Results.savePlots;
     figName = strcat("InputCurves_Horizon_", num2str(T), "_", battstring);
     showPlots = p.Results.showPlots;
-    wdSim = p.Results.wdSim;
-
+    % wdSim = p.Results.wdSim;
+    wdSim = simInfo.wdSim;
     % t vector
     t = 1:length(costArray);
 
