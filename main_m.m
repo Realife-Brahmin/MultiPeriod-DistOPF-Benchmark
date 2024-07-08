@@ -730,3 +730,5 @@ vald.nBatt = sysInfo.nBatt;
 vald.simInfo = simInfo;
 %%
 printAndSaveResults();
+%%
+plotInputCurves(sysInfo, simInfo);
