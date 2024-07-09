@@ -4,7 +4,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
 
     p = inputParser;
     addParameter(p, 'savePlots', true, @islogical);
-    addParameter(p, 'figName', 'plot.png', @ischar);
+    % addParameter(p, 'figName', 'plot.png', @ischar);
     addParameter(p, 'showPlots', true, @islogical);
     % addParameter(p, 'wdSim', './processedData', @ischar);
     parse(p, varargin{:});
@@ -12,10 +12,11 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     costArray = simInfo.costArray;
     loadShapePV = sysInfo.loadShapePV;
     loadShape = sysInfo.loadShape;
-    battstring = simInfo.battstring;
+
     T = simInfo.T;
     savePlots = p.Results.savePlots;
     figName = strcat("InputCurves_Horizon_", num2str(T));
+    ext = ".png";
     showPlots = p.Results.showPlots;
     % wdSim = p.Results.wdSim;
     wdSim = simInfo.wdSim;
@@ -23,7 +24,9 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     t = 1:length(costArray);
 
     % Create figure
-    figure('Visible', 'off');
+    f = figure('visible', showPlots);        
+
+    % figure('Visible', 'off');
 
     % First y-axis (left side)
     yyaxis left;
@@ -57,21 +60,22 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     ax.MinorGridAlpha = 0.1;  % Lighter minor grid lines
 
     % Option to save the figure
-    if savePlots
-        % folderPath = fullfile(wdSim, 'plots');
-             
+    if savePlots             
         folderPath = strcat(wdSim, filesep, "processedData", filesep, sysInfo.systemName, ...
             filesep, "numAreas_", num2str(sysInfo.numAreas));
         if ~exist(folderPath, 'dir')
             mkdir(folderPath);
         end
-        print(fullfile(folderPath, figName), '-dpng');
+        filename = fullfile(folderPath, strcat(figName, ext));
+        saveas(f, filename);
+
+        % print(fullfile(folderPath, figName), '-dpng');
     end
 
-    % Option to show the figure
-    if showPlots
-        set(gcf, 'Visible', 'on');
-    end
+    % % Option to show the figure
+    % if showPlots
+    %     set(gcf, 'Visible', 'on');
+    % end
 
     hold off;
 end
