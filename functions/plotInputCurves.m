@@ -4,9 +4,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
 
     p = inputParser;
     addParameter(p, 'savePlots', true, @islogical);
-    % addParameter(p, 'figName', 'plot.png', @ischar);
     addParameter(p, 'showPlots', true, @islogical);
-    % addParameter(p, 'wdSim', './processedData', @ischar);
     parse(p, varargin{:});
     
     costArray = simInfo.costArray;
@@ -18,15 +16,11 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     figName = strcat("InputCurves_Horizon_", num2str(T));
     ext = ".png";
     showPlots = p.Results.showPlots;
-    % wdSim = p.Results.wdSim;
     wdSim = simInfo.wdSim;
-    % t vector
     t = 1:length(costArray);
 
     % Create figure
     f = figure('visible', showPlots);        
-
-    % figure('Visible', 'off');
 
     % First y-axis (left side)
     yyaxis left;
@@ -37,21 +31,21 @@ function plotInputCurves(sysInfo, simInfo, varargin)
 
     % Second y-axis (right side)
     yyaxis right;
-    % display(costArray)
     plot(t, costArray, '-d', 'Color', [0, 0.5, 0], 'MarkerFaceColor', [0, 0.5, 0], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Cost');
     ylabel('Cost [\$/kWh]', 'Color', 'k');  % Use backslash to escape the dollar sign in ylabel
 
-    % Set y-axis limits
-    ylim([min([loadShapePV, loadShape], [], 'all')*0.97, max([loadShapePV, loadShape], [], 'all')*1.03]);
+    % Set y-axis limits to be tighter
+    yyaxis left;
+    ylim([0, 1]);  % Adjust these limits as necessary
+
     yyaxis right;
-    ylim([min(costArray)*0.97, max(costArray)*1.03]);
+    ylim([0, 0.35]);  % Adjust these limits as necessary
 
     % Set x-axis limits
-    xlim([1 max(t)*1.03]);
+    xlim([1 max(t)]);
 
     % Labels, title, and legend
     xlabel('Time Period t');
-    % title('t-Series Data Comparison');
     legend('show', 'Location', 'northwest');
     grid on;
     ax = gca;
@@ -68,14 +62,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
         end
         filename = fullfile(folderPath, strcat(figName, ext));
         saveas(f, filename);
-
-        % print(fullfile(folderPath, figName), '-dpng');
     end
-
-    % % Option to show the figure
-    % if showPlots
-    %     set(gcf, 'Visible', 'on');
-    % end
 
     hold off;
 end
