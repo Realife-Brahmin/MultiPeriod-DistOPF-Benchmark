@@ -13,14 +13,18 @@ function plotInputCurves(sysInfo, simInfo, varargin)
 
     T = simInfo.T;
     savePlots = p.Results.savePlots;
-    figName = strcat("InputCurves_Horizon_", num2str(T));
-    ext = ".png";
     showPlots = p.Results.showPlots;
     wdSim = simInfo.wdSim;
     t = 1:length(costArray);
 
-    % Create figure
-    f = figure('visible', showPlots);        
+    % Adjust visibility based on the 'showPlots' flag
+    visibleSetting = 'off';
+    if showPlots
+        visibleSetting = 'on';
+    end
+
+    % Create figure with controlled visibility
+    f = figure('Visible', visibleSetting);
 
     % First y-axis (left side)
     yyaxis left;
@@ -32,37 +36,36 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     % Second y-axis (right side)
     yyaxis right;
     plot(t, costArray, '-d', 'Color', [0, 0.5, 0], 'MarkerFaceColor', [0, 0.5, 0], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Cost');
-    ylabel('Cost [\$/kWh]', 'Color', 'k');  % Use backslash to escape the dollar sign in ylabel
+    ylabel('Cost [\$/kWh]', 'Color', 'k');
 
-    % Set y-axis limits to be tighter
+    % Set y-axis and x-axis limits
     yyaxis left;
-    ylim([0, 1]);  % Adjust these limits as necessary
-
+    ylim([0, max(loadShapePV)*1.1]);  % Slightly above max for aesthetic spacing
     yyaxis right;
-    ylim([0, 0.35]);  % Adjust these limits as necessary
+    ylim([0, max(costArray)*1.1]);
 
-    % Set x-axis limits
-    xlim([1 max(t)]);
+    xlim([1, T]);
 
     % Labels, title, and legend
     xlabel('Time Period t');
     legend('show', 'Location', 'northwest');
     grid on;
-    ax = gca;
-    ax.GridColor = [0.8, 0.8, 0.8];
-    ax.GridAlpha = 0.3;
-    ax.MinorGridAlpha = 0.1;  % Lighter minor grid lines
 
-    % Option to save the figure
-    if savePlots             
-        folderPath = strcat(wdSim, filesep, "processedData", filesep, sysInfo.systemName, ...
-            filesep, "numAreas_", num2str(sysInfo.numAreas));
+    % Save the figure if requested
+    if savePlots
+        folderPath = fullfile(wdSim, 'processedData', sysInfo.systemName, 'numAreas', num2str(sysInfo.numAreas));
         if ~exist(folderPath, 'dir')
             mkdir(folderPath);
         end
-        filename = fullfile(folderPath, strcat(figName, ext));
-        saveas(f, filename);
+        ext = ".png";
+        filename = fullfile(folderPath, strcat('InputCurves_Horizon_', num2str(T)));
+        saveas(f, filename, 'png');  % Ensure the format is explicitly specified
     end
 
-    hold off;
+    % If showing the plot, update the visibility dynamically
+    if showPlots
+        set(f, 'Visible', 'on');
+    end
+
+    % hold off;
 end
