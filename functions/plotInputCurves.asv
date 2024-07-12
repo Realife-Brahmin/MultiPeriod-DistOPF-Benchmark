@@ -4,7 +4,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
 
     p = inputParser;
     addParameter(p, 'savePlots', true, @islogical);
-    addParameter(p, 'showPlots', true, @islogical);
+    addParameter(p, 'showPlots', false, @islogical);
     parse(p, varargin{:});
     
     costArray = simInfo.costArray;
@@ -36,7 +36,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     % Second y-axis (right side)
     yyaxis right;
     plot(t, costArray, '-d', 'Color', [0, 0.5, 0], 'MarkerFaceColor', [0, 0.5, 0], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Cost');
-    ylabel('Cost [\$/kWh]', 'Color', 'k');
+    ylabel('Cost [\$/kWh]', 'Color', [0, 0.5, 0]);
 
     % Set y-axis and x-axis limits
     yyaxis left;
@@ -49,7 +49,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     % Labels, title, and legend
     xlabel('Time Period t');
     legend('show', 'Location', 'northwest');
-    grid on;
+    grid minor;
 
     % Save the figure if requested
     if savePlots
