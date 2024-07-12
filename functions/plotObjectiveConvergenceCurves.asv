@@ -9,7 +9,7 @@ function plotObjectiveConvergenceCurves(sysInfo, simInfo, varargin)
 
     p = inputParser;
     addParameter(p, 'savePlots', true, @islogical);
-    addParameter(p, 'showPlots', true, @islogical);
+    addParameter(p, 'showPlots', false, @islogical);
     parse(p, varargin{:});
 
     savePlots = p.Results.savePlots;
@@ -35,7 +35,7 @@ function plotObjectiveConvergenceCurves(sysInfo, simInfo, varargin)
     ylabel('Cost [\$]');
     ylim([min(PSubsCost)*0.9, max(PSubsCost)*1.1]);
     
-    hold on;
+    % hold on;
 
     % title('Substation Power and Cost Convergence');
     title('Convergence of Cost of Substation Power for Entire Horizon');
@@ -61,5 +61,5 @@ function plotObjectiveConvergenceCurves(sysInfo, simInfo, varargin)
         saveas(f, filename);
     end
 
-    % hold off;
+    hold off;
 end
