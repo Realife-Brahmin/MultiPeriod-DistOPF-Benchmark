@@ -22,40 +22,27 @@ function plotObjectiveConvergenceCurves(sysInfo, simInfo, varargin)
 
     % Create figure with controlled visibility
     f = figure('Visible', showPlots);
-
-    % First y-axis (left side) for Substation Power
-    % yyaxis left;
-    % plot(macroItr, PSubs, '-o', 'Color', [0, 0.447, 0.741], 'MarkerFaceColor', [0, 0.447, 0.741], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Substation Power');
-    % ylabel('Power [MW]', 'Color', [0, 0.447, 0.741]);
-    % ylim([min(PSubs)*0.9, max(PSubs)*1.1]);
-
-    % Second y-axis (right side) for Substation Cost
-    % yyaxis right;
     plot(macroItr, PSubsCost, '-s', 'Color', [0.85, 0.325, 0.098], 'MarkerFaceColor', [0.85, 0.325, 0.098], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Substation Power Cost');
     ylabel('Cost [\$]');
     ylim([min(PSubsCost)*0.9, max(PSubsCost)*1.1]);
     
-    % hold on;
-
-    % title('Substation Power and Cost Convergence');
     title('Convergence of Cost of Substation Power for Entire Horizon');
     xlabel('Macro Iteration Number');
+    grid on;
     grid minor;
     legend('show', 'Location', 'northeast');
 
-    % Adjust y-axis limits based on data
-    % yyaxis left;
-    % ylim([min(PSubs)*0.9, max(PSubs)*1.1]);
-    % yyaxis right;
-    % ylim([min(PSubsCost)*0.9, max(PSubsCost)*1.1]);
+    % Explicitly set x-axis ticks to integer values only
+    ax = gca;
+    ax.XTick = macroItr; % Sets x-ticks to only the integer values in macroItr
+    ax.XAxis.MinorTick = 'off';  % Turn off minor ticks to avoid non-integer values
 
     % Save the figure if requested
     if savePlots
-        folderPath = fullfile(wdSim, 'processedData', sysInfo.systemName, strcat('numAreas', num2str(sysInfo.numAreas)));
+        folderPath = fullfile(wdSim, 'processedData', sysInfo.systemName, strcat('numAreas_', num2str(sysInfo.numAreas)));
         if ~exist(folderPath, 'dir')
             mkdir(folderPath);
         end
-        % filename = fullfile(folderPath, 'ObjectiveConvergenceCurves.png');
         ext = ".png";
         filename = fullfile(folderPath, strcat('ObjectiveConvergenceCurves_Horizon_', num2str(T), ext));
         saveas(f, filename);

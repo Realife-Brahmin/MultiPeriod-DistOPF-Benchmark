@@ -28,8 +28,8 @@ objFunction0 = "gen_cost"
 peakShavingToo = false
 % Rated Total System Load = 1164 kW
 PTarget_kW = 940;
-numAreas = 1
-T = 10
+numAreas = 4
+T = 5
 macroItrMax = 100; % Max no. of permissible iterations for optimizing an area
 noBatteries = false;
 alpha = 1e-3;
@@ -732,3 +732,7 @@ vald.simInfo = simInfo;
 printAndSaveResults();
 %%
 plotInputCurves(sysInfo, simInfo);
+%%
+if ~copf
+    plotObjectiveConvergenceCurves(sysInfo, simInfo)
+end
