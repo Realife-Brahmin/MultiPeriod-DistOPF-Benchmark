@@ -1,12 +1,9 @@
 function plotInputCurves(sysInfo, simInfo, varargin)
-    % plotInputCurves Plots cost, PV load shape, and load shape on a single figure
-    % with two different y-axes. Optionally saves and/or shows the plot.
-
     p = inputParser;
     addParameter(p, 'savePlots', true, @islogical);
     addParameter(p, 'showPlots', false, @islogical);
     parse(p, varargin{:});
-    
+
     costArray = simInfo.costArray;
     loadShapePV = sysInfo.loadShapePV;
     loadShape = sysInfo.loadShape;
@@ -17,55 +14,41 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     wdSim = simInfo.wdSim;
     t = 1:length(costArray);
 
-    % Adjust visibility based on the 'showPlots' flag
-    visibleSetting = 'off';
-    if showPlots
-        visibleSetting = 'on';
-    end
-
-    % Create figure with controlled visibility
-    f = figure('Visible', visibleSetting);
-
-    % First y-axis (left side)
+    f = figure('visible', showPlots);
     yyaxis left;
     plot(t, loadShapePV, '-s', 'Color', [0.85, 0.325, 0.098], 'MarkerFaceColor', [0.85, 0.325, 0.098], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Solar Irradiance');
     hold on;
     plot(t, loadShape, '-^', 'Color', [0.7, 0.7, 0], 'MarkerFaceColor', [0.7, 0.7, 0], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Loading Factor');
     ylabel('Loading Factor [dimensionless]', 'Color', 'k');
+    ax = gca;
+    ax.YColor = 'k';  % Black for left y-axis
 
-    % Second y-axis (right side)
     yyaxis right;
     plot(t, costArray, '-d', 'Color', [0, 0.5, 0], 'MarkerFaceColor', [0, 0.5, 0], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Cost');
     ylabel('Cost [\$/kWh]', 'Color', [0, 0.5, 0]);
+    ax = gca;
+    ax.YColor = [0, 0.5, 0];  % Green for right y-axis
 
-    % Set y-axis and x-axis limits
-    yyaxis left;
-    ylim([0, max(loadShapePV)*1.1]);  % Slightly above max for aesthetic spacing
-    yyaxis right;
-    ylim([0, max(costArray)*1.1]);
-
-    xlim([1, T]);
-
-    % Labels, title, and legend
     xlabel('Time Period t');
     legend('show', 'Location', 'northwest');
+    grid on;
+    ax.GridAlpha = 0.5;  % Set grid transparency
     grid minor;
+    xticks(1:T);  % Set x-ticks to integers only
 
-    % Save the figure if requested
     if savePlots
         folderPath = fullfile(wdSim, 'processedData', sysInfo.systemName, 'numAreas', num2str(sysInfo.numAreas));
         if ~exist(folderPath, 'dir')
             mkdir(folderPath);
         end
         ext = ".png";
-        filename = fullfile(folderPath, strcat('InputCurves_Horizon_', num2str(T)));
-        saveas(f, filename, 'png');  % Ensure the format is explicitly specified
+        filename = fullfile(folderPath, strcat('InputCurves_Horizon_', num2str(T), ext));
+        saveas(f, filename, 'png');
     end
 
-    % If showing the plot, update the visibility dynamically
     if showPlots
         set(f, 'Visible', 'on');
     end
 
-    % hold off;
+    hold off;
 end
