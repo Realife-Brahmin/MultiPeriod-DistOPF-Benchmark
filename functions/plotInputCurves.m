@@ -45,7 +45,7 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     ax.YMinorTick = 'on';
 
     if savePlots
-        folderPath = fullfile(wdSim, 'processedData', sysInfo.systemName, 'numAreas', num2str(sysInfo.numAreas));
+        folderPath = fullfile(wdSim, 'processedData', sysInfo.systemName, strcat('numAreas_', num2str(sysInfo.numAreas)));
         if ~exist(folderPath, 'dir')
             mkdir(folderPath);
         end

@@ -31,11 +31,18 @@ function plotInputCurves(sysInfo, simInfo, varargin)
 
     xlabel('Time Period t');
     legend('show', 'Location', 'northwest');
-    grid on;
-    ax.GridAlpha = 0.3;  // Light grid lines
+    % grid on;
+    % ax.GridAlpha = 0.3;  % Light grid lines
     grid minor;
-    ax.MinorGridAlpha = 0.1;  // Very light minor grid lines
-    xticks(1:T);  // Set x-ticks to integers only
+    % ax.MinorGridAlpha = 0.3;  % Very light minor grid lines
+    xticks(1:T);  % Set x-ticks to integers only
+    
+    % Turn on minor grid lines
+    ax.MinorGridLineStyle = '-';
+    ax.MinorGridColor = [0.8 0.8 0.8];
+    ax.MinorGridAlpha = 0.5;
+    ax.YMinorGrid = 'on';
+    ax.YMinorTick = 'on';
 
     if savePlots
         folderPath = fullfile(wdSim, 'processedData', sysInfo.systemName, 'numAreas', num2str(sysInfo.numAreas));
