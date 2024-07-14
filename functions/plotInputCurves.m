@@ -19,22 +19,30 @@ function plotInputCurves(sysInfo, simInfo, varargin)
     plot(t, loadShapePV, '-s', 'Color', [0.85, 0.325, 0.098], 'MarkerFaceColor', [0.85, 0.325, 0.098], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Solar Irradiance');
     hold on;
     plot(t, loadShape, '-^', 'Color', [0.7, 0.7, 0], 'MarkerFaceColor', [0.7, 0.7, 0], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Loading Factor');
-    ylabel('Loading Factor [dimensionless]', 'Color', 'k');
+    ylabel('Loading Factor [dimensionless]');
     ax = gca;
-    ax.YColor = 'k';  % Black for left y-axis
+    ax.YColor = 'k';  % Set y-axis color to black
 
     yyaxis right;
     plot(t, costArray, '-d', 'Color', [0, 0.5, 0], 'MarkerFaceColor', [0, 0.5, 0], 'LineWidth', 2, 'MarkerSize', 8, 'DisplayName', 'Cost');
-    ylabel('Cost [\$/kWh]', 'Color', [0, 0.5, 0]);
+    ylabel('Cost [\$/kWh]');
     ax = gca;
-    ax.YColor = [0, 0.5, 0];  % Green for right y-axis
+    ax.YColor = [0, 0.5, 0];  % Set y-axis color to green
 
     xlabel('Time Period t');
     legend('show', 'Location', 'northwest');
-    grid on;
-    ax.GridAlpha = 0.5;  % Set grid transparency
+    % grid on;
+    % ax.GridAlpha = 0.3;  % Light grid lines
     grid minor;
+    % ax.MinorGridAlpha = 0.3;  % Very light minor grid lines
     xticks(1:T);  % Set x-ticks to integers only
+    
+    % Turn on minor grid lines
+    ax.MinorGridLineStyle = '-';
+    ax.MinorGridColor = [0.8 0.8 0.8];
+    ax.MinorGridAlpha = 0.5;
+    ax.YMinorGrid = 'on';
+    ax.YMinorTick = 'on';
 
     if savePlots
         folderPath = fullfile(wdSim, 'processedData', sysInfo.systemName, 'numAreas', num2str(sysInfo.numAreas));
