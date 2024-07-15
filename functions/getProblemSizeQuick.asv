@@ -1,4 +1,4 @@
-function [nVars_allT, nLinConstraints_allT,  nNonLinEqns_allT] = getProblemSizeQuick(N, m, nDER, nBatt, T, varargin)
+function [nVars_allT, nLinEqns_allT, nNonLinEqns_allT] = getProblemSizeQuick(N, m, nDER, nBatt, T, varargin)
     % getProblemSizeQuick Computes the problem size for optimization
     % Inputs:
     %   N, m, nDER, nBatt - Problem parameters
@@ -35,11 +35,9 @@ function [nVars_allT, nLinConstraints_allT,  nNonLinEqns_allT] = getProblemSizeQ
     
     listNumLinIneqns_lb_t_1toT = [1, 0, m, N, nDER, nBatt*ones(1, 4)]; % P, Q, l, v, qD, B, Pc, Pd, qB
     listNumLinIneqns_ub_t_1toT = [0, 0, m, N, nDER, nBatt*ones(1, 4)]; % P, Q, l, v, qD, B, Pc, Pd, qB
-    nLinIneqns_t_1toT = sum(listNumLinIneqns_lb_t_1toT) + sum(listNumLinIneqns_ub_t_1toT);
-    nLinIneqns_allT = T * nLinIneqns_t_1toT;
-
-    nLinConstraints_allT = nLinEqns_allT + nLinIneqns_allT;
+    nLinIneqns = sum(listNumLinIneqns_lb_t_1toT) + sum(listNumLinIneqns_ub_t_1toT);
+    nLinIneqns_allT = T * nLinIneqns_1toT;
     % Assuming non-linear equations count
     nNonLinEqns_allT = m * T;  % only P^2 + Q^2 - l*v == 0
-    
+
 end
