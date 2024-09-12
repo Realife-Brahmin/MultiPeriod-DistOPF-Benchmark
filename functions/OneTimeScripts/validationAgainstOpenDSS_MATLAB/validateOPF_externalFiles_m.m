@@ -16,7 +16,7 @@ end
 
 visible = 'off'; % display voltage snapshot plots (they are still generated and saved either way)
 
-processedDataFolderVald = strcat(wdVald, filesep, "processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), "Horizon_", num2str(simInfo.T));
+processedDataFolderVald = strcat(wdVald, filesep, "processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), "_Horizon_", num2str(simInfo.T));
 
 dssFolder = strcat(processedDataFolderVald, filesep, "dssFiles");
 
