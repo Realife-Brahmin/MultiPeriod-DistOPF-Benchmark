@@ -17,7 +17,7 @@ end
 
 visible = 'off'; % display voltage snapshot plots (they are still generated and saved either way)
 
-processedDataFolderVald = strcat(wdVald, filesep, "processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas));
+processedDataFolderVald = strcat(wdVald, filesep, "processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), "Horizon_", num2str(simInfo.T));
 
 dssFolder = strcat(processedDataFolderVald, filesep, "dssFiles");
 
@@ -168,7 +168,9 @@ loadShapePV = vald.loadShapePV;
 loadShapeCost = vald.loadShapeCost;
 
 strLoadShapePV = strcat('New Loadshape.LoadShapePV npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapePV'), ']') %#ok
-
+fprintf(fidLoadShapePV, '%s\n', strLoadShapePV);
+strLoadShapePVClarification = strcat('! Not actually being used in my actual OpenDSS verification script. Instead I'm explicitly );
+fprintf(fidLoadShapePV, '%s\n', strLoadShapePVClarification);
 
 strLoadShapeCost = strcat('New Loadshape.LoadShapeCost npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapeCost'), ']') %#ok
 

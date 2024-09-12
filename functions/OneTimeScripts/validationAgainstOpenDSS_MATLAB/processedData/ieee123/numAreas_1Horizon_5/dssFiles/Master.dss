@@ -1,0 +1,2 @@
+Set DataPath = "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB"
+Compile (.\ieee123master_r.dss)

@@ -168,10 +168,14 @@ loadShapePV = vald.loadShapePV;
 loadShapeCost = vald.loadShapeCost;
 
 strLoadShapePV = strcat('New Loadshape.LoadShapePV npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapePV'), ']') %#ok
-
+fprintf(fidLoadShapePV, '%s\n', strLoadShapePV);
+strLoadShapePVClarification = strcat('! Not actually being used in my actual OpenDSS verification script. Instead Im explictly editing PV control every time step.');
+fprintf(fidLoadShapePV, '%s\n', strLoadShapePVClarification);
 
 strLoadShapeCost = strcat('New Loadshape.LoadShapeCost npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapeCost'), ']') %#ok
-
+fprintf(fidLoadShapePSubsCost, '%s\n', strLoadShapeCost);
+strLoadShapePSubsCostClarification = strcat('! Not actually being used in my actual OpenDSS verification script.');
+fprintf(fidLoadShapePV, '%s\n', strLoadShapePSubsCostClarification);
 % for bus1 = busesWithDERs'
 percentCutin = 0.001;
 percentCutout = 0.001;

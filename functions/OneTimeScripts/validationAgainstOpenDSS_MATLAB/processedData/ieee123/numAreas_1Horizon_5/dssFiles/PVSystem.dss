@@ -1,0 +1,17 @@
+New PVSystem.PV3 irrad = 1.0 Phases = 1   Bus1 =3.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV9 irrad = 1.0 Phases = 1   Bus1 =9.1  kV =2.4018 kVA =2.8001 Pmpp =2.3335 %cutin =0.001 %cutout =0.001
+New PVSystem.PV18 irrad = 1.0 Phases = 1   Bus1 =18.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV26 irrad = 1.0 Phases = 1   Bus1 =26.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV35 irrad = 1.0 Phases = 1   Bus1 =35.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV41 irrad = 1.0 Phases = 1   Bus1 =41.1  kV =2.4018 kVA =2.8001 Pmpp =2.3335 %cutin =0.001 %cutout =0.001
+New PVSystem.PV48 irrad = 1.0 Phases = 1   Bus1 =48.1  kV =2.4018 kVA =2.8001 Pmpp =2.3335 %cutin =0.001 %cutout =0.001
+New PVSystem.PV53 irrad = 1.0 Phases = 1   Bus1 =53.1  kV =2.4018 kVA =2.8001 Pmpp =2.3335 %cutin =0.001 %cutout =0.001
+New PVSystem.PV61 irrad = 1.0 Phases = 1   Bus1 =61.1  kV =2.4018 kVA =2.8001 Pmpp =2.3335 %cutin =0.001 %cutout =0.001
+New PVSystem.PV67 irrad = 1.0 Phases = 1   Bus1 =67.1  kV =2.4018 kVA =19.6014 Pmpp =16.3345 %cutin =0.001 %cutout =0.001
+New PVSystem.PV73 irrad = 1.0 Phases = 1   Bus1 =73.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV79 irrad = 1.0 Phases = 1   Bus1 =79.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV87 irrad = 1.0 Phases = 1   Bus1 =87.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV94 irrad = 1.0 Phases = 1   Bus1 =94.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV101 irrad = 1.0 Phases = 1   Bus1 =101.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV108 irrad = 1.0 Phases = 1   Bus1 =108.1  kV =2.4018 kVA =5.5986 Pmpp =4.6655 %cutin =0.001 %cutout =0.001
+New PVSystem.PV116 irrad = 1.0 Phases = 1   Bus1 =116.1  kV =2.4018 kVA =2.8001 Pmpp =2.3335 %cutin =0.001 %cutout =0.001
