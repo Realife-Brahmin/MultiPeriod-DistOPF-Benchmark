@@ -512,11 +512,15 @@ for battBusNum = 1:nBatt
     bus1 = busesWithBatts(battBusNum);
     strExportMonitor =  strcat('Export Monitors Battery', num2str(bus1), '_states');
     DSSText.Command = strExportMonitor;
-    strLoads = strcat('Export Loads');
-    DSSText.Command = strLoads;
-    strSummary = strcat('Export Summary');
-    DSSText.Command = strSummary;
+    fprintf(fidMaster, '%s\n', strExportMonitor);
 end
+
+strLoads = strcat('Export Loads');
+DSSText.Command = strLoads;
+fprintf(fidMaster, '%s\n', strLoads);
+strSummary = strcat('Export Summary');
+DSSText.Command = strSummary;
+fprintf(fidMaster, '%s\n', strSummary);
 
 resultsFolder = strcat(wdVald, filesep, "results", filesep, battstring, filesep, suffixObj);
 
