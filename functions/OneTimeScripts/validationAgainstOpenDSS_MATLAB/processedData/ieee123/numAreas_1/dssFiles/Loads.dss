@@ -1,4 +1,3 @@
-New Loadshape.LoadShape npts =5 interval = 1 mult = [0.75       0.777       0.787       0.796       0.782]
 ! Specifying Loads as Model 1 and 2 type loads. For no CVR, Model 2 loads will be blank
 New load.S3P    Bus=3.1   Phases=1   Model=1   kv=2.4018   kw=13.33  kvar=6.667   Vminpu=0.95  Vmaxpu=1.05 Daily = LoadShape
 New load.S4P    Bus=4.1   Phases=1   Model=1   kv=2.4018   kw=6.667  kvar=3.333   Vminpu=0.95  Vmaxpu=1.05 Daily = LoadShape

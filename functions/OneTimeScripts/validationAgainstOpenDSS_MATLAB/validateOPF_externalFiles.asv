@@ -252,12 +252,11 @@ if Batt_percent > 0
         strLoadShapeSC = strcat('New LoadShape.SCLoadShape', num2str(bus1), ' interval = 1 npts = ', num2str(T), ' mult = [', num2str(dispatch), ']');
     
         DSSText.Command = strLoadShapeSC;
-        fprintf(fidLoadShapeStorageControl, '%s\n', strLoadShapeSC);
-
+    
         strSC = strcat('New StorageController.SC', num2str(bus1), ' Element = Line.L1', ' terminal = 1', ' ElementList = [Battery', num2str(bus1), ']', ' modedis = loadshape', ' daily = SCLoadShape', num2str(bus1), ' eventlog = yes');
+    
         DSSText.Command = strSC;
-        fprintf(fidStorageControl, '%s\n', strSC);
-
+    
     end
 
 else
