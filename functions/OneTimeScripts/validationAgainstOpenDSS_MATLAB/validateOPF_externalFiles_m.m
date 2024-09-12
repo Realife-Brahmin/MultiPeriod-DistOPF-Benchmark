@@ -339,11 +339,18 @@ for t = 1:T
 
     DSSText.Command = 'CalcVoltageBases' ; %! PERFORMS ZERO LOAD POWER FLOW TO ESTIMATE VOLTAGE BASES
     
+    % DSSText.Command = 'CalcVoltageBases' ; %! PERFORMS ZERO LOAD POWER FLOW TO ESTIMATE VOLTAGE BASES
+    strCalcVoltageBases = 'CalcVoltageBases';
+    DSSText.Command = strCalcVoltageBases;
+    fprintf(fidMaster, '%s\n', strCalcVoltageBases);
+
     DSSSolution     = DSSCircuit.Solution;
     
     DSSObj.AllowForms = false;
 
-    DSSSolution.Solve; 
+    DSSSolution.Solve;
+    strSolve = 'Solve';
+    fprintf(fidMaster, '%s\n', strSolve);
 % Saving Loads for |t|
 
     Loads = DSSCircuit.Loads;
