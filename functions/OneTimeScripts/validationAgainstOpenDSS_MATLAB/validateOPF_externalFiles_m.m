@@ -37,6 +37,7 @@ fidLoadShapePSubsCost = fopen(fullfile(dssFolder, 'LoadShapePSubsCost.dss'), 'w'
 fidLoadShapePV = fopen(fullfile(dssFolder, 'LoadShapePV.dss'), 'w');
 fidLoadShapeStorageControl = fopen(fullfile(dssFolder, 'LoadShapeStorageControl.dss'), 'w');
 fidPV = fopen(fullfile(dssFolder, 'PVSystem.dss'), 'w');
+% fidPVControl = fopen(fullfile(dssFolder, 'PVSystemControl.dss'), 'w');
 fidStorageControl = fopen(fullfile(dssFolder, 'StorageControl.dss'), 'w');
 fidStorage = fopen(fullfile(dssFolder, 'Storage.dss'), 'w');
 
@@ -78,6 +79,20 @@ fprintf(fidMaster, '%s\n', strSubsNode);
 % DSSText.Command = MasterFileString;
 % fprintf(fidMaster, '%s\n', MasterFileString);
 
+% Add Redirect commands to Master.dss
+fprintf(fidMaster, 'Redirect BusData.dss\n');
+fprintf(fidMaster, 'Redirect BranchData.dss\n');
+fprintf(fidMaster, 'Redirect Capacitor.dss\n');
+fprintf(fidMaster, 'Redirect Loads.dss\n');
+fprintf(fidMaster, 'Redirect MonitorStorage.dss\n');
+fprintf(fidMaster, 'Redirect LoadShape.dss\n');
+fprintf(fidMaster, 'Redirect LoadShapePSubsCost.dss\n');
+fprintf(fidMaster, 'Redirect LoadShapePV.dss\n');
+fprintf(fidMaster, 'Redirect LoadShapeStorageControl.dss\n');
+fprintf(fidMaster, 'Redirect PVSystem.dss\n');
+% fprintf(fidMaster, 'Redirect PVSystemControl.dss\n');
+fprintf(fidMaster, 'Redirect Storage.dss\n');
+fprintf(fidMaster, 'Redirect StorageControl.dss\n');
 
 text_powerdata_r = 'powerdata.txt';
 Power_data = readmatrix(text_powerdata_r);
@@ -190,7 +205,7 @@ fprintf(fidLoadShapePV, '%s\n', strLoadShapePVClarification);
 strLoadShapeCost = strcat('New Loadshape.LoadShapeCost npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapeCost'), ']') %#ok
 fprintf(fidLoadShapePSubsCost, '%s\n', strLoadShapeCost);
 strLoadShapePSubsCostClarification = strcat('! Not actually being used in my actual OpenDSS verification script.');
-fprintf(fidLoadShapePV, '%s\n', strLoadShapePSubsCostClarification);
+fprintf(fidLoadShapePSubsCost, '%s\n', strLoadShapePSubsCostClarification);
 
 percentCutin = 0.001;
 percentCutout = 0.001;
@@ -287,24 +302,44 @@ for i = 1:N
             '   kV = 2.4018 Model=1 kW=',num2str(smallkW),'   kVAr = ',num2str(Q_C(i)));
 
         DSSText.Command = stC;
+        fprintf(fidCapacitor, '%s\n', stC);
+
     end
 end
 
 
 %% Set Simulation Parameters
+strSetVoltageBases = 'Set VoltageBases = [4.16]';
+DSSText.Command = strSetVoltageBases;
+fprintf(fidMaster, '%s\n', strSetVoltageBases);
 
-DSSText.Command = 'Set VoltageBases = [4.16]' ; %  ! ARRAY OF VOLTAGES IN KV
-DSSText.Command = 'Set mode = Daily ';
-DSSText.Command = 'Set stepsize = 1h'; 
+strSetMode = 'Set mode = Daily ';
+DSSText.Command = strSetMode;
+fprintf(fidMaster, '%s\n', strSetMode);
+
+strSetStepSize = 'Set stepsize = 1h';
+DSSText.Command = strSetStepSize;
+fprintf(fidMaster, '%s\n', strSetStepSize);
+
+% DSSText.Command = 'Set VoltageBases = [4.16]' ; %  ! ARRAY OF VOLTAGES IN KV
+% DSSText.Command = 'Set mode = Daily ';
+% DSSText.Command = 'Set stepsize = 1h'; 
 %% Set, Solve, Save, Repeat
 
 qB_1toT_kVAr = kVA_B*vald.qB_1toT;
 
-DSSText.Command = strcat('Set number = 1');
+strSetNumber = strcat('Set number = 1');
+DSSText.Command = strSetNumber;
+fprintf(fidMaster, '%s\n\n', strSetNumber);
+% DSSText.Command = strcat('Set number = 1');
 
 for t = 1:T
 
-    DSSText.Command = strcat('Set hour = ', num2str(t-1));
+    % DSSText.Command = strcat('Set hour = ', num2str(t-1));
+    strSetHour = strcat('Set hour = ', num2str(t-1));
+    DSSText.Command = strSetHour;
+    fprintf(fidMaster, '%s\n', strSetHour);
+
     if Batt_percent > 0
         filenameStorageControl_t = strcat('StorageControl_t_', num2str(t), '.dss');
         fidStorageControl_t = fopen(fullfile(dssFolder, filenameStorageControl_t), 'w');
@@ -328,6 +363,7 @@ for t = 1:T
     if DER_percent > 0
         filenamePVControl_t = strcat('PVControl_t_', num2str(t), '.dss');
         fidPVControl_t = fopen(fullfile(dssFolder, filenamePVControl_t), 'w');
+
         qD_t_kVAr = qD_1toT_kVAr(:, t);
         pD_t_kW = pD_1toT_kW(:, t);
         for derBusNum = 1:nDER
@@ -342,8 +378,9 @@ for t = 1:T
         qD_t_kVAr = 0.0;
         pD_t_kW = 0.0;
     end
+    
+    % fprintf(fidMaster, 'Redirect LoadShape.dss\n');
 
-    DSSText.Command = 'CalcVoltageBases' ; %! PERFORMS ZERO LOAD POWER FLOW TO ESTIMATE VOLTAGE BASES
     strRedirectPVControl_t = strcat('Redirect PVControl_t_', num2str(t), '.dss');
     fprintf(fidMaster, '%s\n', strRedirectPVControl_t);
     

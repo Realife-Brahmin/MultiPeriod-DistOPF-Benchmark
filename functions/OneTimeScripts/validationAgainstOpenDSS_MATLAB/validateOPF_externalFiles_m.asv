@@ -16,7 +16,7 @@ end
 
 visible = 'off'; % display voltage snapshot plots (they are still generated and saved either way)
 
-processedDataFolderVald = strcat(wdVald, filesep, "processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), "Horizon_", num2str(simInfo.T));
+processedDataFolderVald = strcat(wdVald, filesep, "processedData", filesep, sysInfo.systemName, filesep, "numAreas_", num2str(sysInfo.numAreas), "_Horizon_", num2str(simInfo.T));
 
 dssFolder = strcat(processedDataFolderVald, filesep, "dssFiles");
 
@@ -37,6 +37,7 @@ fidLoadShapePSubsCost = fopen(fullfile(dssFolder, 'LoadShapePSubsCost.dss'), 'w'
 fidLoadShapePV = fopen(fullfile(dssFolder, 'LoadShapePV.dss'), 'w');
 fidLoadShapeStorageControl = fopen(fullfile(dssFolder, 'LoadShapeStorageControl.dss'), 'w');
 fidPV = fopen(fullfile(dssFolder, 'PVSystem.dss'), 'w');
+% fidPVControl = fopen(fullfile(dssFolder, 'PVSystemControl.dss'), 'w');
 fidStorageControl = fopen(fullfile(dssFolder, 'StorageControl.dss'), 'w');
 fidStorage = fopen(fullfile(dssFolder, 'Storage.dss'), 'w');
 
@@ -53,13 +54,45 @@ DSSText=DSSObj.Text;
 DSSCircuit=DSSObj.ActiveCircuit;
 DSSBus = DSSCircuit.ActiveBus;
 
-strSetPath = strcat('Set DataPath = "', char(wdVald), '"');
-DSSText.Command = strSetPath;
-fprintf(fidMaster, '%s\n', strSetPath);
+strClear = strcat('Clear');
+DSSText.Command = strClear;
+fprintf(fidMaster, '%s\n', strClear);
 
-MasterFileString = strcat('Compile (.\', systemName, 'master_r.dss)'); 
-DSSText.Command = MasterFileString;
-fprintf(fidMaster, '%s\n', MasterFileString);
+strSetPathSim = strcat('Set DataPath = "', char(wdVald), '"');
+DSSText.Command = strSetPathSim;
+strSetPathExport = strcat('Set DataPath = "', char(dssFolder), '"');
+fprintf(fidMaster, '%s\n', strSetPathExport);
+
+strObjCircuit = strcat('New object=circuit.ieee123');
+DSSText.Command = strObjCircuit;
+fprintf(fidMaster, '%s\n', strObjCircuit);
+
+strSubsNodeComment = strcat('!~ basekv=4.16 Bus1=1 pu=1.01  R1=0 X1=0.0001 R0=0 X0=0.0001   ! for NLP  at max load 1.016 min 0.9702'); 
+DSSText.Command = strSubsNodeComment;
+fprintf(fidMaster, '%s\n', strSubsNodeComment);
+
+strSubsNode = strcat('Edit "Vsource.source" bus1=1 pu=1.03 R0=0 X0=0.00000001 phases=1 basekv=2.4018 R1=0 X1=0.00000001');
+DSSText.Command = strSubsNode;
+fprintf(fidMaster, '%s\n', strSubsNode);
+
+% MasterFileString = strcat('Compile (.\', systemName, 'master_r.dss)'); 
+% DSSText.Command = MasterFileString;
+% fprintf(fidMaster, '%s\n', MasterFileString);
+
+% Add Redirect commands to Master.dss
+fprintf(fidMaster, 'Redirect BusData.dss\n');
+fprintf(fidMaster, 'Redirect BranchData.dss\n');
+fprintf(fidMaster, 'Redirect Capacitor.dss\n');
+fprintf(fidMaster, 'Redirect Loads.dss\n');
+fprintf(fidMaster, 'Redirect MonitorStorage.dss\n');
+fprintf(fidMaster, 'Redirect LoadShape.dss\n');
+fprintf(fidMaster, 'Redirect LoadShapePSubsCost.dss\n');
+fprintf(fidMaster, 'Redirect LoadShapePV.dss\n');
+fprintf(fidMaster, 'Redirect LoadShapeStorageControl.dss\n');
+fprintf(fidMaster, 'Redirect PVSystem.dss\n');
+% fprintf(fidMaster, 'Redirect PVSystemControl.dss\n');
+fprintf(fidMaster, 'Redirect Storage.dss\n');
+fprintf(fidMaster, 'Redirect StorageControl.dss\n');
 
 text_powerdata_r = 'powerdata.txt';
 Power_data = readmatrix(text_powerdata_r);
@@ -172,7 +205,7 @@ fprintf(fidLoadShapePV, '%s\n', strLoadShapePVClarification);
 strLoadShapeCost = strcat('New Loadshape.LoadShapeCost npts = ', num2str(T), ' interval = 1 mult = [', num2str(loadShapeCost'), ']') %#ok
 fprintf(fidLoadShapePSubsCost, '%s\n', strLoadShapeCost);
 strLoadShapePSubsCostClarification = strcat('! Not actually being used in my actual OpenDSS verification script.');
-fprintf(fidLoadShapePV, '%s\n', strLoadShapePSubsCostClarification);
+fprintf(fidLoadShapePSubsCost, '%s\n', strLoadShapePSubsCostClarification);
 
 percentCutin = 0.001;
 percentCutout = 0.001;
@@ -269,25 +302,48 @@ for i = 1:N
             '   kV = 2.4018 Model=1 kW=',num2str(smallkW),'   kVAr = ',num2str(Q_C(i)));
 
         DSSText.Command = stC;
+        fprintf(fidCapacitor, '%s\n', stC);
+
     end
 end
 
 
 %% Set Simulation Parameters
+strSetVoltageBases = 'Set VoltageBases = [4.16]';
+DSSText.Command = strSetVoltageBases;
+fprintf(fidMaster, '%s\n', strSetVoltageBases);
 
-DSSText.Command = 'Set VoltageBases = [4.16]' ; %  ! ARRAY OF VOLTAGES IN KV
-DSSText.Command = 'Set mode = Daily ';
-DSSText.Command = 'Set stepsize = 1h'; 
+strSetMode = 'Set mode = Daily ';
+DSSText.Command = strSetMode;
+fprintf(fidMaster, '%s\n', strSetMode);
+
+strSetStepSize = 'Set stepsize = 1h';
+DSSText.Command = strSetStepSize;
+fprintf(fidMaster, '%s\n', strSetStepSize);
+
+% DSSText.Command = 'Set VoltageBases = [4.16]' ; %  ! ARRAY OF VOLTAGES IN KV
+% DSSText.Command = 'Set mode = Daily ';
+% DSSText.Command = 'Set stepsize = 1h'; 
 %% Set, Solve, Save, Repeat
 
 qB_1toT_kVAr = kVA_B*vald.qB_1toT;
 
-DSSText.Command = strcat('Set number = 1');
+strSetNumber = strcat('Set number = 1');
+DSSText.Command = strSetNumber;
+fprintf(fidMaster, '%s\n\n', strSetNumber);
+% DSSText.Command = strcat('Set number = 1');
 
 for t = 1:T
 
-    DSSText.Command = strcat('Set hour = ', num2str(t-1));
+    % DSSText.Command = strcat('Set hour = ', num2str(t-1));
+    strSetHour = strcat('Set hour = ', num2str(t-1));
+    DSSText.Command = strSetHour;
+    fprintf(fidMaster, '%s\n', strSetHour);
+
     if Batt_percent > 0
+        filenameStorageControl_t = strcat('StorageControl_t_', num2str(t), '.dss');
+        fidStorageControl_t = fopen(fullfile(dssFolder, filenameStorageControl_t), 'w');
+
         qB_t_kVAr = qB_1toT_kVAr(:, t);
         Pdc_t_kW = Pdc_1toT_kW(:, t);
         for battBusNum = 1:nBatt
@@ -295,8 +351,9 @@ for t = 1:T
             qBj_t_kVAr = qB_t_kVAr(battBusNum);
             Pdcj_t_kW = Pdc_t_kW(battBusNum);
             strStorage = strcat( 'Edit Storage.Battery',  num2str(bus1), ' kW = ', num2str(Pdcj_t_kW), ' kVAr = ', num2str(qBj_t_kVAr) );
-        
             DSSText.Command = strStorage;
+            fprintf(fidStorageControl_t, '%s\n', strStorage);
+
         end
     else
         qB_t_kVAr = 0.0;
@@ -304,6 +361,9 @@ for t = 1:T
     end
     
     if DER_percent > 0
+        filenamePVControl_t = strcat('PVControl_t_', num2str(t), '.dss');
+        fidPVControl_t = fopen(fullfile(dssFolder, filenamePVControl_t), 'w');
+
         qD_t_kVAr = qD_1toT_kVAr(:, t);
         pD_t_kW = pD_1toT_kW(:, t);
         for derBusNum = 1:nDER
@@ -311,21 +371,34 @@ for t = 1:T
             qDj_t_kVAr = qD_t_kVAr(derBusNum);
             pDj_t_kW = pD_t_kW(derBusNum);
             strPVQ = strcat( 'Edit PVSystem.PV', num2str(bus1), ' Pmpp = ', num2str(pDj_t_kW), ' kVAr = ', num2str( qDj_t_kVAr) );
-    
             DSSText.Command = strPVQ;
+            fprintf(fidPVControl_t, '%s\n', strPVQ);
         end
     else
         qD_t_kVAr = 0.0;
         pD_t_kW = 0.0;
     end
-
-    DSSText.Command = 'CalcVoltageBases' ; %! PERFORMS ZERO LOAD POWER FLOW TO ESTIMATE VOLTAGE BASES
     
+    % fprintf(fidMaster, 'Redirect LoadShape.dss\n');
+
+    strRedirectPVControl_t = strcat('Redirect PVControl_t_', num2str(t), '.dss');
+    fprintf(fidMaster, '%s\n', strRedirectPVControl_t);
+    
+    strRedirectStorageControl_t = strcat('Redirect StorageControl_t_', num2str(t), '.dss');
+    fprintf(fidMaster, '%s\n', strRedirectStorageControl_t);
+
+    % DSSText.Command = 'CalcVoltageBases' ; %! PERFORMS ZERO LOAD POWER FLOW TO ESTIMATE VOLTAGE BASES
+    strCalcVoltageBases = 'CalcVoltageBases';
+    DSSText.Command = strCalcVoltageBases;
+    fprintf(fidMaster, '%s\n', strCalcVoltageBases);
+
     DSSSolution     = DSSCircuit.Solution;
     
     DSSObj.AllowForms = false;
 
-    DSSSolution.Solve; 
+    DSSSolution.Solve;
+    strSolve = 'Solve';
+    fprintf(fidMaster, '%s\n', strSolve);
 % Saving Loads for |t|
 
     Loads = DSSCircuit.Loads;
@@ -402,7 +475,7 @@ for t = 1:T
 %     Save .DSS file
 
     ext = ".dss";
-    filename = char(strcat(systemName, "_", simName, "_T_", string(T), "_t_", string(t), ext))
+    filename = char(strcat(systemName, "_", simName, "_T_", string(T), "_t_", string(t), ext)) %#ok
     saveCommand = ['Save Circuit "', filename, '"'];
     DSSText.Command = saveCommand;
     disp(strcat("DSS file exported to ", filename));
@@ -440,12 +513,10 @@ for t = 1:T
     for i = 1:length(BUS_phase)
         X = BUS_phase{i};
         X_len = length(X);
-        % col = str2double(X(end));
         row = str2double(X(1:(X_len-2)));
         V_opds_1toT( row, t) = V_PU(i);
     end
     
-    % disc_V_t = abs(V_opds_1toT(1:N, t) - V_copf_1toT(1:N, t));
     disc_V_t = abs(V_opds_1toT(1:N, t) - V_1toT(1:N, t));
     disc.V_1toT(1:N, t) = disc_V_t;
 
@@ -473,12 +544,11 @@ for t = 1:T
     linewidth = 2.0;
     plot(V_opds_1toT(:, t), 'LineWidth', linewidth, 'Color', 'r');
     hold on;
-    % plot(V_copf_1toT(:, t), 'LineWidth', linewidth, 'Color', 'k')
     plot(V_1toT(:, t), 'LineWidth', linewidth, 'Color', 'k')
     legend({"OpenDSS Voltages", strcat(simName, " Voltages")});
     title([strcat("Validation of ", simName, " vs OpenDSS"), strcat("for ", string(DER_percent), "\% PVs and ", string(Batt_percent), "\% Batteries."), ...
         strcat("Hour = ", string(t), " of T = ", string(T), " hours")]);
-    ylabel("Bus Voltages [pu]")
+    ylabel("Bus Voltages [pu]");
     xlabel("Bus Numbers");
     grid minor;
     hold off;
@@ -497,13 +567,15 @@ for battBusNum = 1:nBatt
     bus1 = busesWithBatts(battBusNum);
     strExportMonitor =  strcat('Export Monitors Battery', num2str(bus1), '_states');
     DSSText.Command = strExportMonitor;
-    strLoads = strcat('Export Loads');
-    DSSText.Command = strLoads;
-    strSummary = strcat('Export Summary');
-    DSSText.Command = strSummary;
-    % strGenerators = strcat('Export Powers');
-    % DSSText.Command = strGenerators;
+    fprintf(fidMaster, '%s\n', strExportMonitor);
 end
+
+strLoads = strcat('Export Loads');
+DSSText.Command = strLoads;
+fprintf(fidMaster, '%s\n', strLoads);
+strSummary = strcat('Export Summary');
+DSSText.Command = strSummary;
+fprintf(fidMaster, '%s\n', strSummary);
 
 resultsFolder = strcat(wdVald, filesep, "results", filesep, battstring, filesep, suffixObj);
 
