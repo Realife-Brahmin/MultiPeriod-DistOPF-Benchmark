@@ -56,10 +56,10 @@ DSSBus = DSSCircuit.ActiveBus;
 strSetPath = strcat('Set DataPath = "', char(wdVald), '"');
 DSSText.Command = strSetPath;
 fprintf(fidMaster, '%s\n', strSetPath);
+strClear = strcat('Clear');
+DSSText.Command = strClear;
+fprintf(fidMaster, '%s\n', strClear);
 
-MasterFileString = strcat('Compile (.\', systemName, 'master_r.dss)'); 
-DSSText.Command = MasterFileString;
-fprintf(fidMaster, '%s\n', MasterFileString);
 strObjCircuit = strcat('New object=circuit.ieee123');
 DSSText.Command = strObjCircuit;
 fprintf(fidMaster, '%s\n', strObjCircuit);
