@@ -266,6 +266,7 @@ for battBusNum = 1:nBatt
 
 end
 
+
 %% Storage Controller
 
 % Pd_1toT_kW = kVA_B*vald.Pd_1toT;
@@ -353,13 +354,14 @@ for t = 1:T
             strStorage = strcat( 'Edit Storage.Battery',  num2str(bus1), ' kW = ', num2str(Pdcj_t_kW), ' kVAr = ', num2str(qBj_t_kVAr) );
             DSSText.Command = strStorage;
             fprintf(fidStorageControl_t, '%s\n', strStorage);
-
         end
     else
         qB_t_kVAr = 0.0;
         Pdc_t_kW = 0.0;
     end
     
+    fclose(fidStorageControl_t);
+
     if DER_percent > 0
         filenamePVControl_t = strcat('PVControl_t_', num2str(t), '.dss');
         fidPVControl_t = fopen(fullfile(dssFolder, filenamePVControl_t), 'w');
@@ -379,6 +381,7 @@ for t = 1:T
         pD_t_kW = 0.0;
     end
     
+    fclose(fidPVControl_t);
     % fprintf(fidMaster, 'Redirect LoadShape.dss\n');
 
     strRedirectPVControl_t = strcat('Redirect PVControl_t_', num2str(t), '.dss');
@@ -629,4 +632,25 @@ disp(['Maximum All Time Voltage Discrepancy: ', num2str(disc.maxV), ' pu'])
 disp(['Maximum All Time Line Loss Discrepancy: ', num2str(disc.maxPLoss_kW), ' kW'])
 disp(['Maximum All Time Substation Borrowed Real Power Discrepancy: ', num2str(disc.maxPSubs_kW), ' kW'])
 disp(['Maximum All Time Substation Borrowed Reactive Power Discrepancy: ', num2str(disc.maxQSubs_kVAr), ' kVAr'])
+
+
 disp('-----------------------------')
+
+% Close all the opened file pointers to ensure the .dss files are accessible by OpenDSS
+
+fclose(fidMaster);              % Close Master.dss
+fclose(fidBranch);              % Close BranchData.dss
+fclose(fidBus);                 % Close BusData.dss
+fclose(fidCapacitor);           % Close Capacitor.dss
+fclose(fidLoad);                % Close Loads.dss
+fclose(fidMonitorStorage);      % Close MonitorStorage.dss
+fclose(fidLoadShape);           % Close LoadShape.dss
+fclose(fidLoadShapePSubsCost);  % Close LoadShapePSubsCost.dss
+fclose(fidLoadShapePV);         % Close LoadShapePV.dss
+fclose(fidLoadShapeStorageControl); % Close LoadShapeStorageControl.dss
+fclose(fidPV);                  % Close PVSystem.dss
+% fclose(fidPVControl);         % PVSystemControl.dss not opened, so no need to close
+fclose(fidStorageControl);      % Close StorageControl.dss
+fclose(fidStorage);             % Close Storage.dss
+
+disp('All .dss files are properly closed and ready for use in OpenDSS.');
