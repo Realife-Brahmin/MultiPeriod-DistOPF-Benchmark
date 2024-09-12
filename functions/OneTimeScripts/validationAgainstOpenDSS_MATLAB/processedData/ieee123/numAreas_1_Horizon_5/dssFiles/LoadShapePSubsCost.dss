@@ -1,0 +1,2 @@
+New Loadshape.LoadShapeCost npts =5 interval = 1 mult = [0.048204    0.048204     0.30181     0.30181    0.048204]
+! Not actually being used in my actual OpenDSS verification script.

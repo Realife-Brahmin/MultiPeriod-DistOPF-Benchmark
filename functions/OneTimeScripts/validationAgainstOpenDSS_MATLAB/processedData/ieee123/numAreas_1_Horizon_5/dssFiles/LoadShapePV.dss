@@ -1,0 +1,2 @@
+New Loadshape.LoadShapePV npts =5 interval = 1 mult = [0.5         0.8         0.9           1           1]
+! Not actually being used in my actual OpenDSS verification script. Instead Im explictly editing PV control every time step.
