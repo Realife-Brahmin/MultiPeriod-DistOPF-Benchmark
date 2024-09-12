@@ -53,12 +53,14 @@ DSSText=DSSObj.Text;
 DSSCircuit=DSSObj.ActiveCircuit;
 DSSBus = DSSCircuit.ActiveBus;
 
-strSetPath = strcat('Set DataPath = "', char(wdVald), '"');
-DSSText.Command = strSetPath;
-fprintf(fidMaster, '%s\n', strSetPath);
 strClear = strcat('Clear');
 DSSText.Command = strClear;
 fprintf(fidMaster, '%s\n', strClear);
+
+strSetPathSim = strcat('Set DataPath = "', char(wdVald), '"');
+DSSText.Command = strSetPathSim;
+strSetPathExport = strcat('Set DataPath = "', char(dssFolder), '"');
+fprintf(fidMaster, '%s\n', strSetPathExport);
 
 strObjCircuit = strcat('New object=circuit.ieee123');
 DSSText.Command = strObjCircuit;
