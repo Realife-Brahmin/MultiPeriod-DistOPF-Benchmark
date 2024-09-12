@@ -306,6 +306,9 @@ for t = 1:T
 
     DSSText.Command = strcat('Set hour = ', num2str(t-1));
     if Batt_percent > 0
+        filenameStorageControl_t = strcat('StorageControl_t_', num2str(t), '.dss');
+        fidStorageControl_t = fopen(fullfile(dssFolder, filenameStorageControl_t), 'w');
+
         qB_t_kVAr = qB_1toT_kVAr(:, t);
         Pdc_t_kW = Pdc_1toT_kW(:, t);
         for battBusNum = 1:nBatt
@@ -313,8 +316,9 @@ for t = 1:T
             qBj_t_kVAr = qB_t_kVAr(battBusNum);
             Pdcj_t_kW = Pdc_t_kW(battBusNum);
             strStorage = strcat( 'Edit Storage.Battery',  num2str(bus1), ' kW = ', num2str(Pdcj_t_kW), ' kVAr = ', num2str(qBj_t_kVAr) );
-        
             DSSText.Command = strStorage;
+            fprintf(fidStorageControl_t, '%s\n', strStorage);
+
         end
     else
         qB_t_kVAr = 0.0;
@@ -322,6 +326,8 @@ for t = 1:T
     end
     
     if DER_percent > 0
+        filenamePVControl_t = strcat('PVControl_t_', num2str(t), '.dss');
+        fidPVControl_t = fopen(fullfile(dssFolder, filenamePVControl_t), 'w');
         qD_t_kVAr = qD_1toT_kVAr(:, t);
         pD_t_kW = pD_1toT_kW(:, t);
         for derBusNum = 1:nDER
@@ -329,8 +335,8 @@ for t = 1:T
             qDj_t_kVAr = qD_t_kVAr(derBusNum);
             pDj_t_kW = pD_t_kW(derBusNum);
             strPVQ = strcat( 'Edit PVSystem.PV', num2str(bus1), ' Pmpp = ', num2str(pDj_t_kW), ' kVAr = ', num2str( qDj_t_kVAr) );
-    
             DSSText.Command = strPVQ;
+            fprintf(fidPVControl_t, '%s\n', strPVQ);
         end
     else
         qD_t_kVAr = 0.0;
@@ -338,7 +344,12 @@ for t = 1:T
     end
 
     DSSText.Command = 'CalcVoltageBases' ; %! PERFORMS ZERO LOAD POWER FLOW TO ESTIMATE VOLTAGE BASES
+    strRedirectPVControl_t = strcat('Redirect PVControl_t_', num2str(t), '.dss');
+    fprintf(fidMaster, '%s\n', strRedirectPVControl_t);
     
+    strRedirectStorageControl_t = strcat('Redirect StorageControl_t_', num2str(t), '.dss');
+    fprintf(fidMaster, '%s\n', strRedirectStorageControl_t);
+
     % DSSText.Command = 'CalcVoltageBases' ; %! PERFORMS ZERO LOAD POWER FLOW TO ESTIMATE VOLTAGE BASES
     strCalcVoltageBases = 'CalcVoltageBases';
     DSSText.Command = strCalcVoltageBases;
