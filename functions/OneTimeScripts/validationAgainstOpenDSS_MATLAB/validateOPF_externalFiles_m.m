@@ -7,7 +7,6 @@ if ismember(localUsername,  listOfUsernames)
         "OneTimeScripts", filesep, "validationAgainstOpenDSS_MATLAB");
     simInfo.wdVald = wdVald;
     cd(wdVald)  
-    % addpath("rawData\");
     addpath(genpath('dss_matlab\'))
     addpath(genpath('..\..\'))
     latex_interpreter
@@ -154,13 +153,11 @@ end
 %% PV Data
 
 simName = vald.simInfo.simName;
-% V_copf_1toT = vald.V_copf;
 V_1toT = vald.V_1toT;
 busesWithDERs = vald.busesWithDERs;
 nDER = vald.nDER;
 Pmpp_kW = kVA_B*vald.Pmpp;
-% PmppFull_kW = kVA_B*vald.PmppFull;
-% kVAFull_kVA = kVA_B*vald.SderFull;
+
 pD_1toT_kW = kVA_B*vald.pD_1toT;
 qD_1toT_kVAr = kVA_B*vald.qD_1toT;
 SDer_kVA = kVA_B*vald.Sder;
@@ -176,20 +173,13 @@ strLoadShapeCost = strcat('New Loadshape.LoadShapeCost npts = ', num2str(T), ' i
 fprintf(fidLoadShapePSubsCost, '%s\n', strLoadShapeCost);
 strLoadShapePSubsCostClarification = strcat('! Not actually being used in my actual OpenDSS verification script.');
 fprintf(fidLoadShapePV, '%s\n', strLoadShapePSubsCostClarification);
-% for bus1 = busesWithDERs'
+
 percentCutin = 0.001;
 percentCutout = 0.001;
 for derBusNum = 1:nDER
     bus1 = busesWithDERs(derBusNum);
-    % Pmpp_j_kW = PmppFull_kW(bus1);
     Pmpp_j_kW = Pmpp_kW(derBusNum);
     kVA_j_kVA = SDer_kVA(derBusNum);
-    % kVA_j_kVA = kVAFull_kVA(bus1);
-
-    % stGa = strcat('New PVSystem.PV', num2str(bus1), ' irrad = 1.0 Phases = 1   Bus1 = ', num2str(bus1), ...
-    %     '.1  kV = ', num2str(kV_B), ' kVA = ', num2str(kVA_j_kVA),  ...
-    %     ' Pmpp = ', num2str(Pmpp_j_kW), ' Daily = LoadShapePV TDaily = TShapePV EffCurve = EffCurvePV  P-TCurve = PvsTPV', ...
-    %     ' %cutin = 0.1 %cutout = 0.1');
 
     stGa = strcat('New PVSystem.PV', num2str(bus1), ' irrad = 1.0 Phases = 1   Bus1 = ', num2str(bus1), ...
     '.1  kV = ', num2str(kV_B), ' kVA = ', num2str(kVA_j_kVA),  ...
@@ -277,8 +267,7 @@ for i = 1:N
     if Q_C(i)
         stC = strcat('New generator.',num2str(busNums(i)),'C','  Phases=1   Bus1=',num2str(busNums(i)),...
             '   kV = 2.4018 Model=1 kW=',num2str(smallkW),'   kVAr = ',num2str(Q_C(i)));
-        % stC = strcat('New Capacitor.C',num2str(busNums(i)),'  Phases=1   Bus1=',num2str(busNums(i)),...
-        %     '   kV = 2.4018 kVAr=',num2str(Q_C(i)));
+
         DSSText.Command = stC;
     end
 end
@@ -382,7 +371,7 @@ for t = 1:T
     resod.pD_Total_kW_1toT(t) = pD_Total_t_kW;
     resod.qD_Total_kVAr_1toT(t) = qD_Total_t_kVAr;
     % Now pD_Total_t_kW and qD_Total_t_kVAr hold the total kW and kVAr PV generation, respectively
-% Saving generated powers of Storage at |t|
+    % Saving generated powers of Storage at |t|
 
     Storages = DSSCircuit.Storages;
     StorageNames = Storages.AllNames;
@@ -413,7 +402,7 @@ for t = 1:T
 %     Save .DSS file
 
     ext = ".dss";
-    filename = char(strcat(systemName, "_", simName, "_T_", string(T), "_t_", string(t), ext))
+    filename = char(strcat(systemName, "_", simName, "_T_", string(T), "_t_", string(t), ext)) %#ok
     saveCommand = ['Save Circuit "', filename, '"'];
     DSSText.Command = saveCommand;
     disp(strcat("DSS file exported to ", filename));
@@ -451,12 +440,10 @@ for t = 1:T
     for i = 1:length(BUS_phase)
         X = BUS_phase{i};
         X_len = length(X);
-        % col = str2double(X(end));
         row = str2double(X(1:(X_len-2)));
         V_opds_1toT( row, t) = V_PU(i);
     end
     
-    % disc_V_t = abs(V_opds_1toT(1:N, t) - V_copf_1toT(1:N, t));
     disc_V_t = abs(V_opds_1toT(1:N, t) - V_1toT(1:N, t));
     disc.V_1toT(1:N, t) = disc_V_t;
 
@@ -484,12 +471,11 @@ for t = 1:T
     linewidth = 2.0;
     plot(V_opds_1toT(:, t), 'LineWidth', linewidth, 'Color', 'r');
     hold on;
-    % plot(V_copf_1toT(:, t), 'LineWidth', linewidth, 'Color', 'k')
     plot(V_1toT(:, t), 'LineWidth', linewidth, 'Color', 'k')
     legend({"OpenDSS Voltages", strcat(simName, " Voltages")});
     title([strcat("Validation of ", simName, " vs OpenDSS"), strcat("for ", string(DER_percent), "\% PVs and ", string(Batt_percent), "\% Batteries."), ...
         strcat("Hour = ", string(t), " of T = ", string(T), " hours")]);
-    ylabel("Bus Voltages [pu]")
+    ylabel("Bus Voltages [pu]");
     xlabel("Bus Numbers");
     grid minor;
     hold off;
@@ -512,8 +498,6 @@ for battBusNum = 1:nBatt
     DSSText.Command = strLoads;
     strSummary = strcat('Export Summary');
     DSSText.Command = strSummary;
-    % strGenerators = strcat('Export Powers');
-    % DSSText.Command = strGenerators;
 end
 
 resultsFolder = strcat(wdVald, filesep, "results", filesep, battstring, filesep, suffixObj);
