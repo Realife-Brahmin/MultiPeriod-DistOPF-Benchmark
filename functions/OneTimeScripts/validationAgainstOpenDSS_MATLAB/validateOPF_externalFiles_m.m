@@ -60,6 +60,22 @@ fprintf(fidMaster, '%s\n', strSetPath);
 MasterFileString = strcat('Compile (.\', systemName, 'master_r.dss)'); 
 DSSText.Command = MasterFileString;
 fprintf(fidMaster, '%s\n', MasterFileString);
+strObjCircuit = strcat('New object=circuit.ieee123');
+DSSText.Command = strObjCircuit;
+fprintf(fidMaster, '%s\n', strObjCircuit);
+
+strSubsNodeComment = strcat('!~ basekv=4.16 Bus1=1 pu=1.01  R1=0 X1=0.0001 R0=0 X0=0.0001   ! for NLP  at max load 1.016 min 0.9702'); 
+DSSText.Command = strSubsNodeComment;
+fprintf(fidMaster, '%s\n', strSubsNodeComment);
+
+strSubsNode = strcat('Edit "Vsource.source" bus1=1 pu=1.03 R0=0 X0=0.00000001 phases=1 basekv=2.4018 R1=0 X1=0.00000001');
+DSSText.Command = strSubsNode;
+fprintf(fidMaster, '%s\n', strSubsNode);
+
+% MasterFileString = strcat('Compile (.\', systemName, 'master_r.dss)'); 
+% DSSText.Command = MasterFileString;
+% fprintf(fidMaster, '%s\n', MasterFileString);
+
 
 text_powerdata_r = 'powerdata.txt';
 Power_data = readmatrix(text_powerdata_r);
