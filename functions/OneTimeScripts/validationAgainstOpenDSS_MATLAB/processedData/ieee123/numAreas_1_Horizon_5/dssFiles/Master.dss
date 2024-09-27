@@ -1,20 +1,21 @@
 Clear
 Set DataPath = "C:\Users\Aryan Ritwajeet Jha\Documents\documents_general\MultiPeriod-DistOPF-Benchmark\functions\OneTimeScripts\validationAgainstOpenDSS_MATLAB\processedData\ieee123\numAreas_1_Horizon_5\dssFiles"
 New object=circuit.ieee123
-!~ basekv=4.16 Bus1=1 pu=1.01  R1=0 X1=0.0001 R0=0 X0=0.0001   ! for NLP  at max load 1.016 min 0.9702
+
 Edit "Vsource.source" bus1=1 pu=1.03 R0=0 X0=0.00000001 phases=1 basekv=2.4018 R1=0 X1=0.00000001
-Redirect BusData.dss
+! You probably do not wanna change the order of the calling of the scripts, as they are not like modules, are called in order and will throw an error if any dependent script was not called before.
+Redirect BusData.dss ! BusData.dss actually is not used here, is empty.
 Redirect BranchData.dss
 Redirect Capacitor.dss
+Redirect LoadShape.dss ! The equivalent information of BusData.dss is stored here.
 Redirect Loads.dss
-Redirect MonitorStorage.dss
-Redirect LoadShape.dss
 Redirect LoadShapePSubsCost.dss
 Redirect LoadShapePV.dss
-Redirect LoadShapeStorageControl.dss
 Redirect PVSystem.dss
 Redirect Storage.dss
+Redirect LoadShapeStorageControl.dss
 Redirect StorageControl.dss
+Redirect MonitorStorage.dss
 Set VoltageBases = [4.16]
 Set mode = Daily 
 Set stepsize = 1h
@@ -25,3 +26,83 @@ Redirect PVControl_t_1.dss
 Redirect StorageControl_t_1.dss
 CalcVoltageBases
 Solve
+
+Set hour =1
+Redirect PVControl_t_2.dss
+Redirect StorageControl_t_2.dss
+CalcVoltageBases
+Solve
+
+Set hour =2
+Redirect PVControl_t_3.dss
+Redirect StorageControl_t_3.dss
+CalcVoltageBases
+Solve
+
+Set hour =3
+Redirect PVControl_t_4.dss
+Redirect StorageControl_t_4.dss
+CalcVoltageBases
+Solve
+
+Set hour =4
+Redirect PVControl_t_5.dss
+Redirect StorageControl_t_5.dss
+CalcVoltageBases
+Solve
+
+Export Monitors Battery3_states
+
+Export Monitors Battery7_states
+
+Export Monitors Battery11_states
+
+Export Monitors Battery18_states
+
+Export Monitors Battery22_states
+
+Export Monitors Battery30_states
+
+Export Monitors Battery34_states
+
+Export Monitors Battery37_states
+
+Export Monitors Battery41_states
+
+Export Monitors Battery47_states
+
+Export Monitors Battery50_states
+
+Export Monitors Battery53_states
+
+Export Monitors Battery58_states
+
+Export Monitors Battery62_states
+
+Export Monitors Battery67_states
+
+Export Monitors Battery71_states
+
+Export Monitors Battery75_states
+
+Export Monitors Battery79_states
+
+Export Monitors Battery84_states
+
+Export Monitors Battery87_states
+
+Export Monitors Battery92_states
+
+Export Monitors Battery97_states
+
+Export Monitors Battery101_states
+
+Export Monitors Battery106_states
+
+Export Monitors Battery111_states
+
+Export Monitors Battery116_states
+
+Export Loads
+
+Export Summary
