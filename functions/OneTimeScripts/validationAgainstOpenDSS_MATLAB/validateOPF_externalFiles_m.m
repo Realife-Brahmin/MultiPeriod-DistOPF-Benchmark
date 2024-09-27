@@ -67,32 +67,35 @@ strObjCircuit = strcat('New object=circuit.ieee123');
 DSSText.Command = strObjCircuit;
 fprintf(fidMaster, '%s\n', strObjCircuit);
 
-strSubsNodeComment = strcat('!~ basekv=4.16 Bus1=1 pu=1.01  R1=0 X1=0.0001 R0=0 X0=0.0001   ! for NLP  at max load 1.016 min 0.9702'); 
-DSSText.Command = strSubsNodeComment;
-fprintf(fidMaster, '%s\n', strSubsNodeComment);
+% strSubsNodeComment = strcat('!~ basekv=4.16 Bus1=1 pu=1.01  R1=0 X1=0.0001 R0=0 X0=0.0001   ! for NLP  at max load 1.016 min 0.9702'); 
+% DSSText.Command = strSubsNodeComment;
+% fprintf(fidMaster, '%s\n', strSubsNodeComment);
 
 strSubsNode = strcat('Edit "Vsource.source" bus1=1 pu=1.03 R0=0 X0=0.00000001 phases=1 basekv=2.4018 R1=0 X1=0.00000001');
 DSSText.Command = strSubsNode;
-fprintf(fidMaster, '%s\n', strSubsNode);
+fprintf(fidMaster, '\n%s\n', strSubsNode);
 
 % MasterFileString = strcat('Compile (.\', systemName, 'master_r.dss)'); 
 % DSSText.Command = MasterFileString;
 % fprintf(fidMaster, '%s\n', MasterFileString);
 
 % Add Redirect commands to Master.dss
-fprintf(fidMaster, 'Redirect BusData.dss\n');
+
+fprintf(fidMaster, '! You probably do not wanna change the order of the calling of the scripts, as they are not like modules, are called in order and will throw an error if any dependent script was not called before.\n');
+
+fprintf(fidMaster, 'Redirect BusData.dss ! BusData.dss actually is not used here, is empty.\n');
 fprintf(fidMaster, 'Redirect BranchData.dss\n');
 fprintf(fidMaster, 'Redirect Capacitor.dss\n');
+fprintf(fidMaster, 'Redirect LoadShape.dss ! The equivalent information of BusData.dss is stored here.\n');
 fprintf(fidMaster, 'Redirect Loads.dss\n');
-fprintf(fidMaster, 'Redirect MonitorStorage.dss\n');
-fprintf(fidMaster, 'Redirect LoadShape.dss\n');
 fprintf(fidMaster, 'Redirect LoadShapePSubsCost.dss\n');
 fprintf(fidMaster, 'Redirect LoadShapePV.dss\n');
-fprintf(fidMaster, 'Redirect LoadShapeStorageControl.dss\n');
 fprintf(fidMaster, 'Redirect PVSystem.dss\n');
-% fprintf(fidMaster, 'Redirect PVSystemControl.dss\n');
 fprintf(fidMaster, 'Redirect Storage.dss\n');
+fprintf(fidMaster, 'Redirect LoadShapeStorageControl.dss\n');
 fprintf(fidMaster, 'Redirect StorageControl.dss\n');
+
+fprintf(fidMaster, 'Redirect MonitorStorage.dss\n');
 
 text_powerdata_r = 'powerdata.txt';
 Power_data = readmatrix(text_powerdata_r);
@@ -331,7 +334,7 @@ qB_1toT_kVAr = kVA_B*vald.qB_1toT;
 
 strSetNumber = strcat('Set number = 1');
 DSSText.Command = strSetNumber;
-fprintf(fidMaster, '%s\n\n', strSetNumber);
+fprintf(fidMaster, '%s\n', strSetNumber);
 % DSSText.Command = strcat('Set number = 1');
 
 for t = 1:T
@@ -339,7 +342,7 @@ for t = 1:T
     % DSSText.Command = strcat('Set hour = ', num2str(t-1));
     strSetHour = strcat('Set hour = ', num2str(t-1));
     DSSText.Command = strSetHour;
-    fprintf(fidMaster, '%s\n', strSetHour);
+    fprintf(fidMaster, '\n%s\n', strSetHour);
 
     if Batt_percent > 0
         filenameStorageControl_t = strcat('StorageControl_t_', num2str(t), '.dss');
@@ -570,15 +573,15 @@ for battBusNum = 1:nBatt
     bus1 = busesWithBatts(battBusNum);
     strExportMonitor =  strcat('Export Monitors Battery', num2str(bus1), '_states');
     DSSText.Command = strExportMonitor;
-    fprintf(fidMaster, '%s\n', strExportMonitor);
+    fprintf(fidMaster, '\n%s\n', strExportMonitor);
 end
 
 strLoads = strcat('Export Loads');
 DSSText.Command = strLoads;
-fprintf(fidMaster, '%s\n', strLoads);
+fprintf(fidMaster, '\n%s\n', strLoads);
 strSummary = strcat('Export Summary');
 DSSText.Command = strSummary;
-fprintf(fidMaster, '%s\n', strSummary);
+fprintf(fidMaster, '\n%s\n', strSummary);
 
 resultsFolder = strcat(wdVald, filesep, "results", filesep, battstring, filesep, suffixObj);
 
