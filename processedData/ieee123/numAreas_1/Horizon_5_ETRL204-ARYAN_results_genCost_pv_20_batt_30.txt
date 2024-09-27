@@ -81,7 +81,7 @@ Hour: Full 5 Hour Horizon
 12. Horizon-Total All time Substation Power Peak: 962.69 kW
 ------------------------------------------------------------
 13. Number of Macro-Iterations: 1
-14. Simulation Time: 559.81 s
-15. Time to solve with sequential (non-parallel) computation: 497.72 s
-16. Time to solve if OPF computation parallelized: 497.72 s
+14. Simulation Time: 660.53 s
+15. Time to solve with sequential (non-parallel) computation: 473.59 s
+16. Time to solve if OPF computation parallelized: 473.59 s
 ------------------------------------------------------------

@@ -1,0 +1,51 @@
+------------------------------------------------------------
+01. Machine ID: ETRL204-ARYAN
+02. Horizon Duration: 2
+03. Nature of Simulation: Centralized-OPF
+04. Objective: Cost of Substation Power
+05. GED Configuration: pv_20_batt_30
+06. Maximum Substation Power Allowed: Inf kW
+-----------------------------
+Hour: 1
+01. Line Loss: 19.59 kW
+02. Substation Power: 997.59 kW + 133.16 kVAr
+03. Total Load: 915.44 kW + 503.69 kVAr
+04. Total Generation: -62.56 kW + 409.93 kVAr
+05. Total PV Generation: 69.29 kW + 20.03 kVAr
+06. Total Battery Generation: -131.85 kW + 39.90 kVAr
+07. Total Battery Flexibility Utilized: 131.83 kW + 86.32 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $48.09
+10. SCD Observed: -0.02 kW
+-----------------------------
+Hour: 2
+01. Line Loss: 11.48 kW
+02. Substation Power: 741.39 kW + 117.28 kVAr
+03. Total Load: 925.90 kW + 509.45 kVAr
+04. Total Generation: 195.99 kW + 415.29 kVAr
+05. Total PV Generation: 76.99 kW + 24.26 kVAr
+06. Total Battery Generation: 119.00 kW + 41.03 kVAr
+07. Total Battery Flexibility Utilized: 118.98 kW + 87.45 kVAr
+08. Total Static Capacitor Reactive Power Generation: 350.00 kVAr
+09. Substation Power Cost: $223.76
+10. SCD Observed: -0.02 kW
+-----------------------------
+Hour: Full 2 Hour Horizon
+01. Horizon Line Loss: 31.07 kW
+02. Horizon Total Substation Power: 1738.98 kW + 250.44 kVAr
+03. Horizon Total Load: 1841.34 kW + 1013.14 kVAr
+04. Horizon Total Generation: 133.43 kW + 825.22 kVAr
+05. Horizon Total PV Generation: 146.28 kW + 44.29 kVAr
+06. Horizon Total Battery Generation: -12.85 kW + 80.93 kVAr
+07. Horizon Total Battery Flexibility Utilized: 250.80 kW + 173.78 kVAr
+08. Horizon Total Static Capacitor Reactive Power Generation: 700.00 kVAr
+09. Horizon Total Substation Power Cost: $271.85
+10. Horizon Total SCD Observed: -0.05 kW
+11. Horizon-end Battery Energy Deviation from Reference: 0.00 kWh
+12. Horizon-Total All time Substation Power Peak: 997.59 kW
+------------------------------------------------------------
+13. Number of Macro-Iterations: 1
+14. Simulation Time: 239.12 s
+15. Time to solve with sequential (non-parallel) computation: 52.06 s
+16. Time to solve if OPF computation parallelized: 52.06 s
+------------------------------------------------------------
